@@ -14,3 +14,5 @@ Discover MindReset, your partner in overcoming addictions, especially those link
 
 
 MindReset simplifies the science of recovery for you, offering a user-friendly experience to guide you towards a digital life that promotes well-being. Start your transformation today!
+
+### Start Date -> 22/12/23
