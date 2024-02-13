@@ -4,8 +4,11 @@ import image2 from "../../app/assets/blogimage/banner.jpg";
 
 function Blog() {
   return (
-    <div className="flex justify-center align-middle sm:flex-row flex-col mt-10  sm:gap-x-5">
-      <div className=" flex border p-6">
+    <div className="flex justify-center align-middle sm:flex-row flex-col mt-10  sm:gap-x-5 ">
+      <a
+        href="/blog:id"
+        className=" flex border p-6 hover:shadow-xl transition duration-300"
+      >
         <div className="w-2/3">
           <h2 className="font-semibold mb-3">Lorem ipsum dolor sit amet.</h2>
           <p>
@@ -16,8 +19,11 @@ function Blog() {
         <div className="relative w-1/3">
           <Image src={image1} fill alt="" />
         </div>
-      </div>
-      <div className=" flex border p-6">
+      </a>
+      <a
+        href="/blog:id "
+        className=" flex border p-6 hover:shadow-xl transition duration-300"
+      >
         <div className="w-2/3">
           <h2 className="font-semibold mb-3">Lorem ipsum dolor sit amet.</h2>
           <p>
@@ -28,7 +34,7 @@ function Blog() {
         <div className="relative w-1/3">
           <Image src={image2} fill alt="" />
         </div>
-      </div>
+      </a>
     </div>
   );
 }
