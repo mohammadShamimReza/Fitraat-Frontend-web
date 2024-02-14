@@ -1,11 +1,10 @@
-import { getUserInfo } from "@/services/auth.service";
+// import { getUserInfo } from "@/services/auth.service";
 import {
   Dispatch,
   ReactNode,
   SetStateAction,
   createContext,
   useContext,
-  useEffect,
   useState,
 } from "react";
 
@@ -34,13 +33,13 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User>({ role: "", id: "" });
 
-  const { role, id } = getUserInfo() as any;
+  // const { role, id } = getUserInfo() as any;
 
-  useEffect(() => {
-    if (role && id) {
-      setUser({ role, id });
-    }
-  }, [role, id]);
+  // useEffect(() => {
+  //   if (role && id) {
+  //     setUser({ role, id });
+  //   }
+  // }, [role, id]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
