@@ -1,6 +1,6 @@
 import Banner from "@/components/mainLayout/Banner";
-import Blog from "@/components/mainLayout/Blog";
 import Footer from "@/components/mainLayout/Footer";
+import Blog from "@/components/mainLayout/LayoutBlog";
 import Motivation from "@/components/mainLayout/Motivation";
 import Reviews from "@/components/mainLayout/Reviews";
 import Subscribe from "@/components/mainLayout/Subscribe";
