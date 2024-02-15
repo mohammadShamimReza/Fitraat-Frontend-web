@@ -2,10 +2,10 @@
 
 const Subscribe = () => {
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div className="max-w-md mx-auto bg-white  border overflow-hidden md:max-w-2xl mt-32">
       <div className="md:flex flex-col">
-        <div className="p-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+        <div className="p-8 text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2 ">
             Subscribe to our newsletter
           </h2>
           <p className="text-gray-600">
@@ -26,7 +26,7 @@ const Subscribe = () => {
               name="email"
               autoComplete="email"
               required
-              className="mt-1 focus:ring-indigo-500  block w-full shadow-sm sm:text-sm border border-black rounded-md h-10"
+              className="mt-1 focus:ring-gray-500  block w-full shadow-sm sm:text-sm border border-black rounded-md h-10"
             />
           </div>
           <div>
