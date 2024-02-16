@@ -21,12 +21,12 @@ function Blogs({ blog }: { blog: any }) {
   return (
     <div className="">
       {" "}
-      <div className="h-72 mb-10">
+      <div className="h-full mb-10">
         <div
           className="bg-white p-4 rounded-lg shadow-xl border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
           isDarkMode dark:bg-gray-800 hover:dark:shadow-slate-600 h-72 flex flex-col justify-between"
         >
-          <div className="">
+          <div className="h-full">
             <Link href={`/blog/1`}>
               <h2
                 className="text-gray-800 mb-4 
@@ -38,7 +38,7 @@ function Blogs({ blog }: { blog: any }) {
               </h2>
               <p
                 className=" mb-2
-            isDarkMode dark:text-gray-300 truncate-ellipsis line-clamp-5"
+            isDarkMode dark:text-gray-300  line-clamp-5 text-justify"
               >
                 {/* {blog?.content && (
                   <div dangerouslySetInnerHTML={{ __html: blog.content }} />

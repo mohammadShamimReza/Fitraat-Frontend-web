@@ -7,7 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 
 // import "react-loading-skeleton/dist/skeleton.css";
 import Blogs from "@/components/BlogPage/Blogs";
-import Main from "@/components/BlogPage/Main";
+import Keyword from "@/components/BlogPage/Keyword";
 import * as yup from "yup";
 
 type BlogsData = {
@@ -70,8 +70,8 @@ function Page() {
   return (
     <div>
       <div className="">
-        <div className="flex sm:flex-row-reverse flex-col justify-between  gap-3 ">
-          <div className="sm:w-1/5 sm:pt-28 pt-0 flex flex-row sm:flex-col flex-wrap ">
+        <div className="flex flex-col justify-between  gap-3 sm:flex-row">
+          <div className="sm:w-1/5 sm:pt-28 pt-0 flex flex-row sm:flex-col flex-wrap order-1">
             {/* {blogTypeDatas?.data?.map((blogType: IBlogType) => ( */}
             <div key={1} className="  ">
               <div className="p-3">
@@ -86,13 +86,16 @@ function Page() {
                   }
                 >
                   {/* {blogType?.title} */}
-                  Lorem ipsum dolor sit amet.
+                  Lorem ipsum .
                 </button>
               </div>
             </div>
             {/* ))} */}
           </div>
-          <div className="w-full sm:w-4/5 sm:order-1">
+          <div className="order-3">
+            <Keyword />{" "}
+          </div>
+          <div className="w-full sm:w-4/5 order-2">
             <form
               onChange={handleSubmit(handleSearchTerm)}
               className="flex  justify-center align-middle"
@@ -233,7 +236,6 @@ function Page() {
           </ul>
         </div>
       </div>
-      <Main />
     </div>
   );
 }

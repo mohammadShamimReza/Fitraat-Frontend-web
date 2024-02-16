@@ -26,7 +26,7 @@ const Subscribe = () => {
               name="email"
               autoComplete="email"
               required
-              className="mt-1 focus:ring-gray-500  block w-full shadow-sm sm:text-sm border border-black rounded-md h-10"
+              className="mt-1 focus:ring-gray-500  block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md h-10"
             />
           </div>
           <div>

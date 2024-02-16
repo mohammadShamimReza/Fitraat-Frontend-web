@@ -64,7 +64,7 @@ function SingleBlog() {
           {/* {blogData?.title} */}
         </div>
         <br />
-        <div className="flex align-middle justify-center h-60 ">
+        <div className="flex align-middle justify-center h-full ">
           <Image
             src={""}
             height={200}
@@ -77,7 +77,7 @@ function SingleBlog() {
         </div>
 
         <br />
-        <div className="flex text-justify">
+        <div className="flex text-justify ">
           {/* {blogData?.content && (
             <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
           )} */}
