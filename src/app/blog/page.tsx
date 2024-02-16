@@ -7,6 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 
 // import "react-loading-skeleton/dist/skeleton.css";
 import Blogs from "@/components/BlogPage/Blogs";
+import Main from "@/components/BlogPage/Main";
 import * as yup from "yup";
 
 type BlogsData = {
@@ -71,23 +72,25 @@ function Page() {
       <div className="">
         <div className="flex sm:flex-row-reverse flex-col justify-between  gap-3 ">
           <div className="sm:w-1/5 sm:pt-28 pt-0 flex flex-row sm:flex-col flex-wrap ">
-            {/* {blogTypeDatas?.data?.map((blogType: IBlogType) => (
-              <div key={blogType?.id} className="  ">
-                <div className="p-3">
-                  <button
-                    onClick={() => setType(blogType?.id)}
-                    onDoubleClick={() => setType(undefined)}
-                    className={
-                      type === blogType?.id
-                        ? "light:bg-transparent hover:light:bg-gray-300 hover:dark:bg-gray-300 light:text-gray-700    border border-gray-500 rounded-lg hover:light:shadow-lg hover:dark:shadow-lg transition duration-300 hover:scale-110 bg-gray-500 text-white dark:bg-gray-200 dark:text-black w-full "
-                        : "light:bg-transparent dark:bg-gray-800 hover:light:bg-gray-300 hover:dark:bg-gray-300 light:text-gray-700 dark:text-white p-1 border border-gray-500 rounded-lg dark:hover:text-black hover:light:shadow-lg hover:dark:shadow-lg transition duration-300 hover:scale-110  w-full"
-                    }
-                  >
-                    {blogType?.title}
-                  </button>
-                </div>
+            {/* {blogTypeDatas?.data?.map((blogType: IBlogType) => ( */}
+            <div key={1} className="  ">
+              <div className="p-3">
+                <button
+                  // onClick={() => setType(blogType?.id)}
+                  onDoubleClick={() => setType(undefined)}
+                  className={
+                    // type === blogType?.id
+                    //   ? "light:bg-transparent hover:light:bg-gray-300 hover:dark:bg-gray-300 light:text-gray-700    border border-gray-500 rounded-lg hover:light:shadow-lg hover:dark:shadow-lg transition duration-300 hover:scale-110 bg-gray-500 text-white dark:bg-gray-200 dark:text-black w-full "
+                    //   :
+                    "light:bg-transparent dark:bg-gray-800 hover:light:bg-gray-300 hover:dark:bg-gray-300 light:text-gray-700 dark:text-white p-1 border border-gray-500 rounded-lg dark:hover:text-black hover:light:shadow-lg hover:dark:shadow-lg transition duration-300 hover:scale-110  w-full"
+                  }
+                >
+                  {/* {blogType?.title} */}
+                  Lorem ipsum dolor sit amet.
+                </button>
               </div>
-            ))} */}
+            </div>
+            {/* ))} */}
           </div>
           <div className="w-full sm:w-4/5 sm:order-1">
             <form
@@ -230,6 +233,7 @@ function Page() {
           </ul>
         </div>
       </div>
+      <Main />
     </div>
   );
 }
