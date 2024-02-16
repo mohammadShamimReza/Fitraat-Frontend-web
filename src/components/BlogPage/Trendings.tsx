@@ -20,7 +20,7 @@ function Trendings() {
                 <p className="font-bold text-lg truncate">
                   Lorem ipsum dolor sit amet.
                 </p>
-                <div className="mt-2 isDarkMode dark:text-gray-300 line-clamp-5  w-44">
+                <div className="mt-2 isDarkMode dark:text-gray-300 line-clamp-5  w-44 text-justify">
                   {/* {blog?.content && (
                     <div
                       dangerouslySetInnerHTML={{
