@@ -28,7 +28,7 @@ const MyTasks: React.FC = () => {
       <div className="flex flex-col lg:flex-row">
         {/* Left Side: Task List */}
         <div className="lg:w-1/3 pr-8 mb-8 lg:mb-0">
-          <h2 className="text-2xl font-bold mb-4">Your Task for Today</h2>
+          <h2 className="text-2xl font-bold ">Your Task for Today</h2>
           <ul className="list-decimal pl-6">
             {tasks.map((task, index) => (
               <li
@@ -46,42 +46,52 @@ const MyTasks: React.FC = () => {
 
         {/* Right Side: Task Details */}
         <div className="lg:w-2/3">
-          <div className="p-4 rounded-lg shadow-lg bg-white h-96  mx-auto flex flex-col justify-evenly align-middle">
+          <div
+            style={{ height: "600px" }}
+            className="p-4 rounded-lg shadow-lg bg-white   mx-auto flex flex-col justify-evenly "
+          >
             <div className="">
-              <h3 className="text-xl font-bold mb-4">
+              <h3 className="text-xl font-bold ">
                 {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
               </h3>
             </div>
-            <div className="grow">
+            <div className="">
               {selectedTask === "video" && (
-                <p className="mb-4">
-                  Watch educational videos on addiction recovery and digital
-                  well-being.
-                </p>
+                <div className="">
+                  <iframe
+                    width="100%"
+                    height="450px"
+                    src={`https://www.youtube.com/embed/RBSGKlAvoiM`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title="Embedded youtube"
+                  />
+                </div>
                 /* Add video component here */
               )}
               {selectedTask === "sortNote" && (
-                <p className="mb-4">
+                <p className="">
                   Reflect on your progress and thoughts with short note-taking
                   exercises.
                 </p>
                 /* Add note sorting component here */
               )}
               {selectedTask === "quiz" && (
-                <p className="mb-4">
+                <p className="">
                   Reinforce learning and test your knowledge with engaging
                   quizzes.
                 </p>
                 /* Add quiz component here */
               )}
               {selectedTask === "rewards" && (
-                <p className="mb-4">
+                <p className="">
                   Stay committed and earn rewards for completing tasks.
                 </p>
                 /* Add rewards component here */
               )}
               {selectedTask === "suggestBlog" && (
-                <p className="mb-4">
+                <p className="">
                   Receive personalized suggestions for blog articles related to
                   recovery and mindfulness.
                 </p>
