@@ -74,7 +74,7 @@ const items: CollapseProps["items"] = [
   },
 ];
 
-const App: React.FC = () => {
+const Faq: React.FC = () => {
   const onChange = (key: string | string[]) => {
     console.log(key);
   };
@@ -89,4 +89,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Faq;
