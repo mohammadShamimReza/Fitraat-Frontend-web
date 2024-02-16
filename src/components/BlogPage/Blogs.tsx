@@ -1,10 +1,9 @@
 // import { useUsersByIdQuery } from "@/redux/api/userApi";
-import { IBlog } from "@/components/types/common";
 import Link from "next/link";
 // import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+// import "react-loading-skeleton/dist/skeleton.css";
 
-function Blog({ blog }: { blog: IBlog }) {
+function Blogs({ blog }: { blog: any }) {
   // const { data: userDatas } = useUsersByIdQuery(blog?.userId);
 
   // const userData = userDatas?.data;
@@ -28,20 +27,31 @@ function Blog({ blog }: { blog: IBlog }) {
           isDarkMode dark:bg-gray-800 hover:dark:shadow-slate-600 h-72 flex flex-col justify-between"
         >
           <div className="">
-            <Link href={`/blogs/${blog.id}`}>
+            <Link href={`/blog/1`}>
               <h2
                 className="text-gray-800 mb-4 
             dark:text-gray-300 text-xl font-semibold overflow-clip"
               >
-                {blog.title}
+                {/* {blog.title} */}
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime,
+                numquam?
               </h2>
               <p
                 className=" mb-2
             isDarkMode dark:text-gray-300 truncate-ellipsis line-clamp-5"
               >
-                {blog?.content && (
+                {/* {blog?.content && (
                   <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-                )}
+                )} */}
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Quaerat, repellendus perspiciatis doloribus tempora quo id esse
+                mollitia sapiente recusandae dolor nemo repellat fugit, cum
+                similique dolorem nisi cupiditate fugiat delectus magnam! Quos
+                inventore animi deserunt aspernatur quod nobis magnam eius
+                distinctio nesciunt tenetur dolores voluptas ullam odio, vitae
+                eaque saepe eos debitis aliquid accusamus earum ducimus in
+                cumque. Neque obcaecati inventore quas sed. Beatae quia
+                repellendus, cum sunt adipisci similique!
               </p>
             </Link>
           </div>
@@ -61,7 +71,10 @@ function Blog({ blog }: { blog: IBlog }) {
                   className="flex w-8 h-8 rounded-full mr-2"
                 /> */}
               </div>
-              {/* <span>{userData?.name}</span> */}
+              <span>
+                {/* {userData?.name} */}
+                Shamim Reza
+              </span>
             </Link>
           </div>
         </div>
@@ -70,4 +83,4 @@ function Blog({ blog }: { blog: IBlog }) {
   );
 }
 
-export default Blog;
+export default Blogs;

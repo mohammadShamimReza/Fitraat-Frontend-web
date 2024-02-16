@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 
 // import "react-loading-skeleton/dist/skeleton.css";
+import Blogs from "@/components/BlogPage/Blogs";
 import * as yup from "yup";
 
 type BlogsData = {
@@ -110,9 +111,9 @@ function Page() {
               </div>
             </form>
 
-            {/* {blogData?.data?.map((blog: IBlog) => (
-              <Blog key={blog.id} blog={blog} />
-            ))} */}
+            {/* {blogData?.data?.map((blog: IBlog) => ( */}
+            <Blogs key={1} blog={""} />
+            {/* ))} */}
           </div>
         </div>
 
