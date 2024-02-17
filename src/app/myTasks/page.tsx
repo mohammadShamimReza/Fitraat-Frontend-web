@@ -1,9 +1,32 @@
 "use client";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Progress } from "antd";
+import type { CheckboxProps, GetProp } from "antd";
+import { Button, Checkbox, Divider, Progress } from "antd";
 import React, { useState } from "react";
 
+type CheckboxValueType = GetProp<typeof Checkbox.Group, "value">[number];
+
+const CheckboxGroup = Checkbox.Group;
+
+const plainOptions = ["Apple", "Pear", "Orange"];
+const defaultCheckedList = ["Apple", "Orange"];
+
 const MyTasks: React.FC = () => {
+  const [checkedList, setCheckedList] =
+    useState<CheckboxValueType[]>(defaultCheckedList);
+
+  const checkAll = plainOptions.length === checkedList.length;
+  const indeterminate =
+    checkedList.length > 0 && checkedList.length < plainOptions.length;
+
+  const onChange = (list: CheckboxValueType[]) => {
+    setCheckedList(list);
+  };
+
+  const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
+    setCheckedList(e.target.checked ? plainOptions : []);
+  };
+
   const [percent, setPercent] = useState<number>(0);
 
   const increase = () => {
@@ -123,10 +146,18 @@ const MyTasks: React.FC = () => {
                 /* Add note sorting component here */
               )}
               {selectedTask === "quiz" && (
-                <p className="">
-                  Reinforce learning and test your knowledge with engaging
-                  quizzes.
-                </p>
+                <div className="">
+                  <p className="">
+                    Reflect on your progress and thoughts with short note-taking
+                    exercises.
+                  </p>
+                  <Divider />
+                  <CheckboxGroup
+                    options={plainOptions}
+                    value={checkedList}
+                    onChange={onChange}
+                  />
+                </div>
                 /* Add quiz component here */
               )}
               {selectedTask === "rewards" && (
