@@ -1,8 +1,39 @@
 "use client";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Progress } from "antd";
 import React, { useState } from "react";
 
 const MyTasks: React.FC = () => {
-  const tasks = ["video", "sortNote", "quiz", "rewards", "suggestBlog"];
+  const [percent, setPercent] = useState<number>(0);
+
+  const increase = () => {
+    setPercent((prevPercent) => {
+      const newPercent = prevPercent + 10;
+      if (newPercent > 100) {
+        return 100;
+      }
+      return newPercent;
+    });
+  };
+
+  const decline = () => {
+    setPercent((prevPercent) => {
+      const newPercent = prevPercent - 10;
+      if (newPercent < 0) {
+        return 0;
+      }
+      return newPercent;
+    });
+  };
+
+  const tasks = [
+    "video",
+    "kagel",
+    "sortNote",
+    "quiz",
+    "rewards",
+    "suggestBlog",
+  ];
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
 
   const handleTaskClick = (index: number) => {
@@ -48,19 +79,19 @@ const MyTasks: React.FC = () => {
         <div className="lg:w-2/3">
           <div
             style={{ height: "600px" }}
-            className="p-4 rounded-lg shadow-lg bg-white   mx-auto flex flex-col justify-evenly "
+            className="p-3 rounded-lg shadow-lg bg-white   mx-auto flex flex-col justify-evenly "
           >
-            <div className="">
+            <div className="basis-1/6">
               <h3 className="text-xl font-bold ">
                 {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
               </h3>
             </div>
-            <div className="">
+            <div className="basis-4/6">
               {selectedTask === "video" && (
                 <div className="">
                   <iframe
                     width="100%"
-                    height="450px"
+                    height="380px"
                     src={`https://www.youtube.com/embed/RBSGKlAvoiM`}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -69,6 +100,20 @@ const MyTasks: React.FC = () => {
                   />
                 </div>
                 /* Add video component here */
+              )}
+              {selectedTask === "kagel" && (
+                <div className="">
+                  <>
+                    <div style={{ marginBottom: 10 }}>
+                      <Progress type="circle" percent={percent} />
+                    </div>
+                    <Button.Group>
+                      <Button onClick={decline} icon={<MinusOutlined />} />
+                      <Button onClick={increase} icon={<PlusOutlined />} />
+                    </Button.Group>
+                  </>
+                </div>
+                /* Add note sorting component here */
               )}
               {selectedTask === "sortNote" && (
                 <p className="">
@@ -98,7 +143,7 @@ const MyTasks: React.FC = () => {
                 /* Add suggested blog component here */
               )}
             </div>
-            <div className="">
+            <div className="basis-1/6 flex justify-center align-bottom flex-col">
               <div className="flex justify-between mt-4">
                 <button
                   className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none"
