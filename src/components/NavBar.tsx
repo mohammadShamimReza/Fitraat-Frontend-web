@@ -1,10 +1,30 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 
 function NavBar() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
   const [notificationToggle, setNotificationToggle] = useState<boolean>(false);
-  const [userMenuToggle, setUserMenuToggle] = useState(false);
+  const [userMenuToggle, setUserMenuToggle] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleBodyClick = () => {
+      // Close menu
+      if (menuToggle) setMenuToggle(false);
+      // Close notification
+      if (notificationToggle) setNotificationToggle(false);
+      // Close user menu
+      if (userMenuToggle) setUserMenuToggle(false);
+    };
+
+    // Add event listener to listen for clicks on the document body
+    document.body.addEventListener("click", handleBodyClick);
+
+    // Cleanup the event listener when component unmounts
+    return () => {
+      document.body.removeEventListener("click", handleBodyClick);
+    };
+  }, [menuToggle, notificationToggle, userMenuToggle]);
 
   return (
     <div>
@@ -188,11 +208,6 @@ function NavBar() {
                           d="M14 5l7 7m0 0l-7 7m7-7H3"
                         />
                       </svg>
-                      {/* <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      /> */}
                     </div>
                   </button>
                 </div>
