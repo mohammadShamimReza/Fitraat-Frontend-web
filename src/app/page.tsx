@@ -1,3 +1,4 @@
+import Faq from "@/components/FAQ";
 import Banner from "@/components/mainLayout/Banner";
 import Blog from "@/components/mainLayout/LayoutBlog";
 import Motivation from "@/components/mainLayout/Motivation";
@@ -11,6 +12,7 @@ export default function Home() {
       <Blog />
       <Motivation />
       <Reviews />
+      <Faq />
       <Subscribe />
     </main>
   );

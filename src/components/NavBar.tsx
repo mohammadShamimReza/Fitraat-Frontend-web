@@ -74,18 +74,12 @@ function NavBar() {
                     How it works
                   </a>
                   <a
-                    href="/faq"
+                    href="/proMember"
                     className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
                   >
-                    FAQ
+                    Pro Member
                   </a>
-                  <a
-                    href="/about"
-                    className="  hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
-                    aria-current="page"
-                  >
-                    About us
-                  </a>
+
                   <a
                     href="/myTasks"
                     className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
