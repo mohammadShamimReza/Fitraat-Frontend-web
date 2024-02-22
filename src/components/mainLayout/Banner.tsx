@@ -5,6 +5,7 @@ function Banner() {
   return (
     <div className="h-96 w-full relative mt-5">
       <Image
+      className="rounded-md"
         alt=""
         src={bannerImage}
         fill
