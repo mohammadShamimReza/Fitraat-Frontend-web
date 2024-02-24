@@ -37,7 +37,7 @@ function SingleBlog() {
   };
 
   return (
-    <div>
+    <div className="p-5">
       <div className="flex justify-end align-middle">
         <Link href={`/profile/`}>
           <div className="">
