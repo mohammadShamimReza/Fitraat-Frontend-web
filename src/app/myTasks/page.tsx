@@ -1,5 +1,12 @@
 "use client";
-import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  MinusOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import type { CheckboxProps, GetProp } from "antd";
 import { Button, Checkbox, Divider, Progress } from "antd";
 import React, { useState } from "react";
@@ -93,6 +100,10 @@ const MyTasks: React.FC = () => {
                 onClick={() => handleTaskClick(index)}
               >
                 {task.replace(/^\w/, (c) => c.toUpperCase())}
+                <span className="pl-3">
+                  <CloseCircleOutlined />
+                  <CheckCircleOutlined />
+                </span>
               </li>
             ))}
           </ul>
@@ -177,18 +188,26 @@ const MyTasks: React.FC = () => {
             <div className="basis-1/6 flex justify-center align-bottom flex-col">
               <div className="flex justify-between mt-4">
                 <button
-                  className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none"
+                  className="px-4 py-2 text-white bg-gray-500 rounded  hover:bg-gray-600 focus:outline-none"
                   onClick={handlePrevious}
                   disabled={selectedTaskIndex === 0}
                 >
+                  <span style={{ paddingRight: "10px" }}>
+                    {" "}
+                    <ArrowLeftOutlined />
+                  </span>
                   Previous
                 </button>
+
                 <button
                   className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none"
                   onClick={handleNext}
                   disabled={selectedTaskIndex === tasks.length - 1}
                 >
                   Next
+                  <span style={{ paddingLeft: "10px" }}>
+                    <ArrowRightOutlined />
+                  </span>
                 </button>
               </div>
             </div>

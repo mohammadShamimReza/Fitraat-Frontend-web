@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function NavBar() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
@@ -27,7 +27,7 @@ function NavBar() {
   }, [menuToggle, notificationToggle, userMenuToggle]);
 
   return (
-    <div className="mb-5 border-2 bg-cyan-100 rounded-xl shadow-2xl shadow-cyan-500 mt-5">
+    <div className="mb-5 border-2  rounded-xl shadow-2xl  mt-5">
       <nav className="">
         <div className="  px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
