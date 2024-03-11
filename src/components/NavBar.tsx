@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import siteLogo from "../app/assets/detox.png";
 
 function NavBar() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
@@ -75,11 +77,9 @@ function NavBar() {
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center text-lg font-bold">
-                <a href="/">
-                  <p>Detox</p>
-                </a>
+                <Image src={siteLogo} width={60} alt="Writer" />
               </div>
-              <div className="hidden sm:ml-6 sm:block">
+              <div className="hidden sm:ml-6 sm:block mt-2">
                 <div className="flex space-x-4">
                   <a
                     href="/blog"
