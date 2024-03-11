@@ -31,7 +31,7 @@ function NavBar() {
 
   return (
     <div className="mb-5 border-2 rounded-xl shadow-lg  mt-5">
-      <nav className="">
+      <nav className="p-1">
         <div className="  px-1 sm:px-4 lg:px-6">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -298,7 +298,6 @@ function NavBar() {
           ""
         )}
       </nav>
-      <hr />
     </div>
   );
 }
