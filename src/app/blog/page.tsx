@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
-// import Skeleton from "react-loading-skeleton";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-// import "react-loading-skeleton/dist/skeleton.css";
 import Blogs from "@/components/BlogPage/Blogs";
 import Keyword from "@/components/BlogPage/Keyword";
 import * as yup from "yup";
@@ -38,14 +36,6 @@ function Page() {
   const [searchTerm, setSearchTerm] = useState<undefined | string>(undefined);
   const [pageCount, setPageCount] = useState<number>(1);
 
-  // const { data: blogDatas } = useBlogQuery({
-  //   typeId: type,
-  //   searchTerm: searchTerm,
-  //   page: pageCount,
-  // });
-  // const blogData = blogDatas?.data;
-  // const { data: blogTypeDatas } = useTypesQuery({});
-
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
   };
@@ -58,34 +48,21 @@ function Page() {
     resolver: yupResolver(validationSchema),
   });
 
-  // if (!blogTypeDatas) {
-  //   return (
-  //     <div className="">
-  //       <Skeleton />
-  //       <Skeleton count={5} />
-  //     </div>
-  //   );
-  // }
 
   return (
     <div>
       <div className="">
         <div className="flex flex-col justify-between  gap-3 sm:flex-row">
           <div className="sm:w-1/5 sm:pt-28 pt-0 flex flex-row sm:flex-col flex-wrap order-1">
-            {/* {blogTypeDatas?.data?.map((blogType: IBlogType) => ( */}
             <div key={1} className="  ">
               <div className="p-3">
                 <button
-                  // onClick={() => setType(blogType?.id)}
                   onDoubleClick={() => setType(undefined)}
                   className={
-                    // type === blogType?.id
-                    //   ? "light:bg-transparent hover:light:bg-gray-300 hover:dark:bg-gray-300 light:text-gray-700    border border-gray-500 rounded-lg hover:light:shadow-lg hover:dark:shadow-lg transition duration-300 hover:scale-110 bg-gray-500 text-white dark:bg-gray-200 dark:text-black w-full "
-                    //   :
-                    "light:bg-transparent dark:bg-gray-800 hover:light:bg-gray-300 hover:dark:bg-gray-300 light:text-gray-700 dark:text-white p-1 border border-gray-500 rounded-lg dark:hover:text-black hover:light:shadow-lg hover:dark:shadow-lg transition duration-300 hover:scale-110  w-full"
+                 
+                    "light:bg-transparent  hover:light:bg-gray-300  light:text-gray-700  p-1 border border-gray-500 rounded-lg  hover:light:shadow-lg  transition duration-300 hover:scale-110  w-full"
                   }
                 >
-                  {/* {blogType?.title} */}
                   Lorem ipsum .
                 </button>
               </div>
@@ -117,7 +94,6 @@ function Page() {
               </div>
             </form>
 
-            {/* {blogData?.data?.map((blog: IBlog) => ( */}
             <Blogs key={1} blog={""} />
             {/* ))} */}
           </div>
@@ -130,7 +106,7 @@ function Page() {
                 onClick={() =>
                   setPageCount(pageCount === 1 ? 1 : pageCount - 1)
                 }
-                className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700     "
               >
                 <svg
                   className="w-3.5 h-3.5 mr-2"
@@ -154,8 +130,8 @@ function Page() {
                 onClick={() => setPageCount(1)}
                 className={
                   pageCount === 1
-                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700 dark:bg-gray-600 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
                 }
               >
                 1
@@ -166,8 +142,8 @@ function Page() {
                 onClick={() => setPageCount(2)}
                 className={
                   pageCount === 2
-                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700 dark:bg-gray-600 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
                 }
               >
                 2
@@ -178,8 +154,8 @@ function Page() {
                 onClick={() => setPageCount(3)}
                 className={
                   pageCount === 3
-                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700 dark:bg-gray-600 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
                 }
               >
                 3
@@ -190,8 +166,8 @@ function Page() {
                 onClick={() => setPageCount(4)}
                 className={
                   pageCount === 4
-                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700 dark:bg-gray-600 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
                 }
               >
                 4
@@ -202,8 +178,8 @@ function Page() {
                 onClick={() => setPageCount(5)}
                 className={
                   pageCount === 5
-                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700 dark:bg-gray-600 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
                 }
               >
                 5
@@ -214,7 +190,7 @@ function Page() {
                 onClick={() =>
                   setPageCount(pageCount === 5 ? 5 : pageCount + 1)
                 }
-                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700     "
               >
                 <svg
                   className="w-3.5 h-3.5 ml-2"

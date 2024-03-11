@@ -15,12 +15,12 @@ function Trendings() {
         <div className="flex flex-col items-center justify-center">
           {/* {trendingBlog?.data?.map((blog: IBlog) => ( */}
           <Link key={1} href={`/blogs/${1}`}>
-            <div className="mb-4 hover:shadow-lg border rounded-lg dark:shadow-white ">
+            <div className="mb-4 hover:shadow-lg border rounded-lg  ">
               <div className="p-4">
                 <p className="font-bold text-lg truncate">
                   Lorem ipsum dolor sit amet.
                 </p>
-                <div className="mt-2 isDarkMode dark:text-gray-300 line-clamp-5  w-44 text-justify">
+                <div className="mt-2  line-clamp-5  w-44 text-justify">
                   {/* {blog?.content && (
                     <div
                       dangerouslySetInnerHTML={{

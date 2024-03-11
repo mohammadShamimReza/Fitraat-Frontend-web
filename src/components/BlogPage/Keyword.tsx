@@ -30,7 +30,7 @@ function Keyword() {
       <div className=" flex justify-end align-middle">
         <Link
           href={"/blogs"}
-          className="text-center border p-5 rounded-xl text-gray-600 dark:text-white flex items-center gap-2   transition duration-300 transform hover:scale-110 cursor-pointer"
+          className="text-center border p-5 rounded-xl text-gray-600  flex items-center gap-2   transition duration-300 transform hover:scale-110 cursor-pointer"
         >
           Read All blog
         </Link>

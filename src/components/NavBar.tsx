@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import siteLogo from "../app/assets/detox.png";
+import siteLogo from "../app/assets/detox1.png";
 
 function NavBar() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
@@ -31,7 +32,7 @@ function NavBar() {
   return (
     <div className="mb-5 border-2 rounded-xl shadow-lg  mt-5">
       <nav className="">
-        <div className="  px-2 sm:px-6 lg:px-8">
+        <div className="  px-1 sm:px-4 lg:px-6">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
               <button
@@ -77,9 +78,12 @@ function NavBar() {
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center text-lg font-bold">
-                <Image src={siteLogo} width={60} alt="Writer" />
+                <Link href={"/home"}>
+                  {" "}
+                  <Image src={siteLogo} width={70} alt="website logo" />
+                </Link>
               </div>
-              <div className="hidden sm:ml-6 sm:block mt-2">
+              <div className="hidden sm:ml-6 sm:block mt-5">
                 <div className="flex space-x-4">
                   <a
                     href="/blog"
@@ -119,7 +123,7 @@ function NavBar() {
                   <span className="absolute -inset-1.5"></span>
                   <span className="sr-only">View notifications</span>
                   <svg
-                    className="h-6 w-6"
+                    className="h-6 w-6 "
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
