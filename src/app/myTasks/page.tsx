@@ -2,11 +2,11 @@
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
   MinusOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
+import { FaCheckCircle } from "react-icons/fa";
+
 import type { CheckboxProps, GetProp } from "antd";
 import { Button, Checkbox, Divider, Progress } from "antd";
 import React, { useState } from "react";
@@ -92,19 +92,26 @@ const MyTasks: React.FC = () => {
           <h2 className="text-2xl font-bold ">Your Task for Today</h2>
           <ul className="list-decimal pl-6">
             {tasks.map((task, index) => (
-              <li
+              <div
                 key={index}
-                className={`mb-2 cursor-pointer transition-colors duration-300 ${
-                  selectedTask === task && "font-bold text-blue-600"
-                }`}
+                className="flex justify-between h-10 cursor-pointer hover:bg-slate-100 rounded"
                 onClick={() => handleTaskClick(index)}
               >
-                {task.replace(/^\w/, (c) => c.toUpperCase())}
-                <span className="pl-3">
-                  <CloseCircleOutlined />
-                  <CheckCircleOutlined />
+                <li
+                  className={`transition-colors duration-300  p-2 ${
+                    selectedTask === task && "font-bold text-blue-600"
+                  }`}
+                >
+                  {task.replace(/^\w/, (c) => c.toUpperCase())}
+                </li>
+                <span className="pl-3 right-0 p-2">
+                  <FaCheckCircle
+                    className=""
+                    size={25}
+                    style={{ color: "blue", fontWeight: "bold" }}
+                  />
                 </span>
-              </li>
+              </div>
             ))}
           </ul>
         </div>
@@ -112,8 +119,8 @@ const MyTasks: React.FC = () => {
         {/* Right Side: Task Details */}
         <div className="lg:w-2/3">
           <div
-            style={{ height: "600px" }}
-            className="p-3 rounded-lg shadow-lg bg-white   mx-auto flex flex-col justify-evenly "
+            style={{ height: "500px" }}
+            className="p-3 rounded-lg shadow-lg    mx-auto flex flex-col justify-evenly "
           >
             <div className="basis-1/6">
               <h3 className="text-xl font-bold ">
@@ -136,17 +143,16 @@ const MyTasks: React.FC = () => {
                 /* Add video component here */
               )}
               {selectedTask === "kagel" && (
-                <div className="">
-                  <>
-                    <div style={{ marginBottom: 10 }}>
-                      <Progress type="circle" percent={percent} />
-                    </div>
-                    <Button.Group>
-                      <Button onClick={decline} icon={<MinusOutlined />} />
-                      <Button onClick={increase} icon={<PlusOutlined />} />
-                    </Button.Group>
-                  </>
+                <div className=" flex flex-col items-center">
+                  <div className=" mb-10 flex justify-center">
+                    <Progress type="circle" percent={percent} size={300} />
+                  </div>
+                  <Button.Group>
+                    <Button onClick={decline} icon={<MinusOutlined />} />
+                    <Button onClick={increase} icon={<PlusOutlined />} />
+                  </Button.Group>
                 </div>
+
                 /* Add note sorting component here */
               )}
               {selectedTask === "sortNote" && (
