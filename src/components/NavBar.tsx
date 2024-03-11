@@ -76,7 +76,7 @@ function NavBar() {
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center text-lg font-bold">
                 <a href="/">
-                  <h2>Detox</h2>
+                  <p>Detox</p>
                 </a>
               </div>
               <div className="hidden sm:ml-6 sm:block">
