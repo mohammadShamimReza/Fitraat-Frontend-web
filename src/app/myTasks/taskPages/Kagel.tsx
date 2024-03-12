@@ -11,8 +11,9 @@ function Kagel({ selectedTask }: { selectedTask: string }) {
   const animationDuration = 8000; // 8 seconds
 
   const startAnimation = () => {
-    // setPercent(0);
+    setPercent(0); // Reset progress to 0 when starting
     setIsAnimating(true);
+    setPausedTime(Date.now());
     if (pausedTime !== null) {
       setAnimationStartTime(Date.now() - pausedTime);
       setPausedTime(null);
@@ -37,6 +38,8 @@ function Kagel({ selectedTask }: { selectedTask: string }) {
         setPercent(progressPercentage);
       }, 100);
 
+      console.log(interval, "thsi si interval elapsed time");
+
       return () => clearInterval(interval);
     }
   }, [isAnimating, animationStartTime]);
@@ -49,7 +52,9 @@ function Kagel({ selectedTask }: { selectedTask: string }) {
             <Progress percent={percent} type="circle" size={300} />
           </div>
           <Button.Group>
-            <Button onClick={startAnimation}>Start</Button>
+            <Button onClick={startAnimation} disabled={isAnimating}>
+              Start
+            </Button>
             <Button onClick={stopAnimation} disabled={!isAnimating}>
               Stop
             </Button>
