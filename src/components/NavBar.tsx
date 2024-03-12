@@ -30,7 +30,7 @@ function NavBar() {
   }, [menuToggle, notificationToggle, userMenuToggle]);
 
   return (
-    <div className="mb-5 border-2 rounded-xl shadow-lg  mt-5">
+    <div className="mb-5 border rounded-xl shadow-lg  mt-5">
       <nav className="p-1">
         <div className="  px-1 sm:px-4 lg:px-6">
           <div className="relative flex h-16 items-center justify-between">
