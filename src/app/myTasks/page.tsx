@@ -1,65 +1,15 @@
 "use client";
-import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-  MinusOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
-import type { CheckboxProps, GetProp } from "antd";
-import { Button, Checkbox, Progress } from "antd";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
-
-type CheckboxValueType = GetProp<typeof Checkbox.Group, "value">[number];
-
-const CheckboxGroup = Checkbox.Group;
-
-const plainOptions = ["Apple", "Pear", "Orange"];
-const defaultCheckedList = ["Apple", "Orange"];
+import Kagel from "./taskPages/Kagel";
+import Quiz from "./taskPages/Quiz";
+import Reward from "./taskPages/Reward";
+import SortNote from "./taskPages/SortNote";
+import SuggestedBlog from "./taskPages/SuggestedBlog";
+import Video from "./taskPages/Video";
 
 const MyTasks: React.FC = () => {
-  const [checkedList, setCheckedList] =
-    useState<CheckboxValueType[]>(defaultCheckedList);
-
-  const checkAll = plainOptions.length === checkedList.length;
-  const indeterminate =
-    checkedList.length > 0 && checkedList.length < plainOptions.length;
-
-  const onChange = (list: CheckboxValueType[]) => {
-    setCheckedList(list);
-  };
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-
-  const handleOptionClick = (option: string) => {
-    setSelectedAnswer(option);
-  };
-
-  const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
-    setCheckedList(e.target.checked ? plainOptions : []);
-  };
-
-  const [percent, setPercent] = useState<number>(0);
-
-  const increase = () => {
-    setPercent((prevPercent) => {
-      const newPercent = prevPercent + 10;
-      if (newPercent > 100) {
-        return 100;
-      }
-      return newPercent;
-    });
-  };
-
-  const decline = () => {
-    setPercent((prevPercent) => {
-      const newPercent = prevPercent - 10;
-      if (newPercent < 0) {
-        return 0;
-      }
-      return newPercent;
-    });
-  };
-
   const tasks = [
     "video",
     "kagel",
@@ -120,7 +70,6 @@ const MyTasks: React.FC = () => {
           </ul>
         </div>
 
-        {/* Right Side: Task Details */}
         <div className="lg:w-2/3">
           <div
             style={{ height: "500px" }}
@@ -132,82 +81,12 @@ const MyTasks: React.FC = () => {
               </h3>
             </div>
             <div className="basis-4/6">
-              {selectedTask === "video" && (
-                <div className="">
-                  <iframe
-                    width="100%"
-                    height="380px"
-                    src={`https://www.youtube.com/embed/RBSGKlAvoiM`}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="Embedded youtube"
-                  />
-                </div>
-                /* Add video component here */
-              )}
-              {selectedTask === "kagel" && (
-                <div className=" flex flex-col items-center">
-                  <div className=" mb-10 flex justify-center">
-                    <Progress type="circle" percent={percent} size={300} />
-                  </div>
-                  <Button.Group>
-                    <Button onClick={decline} icon={<MinusOutlined />} />
-                    <Button onClick={increase} icon={<PlusOutlined />} />
-                  </Button.Group>
-                </div>
-
-                /* Add note sorting component here */
-              )}
-              {selectedTask === "sortNote" && (
-                <p className="">
-                  Reflect on your progress and thoughts with short note-taking
-                  exercises.
-                </p>
-                /* Add note sorting component here */
-              )}
-              {selectedTask === "quiz" && (
-                <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
-                  <h2 className="text-lg font-semibold mb-4">
-                    What is the capital of France?
-                  </h2>
-                  <div className="grid grid-cols-1 gap-4">
-                    {["Paris", "London", "Berlin", "Madrid"].map(
-                      (option, index) => (
-                        <button
-                          key={index}
-                          className={`w-full bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-md text-left ${
-                            selectedAnswer === option
-                              ? "bg-blue-500 text-white hover:bg-blue-500"
-                              : ""
-                          }`}
-                          onClick={() => handleOptionClick(option)}
-                        >
-                          {option}
-                        </button>
-                      )
-                    )}
-                  </div>
-                  {selectedAnswer && (
-                    <p className="mt-4">
-                      You selected: <strong>{selectedAnswer}</strong>
-                    </p>
-                  )}
-                </div>
-              )}
-              {selectedTask === "rewards" && (
-                <p className="">
-                  Stay committed and earn rewards for completing tasks.
-                </p>
-                /* Add rewards component here */
-              )}
-              {selectedTask === "suggestBlog" && (
-                <p className="">
-                  Receive personalized suggestions for blog articles related to
-                  recovery and mindfulness.
-                </p>
-                /* Add suggested blog component here */
-              )}
+              <Video selectedTask={selectedTask} />
+              <Kagel selectedTask={selectedTask} />
+              <SortNote selectedTask={selectedTask} />
+              <Quiz selectedTask={selectedTask} />
+              <Reward selectedTask={selectedTask} />
+              <SuggestedBlog selectedTask={selectedTask} />
             </div>
             <div className="basis-1/6 flex justify-center align-bottom flex-col">
               <div className="flex justify-between mt-4">
