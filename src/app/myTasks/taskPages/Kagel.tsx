@@ -1,5 +1,5 @@
 import { Button, Progress } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Kagel({ selectedTask }: { selectedTask: string }) {
   // const [percent, setPercent] = useState<number>(0);
@@ -43,43 +43,47 @@ function Kagel({ selectedTask }: { selectedTask: string }) {
   //     return () => clearInterval(interval);
   //   }
   // }, [isAnimating, animationStartTime]);
-
-  let initialTime = 3; // in seconds
+  const initialTime = 3000; // in seconds
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [progressBarPercent, setProgressBarPercent] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    const time = setInterval(() => {
-      setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
-    }, 1000);
-    const percent = Math.round(((initialTime - timeLeft) / initialTime) * 100);
-    console.log(percent);
-    if (timeLeft == 0) {
-      clearInterval(time);
-    }
-    return () => clearInterval(time);
-  }, [timeLeft]),
-    console.log(timeLeft);
+  const timerId = useRef<NodeJS.Timeout | undefined | number>(undefined);
 
-  // useEffect(() => {
-  //   if (timeLeft <= 0) {
-  //     setIsRunning(false);
-  //   } else {
-  //     setProgressBarPercent(
-  //       Math.round(((initialTime - timeLeft) / initialTime) * 100)
-  //     );
-  //   }
-  // }, [timeLeft]);
-
-  const handleStart = () => {
+  const startTimer = () => {
     setIsRunning(true);
-    initialTime = 3;
   };
 
-  const handleStop = () => {
+  const stopTimer = () => {
+    clearInterval(timerId.current);
     setIsRunning(false);
   };
+
+  useEffect(() => {
+    if (isRunning) {
+      timerId.current = window.setInterval(() => {
+        setTimeLeft((prevTimeLeft) => prevTimeLeft - 100);
+      }, 100);
+
+      return () => clearInterval(timerId.current);
+    }
+  }, [isRunning]);
+
+  useEffect(() => {
+    if (initialTime) {
+      if (progressBarPercent < 100) {
+        let updateProgressPercent = Math.round(
+          ((initialTime - timeLeft) / initialTime) * 100
+        );
+        setProgressBarPercent(updateProgressPercent);
+      }
+
+      if (timeLeft === 0 && timerId.current) {
+        clearInterval(timerId.current);
+        setIsRunning(false);
+      }
+    }
+  }, [timeLeft]);
 
   return (
     <div>
@@ -89,10 +93,10 @@ function Kagel({ selectedTask }: { selectedTask: string }) {
             <Progress percent={progressBarPercent} type="circle" size={300} />
           </div>
           <Button.Group>
-            <Button onClick={handleStart} disabled={isRunning}>
+            <Button onClick={startTimer} disabled={isRunning}>
               Start
             </Button>
-            <Button onClick={handleStop} disabled={!isRunning}>
+            <Button onClick={stopTimer} disabled={!isRunning}>
               Stop
             </Button>
           </Button.Group>
