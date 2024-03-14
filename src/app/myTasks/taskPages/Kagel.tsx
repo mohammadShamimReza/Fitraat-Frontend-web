@@ -51,6 +51,10 @@ function Kagel({ selectedTask }: { selectedTask: string }) {
   const timerId = useRef<NodeJS.Timeout | undefined | number>(undefined);
 
   const startTimer = () => {
+      if (progressBarPercent === 100) {
+        setTimeLeft(initialTime);
+        setProgressBarPercent(0);
+      }
     setIsRunning(true);
   };
 
@@ -93,12 +97,8 @@ function Kagel({ selectedTask }: { selectedTask: string }) {
             <Progress percent={progressBarPercent} type="circle" size={300} />
           </div>
           <Button.Group>
-            <Button onClick={startTimer} disabled={isRunning}>
-              Start
-            </Button>
-            <Button onClick={stopTimer} disabled={!isRunning}>
-              Stop
-            </Button>
+            <Button onClick={startTimer}>Start</Button>
+            <Button onClick={stopTimer}>Stop</Button>
           </Button.Group>
         </div>
       )}
