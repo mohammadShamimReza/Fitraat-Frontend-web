@@ -17,10 +17,10 @@ function Quiz({ selectedTask }: { selectedTask: string }) {
             {["Paris", "London", "Berlin", "Madrid"].map((option, index) => (
               <button
                 key={index}
-                className={`w-full bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-md text-left ${
+                className={`w-full bg-gray-200  py-2 px-4 rounded-md text-left ${
                   selectedAnswer === option
-                    ? "bg-blue-500 text-white hover:bg-blue-500"
-                    : ""
+                    ? "bg-black text-white hover:bg-slate-800"
+                    : "hover:bg-gray-300"
                 }`}
                 onClick={() => handleOptionClick(option)}
               >
