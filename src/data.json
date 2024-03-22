@@ -1,0 +1,102 @@
+{
+  "data": [
+    {
+      "id": 2,
+      "attributes": {
+        "DayId": 1,
+        "reward": "There is no reward",
+        "createdAt": "2024-03-22T11:53:03.085Z",
+        "updatedAt": "2024-03-22T11:53:05.112Z",
+        "publishedAt": "2024-03-22T11:53:05.109Z",
+        "video": {
+          "data": {
+            "id": 2,
+            "attributes": {
+              "videoId": 1,
+              "createdAt": "2024-03-22T11:49:27.879Z",
+              "updatedAt": "2024-03-22T11:49:29.392Z",
+              "publishedAt": "2024-03-22T11:49:29.390Z",
+              "VideoUrl": "https://www.youtube.com/embed/7WUKdCV8J34"
+            }
+          }
+        },
+        "kegel": {
+          "data": {
+            "id": 2,
+            "attributes": {
+              "KagelId": 1,
+              "createdAt": "2024-03-22T11:51:36.816Z",
+              "updatedAt": "2024-03-22T11:51:37.492Z",
+              "publishedAt": "2024-03-22T11:51:37.489Z",
+              "kegel_times": {
+                "data": [
+                  {
+                    "id": 10,
+                    "attributes": {
+                      "squeeze": 5,
+                      "stop": 4,
+                      "createdAt": "2024-03-22T11:50:56.530Z",
+                      "updatedAt": "2024-03-22T11:51:02.968Z",
+                      "publishedAt": "2024-03-22T11:51:02.965Z",
+                      "kagelTimeId": 1
+                    }
+                  },
+                  {
+                    "id": 11,
+                    "attributes": {
+                      "squeeze": 6,
+                      "stop": 5,
+                      "createdAt": "2024-03-22T11:52:11.035Z",
+                      "updatedAt": "2024-03-22T12:01:21.680Z",
+                      "publishedAt": "2024-03-22T12:01:21.679Z",
+                      "kagelTimeId": 2
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "sort_note": {
+          "data": {
+            "id": 2,
+            "attributes": {
+              "sortNoteId": 1,
+              "sortNoteContent": "আল্লাহর কাছে সৎ থাকা আর নিজের বিবেকের কাছে পরিচ্ছন্ন থাকা সবথেকে কঠিন😓 আল্লাহ্ আমাকে আর আপনাদের সবাইকে এইসব ফেৎনা থেকে হেফাজত করুক।।আমীন",
+              "createdAt": "2024-03-22T11:49:59.806Z",
+              "updatedAt": "2024-03-22T11:50:00.829Z",
+              "publishedAt": "2024-03-22T11:50:00.827Z"
+            }
+          }
+        },
+        "blog": {
+          "data": {
+            "id": 2,
+            "attributes": {
+              "BlogId": 1,
+              "topic": "Remove porn",
+              "content": "Watching porn is a perfectly natural part of a healthy sex life and needn’t be associated with feelings of guilt or shame. However, if you find that your viewing habits are becoming excessive this could indicate that you’ve developed a porn addiction. This behavioural disorder might seem harmless enough but if left unchecked it can start affecting your home, work and personal life. If you’re wondering how to stop a porn addiction, we can help. \n\nDo you feel like you want to stop watching porn, but can’t? Are you obsessed with indulging in pornographic material? Is porn taking priority over other things? A porn addiction can make you feel out of control and damage any existing healthy relationships you may have. Don’t let porn ruin your life. The holistic therapists at Delamere wellness retreat in Cheshire have put together these top tips on how to stop a porn addiction. ",
+              "title": "How to stop a porn addiction ",
+              "imageURL": "https://delamere.com/blog/how-to-stop-a-porn-addiction",
+              "keywords": {
+                "keyword": ["Watching", "porn", "perfectly"]
+              },
+              "viewCount": "1",
+              "createdAt": "2024-03-22T11:59:43.799Z",
+              "updatedAt": "2024-03-22T12:00:19.477Z",
+              "publishedAt": "2024-03-22T12:00:19.474Z"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}

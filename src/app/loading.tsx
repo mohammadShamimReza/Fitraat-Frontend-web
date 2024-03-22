@@ -3,7 +3,7 @@
 const FancyLoading = () => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="rounded-full p-8 bg-gradient-to-br from-white to-black shadow-2xl animate-pulse">
+      <div className="rounded-full p-8 bg-gradient-to-br from-white to-black shadow-md animate-pulse">
         <svg
           className="w-20 h-20 text-white animate-spin"
           viewBox="0 0 24 24"

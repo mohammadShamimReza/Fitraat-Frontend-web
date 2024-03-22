@@ -3,7 +3,7 @@ const MembershipCard = () => {
     <div className="flex justify-center items-center h-screen ">
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:p-3 md:p-3 lg:p-0">
         {/* Freemium Membership Card */}
-        <div className="bg-white overflow-hidden  rounded-lg shadow-lg">
+        <div className="bg-white overflow-hidden  rounded-lg shadow-md">
           <div className="px-4 py-5 sm:p-6">
             <h2 className="text-lg font-semibold leading-6 text-gray-900">
               Freemium Membership
@@ -82,7 +82,7 @@ const MembershipCard = () => {
         </div>
 
         {/* Pro Membership Card */}
-        <div className="bg-white overflow-hidden shadow-lg rounded-lg">
+        <div className="bg-white overflow-hidden shadow-md rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <h2 className="text-lg font-semibold leading-6 text-gray-900">
               Pro Membership

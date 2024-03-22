@@ -73,7 +73,7 @@ const MyTasks: React.FC = () => {
         <div className="lg:w-2/3">
           <div
             style={{ height: "500px" }}
-            className="p-3 rounded-lg shadow-lg    mx-auto flex flex-col justify-evenly "
+            className="p-3 rounded-lg shadow-md    mx-auto flex flex-col justify-evenly "
           >
             <div className="basis-1/6">
               <h3 className="text-xl font-bold ">

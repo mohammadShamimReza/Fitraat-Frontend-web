@@ -30,7 +30,7 @@ function NavBar() {
   }, [menuToggle, notificationToggle, userMenuToggle]);
 
   return (
-    <div className="mb-5 border rounded-xl shadow-lg  mt-5">
+    <div className="mb-5 border rounded-xl shadow-md  mt-5">
       <nav className="p-1">
         <div className="  px-1 sm:px-4 lg:px-6">
           <div className="relative flex h-16 items-center justify-between">
@@ -86,17 +86,18 @@ function NavBar() {
               <div className="hidden sm:ml-6 sm:block mt-5">
                 <div className="flex space-x-4">
                   <a
+                    href="/"
+                    className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
+                  >
+                    Home
+                  </a>
+                  <a
                     href="/blog"
                     className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
                   >
                     Blog
                   </a>
-                  <a
-                    href="/howitwork"
-                    className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
-                  >
-                    How it works
-                  </a>
+
                   <a
                     href="/proMember"
                     className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
@@ -139,7 +140,7 @@ function NavBar() {
                 </button>
                 {notificationToggle ? (
                   <div
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
@@ -212,7 +213,7 @@ function NavBar() {
 
                 {userMenuToggle ? (
                   <div
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
@@ -261,16 +262,16 @@ function NavBar() {
           >
             <div className="space-y-1 px-2 pb-3 pt-2">
               <a
+                href="/"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+              >
+                Home
+              </a>
+              <a
                 href="/blog"
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
               >
                 Blog
-              </a>
-              <a
-                href="/howitwork"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
-              >
-                How it works
               </a>
 
               <a
