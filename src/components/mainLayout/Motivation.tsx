@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function Motivation() {
   return (
-    <div className="flex justify-center align-middle sm:flex-row flex-col mt-32 gap-5 ">
+    <div className="flex justify-center align-middle sm:flex-row flex-col gap-5 layoutComponent">
       <div className="sm:w-1/2  h-80 relative">
         <div className="">
           <Image src={image1} fill alt="" />
