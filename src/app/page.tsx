@@ -7,7 +7,7 @@ import Subscribe from "@/components/mainLayout/Subscribe";
 
 export default function Home() {
   return (
-    <main className="border-2 pr-5 pl-5 border-slate-100 shadow-md   rounded-xl mb-5">
+    <main className="mb-5">
       <Banner />
       <Blog />
       <Motivation />

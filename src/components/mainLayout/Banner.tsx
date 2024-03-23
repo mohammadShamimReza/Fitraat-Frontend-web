@@ -4,7 +4,7 @@ import bannerImage from "../../app/assets/spartan1.png";
 
 function Banner() {
   return (
-    <div className="h-96 w-full relative mt-5">
+    <div className="lg:h-96 sm:h-96 md:h-96 w-full relative mt-5  border-slate-100 shadow-md rounded-xl border-2 pr-5 pl-5">
       <div className="flex justify-between align-middle">
         <div className=" font-bold text-2xl md:text-4xl lg:text-5xl">
           <div className="inline-block leading-normal mb-4 text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-100">
@@ -23,7 +23,7 @@ function Banner() {
             href={"/myTasks"}
             className=" lg:flex justify-center items-center animate-pulse"
           >
-            <button className="bg-gradient-to-br from-gray-800 to-gray-700 text-white hover:text-gray-200 font-bold py-3 px-6 rounded-full shadow-lg transition duration-700 ease-in-out transform hover:scale-125 focus:outline-none   flex gap-1">
+            <button className="bg-gradient-to-br from-gray-800 to-gray-700 text-white hover:text-gray-200 font-bold py-2 px-6 rounded-full shadow-lg transition duration-500 ease-in-out transform hover:scale-110 focus:outline-none   flex gap-1 mb-3">
               <p>now</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -43,13 +43,13 @@ function Banner() {
           </Link>
         </div>
 
-        <div className="relative ">
+        <div className="relative  ">
           <Image
-            className="rounded-md "
+            className=" rounded-md "
             alt=""
             src={bannerImage}
-            height={400}
-            width={400}
+            height={380}
+            width={380}
             // fill
           ></Image>
         </div>
