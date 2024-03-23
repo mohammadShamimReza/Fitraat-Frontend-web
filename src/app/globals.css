@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-
+@layer components {
+  .layoutComponent {
+    @apply w-full relative mt-5  border-slate-100 shadow-md rounded-xl border-2 pr-5 pl-5
+  }
 }
 
 body {
