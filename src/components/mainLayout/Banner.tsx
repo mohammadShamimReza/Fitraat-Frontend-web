@@ -4,9 +4,9 @@ import bannerImage from "../../app/assets/spartan1.png";
 
 function Banner() {
   return (
-    <div className="lg:h-96 sm:h-96 md:h-96 layoutComponent">
+    <div className="lg:h-96 sm:h-96 md:h-96 layoutComponent mt-14 ">
       <div className="flex justify-between align-middle">
-        <div className=" font-bold text-2xl md:text-4xl lg:text-5xl">
+        <div className=" font-bold text-2xl md:text-4xl lg:text-5xl pl-5">
           <div className="inline-block leading-normal mb-4 text-transparent bg-clip-text bg-gradient-to-br from-gray-800 to-gray-100">
             Let&apos;s become <br />
             <span className="text-gray-900  text-3xl md:text-5xl lg:text-6xl font-extrabold">
