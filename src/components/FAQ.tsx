@@ -1,4 +1,5 @@
 "use client";
+import { CaretRightOutlined } from "@ant-design/icons";
 import type { CollapseProps } from "antd";
 import { Collapse } from "antd";
 import React from "react";
@@ -80,11 +81,20 @@ const Faq: React.FC = () => {
   };
 
   return (
-    <div className="">
+    <div className="mt-15 p-5">
       <p className="text-4xl font-bold my-10 text-center">
         Frequently Asked Question
       </p>
-      <Collapse items={items} defaultActiveKey={["1"]} onChange={onChange} />
+      <Collapse
+        items={items}
+        defaultActiveKey={["1"]}
+        expandIcon={({ isActive }) => (
+          <CaretRightOutlined rotate={isActive ? 90 : 0} />
+        )}
+        expandIconPosition={"end"}
+        onChange={onChange}
+        className="text-center"
+      />
     </div>
   );
 };

@@ -1,48 +1,17 @@
-// // components/Footer.js
-
-// const Footer = () => {
-//   return (
-//     <footer className="bg-gray-800 text-white py-4 mt-20">
-//       <div className="container mx-auto flex justify-between items-center">
-//         <p className="text-sm">
-//           &copy; 2024 Your Company. All rights reserved.
-//         </p>
-//         <ul className="flex space-x-4">
-//           <li>
-//             <a href="#" className="hover:text-gray-300">
-//               About
-//             </a>
-//           </li>
-//           <li>
-//             <a href="#" className="hover:text-gray-300">
-//               Services
-//             </a>
-//           </li>
-//           <li>
-//             <a href="#" className="hover:text-gray-300">
-//               Contact
-//             </a>
-//           </li>
-//         </ul>
-//       </div>
-//     </footer>
-//   );
-// };
-
-// export default Footer;
-
-// components/Footer.js
-
 const Footer = () => {
   return (
-    <footer className="border rounded-xl shadow-md   py-8 mt-10 mb-10">
+    <footer className="layoutComponent mb-5 mt-24">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-5">
           <div className="text-center md:text-left flex flex-col justify-center items-center">
             <h3 className="text-xl font-bold mb-4">About Us</h3>
-            <p className="text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              eget enim quis purus tempor vestibulum.
+            <p className="text-justify">
+              Overcoming addictions, especially those linked to{" "}
+              <span className="font-bold text-red-600"> social media</span> and{" "}
+              <span className="font-bold text-red-600">pornography</span>. Using
+              science-backed techniques like behavioral science, Inspiring task,
+              and build{" "}
+              <span className="font-bold text-red-600"> daily routine.</span>
             </p>
           </div>
           <div className="text-center md:text-left  flex flex-col justify-center items-center">
@@ -79,23 +48,12 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="mt-8 border-t border-gray-700 ">
-        <div className="container mx-auto flex justify-evenly items-center mt-5 ">
-          <p className="text-sm ">
-            &copy; 2024 Your Company. All rights reserved.
+      <div className=" border-t border-gray-700 ">
+        <div className="text-center ">
+          <p className="text-sm my-5">
+            &copy; 2024 Your Company. All rights{" "}
+            <span className="text-red-600"> Fitraat</span>.
           </p>
-          <ul className="flex space-x-4">
-            <li>
-              <a href="#" className="hover:text-gray-300">
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-gray-300">
-                Terms of Service
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </footer>
