@@ -77,7 +77,7 @@ function SingleBlog() {
         </div>
 
         <br />
-        <div className="flex text-justify ">
+        <div className="flex  ">
           {/* {blogData?.content && (
             <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
           )} */}

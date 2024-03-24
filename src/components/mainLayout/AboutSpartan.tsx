@@ -5,8 +5,8 @@ import image2 from "../../app/assets/blogimage/unbeatable.jpeg";
 function AboutSpartan() {
   return (
     <div className="layoutComponent p-3 mt-14">
-      <div className="flex justify-between align-middle sm:flex-row flex-col  gap-5">
-        <div className="flex border p-6 hover:shadow-md rounded-xl transition duration-300  sm:w-1/2 md:w-full lg:w-full">
+      <div className="flex justify-between align-middle sm:flex-row flex-col  gap-5 ">
+        <div className="flex border p-6 hover:shadow-md rounded-xl transition duration-300  sm:w-1/2 md:w-full lg:w-full ">
           <div className="w-2/3">
             <h2 className="text-3xl font-semibold text-gray-900 mb-3">
               <span className="text-gray-500"> What is </span>

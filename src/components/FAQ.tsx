@@ -93,7 +93,7 @@ const Faq: React.FC = () => {
         )}
         expandIconPosition={"end"}
         onChange={onChange}
-        className="text-center"
+        className="text-center "
       />
     </div>
   );
