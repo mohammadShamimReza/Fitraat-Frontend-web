@@ -7,7 +7,10 @@ import Subscribe from "@/components/mainLayout/Subscribe";
 
 export default function Home() {
   return (
-    <main className="mb-5">
+    <main
+      className="mb-5 pattern-boxes pattern-blue-500 pattern-bg-white 
+  pattern-size-6 pattern-opacity-20"
+    >
       <Banner />
       <AboutSpartan />
       <Motivation />

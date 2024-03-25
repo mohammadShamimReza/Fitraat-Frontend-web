@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import Blogs from "@/components/BlogPage/Blogs";
 import Keyword from "@/components/BlogPage/Keyword";
+import { useGetBlogsQuery } from "@/redux/api/baseApi";
 import * as yup from "yup";
 
 type BlogsData = {
@@ -35,6 +36,8 @@ function Page() {
   const [type, setType] = useState<undefined | string>(undefined);
   const [searchTerm, setSearchTerm] = useState<undefined | string>(undefined);
   const [pageCount, setPageCount] = useState<number>(1);
+  const { data } = useGetBlogsQuery({});
+  console.log(data);
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);

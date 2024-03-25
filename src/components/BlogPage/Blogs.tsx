@@ -21,12 +21,12 @@ function Blogs({ blog }: { blog: any }) {
   return (
     <div className="">
       {" "}
-      <div className="h-full mb-10">
+      <div className="h-full mb-10 p-4">
         <div
           className=" p-4 rounded-lg shadow-xl border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
           isDarkMode   h-72 flex flex-col justify-between"
         >
-          <div className="h-full">
+          <div className="h-full ">
             <Link href={`/blog/1`}>
               <h2
                 className="text-gray-800 mb-4 
