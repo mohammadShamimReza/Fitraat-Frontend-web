@@ -2,7 +2,7 @@ const MembershipCard = () => {
   return (
     <div className="mt-20">
       <div className="">
-        <div className="layoutComponent p-5">
+        <div className=" p-5">
           <p className="text-center text-4xl font-bold text-gray-700 underline">
             Become <span className="text-red-600">premium</span> member
           </p>
@@ -28,7 +28,7 @@ const MembershipCard = () => {
       <div className="flex justify-center items-center mt-32 ">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:p-3 md:p-3 lg:p-0">
           {/* Freemium Membership Card */}
-          <div className="bg-white overflow-hidden   shadow-md rounded-xl border-2 ">
+          <div className="bg-white overflow-hidden   shadow-md rounded-xl border-2 flex justify-between flex-col">
             <div className="px-4 py-5 sm:p-6">
               <h2 className="text-lg font-semibold leading-6 text-gray-900">
                 Freemium Membership
@@ -50,17 +50,9 @@ const MembershipCard = () => {
                   >
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
                   </svg>
-                  Limited access to premium content
+                  Limited access to content
                 </li>
-                <li className="flex items-center mt-2">
-                  <svg
-                    className="w-5 h-5 mr-2 fill-current text-green-500"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-                  </svg>
-                  Basic customer support
-                </li>
+
                 <li className="flex items-center mt-2">
                   <svg
                     className="w-5 h-5 mr-2 fill-current text-green-500"
@@ -97,6 +89,66 @@ const MembershipCard = () => {
                   </svg>
                   Ability to connect with social media
                 </li>
+                <li
+                  className="flex items-center mt-2 line-through
+"
+                >
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-gray-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  Customizable dashboard layout
+                </li>
+                <li
+                  className="flex items-center mt-2 line-through
+"
+                >
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-gray-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  120 day premium package
+                </li>
+                <li
+                  className="flex items-center mt-2 line-through
+"
+                >
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-gray-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  Latest update of premium contant
+                </li>
+                <li
+                  className="flex items-center mt-2 line-through
+"
+                >
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-gray-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  Access carreer building workshop
+                </li>
+                <li
+                  className="flex items-center mt-2 line-through
+"
+                >
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-gray-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  Access carreer building support
+                </li>
               </ul>
             </div>
             <div className="bg-gray-800   px-4 py-4 sm:px-6">
@@ -114,8 +166,8 @@ const MembershipCard = () => {
           </div>
 
           {/* Pro Membership Card */}
-          <div className="bg-white overflow-hidden   shadow-md rounded-xl border-2 ">
-            <div className="px-4 py-5 sm:p-6">
+          <div className="bg-white overflow-hidden flex justify-between flex-col   shadow-md rounded-xl border-2 ">
+            <div className="px-4 py-5 sm:p-6 ">
               <h2 className="text-lg font-semibold leading-6 text-gray-900">
                 Pro Membership
               </h2>
@@ -182,6 +234,42 @@ const MembershipCard = () => {
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
                   </svg>
                   Customizable dashboard layout
+                </li>
+                <li className="flex items-center mt-2">
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-green-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  120 day premium package
+                </li>
+                <li className="flex items-center mt-2">
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-green-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  Latest update of premium contant
+                </li>
+                <li className="flex items-center mt-2">
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-green-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  Access carreer building workshop
+                </li>
+                <li className="flex items-center mt-2">
+                  <svg
+                    className="w-5 h-5 mr-2 fill-current text-green-500"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                  </svg>
+                  Access carreer building support
                 </li>
               </ul>
             </div>
