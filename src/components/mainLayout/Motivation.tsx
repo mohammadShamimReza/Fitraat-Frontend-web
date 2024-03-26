@@ -1,4 +1,4 @@
-import image from "../../app/assets/blogimage/removePorn.jpg";
+import image from "../../app/assets/removePorn.jpg";
 
 import Image from "next/image";
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import image1 from "../../app/assets/blogimage/spartan2.png";
-import image2 from "../../app/assets/blogimage/unbeatable.jpeg";
+import image1 from "../../app/assets/spartan2.png";
+import image2 from "../../app/assets/unbeatable.jpeg";
 
 function AboutSpartan() {
   return (
