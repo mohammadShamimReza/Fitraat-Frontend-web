@@ -25,16 +25,14 @@ function Blogs({
           isDarkMode   h-72 flex flex-col justify-between"
           >
             <div className="h-full ">
-              <Link href={`/blog/1`}>
-                <h2
-                  className="text-gray-800 mb-4 
+              <h2
+                className="text-gray-800 mb-4 
              text-3xl font-semibold overflow-clip animate-pulse w-1/2 h-8 bg-gray-300 rounded"
-                ></h2>
-                <div
-                  className=" mb-2
+              ></h2>
+              <div
+                className=" mb-2
             isDarkMode   line-clamp-5 text-justify animate-pulse w-full h-4/6 bg-gray-300 rounded"
-                ></div>
-              </Link>
+              ></div>
             </div>
           </div>
         </div>
@@ -51,7 +49,7 @@ function Blogs({
           isDarkMode   h-72 flex flex-col justify-between"
           >
             <div className="h-full ">
-              <Link href={`/blog/1`}>
+              <Link href={`/blog/${blog.id}`}>
                 <h2
                   className="text-gray-800 mb-4 
              text-3xl font-semibold overflow-clip"
@@ -79,6 +77,7 @@ function Blogs({
               <Link href={`/profile/`} className="flex items-center">
                 <div>
                   <Image
+                    priority={false}
                     src={myPic}
                     height={2}
                     width={2}

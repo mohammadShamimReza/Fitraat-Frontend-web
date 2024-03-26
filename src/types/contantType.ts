@@ -1,4 +1,4 @@
-interface Blog {
+export interface Blog {
   attributes: {
     BlogId: number;
     topic: string;
@@ -23,7 +23,19 @@ interface Meta {
   };
 }
 
-export interface Data {
+export interface BlogData {
   data: Blog[];
+  meta: Meta;
+}
+
+export interface SingleBlogData {
+  data: {
+    attributes: {
+      title: string;
+      content: string;
+      imageURL: string;
+      viewCount: number;
+    };
+  };
   meta: Meta;
 }
