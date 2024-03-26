@@ -35,7 +35,7 @@ function Page({ params }: { params: { slug: string } }) {
       <div className="">
         <div
           className="text-gray-800 mb-4 
-            dark:text-gray-300 text-2xl font-semibold text-center"
+            dark:text-gray-300 text-5xl font-semibold text-center"
         >
           {blogData?.title}
         </div>
@@ -53,7 +53,10 @@ function Page({ params }: { params: { slug: string } }) {
         </div>
 
         <br />
-        <div className="flex  ">
+        <div
+          className="flex max-w-5xl mx-auto text-lg text-gray-600 p-5"
+          style={{ lineHeight: "1.8" }}
+        >
           {blogData?.content && (
             <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
           )}
