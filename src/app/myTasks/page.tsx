@@ -1,4 +1,5 @@
 "use client";
+import { useGetDaysByIdQuery } from "@/redux/api/dayApi";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
@@ -10,6 +11,8 @@ import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
 const MyTasks: React.FC = () => {
+  const { data } = useGetDaysByIdQuery("1");
+  console.log(data);
   const tasks = [
     "video",
     "kagel",

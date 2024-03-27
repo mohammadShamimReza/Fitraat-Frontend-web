@@ -6,7 +6,7 @@ const MembershipCard = () => {
           <p className="text-center text-4xl font-bold text-gray-700 underline">
             Become <span className="text-red-600">premium</span> member
           </p>
-          <p className="mt-5">
+          <p className="mt-5 max-w-5xl p-5 mx-auto">
             &quot;We suggest not buying the premium membership right away. We
             offer a 40-day free trial of our app without requiring any login. We
             believe this 40-day trial is sufficient for most people. However, if
