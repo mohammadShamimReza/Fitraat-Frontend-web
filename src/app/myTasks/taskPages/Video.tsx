@@ -6,6 +6,7 @@ function Video({ selectedTask }: { selectedTask: string }) {
           <iframe
             width="100%"
             height="380px"
+            className="rounded-xl"
             src={`https://www.youtube.com/embed/RBSGKlAvoiM`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

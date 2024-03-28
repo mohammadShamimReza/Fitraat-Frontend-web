@@ -2,36 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import siteLogo from "../app/assets/detox1.png";
+import { useState } from "react";
+import siteLogo from "../../app/assets/detox1.png";
 
 function NavBar() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
   const [notificationToggle, setNotificationToggle] = useState<boolean>(false);
   const [userMenuToggle, setUserMenuToggle] = useState<boolean>(false);
 
-  useEffect(() => {
-    const handleBodyClick = () => {
-      // Close menu
-      if (menuToggle) setMenuToggle(false);
-      // Close notification
-      if (notificationToggle) setNotificationToggle(false);
-      // Close user menu
-      if (userMenuToggle) setUserMenuToggle(false);
-    };
-
-    // Add event listener to listen for clicks on the document body
-    document.body.addEventListener("click", handleBodyClick);
-
-    // Cleanup the event listener when component unmounts
-    return () => {
-      document.body.removeEventListener("click", handleBodyClick);
-    };
-  }, [menuToggle, notificationToggle, userMenuToggle]);
-
   return (
     <div className="mb-5 border rounded-xl shadow-md  mt-5">
-      <nav className="p-1">
+      <nav className="p-2">
         <div className="  px-1 sm:px-4 lg:px-6">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -114,8 +95,9 @@ function NavBar() {
                 </div>
               </div>
             </div>
+
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <div className="">
+              {/* <div className="">
                 <button
                   onClick={() => setNotificationToggle(!notificationToggle)}
                   type="button"
@@ -177,12 +159,11 @@ function NavBar() {
                 ) : (
                   ""
                 )}
-              </div>
+              </div> */}
 
               <div className="relative ml-3">
-                <div className="">
-                  <button
-                    type="button"
+                <Link href={"/login"} className="">
+                  <div
                     onClick={() => setUserMenuToggle(!userMenuToggle)}
                     className="relative flex   text-sm  hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 "
                     id="user-menu-button"
@@ -208,20 +189,20 @@ function NavBar() {
                         />
                       </svg>
                     </div>
-                  </button>
-                </div>
+                  </div>
+                </Link>
 
                 {userMenuToggle ? (
                   <div
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-white  shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabIndex={-1}
                   >
                     <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700"
+                      href="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-t-xl"
                       role="menuitem"
                       tabIndex={-1}
                       id="user-menu-item-0"
@@ -239,7 +220,7 @@ function NavBar() {
                     </a>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-b-xl"
                       role="menuitem"
                       tabIndex={-1}
                       id="user-menu-item-2"
