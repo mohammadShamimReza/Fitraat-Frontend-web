@@ -1,12 +1,15 @@
 import { baseApi } from "./baseApi";
 
-const DAYS = "/days";
+const AUTH = "/auth/local";
 
 export const daysApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getDaysById: builder.query({
-      query: (id: string) =>
-        `${DAYS}?filters[DayId][$eq]=${id}&populate[0]=video&populate[1]=kegel.kegel_times&populate[2]=sort_note&populate[3]=blog`,
+    registerUser: builder.mutation({
+      query: (body) => ({
+        url: `${AUTH}/register`,
+        method: "POST",
+        body,
+      }),
       transformResponse: (rawResult) => {
         return rawResult;
       },
@@ -14,4 +17,4 @@ export const daysApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetDaysByIdQuery } = daysApi;
+export const { useRegisterUserMutation } = daysApi;
