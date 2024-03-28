@@ -1,5 +1,7 @@
 "use client";
 
+import { useRegisterUserMutation } from "@/redux/api/authApi";
+import { message } from "antd";
 import { useState } from "react";
 
 function RegisterPage() {
@@ -12,6 +14,9 @@ function RegisterPage() {
     gender: "",
     language: "",
   });
+  const [createUser, { error }] = useRegisterUserMutation();
+
+  console.log(error);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -23,10 +28,26 @@ function RegisterPage() {
     });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Form Data:", formData);
-    // Here you can add your registration logic
+    if (
+      formData.age !== "" &&
+      formData.gender !== "" &&
+      formData.language !== "" &&
+      formData.email !== "" &&
+      formData.phone !== "" &&
+      formData.password !== "" &&
+      formData.username !== ""
+    ) {
+      try {
+        const result = await createUser(formData);
+        console.log(result);
+      } catch (error) {
+        console.log(error);
+      }
+    } else message.success("user is not created");
+    console.error(error);
   };
 
   return (
@@ -159,8 +180,8 @@ function RegisterPage() {
               required
             >
               <option value="">Select language</option>
-              <option value="bangla">Bangla</option>
-              <option value="english">English</option>
+              <option value="Bangla">Bangla</option>
+              <option value="English">English</option>
             </select>
           </div>
           {/* Submit Button */}
