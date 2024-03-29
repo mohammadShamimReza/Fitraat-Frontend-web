@@ -1,6 +1,8 @@
 "use client";
 
+import { getTokenFromCookie, storeTokenInCookie } from "@/lib/auth/token";
 import { useRegisterUserMutation } from "@/redux/api/authApi";
+import { Error } from "@/types/contantType";
 import { message } from "antd";
 import { useState } from "react";
 
@@ -30,7 +32,6 @@ function RegisterPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Form Data:", formData);
     if (
       formData.age !== "" &&
       formData.gender !== "" &&
@@ -40,14 +41,23 @@ function RegisterPage() {
       formData.password !== "" &&
       formData.username !== ""
     ) {
-      try {
-        const result = await createUser(formData);
+      const result: any | Error = await createUser(formData);
+      if (error) {
+        if (result?.error?.error?.message === "This attribute must be unique") {
+          message.error(`Phone must be unique`);
+        } else if (result?.error) {
+          message.error(result?.error.error.message);
+        }
+      } else {
+        message.success("user created successfully");
         console.log(result);
-      } catch (error) {
-        console.log(error);
+        storeTokenInCookie(result?.data?.jwt);
+
+        console.log(getTokenFromCookie());
       }
-    } else message.success("user is not created");
-    console.error(error);
+    } else {
+      message.error("user not created successfully");
+    }
   };
 
   return (

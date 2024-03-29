@@ -1,3 +1,4 @@
+import { Error, UserData } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
 const AUTH = "/auth/local";
@@ -10,8 +11,11 @@ export const daysApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      transformResponse: (rawResult) => {
+      transformResponse: (rawResult: UserData | Error) => {
         return rawResult;
+      },
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return baseQueryReturnValue.data;
       },
     }),
   }),

@@ -116,3 +116,47 @@ export interface DayData {
   data: Day[];
   meta: Meta;
 }
+
+export interface Error {
+  error: {
+    data: {
+      data: null;
+      error: {
+        status: number;
+        name: string;
+        message: string;
+        details: {}[];
+      };
+    };
+    status: number;
+  };
+}
+
+export interface UserData {
+  age: number;
+  blocked: boolean;
+  compliteDay: number;
+  confirmed: boolean;
+  country: string;
+  createdAt: string;
+  currentDay: number;
+  email: string;
+  gender: string;
+  id: number;
+  kagelComplete: boolean;
+  language: string;
+  phone: string;
+  provider: string;
+  quizComplete: boolean;
+  sortNoteComplete: boolean;
+  updateAt: string;
+  userName: string;
+  videoComplete: boolean;
+}
+
+export interface UserAuthData {
+  data: {
+    jwt: string;
+    user: UserData;
+  };
+}
