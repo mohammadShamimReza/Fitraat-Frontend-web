@@ -1,12 +1,19 @@
 "use client";
 
-import { getTokenFromCookie, storeTokenInCookie } from "@/lib/auth/token";
+import { storeTokenInCookie } from "@/lib/auth/token";
 import { useRegisterUserMutation } from "@/redux/api/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { Error } from "@/types/contantType";
 import { message } from "antd";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function RegisterPage() {
+  const router = useRouter();
+
+  const dispatch = useAppDispatch();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -17,8 +24,6 @@ function RegisterPage() {
     language: "",
   });
   const [createUser, { error }] = useRegisterUserMutation();
-
-  console.log(error);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -41,19 +46,28 @@ function RegisterPage() {
       formData.password !== "" &&
       formData.username !== ""
     ) {
-      const result: any | Error = await createUser(formData);
-      if (error) {
-        if (result?.error?.error?.message === "This attribute must be unique") {
-          message.error(`Phone must be unique`);
-        } else if (result?.error) {
-          message.error(result?.error.error.message);
-        }
-      } else {
-        message.success("user created successfully");
+      try {
+        const result: any | Error = await createUser(formData);
         console.log(result);
-        storeTokenInCookie(result?.data?.jwt);
+        if (result?.error) {
+          if (
+            result?.error?.error?.message === "This attribute must be unique"
+          ) {
+            message.error(`Phone must be unique`);
+          } else if (result?.error) {
+            message.error(result?.error.error.message);
+          }
+        } else {
+          router.push("/myTasks");
+                    message.success("user created successfully");
+                    console.log(result);
+                    storeTokenInCookie(result?.data?.jwt);
+          dispatch(storeAuthToken(result?.data?.jwt));
 
-        console.log(getTokenFromCookie());
+          dispatch(storeUserInfo(result?.data?.user));
+        }
+      } catch (error) {
+        console.log(error);
       }
     } else {
       message.error("user not created successfully");
