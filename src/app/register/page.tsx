@@ -5,6 +5,7 @@ import { useRegisterUserMutation } from "@/redux/api/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { Error } from "@/types/contantType";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,7 +24,11 @@ function RegisterPage() {
     gender: "",
     language: "",
   });
-  const [createUser, { error }] = useRegisterUserMutation();
+  const [registerUser, { error }] = useRegisterUserMutation();
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -47,7 +52,7 @@ function RegisterPage() {
       formData.username !== ""
     ) {
       try {
-        const result: any | Error = await createUser(formData);
+        const result: any | Error = await registerUser(formData);
         console.log(result);
         if (result?.error) {
           if (
@@ -59,9 +64,9 @@ function RegisterPage() {
           }
         } else {
           router.push("/myTasks");
-                    message.success("user created successfully");
-                    console.log(result);
-                    storeTokenInCookie(result?.data?.jwt);
+          message.success("user created successfully");
+          console.log(result);
+          storeTokenInCookie(result?.data?.jwt);
           dispatch(storeAuthToken(result?.data?.jwt));
 
           dispatch(storeUserInfo(result?.data?.user));
@@ -115,7 +120,7 @@ function RegisterPage() {
             />
           </div>
           {/* Password Input */}
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label
               htmlFor="password"
               className="block text-lg font-semibold mb-2"
@@ -123,16 +128,26 @@ function RegisterPage() {
               Password <span className="text-red-500">*</span>
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               className="w-full rounded-lg border border-gray-300 px-3 py-2"
-              placeholder="Enter your password (min. 6 characters)"
-              value={formData.password}
+              placeholder="Enter your password (min 6 cherecter)"
               onChange={handleChange}
-              minLength={6}
+              value={formData.password}
               required
             />
+            {showPassword ? (
+              <EyeOutlined
+                className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-500 cursor-pointer mt-4"
+                onClick={togglePasswordVisibility}
+              />
+            ) : (
+              <EyeInvisibleOutlined
+                className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-500 cursor-pointer mt-4"
+                onClick={togglePasswordVisibility}
+              />
+            )}
           </div>
           {/* Age Input */}
           <div className="mb-4">

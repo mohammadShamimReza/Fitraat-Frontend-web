@@ -18,7 +18,20 @@ export const daysApi = baseApi.injectEndpoints({
         return baseQueryReturnValue.data;
       },
     }),
+    loginUser: builder.mutation({
+      query: (body) => ({
+        url: `${AUTH}`,
+        method: "POST",
+        body,
+      }),
+      transformResponse: (rawResult: UserData | Error) => {
+        return rawResult;
+      },
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return baseQueryReturnValue.data;
+      },
+    }),
   }),
 });
 
-export const { useRegisterUserMutation } = daysApi;
+export const { useRegisterUserMutation, useLoginUserMutation } = daysApi;

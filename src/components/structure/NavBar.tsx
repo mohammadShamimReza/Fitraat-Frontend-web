@@ -1,14 +1,27 @@
 "use client";
 
+import { getTokenFromCookie, removeTokenFromCookie } from "@/lib/auth/token";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { removeAuthToken } from "@/redux/slice/authSlice";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 import Link from "next/link";
 import { useState } from "react";
 import siteLogo from "../../app/assets/detox1.png";
 
 function NavBar() {
+  const router = useRouter();
+
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
-  const [notificationToggle, setNotificationToggle] = useState<boolean>(false);
+
   const [userMenuToggle, setUserMenuToggle] = useState<boolean>(false);
+
+  const authTokenFromRedux = useAppSelector((state) => state.auth.authToken);
+
+  const authToken = getTokenFromCookie() || authTokenFromRedux;
+  const dispatch = useAppDispatch();
+  console.log(authToken);
 
   return (
     <div className="mb-5 border rounded-xl shadow-md  mt-5">
@@ -173,26 +186,44 @@ function NavBar() {
                     <span className="absolute -inset-1.5"></span>
                     <span className="sr-only">Open user menu</span>
                     <div className="flex gap-1">
-                      <p>login</p>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
+                      {typeof authToken !== null ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          className="h-10 w-10 rounded-xl border p-1"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M14 5l7 7m0 0l-7 7m7-7H3"
-                        />
-                      </svg>
+                        >
+                          <circle cx="12" cy="8" r="7" />
+                          <path d="M12 16s-8-1.5-8 4v2h16v-2c0-5.5-8-4-8-4z" />
+                        </svg>
+                      ) : (
+                        <>
+                          <p>login</p>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            />
+                          </svg>
+                        </>
+                      )}
                     </div>
                   </div>
                 </Link>
 
-                {userMenuToggle ? (
+                {authToken && userMenuToggle ? (
                   <div
                     className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-white  shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
@@ -220,12 +251,17 @@ function NavBar() {
                     </a>
                     <a
                       href="#"
+                      onClick={() => {
+                        removeTokenFromCookie(),
+                          dispatch(removeAuthToken(null));
+                        router.push("/");
+                      }}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-b-xl"
                       role="menuitem"
                       tabIndex={-1}
                       id="user-menu-item-2"
                     >
-                      Sign out
+                      Log out
                     </a>
                   </div>
                 ) : (

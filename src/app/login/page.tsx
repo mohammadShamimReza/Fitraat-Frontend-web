@@ -1,24 +1,63 @@
 "use client";
+import { storeTokenInCookie } from "@/lib/auth/token";
+import { useLoginUserMutation } from "@/redux/api/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { message } from "antd";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import "tailwindcss/tailwind.css";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.name === "email") {
-      setEmail(event.target.value);
-    } else if (event.target.name === "password") {
-      setPassword(event.target.value);
-    }
+  const dispatch = useAppDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [formData, setFormData] = useState({
+    identifier: "",
+    password: "",
+  });
+  console.log(formData);
+  const [loginUser, { error }] = useLoginUserMutation();
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Here you can add your authentication logic
+    if (formData.identifier !== "" && formData.password !== "") {
+      try {
+        const result: any | Error = await loginUser(formData);
+        console.log(result);
+        if (result?.error) {
+          message.error("Use valid credentials");
+        } else {
+          router.push("/myTasks");
+          message.success("Login successfully");
+          console.log(result);
+          storeTokenInCookie(result?.data?.jwt);
+          dispatch(storeAuthToken(result?.data?.jwt));
+
+          dispatch(storeUserInfo(result?.data?.user));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      message.error("Login successfully");
+    }
   };
 
   return (
@@ -29,20 +68,21 @@ function LoginPage() {
           {/* Email Input */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-lg font-semibold mb-2">
-              Email
+              Email of Username
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
+              type="text"
+              id="identifier"
+              name="identifier"
               className="w-full rounded-lg border border-gray-300 px-3 py-2"
-              placeholder="Enter your email"
-              value={email}
+              placeholder="Enter your email or username"
               onChange={handleChange}
+              required
+              value={formData.identifier}
             />
           </div>
           {/* Password Input */}
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label
               htmlFor="password"
               className="block text-lg font-semibold mb-2"
@@ -50,14 +90,26 @@ function LoginPage() {
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               className="w-full rounded-lg border border-gray-300 px-3 py-2"
               placeholder="Enter your password"
-              value={password}
               onChange={handleChange}
+              value={formData.password}
+              required
             />
+            {showPassword ? (
+              <EyeOutlined
+                className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-500 cursor-pointer mt-4"
+                onClick={togglePasswordVisibility}
+              />
+            ) : (
+              <EyeInvisibleOutlined
+                className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-500 cursor-pointer mt-4"
+                onClick={togglePasswordVisibility}
+              />
+            )}
           </div>
           {/* Forgot Password */}
           <div className="text-right mb-6">

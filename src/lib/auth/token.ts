@@ -10,3 +10,8 @@ export const getTokenFromCookie = () => {
   const token = Cookies.get("jwt");
   return token;
 };
+
+export const removeTokenFromCookie = () => {
+  const removeToken = Cookies.remove("jwt");
+  return removeToken;
+};
