@@ -154,6 +154,42 @@ export interface UserData {
   videoComplete: boolean;
 }
 
+export interface UserDataWithDay {
+  age: number;
+  blocked: boolean;
+  compliteDay: number;
+  confirmed: boolean;
+  country: string;
+  createdAt: string;
+  currentDay: {
+    DayId: number;
+    createdAt: string;
+
+    updatedAt: string;
+    blog: {
+      data: Blog;
+    };
+    kegel: Kegel;
+    publishedAt: string;
+    reward: string;
+    sort_note: SortNote;
+    video: Video;
+    id: number;
+  };
+  email: string;
+  gender: string;
+  id: number;
+  kagelComplete: boolean;
+  language: string;
+  phone: string;
+  provider: string;
+  quizComplete: boolean;
+  sortNoteComplete: boolean;
+  updateAt: string;
+  userName: string;
+  videoComplete: boolean;
+}
+
 export interface UserAuthData {
   data: {
     jwt: string;

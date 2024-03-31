@@ -22,7 +22,6 @@ function LoginPage() {
     identifier: "",
     password: "",
   });
-  console.log(formData);
   const [loginUser, { error }] = useLoginUserMutation();
 
   const handleChange = (
@@ -142,7 +141,7 @@ function LoginPage() {
             Don&apos;t have an account?{" "}
             <a
               href="/register"
-              className="text-gray-800 hover:text-black underline"
+              className="text-red-600 hover:text-black underline"
             >
               Register here
             </a>

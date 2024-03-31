@@ -5,7 +5,7 @@ const DAYS = "/days";
 
 export const daysApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getDaysById: builder.query({
+    getDaysByDayId: builder.query({
       query: (id: string) =>
         `${DAYS}?filters[DayId][$eq]=${id}&populate[0]=video&populate[1]=kegel.kegel_times&populate[2]=sort_note&populate[3]=blog`,
       transformResponse: (rawResult: DayData) => {
@@ -15,4 +15,4 @@ export const daysApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetDaysByIdQuery } = daysApi;
+export const { useGetDaysByDayIdQuery } = daysApi;
