@@ -41,9 +41,11 @@ export const daysApi = baseApi.injectEndpoints({
     }),
     updateUserDay: builder.mutation({
       query: (body) => ({
-        url: `${AUTH}/register`,
+        url: `users/${body.userId}`,
         method: "POST",
-        body,
+        body: {
+          currentDay: body.dayId,
+        },
       }),
       transformResponse: (rawResult: UserData | Error) => {
         return rawResult;
@@ -59,4 +61,5 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useGetUserInfoQuery,
+  useUpdateUserDayMutation,
 } = daysApi;

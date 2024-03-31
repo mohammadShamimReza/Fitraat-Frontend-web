@@ -175,7 +175,7 @@ export interface UserDataWithDay {
     sort_note: SortNote;
     video: Video;
     id: number;
-  };
+  } | null;
   email: string;
   gender: string;
   id: number;

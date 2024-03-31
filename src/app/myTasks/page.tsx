@@ -1,5 +1,6 @@
 "use client";
 import { useGetUserInfoQuery } from "@/redux/api/authApi";
+import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
@@ -12,7 +13,7 @@ import Video from "./taskPages/Video";
 
 const MyTasks: React.FC = () => {
   const { data: userInfoData } = useGetUserInfoQuery();
-  // const { data: dayData } = useGetDaysByIdQuery(userInfoData?.currentDay);
+  const { data: dayData } = useGetDaysByDayIdQuery("");
 
   console.log(userInfoData);
   // console.log(dayData);
