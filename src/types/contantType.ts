@@ -109,6 +109,16 @@ export interface Day {
     sort_note: SortNote;
     video: Video;
     id: number;
+    quiz: {
+      id: number;
+      question: string;
+      answer: string;
+      quizOptions: string;
+      quizId: number;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+    };
   };
 }
 
@@ -166,6 +176,16 @@ export interface UserDataWithDay {
     createdAt: string;
 
     updatedAt: string;
+    quiz: {
+      id: number;
+      question: string;
+      answer: string;
+      quizOptions: string;
+      quizId: number;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+    };
     blog: {
       data: Blog;
     };

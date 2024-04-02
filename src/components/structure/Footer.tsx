@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <footer className="layoutComponent mb-5 mt-24">
@@ -18,24 +20,24 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4">Services</h3>
             <ul className="text-sm">
               <li className="mb-2">
-                <a href="#" className="hover:text-gray-300">
+                <Link href="#" className="hover:text-gray-300">
                   Web Design
-                </a>
+                </Link>
               </li>
               <li className="mb-2">
-                <a href="#" className="hover:text-gray-300">
+                <Link href="#" className="hover:text-gray-300">
                   Graphic Design
-                </a>
+                </Link>
               </li>
               <li className="mb-2">
-                <a href="#" className="hover:text-gray-300">
+                <Link href="#" className="hover:text-gray-300">
                   SEO
-                </a>
+                </Link>
               </li>
               <li className="mb-2">
-                <a href="#" className="hover:text-gray-300">
+                <Link href="#" className="hover:text-gray-300">
                   Marketing
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

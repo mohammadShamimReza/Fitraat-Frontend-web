@@ -14,6 +14,9 @@ import Video from "./taskPages/Video";
 const MyTasks: React.FC = () => {
   const { data: userInfoData } = useGetUserInfoQuery();
   const { data: dayData } = useGetDaysByDayIdQuery("");
+  if (userInfoData && "currentDay" in userInfoData) {
+    userInfoData.currentDay?.DayId;
+  }
 
   console.log(userInfoData);
   // console.log(dayData);
@@ -98,7 +101,11 @@ const MyTasks: React.FC = () => {
             <div className="basis-1/6 flex justify-center align-bottom flex-col">
               <div className="flex justify-between mt-4">
                 <button
-                  className="px-4 py-2 text-white bg-gray-500 rounded  hover:bg-gray-600 focus:outline-none"
+                  className={`px-4 py-2 text-white rounded focus:outline-none ${
+                    selectedTaskIndex === 0
+                      ? "bg-gray-500 cursor-not-allowed "
+                      : "bg-gray-600 hover:bg-gray-700"
+                  }`}
                   onClick={handlePrevious}
                   disabled={selectedTaskIndex === 0}
                 >
@@ -110,7 +117,11 @@ const MyTasks: React.FC = () => {
                 </button>
 
                 <button
-                  className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none"
+                  className={`px-4 py-2 text-white rounded focus:outline-none ${
+                    selectedTaskIndex === tasks.length - 1
+                      ? "bg-gray-500 cursor-not-allowed "
+                      : "bg-gray-600 hover:bg-gray-700"
+                  }`}
                   onClick={handleNext}
                   disabled={selectedTaskIndex === tasks.length - 1}
                 >

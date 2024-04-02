@@ -5,6 +5,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -112,9 +113,12 @@ function LoginPage() {
           </div>
           {/* Forgot Password */}
           <div className="text-right mb-6">
-            <a href="#" className="text-gray-600 hover:text-gray-800 underline">
+            <Link
+              href="#"
+              className="text-gray-600 hover:text-gray-800 underline"
+            >
               Forgot Password?
-            </a>
+            </Link>
           </div>
           {/* Login Button */}
           <button
@@ -139,12 +143,12 @@ function LoginPage() {
           {/* Signup Link */}
           <div className="text-center text-gray-600 ">
             Don&apos;t have an account?{" "}
-            <a
+            <Link
               href="/register"
               className="text-red-600 hover:text-black underline"
             >
               Register here
-            </a>
+            </Link>
           </div>
         </form>
       </div>
