@@ -40,10 +40,10 @@ function NavBar() {
   }, [authTokenFromRedux, removeTokenFromCookies]); // include removeTokenFromCookies in the dependency array
 
   const handleLogout = () => {
-    router.push("/");
-    console.log("first");
-    removeTokenFromCookies(); // Call the function
+    console.log("this is login ");
+    removeTokenFromCookies();
     dispatch(removeAuthToken(null));
+    // window.location.reload();
   };
   return (
     <div className="mb-5 border rounded-xl shadow-md  mt-5">
@@ -205,7 +205,7 @@ function NavBar() {
                         Settings
                       </Link>
                       <Link
-                        href="#"
+                        href="/"
                         onClick={handleLogout}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-b-xl"
                         role="menuitem"

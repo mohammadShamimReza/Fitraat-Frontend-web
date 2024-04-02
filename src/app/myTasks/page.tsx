@@ -2,7 +2,8 @@
 import { useGetUserInfoQuery } from "@/redux/api/authApi";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import Kagel from "./taskPages/Kagel";
 import Quiz from "./taskPages/Quiz";
@@ -12,14 +13,57 @@ import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
 const MyTasks: React.FC = () => {
-  const { data: userInfoData } = useGetUserInfoQuery();
+  const router = useRouter();
+  const {
+    data: userInfoData,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetUserInfoQuery();
   const { data: dayData } = useGetDaysByDayIdQuery("");
+
+  const [localStorageData, setLocalStorageData] = useState({
+    video: false,
+    kagel: false,
+    sortNote: false,
+    quiz: false,
+    rewards: false,
+    suggestBlog: false,
+  });
+
   if (userInfoData && "currentDay" in userInfoData) {
     userInfoData.currentDay?.DayId;
+    const dayData = userInfoData.currentDay;
+    const vedio = dayData?.video;
+    const quiz = dayData?.quiz;
+    const reward = dayData?.reward;
+    const blog = dayData?.blog;
+    const kegel = dayData?.kegel;
   }
 
-  console.log(userInfoData);
-  // console.log(dayData);
+  useEffect(() => {
+    const storedData = localStorage.getItem("taskCompletionData");
+    console.log(storedData);
+    if (storedData) {
+      setLocalStorageData(JSON.parse(storedData));
+    }
+  }, []);
+
+  const initialRender = useRef(true);
+
+  useEffect(() => {
+    if (!initialRender.current) {
+      localStorage.setItem(
+        "taskCompletionData",
+        JSON.stringify(localStorageData)
+      );
+      console.log("inside if");
+    } else {
+      initialRender.current = false;
+      console.log("inside else");
+    }
+  }, [localStorageData]);
+
   const tasks = [
     "video",
     "kagel",
@@ -28,7 +72,9 @@ const MyTasks: React.FC = () => {
     "rewards",
     "suggestBlog",
   ];
+
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
+  const selectedTask = tasks[selectedTaskIndex];
 
   const handleTaskClick = (index: number) => {
     setSelectedTaskIndex(index);
@@ -41,12 +87,17 @@ const MyTasks: React.FC = () => {
   };
 
   const handleNext = () => {
+    setLocalStorageData((prevState) => ({
+      ...prevState,
+      [selectedTask]: true,
+    }));
+    if (selectedTask === "suggestBlog") {
+      router.push("/");
+    }
     if (selectedTaskIndex < tasks.length - 1) {
       setSelectedTaskIndex(selectedTaskIndex + 1);
     }
   };
-
-  const selectedTask = tasks[selectedTaskIndex];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -117,13 +168,9 @@ const MyTasks: React.FC = () => {
                 </button>
 
                 <button
-                  className={`px-4 py-2 text-white rounded focus:outline-none ${
-                    selectedTaskIndex === tasks.length - 1
-                      ? "bg-gray-500 cursor-not-allowed "
-                      : "bg-gray-600 hover:bg-gray-700"
+                  className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
                   }`}
                   onClick={handleNext}
-                  disabled={selectedTaskIndex === tasks.length - 1}
                 >
                   Next
                   <span style={{ paddingLeft: "10px" }}>

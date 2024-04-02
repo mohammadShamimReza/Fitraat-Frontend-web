@@ -187,13 +187,50 @@ export interface UserDataWithDay {
       publishedAt: string;
     };
     blog: {
-      data: Blog;
+      BlogId: number;
+      topic: string;
+      content: string;
+      title: string;
+      imageURL: string;
+      keywords: {
+        keyword: string[];
+      };
+      publishedAt: string;
+      updatedAt: string;
+      viewCount: string;
     };
-    kegel: Kegel;
+    kegel: {
+      KagelId: number;
+      createdAt: string;
+      kegel_times: {
+        squeeze: number;
+        stop: number;
+        createdAt: string;
+        publishedAt: string;
+        updatedAt: string;
+      }[];
+      publishedAt: string;
+      updatedAt: string;
+    };
     publishedAt: string;
     reward: string;
-    sort_note: SortNote;
-    video: Video;
+    sort_note: {
+      sortNoteId: number;
+      sortNoteContent: string;
+      createdAt: string;
+      publishedAt: string;
+      updatedAt: string;
+    };
+    video: {
+      vedeoId: number;
+      createdAt: string;
+
+      updatedAt: string;
+      publishedAt: string;
+
+      VideoUrl: string;
+      videoId: number;
+    };
     id: number;
   } | null;
   email: string;
