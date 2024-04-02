@@ -31,21 +31,18 @@ const MyTasks: React.FC = () => {
     suggestBlog: false,
   });
 
-  if (userInfoData && "currentDay" in userInfoData) {
-    userInfoData.currentDay?.DayId;
-    const dayData = userInfoData.currentDay;
-    const vedio = dayData?.video;
-    const quiz = dayData?.quiz;
-    const reward = dayData?.reward;
-    const blog = dayData?.blog;
-    const kegel = dayData?.kegel;
-  }
+
 
   useEffect(() => {
     const storedData = localStorage.getItem("taskCompletionData");
     console.log(storedData);
     if (storedData) {
       setLocalStorageData(JSON.parse(storedData));
+    } else {
+      localStorage.setItem(
+        "taskCompletionData",
+        JSON.stringify(localStorageData)
+      );
     }
   }, []);
 
@@ -57,10 +54,8 @@ const MyTasks: React.FC = () => {
         "taskCompletionData",
         JSON.stringify(localStorageData)
       );
-      console.log("inside if");
     } else {
       initialRender.current = false;
-      console.log("inside else");
     }
   }, [localStorageData]);
 
@@ -102,15 +97,27 @@ const MyTasks: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col lg:flex-row">
-        {/* Left Side: Task List */}
         <div className="lg:w-1/3 pr-8 mb-8 lg:mb-0">
           <h2 className="text-2xl font-bold ">Your Task for Today</h2>
           <ul className="list-decimal pl-6">
             {tasks.map((task, index) => (
               <div
                 key={index}
-                className="flex justify-between h-10 cursor-pointer hover:bg-slate-100 rounded"
-                onClick={() => handleTaskClick(index)}
+                className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
+                  (localStorageData as any)[task] === false
+                    ? " cursor-not-allowed"
+                    : "cursor-pointer"
+                }`}
+                title={
+                  (localStorageData as any)[task] === false
+                    ? "This task is not available"
+                    : "you have completed this task"
+                }
+                onClick={() => {
+                  if ((localStorageData as any)[task] === true) {
+                    handleTaskClick(index);
+                  }
+                }}
               >
                 <li
                   className={`transition-colors duration-300  p-2 ${
@@ -123,7 +130,13 @@ const MyTasks: React.FC = () => {
                   <FaCheckCircle
                     className=""
                     size={25}
-                    style={{ color: "blue", fontWeight: "bold" }}
+                    style={{
+                      color:
+                        (localStorageData as any)[task] === true
+                          ? "blue"
+                          : "gray",
+                      fontWeight: "bold",
+                    }}
                   />
                 </span>
               </div>
