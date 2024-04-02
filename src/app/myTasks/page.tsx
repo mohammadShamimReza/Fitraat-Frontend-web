@@ -45,7 +45,6 @@ const MyTasks: React.FC = () => {
         "taskCompletionForUnAuthenticatedUserData",
         JSON.stringify(UnAuthLocalStorageData)
       );
-      localStorage.setItem("unAuthDayId", JSON.stringify(unauthDayId));
     }
   }, []);
 
@@ -77,7 +76,6 @@ const MyTasks: React.FC = () => {
     const storedData = localStorage.getItem(
       "taskCompletionForAuthenticatedUserData"
     );
-    console.log(storedData);
     if (storedData) {
       setLocalStorageData(JSON.parse(storedData));
     } else {
@@ -123,20 +121,6 @@ const MyTasks: React.FC = () => {
     }
   };
 
-  console.log(authenticatedUserInfoData, authenticatedUserInfoDataError);
-
-  if (
-    authenticatedUserInfoData === undefined &&
-    authenticatedUserInfoDataError === true
-  ) {
-    console.log("unauth user");
-  } else if (
-    authenticatedUserInfoData &&
-    authenticatedUserInfoDataError === false
-  ) {
-    console.log("auth user");
-  }
-
   const handleNext = () => {
     if (
       authenticatedUserInfoData === undefined &&
@@ -161,10 +145,16 @@ const MyTasks: React.FC = () => {
         authenticatedUserInfoData === undefined &&
         authenticatedUserInfoDataError === true
       ) {
-        localStorage.setItem(
-          "unAuthDayId",
-          JSON.stringify((parseInt(unauthDayId) + 1).toString())
-        );
+        let unAuthDayId: string | null = localStorage.getItem("unAuthDayId");
+        if (unAuthDayId !== null) {
+          unAuthDayId = JSON.parse(unAuthDayId);
+          if (typeof unAuthDayId === "string") {
+            localStorage.setItem(
+              "unAuthDayId",
+              JSON.stringify((parseInt(unAuthDayId) + 1).toString())
+            );
+          }
+        }
       } else if (
         authenticatedUserInfoData &&
         authenticatedUserInfoDataError === false

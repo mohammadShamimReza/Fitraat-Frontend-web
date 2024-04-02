@@ -60,6 +60,9 @@ function LoginPage() {
         if (result?.error) {
           message.error("Use inValid credentials");
         } else {
+          if (typeof window !== "undefined") {
+            window.location.reload();
+          }
           router.push("/myTasks");
           message.success("Login successfully");
           console.log(result);
@@ -67,9 +70,6 @@ function LoginPage() {
           dispatch(storeAuthToken(result?.data?.jwt));
 
           dispatch(storeUserInfo(result?.data?.user));
-          if (typeof window !== "undefined") {
-            window.location.reload();
-          }
         }
       } catch (error) {
         console.log(error);
