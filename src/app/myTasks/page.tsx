@@ -145,15 +145,18 @@ const MyTasks: React.FC = () => {
         authenticatedUserInfoData === undefined &&
         authenticatedUserInfoDataError === true
       ) {
-        let unAuthDayId: string | null = localStorage.getItem("unAuthDayId");
-        if (unAuthDayId !== null) {
-          unAuthDayId = JSON.parse(unAuthDayId);
-          if (typeof unAuthDayId === "string") {
-            localStorage.setItem(
-              "unAuthDayId",
-              JSON.stringify((parseInt(unAuthDayId) + 1).toString())
-            );
-          }
+        let unAuthDayId = localStorage.getItem("unAuthDayId");
+
+        if (unAuthDayId === null) {
+          localStorage.setItem("unAuthDayId", "1");
+        } else if (unAuthDayId !== null) {
+          let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
+          console.log(
+            typeof parsedUnAuthDayId,
+            typeof unAuthDayId,
+            parsedUnAuthDayId
+          );
+          localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
         }
       } else if (
         authenticatedUserInfoData &&
