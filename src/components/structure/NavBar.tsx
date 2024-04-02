@@ -40,10 +40,13 @@ function NavBar() {
   }, [authTokenFromRedux, removeTokenFromCookies]); // include removeTokenFromCookies in the dependency array
 
   const handleLogout = () => {
-    console.log("this is login ");
     removeTokenFromCookies();
     dispatch(removeAuthToken(null));
-    // window.location.reload();
+
+    if (typeof window !== "undefined") {
+      window.location.reload();
+      router.push("/");
+    }
   };
   return (
     <div className="mb-5 border rounded-xl shadow-md  mt-5">

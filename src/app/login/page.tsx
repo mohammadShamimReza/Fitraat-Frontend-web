@@ -1,13 +1,17 @@
 "use client";
-import { storeTokenInCookie } from "@/lib/auth/token";
+import {
+  getTokenFromCookie,
+  removeTokenFromCookie,
+  storeTokenInCookie,
+} from "@/lib/auth/token";
 import { useLoginUserMutation } from "@/redux/api/authApi";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function LoginPage() {
   const router = useRouter();
@@ -34,6 +38,18 @@ function LoginPage() {
       [name]: value,
     });
   };
+  const authTokenFromRedux = useAppSelector((state) => state.auth.authToken);
+
+  const removeTokenFromCookies = useCallback(() => {
+    return removeTokenFromCookie();
+  }, []); // empty dependency array means the function does not depend on any variables
+
+  useEffect(() => {
+    const authToken = getTokenFromCookie() || authTokenFromRedux;
+    if (authToken) {
+      router.push("/myTasks");
+    }
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,7 +58,7 @@ function LoginPage() {
         const result: any | Error = await loginUser(formData);
         console.log(result);
         if (result?.error) {
-          message.error("Use valid credentials");
+          message.error("Use inValid credentials");
         } else {
           router.push("/myTasks");
           message.success("Login successfully");
@@ -51,6 +67,9 @@ function LoginPage() {
           dispatch(storeAuthToken(result?.data?.jwt));
 
           dispatch(storeUserInfo(result?.data?.user));
+          if (typeof window !== "undefined") {
+            window.location.reload();
+          }
         }
       } catch (error) {
         console.log(error);
