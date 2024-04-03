@@ -2,47 +2,6 @@ import { Button, Progress } from "antd";
 import { useEffect, useRef, useState } from "react";
 
 function Kagel({ selectedTask }: { selectedTask: string }) {
-  // const [percent, setPercent] = useState<number>(0);
-  // const [isAnimating, setIsAnimating] = useState(false);
-  // const [animationStartTime, setAnimationStartTime] = useState<number | null>(
-  //   null
-  // );
-  // const [pausedTime, setPausedTime] = useState<number | null>(null);
-  // const animationDuration = 8000;
-
-  // const startAnimation = () => {
-  //   setPercent(0); // Reset progress to 0 when starting
-  //   setIsAnimating(true);
-  //   setPausedTime(Date.now());
-  //   if (pausedTime !== null) {
-  //     setAnimationStartTime(Date.now() - pausedTime);
-  //     setPausedTime(null);
-  //   } else {
-  //     setAnimationStartTime(Date.now());
-  //   }
-  // };
-
-  // const stopAnimation = () => {
-  //   setIsAnimating(false);
-  //   setPausedTime(Date.now() - animationStartTime!);
-  // };
-
-  // useEffect(() => {
-  //   if (isAnimating) {
-  //     const interval = setInterval(() => {
-  //       const elapsedTime = Date.now() - animationStartTime!;
-  //       const progressPercentage = Math.min(
-  //         100,
-  //         (elapsedTime / animationDuration) * 100
-  //       );
-  //       setPercent(progressPercentage);
-  //     }, 100);
-
-  //     console.log(interval, "thsi si interval elapsed time");
-
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [isAnimating, animationStartTime]);
   const initialTime = 3000; // in seconds
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [progressBarPercent, setProgressBarPercent] = useState(0);
@@ -51,10 +10,10 @@ function Kagel({ selectedTask }: { selectedTask: string }) {
   const timerId = useRef<NodeJS.Timeout | undefined | number>(undefined);
 
   const startTimer = () => {
-      if (progressBarPercent === 100) {
-        setTimeLeft(initialTime);
-        setProgressBarPercent(0);
-      }
+    if (progressBarPercent === 100) {
+      setTimeLeft(initialTime);
+      setProgressBarPercent(0);
+    }
     setIsRunning(true);
   };
 

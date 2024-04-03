@@ -3,7 +3,32 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import TaskPage from "./TaskPage";
 
-function AuthMyTask() {
+function AuthMyTask({
+  blog,
+  quiz,
+  sort_note,
+  video,
+  reward,
+}: {
+  blog: {
+    title: string | undefined;
+    content: string | undefined;
+  };
+  quiz: {
+    question: string | undefined;
+    answer: string | undefined;
+    quizOptions: string | undefined;
+  };
+  sort_note: {
+    sortNoteContent: string | undefined;
+  };
+  video: {
+    videoUrl: string | undefined;
+  };
+  reward: {
+    rewardContant: string | undefined;
+  };
+}) {
   const router = useRouter();
 
   const tasks = [
@@ -101,6 +126,11 @@ function AuthMyTask() {
         selectedTaskIndex={selectedTaskIndex}
         handlePrevious={handlePrevious}
         handleNext={handleNext}
+        blog={blog}
+        quiz={quiz}
+        sort_note={sort_note}
+        video={video}
+        reward={reward}
       />
     </>
   );

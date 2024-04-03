@@ -1,11 +1,17 @@
-function SuggestedBlog({ selectedTask }: { selectedTask: string }) {
+function SuggestedBlog({
+  selectedTask,
+  blog,
+}: {
+  selectedTask: string;
+  blog: {
+    title: string | undefined;
+    content: string | undefined;
+  };
+}) {
   return (
     <div>
       {selectedTask === "suggestBlog" && (
-        <p className="">
-          Receive personalized suggestions for blog articles related to recovery
-          and mindfulness.
-        </p>
+        <p className="">{blog.content}</p>
         /* Add suggested blog component here */
       )}
     </div>

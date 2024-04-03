@@ -1,11 +1,17 @@
-function Reward({ selectedTask }: { selectedTask: string }) {
+function Reward({
+  selectedTask,
+  reward,
+}: {
+  selectedTask: string;
+  reward: {
+    rewardContant: string | undefined;
+  };
+}) {
   return (
     <div>
       {" "}
       {selectedTask === "rewards" && (
-        <p className="">
-          Stay committed and earn rewards for completing tasks.
-        </p>
+        <p className="">{reward.rewardContant}</p>
         /* Add rewards component here */
       )}
     </div>

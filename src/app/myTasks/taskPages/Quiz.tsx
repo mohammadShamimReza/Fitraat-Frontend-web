@@ -1,6 +1,16 @@
 import { useState } from "react";
 
-function Quiz({ selectedTask }: { selectedTask: string }) {
+function Quiz({
+  selectedTask,
+  quiz,
+}: {
+  selectedTask: string;
+  quiz: {
+    question: string | undefined;
+    answer: string | undefined;
+    quizOptions: string | undefined;
+  };
+}) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
   const handleOptionClick = (option: string) => {
@@ -10,9 +20,7 @@ function Quiz({ selectedTask }: { selectedTask: string }) {
     <div>
       {selectedTask === "quiz" && (
         <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
-          <h2 className="text-lg font-semibold mb-4">
-            What is the capital of France?
-          </h2>
+          <h2 className="text-lg font-semibold mb-4">{quiz.question}</h2>
           <div className="grid grid-cols-1 gap-4">
             {["Paris", "London", "Berlin", "Madrid"].map((option, index) => (
               <button

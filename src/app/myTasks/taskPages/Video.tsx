@@ -1,4 +1,12 @@
-function Video({ selectedTask }: { selectedTask: string }) {
+function Video({
+  selectedTask,
+  video,
+}: {
+  selectedTask: string;
+  video: {
+    videoUrl: string | undefined;
+  };
+}) {
   return (
     <div>
       {selectedTask === "video" && (
@@ -7,7 +15,7 @@ function Video({ selectedTask }: { selectedTask: string }) {
             width="100%"
             height="380px"
             className="rounded-xl"
-            src={`https://www.youtube.com/embed/RBSGKlAvoiM`}
+            src={video.videoUrl || `https://www.youtube.com/embed/RBSGKlAvoiM`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen

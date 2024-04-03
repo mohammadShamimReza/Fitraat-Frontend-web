@@ -1,12 +1,17 @@
-function SortNote({ selectedTask }: { selectedTask: string }) {
+function SortNote({
+  selectedTask,
+  sort_note,
+}: {
+  selectedTask: string;
+  sort_note: {
+    sortNoteContent: string | undefined;
+  };
+}) {
   return (
     <div>
       {" "}
       {selectedTask === "sortNote" && (
-        <p className="">
-          Reflect on your progress and thoughts with short note-taking
-          exercises.
-        </p>
+        <p className="">{sort_note.sortNoteContent}</p>
         /* Add note sorting component here */
       )}
     </div>

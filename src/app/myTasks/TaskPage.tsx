@@ -16,6 +16,11 @@ function TaskPage({
   selectedTaskIndex,
   handlePrevious,
   handleNext,
+  blog,
+  quiz,
+  sort_note,
+  video,
+  reward,
 }: {
   localStorageData: {
     video: boolean;
@@ -30,6 +35,24 @@ function TaskPage({
   selectedTaskIndex: number;
   handlePrevious: () => void;
   handleNext: () => void;
+  blog: {
+    title: string | undefined;
+    content: string | undefined;
+  };
+  quiz: {
+    question: string | undefined;
+    answer: string | undefined;
+    quizOptions: string | undefined;
+  };
+  sort_note: {
+    sortNoteContent: string | undefined;
+  };
+  video: {
+    videoUrl: string | undefined;
+  };
+  reward: {
+    rewardContant: string | undefined;
+  };
 }) {
   const tasks = [
     "video",
@@ -102,12 +125,12 @@ function TaskPage({
                 </h3>
               </div>
               <div className="basis-4/6">
-                <Video selectedTask={selectedTask} />
+                <Video selectedTask={selectedTask} video={video} />
                 <Kagel selectedTask={selectedTask} />
-                <SortNote selectedTask={selectedTask} />
-                <Quiz selectedTask={selectedTask} />
-                <Reward selectedTask={selectedTask} />
-                <SuggestedBlog selectedTask={selectedTask} />
+                <SortNote selectedTask={selectedTask} sort_note={sort_note} />
+                <Quiz selectedTask={selectedTask} quiz={quiz} />
+                <Reward selectedTask={selectedTask} reward={reward} />
+                <SuggestedBlog selectedTask={selectedTask} blog={blog} />
               </div>
               <div className="basis-1/6 flex justify-center align-bottom flex-col">
                 <div className="flex justify-between mt-4">
