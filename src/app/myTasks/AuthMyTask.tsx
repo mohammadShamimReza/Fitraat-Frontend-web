@@ -1,5 +1,7 @@
 "use client";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import Kagel from "./taskPages/Kagel";
 import Quiz from "./taskPages/Quiz";
@@ -8,30 +10,97 @@ import SortNote from "./taskPages/SortNote";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
-function AuthMyTask({
-  tasks,
-  authLocalStorageData,
-  handleTaskClick,
-  selectedTask,
-  selectedTaskIndex,
-  handlePrevious,
-  handleNext,
-}: {
-  tasks: string[];
-  authLocalStorageData: {
-    video: boolean;
-    kagel: boolean;
-    sortNote: boolean;
-    quiz: boolean;
-    rewards: boolean;
-    suggestBlog: boolean;
+function AuthMyTask() {
+  const router = useRouter();
+
+  const tasks = [
+    "video",
+    "kagel",
+    "sortNote",
+    "quiz",
+    "rewards",
+    "suggestBlog",
+  ];
+
+  const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
+  const selectedTask = tasks[selectedTaskIndex];
+
+  const [authLocalStorageData, setAuthLocalStorageData] = useState({
+    video: false,
+    kagel: false,
+    sortNote: false,
+    quiz: false,
+    rewards: false,
+    suggestBlog: false,
+  });
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("AuthDay");
+    if (storedData) {
+      setAuthLocalStorageData(JSON.parse(storedData));
+    } else {
+      localStorage.setItem("AuthDay", JSON.stringify(authLocalStorageData));
+    }
+  }, []);
+
+  const initialRender = useRef(true);
+
+  useEffect(() => {
+    if (!initialRender.current) {
+      if (selectedTask === "suggestBlog") {
+        localStorage.setItem(
+          "UnAuthDay",
+          JSON.stringify({
+            video: false,
+            kagel: false,
+            sortNote: false,
+            quiz: false,
+            rewards: false,
+            suggestBlog: false,
+          })
+        );
+      } else {
+        localStorage.setItem("AuthDay", JSON.stringify(authLocalStorageData));
+      }
+    } else {
+      initialRender.current = false;
+    }
+  }, [authLocalStorageData]);
+
+  const handleTaskClick = (index: number) => {
+    setSelectedTaskIndex(index);
   };
-  handleTaskClick: (index: number) => void;
-  selectedTask: string;
-  selectedTaskIndex: number;
-  handlePrevious: () => void;
-  handleNext: () => void;
-}) {
+
+  const handlePrevious = () => {
+    if (selectedTaskIndex > 0) {
+      setSelectedTaskIndex(selectedTaskIndex - 1);
+    }
+  };
+  const handleNext = () => {
+    setAuthLocalStorageData((prevState) => ({
+      ...prevState,
+      [selectedTask]: true,
+    }));
+
+    if (selectedTask === "suggestBlog") {
+      localStorage.setItem(
+        "AuthDay",
+        JSON.stringify({
+          video: false,
+          kagel: false,
+          sortNote: false,
+          quiz: false,
+          rewards: false,
+          suggestBlog: false,
+        })
+      );
+      router.push("/");
+    }
+    if (selectedTaskIndex < tasks.length - 1) {
+      setSelectedTaskIndex(selectedTaskIndex + 1);
+    }
+  };
+
   return (
     <>
       <div className="container mx-auto px-4 py-8">

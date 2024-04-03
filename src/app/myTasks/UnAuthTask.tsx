@@ -1,5 +1,7 @@
 "use client";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import Kagel from "./taskPages/Kagel";
 import Quiz from "./taskPages/Quiz";
@@ -8,30 +10,95 @@ import SortNote from "./taskPages/SortNote";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
-function UnAuthTask({
-  tasks,
-  UnAuthLocalStorageData,
-  handleTaskClick,
-  selectedTask,
-  selectedTaskIndex,
-  handlePrevious,
-  handleNext,
-}: {
-  tasks: string[];
-  UnAuthLocalStorageData: {
-    video: boolean;
-    kagel: boolean;
-    sortNote: boolean;
-    quiz: boolean;
-    rewards: boolean;
-    suggestBlog: boolean;
+function UnAuthTask({}) {
+  const router = useRouter();
+
+  const tasks = [
+    "video",
+    "kagel",
+    "sortNote",
+    "quiz",
+    "rewards",
+    "suggestBlog",
+  ];
+
+  const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
+  const selectedTask = tasks[selectedTaskIndex];
+  const [UnAuthLocalStorageData, setUnAuthLocalStorageData] = useState({
+    video: false,
+    kagel: false,
+    sortNote: false,
+    quiz: false,
+    rewards: false,
+    suggestBlog: false,
+  });
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("UnAuthDay");
+    if (storedData) {
+      setUnAuthLocalStorageData(JSON.parse(storedData));
+    } else {
+      localStorage.setItem("UnAuthDay", JSON.stringify(UnAuthLocalStorageData));
+    }
+  }, []);
+
+  const unAuthInitialRender = useRef(true);
+
+  useEffect(() => {
+    if (!unAuthInitialRender.current) {
+      if (selectedTask === "suggestBlog") {
+        localStorage.setItem(
+          "UnAuthDay",
+          JSON.stringify({
+            video: false,
+            kagel: false,
+            sortNote: false,
+            quiz: false,
+            rewards: false,
+            suggestBlog: false,
+          })
+        );
+      } else {
+        localStorage.setItem(
+          "UnAuthDay",
+          JSON.stringify(UnAuthLocalStorageData)
+        );
+      }
+    } else {
+      unAuthInitialRender.current = false;
+    }
+  }, [UnAuthLocalStorageData]);
+
+  const handleTaskClick = (index: number) => {
+    setSelectedTaskIndex(index);
   };
-  handleTaskClick: (index: number) => void;
-  selectedTask: string;
-  selectedTaskIndex: number;
-  handlePrevious: () => void;
-  handleNext: () => void;
-}) {
+
+  const handlePrevious = () => {
+    if (selectedTaskIndex > 0) {
+      setSelectedTaskIndex(selectedTaskIndex - 1);
+    }
+  };
+  const handleNext = () => {
+    setUnAuthLocalStorageData((prevState) => ({
+      ...prevState,
+      [selectedTask]: true,
+    }));
+
+    if (selectedTask === "suggestBlog") {
+      let unAuthDayId = localStorage.getItem("unAuthDayId");
+
+      if (unAuthDayId === null) {
+        localStorage.setItem("unAuthDayId", "1");
+      } else if (unAuthDayId !== null) {
+        let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
+        localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
+      }
+      router.push("/");
+    }
+    if (selectedTaskIndex < tasks.length - 1) {
+      setSelectedTaskIndex(selectedTaskIndex + 1);
+    }
+  };
   return (
     <>
       <div className="container mx-auto px-4 py-8">
