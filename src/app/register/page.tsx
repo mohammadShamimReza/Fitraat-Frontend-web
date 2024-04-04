@@ -23,7 +23,9 @@ function RegisterPage() {
     phone: "",
     gender: "",
     language: "",
+    currentDay: 1,
   });
+  console.log(formData);
   const [registerUser, { error }] = useRegisterUserMutation();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {

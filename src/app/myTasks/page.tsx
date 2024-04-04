@@ -62,7 +62,7 @@ const MyTasks: React.FC = () => {
       }
     }
   }, [authenticatedUserInfoData]);
-  console.log(blog, quiz, sort_note, video, reward);
+  console.log(authenticatedUserInfoData);
 
   if (
     authenticatedUserInfoData === undefined &&

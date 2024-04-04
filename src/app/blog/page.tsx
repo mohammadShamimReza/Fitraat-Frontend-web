@@ -17,6 +17,7 @@ function Page() {
   const [searchTerm, setSearchTerm] = useState<undefined | string>(undefined);
   const { data: blogData, isLoading, isSuccess } = useGetBlogsQuery({});
 
+
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
   };
