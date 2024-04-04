@@ -11,7 +11,7 @@ function SortNote({
     <div>
       {" "}
       {selectedTask === "sortNote" && (
-        <p className="">{sort_note.sortNoteContent}</p>
+        <p className="">{sort_note?.sortNoteContent}</p>
         /* Add note sorting component here */
       )}
     </div>

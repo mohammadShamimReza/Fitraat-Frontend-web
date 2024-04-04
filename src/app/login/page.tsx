@@ -58,7 +58,7 @@ function LoginPage() {
         const result: any | Error = await loginUser(formData);
         console.log(result);
         if (result?.error) {
-          message.error("Use inValid credentials");
+          message.error("User is not valid");
         } else {
           if (typeof window !== "undefined") {
             window.location.reload();

@@ -11,7 +11,7 @@ function SuggestedBlog({
   return (
     <div>
       {selectedTask === "suggestBlog" && (
-        <p className="">{blog.content}</p>
+        <p className="">{blog?.content}</p>
         /* Add suggested blog component here */
       )}
     </div>

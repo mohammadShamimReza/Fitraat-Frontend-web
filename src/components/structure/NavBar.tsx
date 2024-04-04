@@ -97,7 +97,7 @@ function NavBar() {
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center text-lg font-bold">
-                <Link href={"/home"}>
+                <Link href={"/"}>
                   {" "}
                   <Image src={siteLogo} width={70} alt="website logo" />
                 </Link>
