@@ -10,7 +10,6 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
   const { data: authenticatedDayData, isError } =
     useGetDaysByDayIdQuery(authDayDataId);
 
-  console.log(authenticatedDayData);
 
   const [blog, setBlog] = useState<{
     title: string | undefined;
@@ -63,7 +62,6 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
       }
     }
   }, [authenticatedDayData]);
-  console.log(authenticatedDayData, authDayDataId);
 
   const tasks = [
     "video",

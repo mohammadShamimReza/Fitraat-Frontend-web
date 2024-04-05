@@ -1,4 +1,5 @@
 "use client";
+import { KegelTimes } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { FaCheckCircle } from "react-icons/fa";
 import Kagel from "./taskPages/Kagel";
@@ -21,6 +22,7 @@ function TaskPage({
   sort_note,
   video,
   reward,
+  kegel,
 }: {
   localStorageData: {
     video: boolean;
@@ -53,6 +55,7 @@ function TaskPage({
   reward: {
     rewardContant: string | undefined;
   };
+  kegel: KegelTimes[] | undefined;
 }) {
   const tasks = [
     "video",
