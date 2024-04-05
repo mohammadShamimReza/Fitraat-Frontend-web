@@ -1,35 +1,69 @@
 "use client";
+import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import TaskPage from "./TaskPage";
 
-function AuthMyTask({
-  blog,
-  quiz,
-  sort_note,
-  video,
-  reward,
-}: {
-  blog: {
+function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
+  const router = useRouter();
+
+  const { data: authenticatedDayData, isError } =
+    useGetDaysByDayIdQuery(authDayDataId);
+
+  console.log(authenticatedDayData);
+
+  const [blog, setBlog] = useState<{
     title: string | undefined;
     content: string | undefined;
-  };
-  quiz: {
+  }>({
+    title: "",
+    content: "",
+  });
+  const [kegel, setKegel] = useState();
+  const [quiz, setQuiz] = useState<{
     question: string | undefined;
     answer: string | undefined;
     quizOptions: string | undefined;
-  };
-  sort_note: {
+  }>({
+    question: "",
+    answer: "",
+    quizOptions: "",
+  });
+  const [sort_note, setSort_note] = useState<{
     sortNoteContent: string | undefined;
-  };
-  video: {
-    videoUrl: string | undefined;
-  };
-  reward: {
-    rewardContant: string | undefined;
-  };
-}) {
-  const router = useRouter();
+  }>({
+    sortNoteContent: "",
+  });
+  const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
+    videoUrl: "",
+  });
+  const [reward, setReward] = useState<{ rewardContant: string | undefined }>({
+    rewardContant: "",
+  });
+
+  useEffect(() => {
+    if (authenticatedDayData) {
+      const authDayData = authenticatedDayData?.data[0].attributes;
+      if (authDayData) {
+        setBlog({
+          title: authDayData.blog.data.attributes.title,
+          content: authDayData.blog.data.attributes.content,
+        });
+        setQuiz({
+          answer: authDayData.quiz.answer,
+          question: authDayData.quiz.question,
+          quizOptions: authDayData.quiz.quizOptions,
+        });
+        setSort_note({
+          sortNoteContent:
+            authDayData.sort_note.data.attributes.sortNoteContent,
+        });
+        setVideo({ videoUrl: authDayData.video.data.attributes.VideoUrl });
+        setReward({ rewardContant: authDayData.reward });
+      }
+    }
+  }, [authenticatedDayData]);
+  console.log(authenticatedDayData, authDayDataId);
 
   const tasks = [
     "video",

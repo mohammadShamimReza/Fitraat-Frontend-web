@@ -8,7 +8,6 @@ export const blogApi = baseApi.injectEndpoints({
     getBlogs: builder.query({
       query: () => BLOG,
       transformResponse: (rawResult: BlogData) => {
-        console.log(rawResult);
         return rawResult;
       },
     }),

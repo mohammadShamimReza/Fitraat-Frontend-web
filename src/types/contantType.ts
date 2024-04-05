@@ -120,6 +120,7 @@ export interface Day {
       publishedAt: string;
     };
   };
+  id: number;
 }
 
 export interface DayData {
@@ -171,68 +172,69 @@ export interface UserDataWithDay {
   confirmed: boolean;
   country: string;
   createdAt: string;
-  currentDay: {
-    DayId: number;
-    createdAt: string;
+  currentDay: number;
+  // {
+  //   DayId: number;
+  //   createdAt: string;
 
-    updatedAt: string;
-    quiz: {
-      id: number;
-      question: string;
-      answer: string;
-      quizOptions: string;
-      quizId: number;
-      createdAt: string;
-      updatedAt: string;
-      publishedAt: string;
-    };
-    blog: {
-      BlogId: number;
-      topic: string;
-      content: string;
-      title: string;
-      imageURL: string;
-      keywords: {
-        keyword: string[];
-      };
-      publishedAt: string;
-      updatedAt: string;
-      viewCount: string;
-    };
-    kegel: {
-      KagelId: number;
-      createdAt: string;
-      kegel_times: {
-        squeeze: number;
-        stop: number;
-        createdAt: string;
-        publishedAt: string;
-        updatedAt: string;
-      }[];
-      publishedAt: string;
-      updatedAt: string;
-    };
-    publishedAt: string;
-    reward: string;
-    sort_note: {
-      sortNoteId: number;
-      sortNoteContent: string;
-      createdAt: string;
-      publishedAt: string;
-      updatedAt: string;
-    };
-    video: {
-      vedeoId: number;
-      createdAt: string;
+  //   updatedAt: string;
+  //   quiz: {
+  //     id: number;
+  //     question: string;
+  //     answer: string;
+  //     quizOptions: string;
+  //     quizId: number;
+  //     createdAt: string;
+  //     updatedAt: string;
+  //     publishedAt: string;
+  //   };
+  //   blog: {
+  //     BlogId: number;
+  //     topic: string;
+  //     content: string;
+  //     title: string;
+  //     imageURL: string;
+  //     keywords: {
+  //       keyword: string[];
+  //     };
+  //     publishedAt: string;
+  //     updatedAt: string;
+  //     viewCount: string;
+  //   };
+  //   kegel: {
+  //     KagelId: number;
+  //     createdAt: string;
+  //     kegel_times: {
+  //       squeeze: number;
+  //       stop: number;
+  //       createdAt: string;
+  //       publishedAt: string;
+  //       updatedAt: string;
+  //     }[];
+  //     publishedAt: string;
+  //     updatedAt: string;
+  //   };
+  //   publishedAt: string;
+  //   reward: string;
+  //   sort_note: {
+  //     sortNoteId: number;
+  //     sortNoteContent: string;
+  //     createdAt: string;
+  //     publishedAt: string;
+  //     updatedAt: string;
+  //   };
+  //   video: {
+  //     vedeoId: number;
+  //     createdAt: string;
 
-      updatedAt: string;
-      publishedAt: string;
+  //     updatedAt: string;
+  //     publishedAt: string;
 
-      VideoUrl: string;
-      videoId: number;
-    };
-    id: number;
-  } | null;
+  //     VideoUrl: string;
+  //     videoId: number;
+  //   };
+  //   id: number;
+  // } | null;
   email: string;
   gender: string;
   id: number;
