@@ -2,7 +2,7 @@
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { KegelTimes } from "@/types/contantType";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import TaskPage from "./TaskPage";
 
 function UnAuthTask({}) {
@@ -19,46 +19,26 @@ function UnAuthTask({}) {
 
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
   const selectedTask = tasks[selectedTaskIndex];
-  const [localStorageData, setLocalStorageData] = useState({
+
+  const initialLocalStorageData = localStorage.getItem("UnAuthDay");
+  const defaultLocalStorageData = {
     video: false,
     kagel: false,
     sortNote: false,
     quiz: false,
     rewards: false,
     suggestBlog: false,
-  });
+  };
 
+  const [localStorageData, setLocalStorageData] = useState(
+    initialLocalStorageData
+      ? JSON.parse(initialLocalStorageData)
+      : defaultLocalStorageData
+  );
+
+  // Update local storage whenever localStorageData changes
   useEffect(() => {
-    const storedData = localStorage.getItem("UnAuthDay");
-    if (storedData) {
-      setLocalStorageData(JSON.parse(storedData));
-    } else {
-      localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
-    }
-  }, []);
-
-  const unAuthInitialRender = useRef(true);
-
-  useEffect(() => {
-    if (!unAuthInitialRender.current) {
-      if (selectedTask === "suggestBlog") {
-        localStorage.setItem(
-          "UnAuthDay",
-          JSON.stringify({
-            video: false,
-            kagel: false,
-            sortNote: false,
-            quiz: false,
-            rewards: false,
-            suggestBlog: false,
-          })
-        );
-      } else {
-        localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
-      }
-    } else {
-      unAuthInitialRender.current = false;
-    }
+    localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
   }, [localStorageData]);
 
   const handleTaskClick = (index: number) => {
@@ -71,13 +51,25 @@ function UnAuthTask({}) {
     }
   };
   const handleNext = () => {
-    setLocalStorageData((prevState) => ({
+    setLocalStorageData((prevState: typeof localStorageData) => ({
       ...prevState,
       [selectedTask]: true,
     }));
+    console.log("third");
 
     if (selectedTask === "suggestBlog") {
       let unAuthDayId = localStorage.getItem("unAuthDayId");
+      localStorage.setItem(
+        "UnAuthDay",
+        JSON.stringify({
+          video: false,
+          kagel: false,
+          sortNote: false,
+          quiz: false,
+          rewards: false,
+          suggestBlog: false,
+        })
+      );
 
       if (unAuthDayId === null) {
         localStorage.setItem("unAuthDayId", "1");

@@ -1,7 +1,7 @@
 "use client";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import TaskPage from "./TaskPage";
 
 function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
@@ -9,7 +9,6 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
 
   const { data: authenticatedDayData, isError } =
     useGetDaysByDayIdQuery(authDayDataId);
-
 
   const [blog, setBlog] = useState<{
     title: string | undefined;
@@ -74,46 +73,24 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
 
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
   const selectedTask = tasks[selectedTaskIndex];
-
-  const [localStorageData, setLocalStorageData] = useState({
+  const initialLocalStorageData = localStorage.getItem("AuthDay");
+  const defaultLocalStorageData = {
     video: false,
     kagel: false,
     sortNote: false,
     quiz: false,
     rewards: false,
     suggestBlog: false,
-  });
+  };
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("AuthDay");
-    if (storedData) {
-      setLocalStorageData(JSON.parse(storedData));
-    } else {
-      localStorage.setItem("AuthDay", JSON.stringify(localStorageData));
-    }
-  }, []);
-  const initialRender = useRef(true);
-  useEffect(() => {
-    if (!initialRender.current) {
-      if (selectedTask === "suggestBlog") {
-        localStorage.setItem(
-          "UnAuthDay",
-          JSON.stringify({
-            video: false,
-            kagel: false,
-            sortNote: false,
-            quiz: false,
-            rewards: false,
-            suggestBlog: false,
-          })
-        );
-      } else {
-        localStorage.setItem("AuthDay", JSON.stringify(localStorageData));
-      }
-    } else {
-      initialRender.current = false;
-    }
-  }, [localStorageData]);
+  const [localStorageData, setLocalStorageData] = useState(
+    initialLocalStorageData
+      ? JSON.parse(initialLocalStorageData)
+      : defaultLocalStorageData
+  );
+useEffect(() => {
+  localStorage.setItem("AuthDay", JSON.stringify(localStorageData));
+}, [localStorageData]);
 
   const handleTaskClick = (index: number) => {
     setSelectedTaskIndex(index);
@@ -125,7 +102,7 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
     }
   };
   const handleNext = () => {
-    setLocalStorageData((prevState) => ({
+    setLocalStorageData((prevState: typeof localStorageData) => ({
       ...prevState,
       [selectedTask]: true,
     }));
