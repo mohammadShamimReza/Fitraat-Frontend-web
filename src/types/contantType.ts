@@ -42,8 +42,7 @@ export interface SingleBlogData {
 
 export interface KegelTimes {
   attributes: {
-    squeeze: number;
-    stop: number;
+    times: string;
     createdAt: string;
     publishedAt: string;
     updatedAt: string;
