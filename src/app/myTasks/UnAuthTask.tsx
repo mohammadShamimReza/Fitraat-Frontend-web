@@ -51,23 +51,11 @@ function UnAuthTask({}) {
     }
   };
   const handleNext = () => {
-    setLocalStorageData((prevState: typeof localStorageData) => ({
-      ...prevState,
-      [selectedTask]: true,
-    }));
-
     if (selectedTask === "suggestBlog") {
       let unAuthDayId = localStorage.getItem("unAuthDayId");
       localStorage.setItem(
         "UnAuthDay",
-        JSON.stringify({
-          video: false,
-          kagel: false,
-          sortNote: false,
-          quiz: false,
-          rewards: false,
-          suggestBlog: false,
-        })
+        JSON.stringify(defaultLocalStorageData)
       );
 
       if (unAuthDayId === null) {
@@ -78,6 +66,11 @@ function UnAuthTask({}) {
         router.push("/");
       }
       router.push("/");
+    } else {
+      setLocalStorageData((prevState: typeof localStorageData) => ({
+        ...prevState,
+        [selectedTask]: true,
+      }));
     }
     if (selectedTaskIndex < tasks.length - 1) {
       setSelectedTaskIndex(selectedTaskIndex + 1);
