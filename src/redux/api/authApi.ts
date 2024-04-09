@@ -42,9 +42,10 @@ export const daysApi = baseApi.injectEndpoints({
     updateUserDay: builder.mutation({
       query: (body) => ({
         url: `users/${body.userId}`,
-        method: "POST",
+        method: "PUT",
         body: {
-          currentDay: body.dayId,
+          currentDay: body.currentDay,
+          compliteDay: body.currentDay,
         },
       }),
       transformResponse: (rawResult: UserData | Error) => {

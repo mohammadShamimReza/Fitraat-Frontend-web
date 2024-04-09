@@ -13,6 +13,7 @@ const MyTasks: React.FC = () => {
   } = useGetUserInfoQuery();
 
   const authDayDataId = authenticatedUserInfoData?.currentDay!;
+  const userId = authenticatedUserInfoData?.id!;
 
   if (
     authenticatedUserInfoData === undefined &&
@@ -28,7 +29,7 @@ const MyTasks: React.FC = () => {
   ) {
     return (
       // ! authenticate user render
-      <AuthMyTask authDayDataId={authDayDataId} />
+      <AuthMyTask authDayDataId={authDayDataId} userId={userId} />
     );
   }
 };

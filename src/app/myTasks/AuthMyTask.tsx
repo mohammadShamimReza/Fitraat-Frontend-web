@@ -1,11 +1,19 @@
 "use client";
+import { useUpdateUserDayMutation } from "@/redux/api/authApi";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { KegelTimes } from "@/types/contantType";
+import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import TaskPage from "./TaskPage";
 
-function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
+function AuthMyTask({
+  authDayDataId,
+  userId,
+}: {
+  authDayDataId: number;
+  userId: number;
+}) {
   const router = useRouter();
 
   const tasks = [
@@ -19,6 +27,8 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
 
   const { data: authenticatedDayData, isError } =
     useGetDaysByDayIdQuery(authDayDataId);
+
+  const [updataUserDay] = useUpdateUserDayMutation();
 
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
   const selectedTask = tasks[selectedTaskIndex];
@@ -49,7 +59,7 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
       setSelectedTaskIndex(selectedTaskIndex - 1);
     }
   };
-  const handleNext = () => {
+  const handleNext = async () => {
     setLocalStorageData((prevState: typeof localStorageData) => ({
       ...prevState,
       [selectedTask]: true,
@@ -67,6 +77,15 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
           suggestBlog: false,
         })
       );
+      const result = await updataUserDay({
+        currentDay: authDayDataId + 1,
+        compliteDay: authDayDataId,
+        userId: userId,
+      });
+      message.success(
+        "congratulation!! You have successfully conplied this day"
+      );
+      console.log(result);
       router.push("/");
     }
     if (selectedTaskIndex < tasks.length - 1) {
@@ -102,6 +121,8 @@ function AuthMyTask({ authDayDataId }: { authDayDataId: number }) {
   const [reward, setReward] = useState<{ rewardContant: string | undefined }>({
     rewardContant: "",
   });
+
+  console.log(authenticatedDayData);
 
   useEffect(() => {
     if (authenticatedDayData) {
