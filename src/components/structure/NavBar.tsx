@@ -43,10 +43,9 @@ function NavBar() {
     removeTokenFromCookies();
     dispatch(removeAuthToken(null));
 
-    if (typeof window !== "undefined") {
-      window.location.reload();
-      router.push("/");
-    }
+      if (typeof window !== "undefined") {
+        window.location.href = "/"; // Directly set the href to trigger page reload
+      }
   };
   return (
     <div className="mb-5 border rounded-xl shadow-md  mt-5">

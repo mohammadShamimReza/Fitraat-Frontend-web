@@ -11,7 +11,6 @@ function SuggestedBlog({
     content: string | undefined;
   };
 }) {
-  console.log(blog.id);
   return (
     <div>
       {selectedTask === "suggestBlog" && (

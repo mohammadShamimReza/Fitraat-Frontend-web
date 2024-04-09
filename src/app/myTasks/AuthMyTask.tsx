@@ -1,6 +1,8 @@
 "use client";
 import { useUpdateUserDayMutation } from "@/redux/api/authApi";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { storeCurrentTask } from "@/redux/slice/taskSlice";
 import { KegelTimes } from "@/types/contantType";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
@@ -30,8 +32,11 @@ function AuthMyTask({
 
   const [updataUserDay] = useUpdateUserDayMutation();
 
+  const currentTask = useAppSelector((state) => state.taskSlice.currentTask);
+  const dispatch = useAppDispatch();
+
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
-  const selectedTask = tasks[selectedTaskIndex];
+  const selectedTask = currentTask || tasks[selectedTaskIndex];
   const initialLocalStorageData = localStorage.getItem("AuthDay");
   const defaultLocalStorageData = {
     video: false,
@@ -41,7 +46,6 @@ function AuthMyTask({
     rewards: false,
     suggestBlog: false,
   };
-  console.log(selectedTask);
   const [localStorageData, setLocalStorageData] = useState(
     initialLocalStorageData
       ? JSON.parse(initialLocalStorageData)
@@ -53,11 +57,13 @@ function AuthMyTask({
 
   const handleTaskClick = (index: number) => {
     setSelectedTaskIndex(index);
+    dispatch(storeCurrentTask(tasks[index]));
   };
 
   const handlePrevious = () => {
     if (selectedTaskIndex > 0) {
       setSelectedTaskIndex(selectedTaskIndex - 1);
+      dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
     }
   };
   const handleNext = async () => {
@@ -81,6 +87,7 @@ function AuthMyTask({
     }
     if (selectedTaskIndex < tasks.length - 1) {
       setSelectedTaskIndex(selectedTaskIndex + 1);
+      dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
     }
   };
 

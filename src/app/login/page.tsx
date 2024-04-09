@@ -59,15 +59,15 @@ function LoginPage() {
         if (result?.error) {
           message.error("User is not valid");
         } else {
-          if (typeof window !== "undefined") {
-            window.location.reload();
-          }
-          router.push("/myTasks");
           message.success("Login successfully");
           storeTokenInCookie(result?.data?.jwt);
           dispatch(storeAuthToken(result?.data?.jwt));
 
           dispatch(storeUserInfo(result?.data?.user));
+          router.push("/myTasks");
+          // if (typeof window !== "undefined") {
+          //   window.location.reload();
+          // }
         }
       } catch (error) {
         console.log(error);
