@@ -41,6 +41,7 @@ function AuthMyTask({
     rewards: false,
     suggestBlog: false,
   };
+  console.log(selectedTask);
   const [localStorageData, setLocalStorageData] = useState(
     initialLocalStorageData
       ? JSON.parse(initialLocalStorageData)
@@ -48,14 +49,7 @@ function AuthMyTask({
   );
   useEffect(() => {
     localStorage.setItem("AuthDay", JSON.stringify(localStorageData));
-    console.log("first");
   }, [localStorageData]);
-
-  console.log(
-    localStorageData,
-    defaultLocalStorageData,
-    initialLocalStorageData
-  );
 
   const handleTaskClick = (index: number) => {
     setSelectedTaskIndex(index);
@@ -77,6 +71,7 @@ function AuthMyTask({
       message.success(
         "congratulation!! You have successfully conplied this day"
       );
+      window.location.reload();
       router.push("/");
     } else {
       setLocalStorageData((prevState: typeof localStorageData) => ({
@@ -90,9 +85,11 @@ function AuthMyTask({
   };
 
   const [blog, setBlog] = useState<{
+    id: number | undefined;
     title: string | undefined;
     content: string | undefined;
   }>({
+    id: 1,
     title: "",
     content: "",
   });
@@ -118,12 +115,12 @@ function AuthMyTask({
     rewardContant: "",
   });
 
-
   useEffect(() => {
     if (authenticatedDayData) {
       const authDayData = authenticatedDayData?.data[0].attributes;
       if (authDayData) {
         setBlog({
+          id: authDayData.blog.data.id,
           title: authDayData.blog.data.attributes.title,
           content: authDayData.blog.data.attributes.content,
         });

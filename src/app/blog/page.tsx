@@ -8,7 +8,6 @@ import { Controller, useForm } from "react-hook-form";
 import { useGetBlogsQuery } from "@/redux/api/blogApi";
 import { Blog } from "@/types/contantType";
 import * as yup from "yup";
-import BlogType from "./BlogType";
 import Blogs from "./Blogs";
 import Pagination from "./Pagination";
 import Trendings from "./Trendings";
@@ -16,7 +15,6 @@ import Trendings from "./Trendings";
 function Page() {
   const [searchTerm, setSearchTerm] = useState<undefined | string>(undefined);
   const { data: blogData, isLoading, isSuccess } = useGetBlogsQuery({});
-
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
@@ -34,7 +32,7 @@ function Page() {
     <div>
       <div className="">
         <div className="flex flex-col justify-between  gap-3 sm:flex-row">
-          <BlogType />
+          {/* <BlogType /> */}
           <div className="order-3">
             <Trendings />
           </div>

@@ -38,7 +38,7 @@ function Trendings() {
           </div>
         </div>
       </div>
-      <br />
+      {/* <br />
       <br />
       <div className=" flex justify-end align-middle">
         <Link
@@ -49,7 +49,7 @@ function Trendings() {
         </Link>
       </div>
       <br />
-      <br />
+      <br /> */}
     </div>
   );
 }

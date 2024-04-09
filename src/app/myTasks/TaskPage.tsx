@@ -38,6 +38,7 @@ function TaskPage({
   handlePrevious: () => void;
   handleNext: () => void;
   blog: {
+    id: number | undefined;
     title: string | undefined;
     content: string | undefined;
   };
@@ -123,7 +124,7 @@ function TaskPage({
               className="p-3 rounded-lg shadow-md    mx-auto flex flex-col justify-evenly "
             >
               <div className="basis-1/6">
-                <h3 className="text-xl font-bold ">
+                <h3 className="text-2xl font-bold text-center">
                   {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
                 </h3>
               </div>

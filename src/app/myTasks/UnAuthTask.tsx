@@ -19,79 +19,84 @@ function UnAuthTask({}) {
 
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
   const selectedTask = tasks[selectedTaskIndex];
+    console.log(selectedTask);
 
-  const initialLocalStorageData = localStorage.getItem("UnAuthDay");
-  const defaultLocalStorageData = {
-    video: false,
-    kagel: false,
-    sortNote: false,
-    quiz: false,
-    rewards: false,
-    suggestBlog: false,
-  };
+    const initialLocalStorageData = localStorage.getItem("UnAuthDay");
+    const defaultLocalStorageData = {
+      video: false,
+      kagel: false,
+      sortNote: false,
+      quiz: false,
+      rewards: false,
+      suggestBlog: false,
+    };
 
-  const [localStorageData, setLocalStorageData] = useState(
-    initialLocalStorageData
-      ? JSON.parse(initialLocalStorageData)
-      : defaultLocalStorageData
-  );
+    const [localStorageData, setLocalStorageData] = useState(
+      initialLocalStorageData
+        ? JSON.parse(initialLocalStorageData)
+        : defaultLocalStorageData
+    );
 
-  // Update local storage whenever localStorageData changes
-  useEffect(() => {
-    localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
-  }, [localStorageData]);
+    // Update local storage whenever localStorageData changes
+    useEffect(() => {
+      localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
+    }, [localStorageData]);
 
-  const handleTaskClick = (index: number) => {
-    setSelectedTaskIndex(index);
-  };
+    const handleTaskClick = (index: number) => {
+      setSelectedTaskIndex(index);
+    };
 
-  const handlePrevious = () => {
-    if (selectedTaskIndex > 0) {
-      setSelectedTaskIndex(selectedTaskIndex - 1);
-    }
-  };
-  const handleNext = () => {
-    if (selectedTask === "suggestBlog") {
-      let unAuthDayId = localStorage.getItem("unAuthDayId");
-      localStorage.setItem(
-        "UnAuthDay",
-        JSON.stringify(defaultLocalStorageData)
-      );
-
-      if (unAuthDayId === null) {
-        localStorage.setItem("unAuthDayId", "1");
-      } else if (unAuthDayId !== null) {
-        let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
-        localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-        router.push("/");
+    const handlePrevious = () => {
+      if (selectedTaskIndex > 0) {
+        setSelectedTaskIndex(selectedTaskIndex - 1);
       }
-      router.push("/");
-    } else {
-      setLocalStorageData((prevState: typeof localStorageData) => ({
-        ...prevState,
-        [selectedTask]: true,
-      }));
-    }
-    if (selectedTaskIndex < tasks.length - 1) {
-      setSelectedTaskIndex(selectedTaskIndex + 1);
-    }
-  };
-  const [unAuthDayId, setUnAuthDayId] = useState("1");
-  useEffect(() => {
-    setUnAuthDayId(window.localStorage.getItem("unAuthDayId") || "1");
-  }, []);
+    };
+    const handleNext = () => {
+      if (selectedTask === "suggestBlog") {
+        let unAuthDayId = localStorage.getItem("unAuthDayId");
+        localStorage.setItem(
+          "UnAuthDay",
+          JSON.stringify(defaultLocalStorageData)
+        );
 
-  const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
-    parseInt(unAuthDayId)
-  );
+        if (unAuthDayId === null) {
+          localStorage.setItem("unAuthDayId", "1");
+        } else if (unAuthDayId !== null) {
+          let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
+          localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
+          router.push("/");
+        }
+        router.push("/");
+      } else {
+        setLocalStorageData((prevState: typeof localStorageData) => ({
+          ...prevState,
+          [selectedTask]: true,
+        }));
+      }
+      if (selectedTaskIndex < tasks.length - 1) {
+        setSelectedTaskIndex(selectedTaskIndex + 1);
+      }
+    };
+    const [unAuthDayId, setUnAuthDayId] = useState("1");
+    useEffect(() => {
+      setUnAuthDayId(window.localStorage.getItem("unAuthDayId") || "1");
+    }, []);
 
-  const [blog, setBlog] = useState<{
-    title: string | undefined;
-    content: string | undefined;
-  }>({
-    title: "",
-    content: "",
-  });
+    const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
+      parseInt(unAuthDayId)
+    );
+
+    const [blog, setBlog] = useState<{
+      id: number | undefined;
+
+      title: string | undefined;
+      content: string | undefined;
+    }>({
+      id: 1,
+
+      title: "",
+      content: "",
+    });
   const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
   const [quiz, setQuiz] = useState<{
     question: string | undefined;
@@ -119,6 +124,8 @@ function UnAuthTask({}) {
       const unAuthDayData = unAuthenticatedDayData?.data[0].attributes;
       if (unAuthDayData) {
         setBlog({
+          id: unAuthDayData.blog.data.id,
+
           title: unAuthDayData.blog.data.attributes.title,
           content: unAuthDayData.blog.data.attributes.content,
         });
