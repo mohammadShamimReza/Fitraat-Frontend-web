@@ -25,7 +25,6 @@ function RegisterPage() {
     language: "",
     currentDay: 1,
   });
-  console.log(formData);
   const [registerUser, { error }] = useRegisterUserMutation();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -55,7 +54,6 @@ function RegisterPage() {
     ) {
       try {
         const result: any | Error = await registerUser(formData);
-        console.log(result);
         if (result?.error) {
           if (
             result?.error?.error?.message === "This attribute must be unique"
@@ -67,7 +65,6 @@ function RegisterPage() {
         } else {
           router.push("/myTasks");
           message.success("user created successfully");
-          console.log(result);
           storeTokenInCookie(result?.data?.jwt);
           dispatch(storeAuthToken(result?.data?.jwt));
 

@@ -55,7 +55,6 @@ function UnAuthTask({}) {
       ...prevState,
       [selectedTask]: true,
     }));
-    console.log("third");
 
     if (selectedTask === "suggestBlog") {
       let unAuthDayId = localStorage.getItem("unAuthDayId");
@@ -124,25 +123,25 @@ function UnAuthTask({}) {
 
   useEffect(() => {
     if (unAuthenticatedDayData) {
-      const authDayData = unAuthenticatedDayData?.data[0].attributes;
-      if (authDayData) {
+      const unAuthDayData = unAuthenticatedDayData?.data[0].attributes;
+      if (unAuthDayData) {
         setBlog({
-          title: authDayData.blog.data.attributes.title,
-          content: authDayData.blog.data.attributes.content,
+          title: unAuthDayData.blog.data.attributes.title,
+          content: unAuthDayData.blog.data.attributes.content,
         });
         setQuiz({
-          answer: authDayData.quiz.answer,
-          question: authDayData.quiz.question,
-          quizOptions: authDayData.quiz.quizOptions,
+          answer: unAuthDayData.quiz.data.attributes.answer,
+          question: unAuthDayData.quiz.data.attributes.question,
+          quizOptions: unAuthDayData.quiz.data.attributes.quizOptions,
         });
         setSort_note({
           sortNoteContent:
-            authDayData.sort_note.data.attributes.sortNoteContent,
+            unAuthDayData.sort_note.data.attributes.sortNoteContent,
         });
-        setVideo({ videoUrl: authDayData.video.data.attributes.VideoUrl });
-        setReward({ rewardContant: authDayData.reward });
+        setVideo({ videoUrl: unAuthDayData.video.data.attributes.VideoUrl });
+        setReward({ rewardContant: unAuthDayData.reward });
 
-        setKegel(authDayData?.kegel.data.attributes.kegel_times.data);
+        setKegel(unAuthDayData?.kegel.data.attributes.kegel_times.data);
       }
     }
   }, [unAuthenticatedDayData, unAuthDayId]);

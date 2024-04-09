@@ -10,7 +10,6 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     storeUserInfo: (state, action) => {
-      console.log(state, action);
       state.userInfo = action.payload;
     },
     storeAuthToken: (state, action) => {

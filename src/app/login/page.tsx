@@ -56,7 +56,6 @@ function LoginPage() {
     if (formData.identifier !== "" && formData.password !== "") {
       try {
         const result: any | Error = await loginUser(formData);
-        console.log(result);
         if (result?.error) {
           message.error("User is not valid");
         } else {
@@ -65,7 +64,6 @@ function LoginPage() {
           }
           router.push("/myTasks");
           message.success("Login successfully");
-          console.log(result);
           storeTokenInCookie(result?.data?.jwt);
           dispatch(storeAuthToken(result?.data?.jwt));
 

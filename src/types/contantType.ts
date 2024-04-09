@@ -109,14 +109,18 @@ export interface Day {
     video: Video;
     id: number;
     quiz: {
-      id: number;
-      question: string;
-      answer: string;
-      quizOptions: string;
-      quizId: number;
-      createdAt: string;
-      updatedAt: string;
-      publishedAt: string;
+      data: {
+        attributes: {
+          question: string;
+          answer: string;
+          quizOptions: string;
+          quizId: number;
+          createdAt: string;
+          updatedAt: string;
+          publishedAt: string;
+        };
+        id: number;
+      };
     };
   };
   id: number;
