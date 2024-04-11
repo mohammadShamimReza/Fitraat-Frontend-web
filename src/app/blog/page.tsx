@@ -13,8 +13,12 @@ import Pagination from "./Pagination";
 import Trendings from "./Trendings";
 
 function Page() {
-  const [searchTerm, setSearchTerm] = useState<undefined | string>(undefined);
-  const { data: blogData, isLoading, isSuccess } = useGetBlogsQuery({});
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const {
+    data: blogData,
+    isLoading,
+    isSuccess,
+  } = useGetBlogsQuery({ searchTerm });
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);

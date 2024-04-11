@@ -21,7 +21,7 @@ function Blogs({
         {" "}
         <div className="h-full mb-10 p-4">
           <div
-            className=" p-4 rounded-lg shadow-xl border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
+            className=" p-4 rounded-2xl shadow-xl border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
           isDarkMode   h-72 flex flex-col justify-between"
           >
             <div className="h-full ">
@@ -41,32 +41,28 @@ function Blogs({
   }
   if (isSuccess) {
     return (
-      <div className="">
+      <Link href={`/blog/${blog.id}`}>
         {" "}
         <div className="h-full mb-10 p-4">
           <div
-            className=" p-4 rounded-lg shadow-xl border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
+            className=" p-4 rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
           isDarkMode   h-72 flex flex-col justify-between"
           >
             <div className="h-full ">
-              <Link href={`/blog/${blog.id}`}>
-                <h2
-                  className="text-gray-800 mb-4 
+              <h2
+                className="text-gray-800 mb-4 
              text-3xl font-semibold overflow-clip"
-                >
-                  {blogData.title}
-                </h2>
-                <div
-                  className=" mb-2
+              >
+                {blogData.title}
+              </h2>
+              <div
+                className=" mb-2
             isDarkMode   line-clamp-5 text-justify"
-                >
-                  {blogData?.content && (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: blogData.content }}
-                    />
-                  )}
-                </div>
-              </Link>
+              >
+                {blogData?.content && (
+                  <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
+                )}
+              </div>
             </div>
             <div className="flex items-center justify-between text-gray-600">
               <div className="">
@@ -90,7 +86,7 @@ function Blogs({
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     );
   }
 }
