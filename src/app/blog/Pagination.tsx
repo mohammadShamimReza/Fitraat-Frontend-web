@@ -10,7 +10,7 @@ function Pagination({
   totalBlog: number;
 }) {
   // Calculate the total number of pages based on the total number of blogs
-  const totalPages = Math.ceil(300 / 3); // Assuming 3 blogs per page
+  const totalPages = Math.ceil(totalBlog / 3); // Assuming 3 blogs per page
 
   // Function to generate pagination button elements
   const renderPaginationButtons = () => {
@@ -28,8 +28,8 @@ function Pagination({
               onClick={() => setPageCount(i)}
               className={
                 pageCount === i
-                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
-                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg ml-2 gap-3"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2"
               }
             >
               {i}
@@ -48,8 +48,8 @@ function Pagination({
                 onClick={() => setPageCount(i)}
                 className={
                   pageCount === i
-                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg ml-2"
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2"
                 }
               >
                 {i}
@@ -60,9 +60,9 @@ function Pagination({
         buttons.push(
           <li
             key={2}
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg"
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg ml-2"
           >
-            <span className="flex items-center justify-center font-bold text-2xl rounded-lg">
+            <span className="flex items-center justify-center font-bold text-2xl rounded-lg ml-2">
               ...
             </span>
           </li>
@@ -74,8 +74,8 @@ function Pagination({
               onClick={() => setPageCount(totalPages)}
               className={
                 pageCount === totalPages
-                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
-                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg ml-2"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2"
               }
             >
               {totalPages}
@@ -90,8 +90,8 @@ function Pagination({
               onClick={() => setPageCount(1)}
               className={
                 pageCount === 1
-                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
-                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg ml-2"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2"
               }
             >
               1
@@ -101,7 +101,7 @@ function Pagination({
         buttons.push(
           <li
             key={2}
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg"
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg ml-2"
           >
             <span className="flex items-center justify-center">...</span>
           </li>
@@ -113,8 +113,8 @@ function Pagination({
                 onClick={() => setPageCount(i)}
                 className={
                   pageCount === i
-                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg ml-2"
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2"
                 }
               >
                 {i}
@@ -130,8 +130,8 @@ function Pagination({
               onClick={() => setPageCount(1)}
               className={
                 pageCount === 1
-                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
-                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg ml-2"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2"
               }
             >
               1
@@ -141,7 +141,7 @@ function Pagination({
         buttons.push(
           <li
             key={2}
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg"
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg ml-2"
           >
             <span className="flex items-center justify-center">...</span>
           </li>
@@ -157,8 +157,8 @@ function Pagination({
                 onClick={() => setPageCount(i)}
                 className={
                   pageCount === i
-                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
-                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg ml-2"
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2"
                 }
               >
                 {i}
@@ -169,7 +169,7 @@ function Pagination({
         buttons.push(
           <li
             key={2}
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg"
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg ml-2"
           >
             <span className="flex items-center justify-center">...</span>
           </li>
@@ -180,8 +180,8 @@ function Pagination({
               onClick={() => setPageCount(totalPages)}
               className={
                 pageCount === totalPages
-                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
-                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg ml-2"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2"
               }
             >
               {totalPages}
@@ -199,7 +199,7 @@ function Pagination({
         <li>
           <button
             onClick={() => setPageCount(pageCount === 1 ? 1 : pageCount - 1)}
-            className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white   hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg "
+            className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white   hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2 "
           >
             <svg
               className="w-3.5 h-3.5 mr-2"
