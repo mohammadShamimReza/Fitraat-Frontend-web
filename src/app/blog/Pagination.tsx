@@ -3,17 +3,203 @@ import { Dispatch, SetStateAction } from "react";
 function Pagination({
   pageCount,
   setPageCount,
+  totalBlog,
 }: {
   pageCount: number;
   setPageCount: Dispatch<SetStateAction<number>>;
+  totalBlog: number;
 }) {
+  // Calculate the total number of pages based on the total number of blogs
+  const totalPages = Math.ceil(300 / 3); // Assuming 3 blogs per page
+
+  // Function to generate pagination button elements
+  const renderPaginationButtons = () => {
+    const buttons = [];
+    const maxButtonsToShow = 5; // Maximum number of buttons to show
+    const halfMaxButtonsToShow = Math.floor(maxButtonsToShow / 2);
+
+    // Render buttons dynamically based on the current page and total pages
+    if (totalPages <= maxButtonsToShow) {
+      // If total pages are less than or equal to maxButtonsToShow, render all buttons
+      for (let i = 1; i <= totalPages; i++) {
+        buttons.push(
+          <li key={i}>
+            <button
+              onClick={() => setPageCount(i)}
+              className={
+                pageCount === i
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+              }
+            >
+              {i}
+            </button>
+          </li>
+        );
+      }
+    } else {
+      // If total pages are greater than maxButtonsToShow, render buttons dynamically
+      if (pageCount <= halfMaxButtonsToShow + 1) {
+        // Show buttons from 1 to maxButtonsToShow
+        for (let i = 1; i <= maxButtonsToShow; i++) {
+          buttons.push(
+            <li key={i}>
+              <button
+                onClick={() => setPageCount(i)}
+                className={
+                  pageCount === i
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                }
+              >
+                {i}
+              </button>
+            </li>
+          );
+        }
+        buttons.push(
+          <li
+            key={2}
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg"
+          >
+            <span className="flex items-center justify-center font-bold text-2xl rounded-lg">
+              ...
+            </span>
+          </li>
+        );
+
+        buttons.push(
+          <li key={totalPages}>
+            <button
+              onClick={() => setPageCount(totalPages)}
+              className={
+                pageCount === totalPages
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+              }
+            >
+              {totalPages}
+            </button>
+          </li>
+        );
+      } else if (pageCount >= totalPages - halfMaxButtonsToShow) {
+        // Show buttons from totalPages - maxButtonsToShow to totalPages
+        buttons.push(
+          <li key={1}>
+            <button
+              onClick={() => setPageCount(1)}
+              className={
+                pageCount === 1
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+              }
+            >
+              1
+            </button>
+          </li>
+        );
+        buttons.push(
+          <li
+            key={2}
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg"
+          >
+            <span className="flex items-center justify-center">...</span>
+          </li>
+        );
+        for (let i = totalPages - maxButtonsToShow + 3; i <= totalPages; i++) {
+          buttons.push(
+            <li key={i}>
+              <button
+                onClick={() => setPageCount(i)}
+                className={
+                  pageCount === i
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                }
+              >
+                {i}
+              </button>
+            </li>
+          );
+        }
+      } else {
+        // Show buttons around the current page
+        buttons.push(
+          <li key={1}>
+            <button
+              onClick={() => setPageCount(1)}
+              className={
+                pageCount === 1
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+              }
+            >
+              1
+            </button>
+          </li>
+        );
+        buttons.push(
+          <li
+            key={2}
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg"
+          >
+            <span className="flex items-center justify-center">...</span>
+          </li>
+        );
+        for (
+          let i = pageCount - halfMaxButtonsToShow;
+          i <= pageCount + halfMaxButtonsToShow;
+          i++
+        ) {
+          buttons.push(
+            <li key={i}>
+              <button
+                onClick={() => setPageCount(i)}
+                className={
+                  pageCount === i
+                    ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
+                    : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+                }
+              >
+                {i}
+              </button>
+            </li>
+          );
+        }
+        buttons.push(
+          <li
+            key={2}
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white text-2xl rounded-lg"
+          >
+            <span className="flex items-center justify-center">...</span>
+          </li>
+        );
+        buttons.push(
+          <li key={totalPages}>
+            <button
+              onClick={() => setPageCount(totalPages)}
+              className={
+                pageCount === totalPages
+                  ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200  hover:bg-gray-300 hover:text-gray-700 text-2xl rounded-lg"
+                  : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg"
+              }
+            >
+              {totalPages}
+            </button>
+          </li>
+        );
+      }
+    }
+    return buttons;
+  };
+
   return (
     <div className="flex justify-center align-middle">
       <ul className="inline-flex  -space-x-px text-sm">
         <li>
           <button
             onClick={() => setPageCount(pageCount === 1 ? 1 : pageCount - 1)}
-            className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700     "
+            className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white   hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg "
           >
             <svg
               className="w-3.5 h-3.5 mr-2"
@@ -32,70 +218,15 @@ function Pagination({
             </svg>
           </button>
         </li>
+        {renderPaginationButtons()}
         <li>
           <button
-            onClick={() => setPageCount(1)}
-            className={
-              pageCount === 1
-                ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
-                : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
+            onClick={() =>
+              setPageCount(
+                pageCount === totalPages ? totalPages : pageCount + 1
+              )
             }
-          >
-            1
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => setPageCount(2)}
-            className={
-              pageCount === 2
-                ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
-                : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
-            }
-          >
-            2
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => setPageCount(3)}
-            className={
-              pageCount === 3
-                ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
-                : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
-            }
-          >
-            3
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => setPageCount(4)}
-            className={
-              pageCount === 4
-                ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
-                : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
-            }
-          >
-            4
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => setPageCount(5)}
-            className={
-              pageCount === 5
-                ? "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-gray-200 border border-gray-300 hover:bg-gray-300 hover:text-gray-700     "
-                : "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700     "
-            }
-          >
-            5
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => setPageCount(pageCount === 5 ? 5 : pageCount + 1)}
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700     "
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white rounded-lg  hover:bg-gray-100 hover:text-gray-700 text-2xl "
           >
             <svg
               className="w-3.5 h-3.5 ml-2"

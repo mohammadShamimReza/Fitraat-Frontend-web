@@ -33,6 +33,8 @@ function Page() {
     resolver: yupResolver(validationSchema),
   });
 
+  const totalBlog: number = blogData?.meta.pagination.total || 0;
+
   return (
     <div>
       <div className="">
@@ -93,7 +95,11 @@ function Page() {
           </div>
         </div>
 
-        <Pagination pageCount={pageCount} setPageCount={setPageCount} />
+        <Pagination
+          pageCount={pageCount}
+          setPageCount={setPageCount}
+          totalBlog={totalBlog}
+        />
       </div>
     </div>
   );
