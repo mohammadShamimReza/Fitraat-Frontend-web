@@ -10,7 +10,7 @@ function Pagination({
   totalBlog: number;
 }) {
   // Calculate the total number of pages based on the total number of blogs
-  const totalPages = Math.ceil(totalBlog / 3); // Assuming 3 blogs per page
+  const totalPages = Math.ceil(totalBlog / 10); // Assuming 3 blogs per page
 
   // Function to generate pagination button elements
   const renderPaginationButtons = () => {
