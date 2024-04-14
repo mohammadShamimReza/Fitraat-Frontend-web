@@ -61,14 +61,34 @@ function Page() {
                 />
               </div>
             </form>
-            {blogData?.data.map((blog: Blog) => (
-              <Blogs
-                key={1}
-                blog={blog}
-                isLoading={isLoading}
-                isSuccess={isSuccess}
-              />
-            ))}
+
+            {isLoading
+              ? Array.from({ length: 10 }, (_, index) => (
+                  <div key={index} className="">
+                    <div className="h-full mb-10 p-4">
+                      <div
+                        className="p-4 rounded-2xl shadow-xl border border-t dark:border-none mb-4 transition duration-100 transform hover:shadow-2xl 
+            isDarkMode h-72 flex flex-col justify-between"
+                      >
+                        <div className="h-full ">
+                          <h2
+                            className="text-gray-800 mb-4 
+               text-3xl font-semibold overflow-clip animate-pulse w-1/2 h-8 bg-gray-300 rounded"
+                          ></h2>
+                          <div
+                            className="mb-2
+                isDarkMode line-clamp-5 text-justify animate-pulse w-full h-4/6 bg-gray-300 rounded"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              : isSuccess
+              ? blogData?.data.map((blog: Blog) => (
+                  <Blogs key={1} blog={blog} />
+                ))
+              : ""}
           </div>
         </div>
 

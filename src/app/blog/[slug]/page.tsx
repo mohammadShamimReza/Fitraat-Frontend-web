@@ -12,6 +12,7 @@ function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
   const { data } = useGetBlogsByIdQuery(blogId);
   const blogData = data?.data.attributes;
+  console.log(blogData);
   return (
     <div className="p-5">
       <div className="flex justify-end align-middle">
