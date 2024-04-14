@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-function Pagination() {
-  const [pageCount, setPageCount] = useState<number>(1);
-
+function Pagination({
+  pageCount,
+  setPageCount,
+}: {
+  pageCount: number;
+  setPageCount: Dispatch<SetStateAction<number>>;
+}) {
   return (
     <div className="flex justify-center align-middle">
       <ul className="inline-flex  -space-x-px text-sm">

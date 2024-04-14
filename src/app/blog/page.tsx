@@ -14,11 +14,12 @@ import Trendings from "./Trendings";
 
 function Page() {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [pageCount, setPageCount] = useState<number>(1);
   const {
     data: blogData,
     isLoading,
     isSuccess,
-  } = useGetBlogsQuery({ searchTerm });
+  } = useGetBlogsQuery({ searchTerm, pageCount });
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
@@ -92,7 +93,7 @@ function Page() {
           </div>
         </div>
 
-        <Pagination />
+        <Pagination pageCount={pageCount} setPageCount={setPageCount} />
       </div>
     </div>
   );

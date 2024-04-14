@@ -6,8 +6,8 @@ const BLOG = "/blogs";
 export const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBlogs: builder.query({
-      query: (body: { searchTerm: string }) =>
-        `${BLOG}?filters[title][$containsi]=${body.searchTerm}`,
+      query: (body: { searchTerm: string; pageCount: number }) =>
+        `${BLOG}?filters[title][$containsi]=${body.searchTerm}&pagination[page]=${body.pageCount}&pagination[pageSize]=3`,
       transformResponse: (rawResult: BlogData) => {
         return rawResult;
       },

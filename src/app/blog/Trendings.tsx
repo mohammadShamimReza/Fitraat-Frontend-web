@@ -4,6 +4,7 @@ import Link from "next/link";
 
 function Trendings() {
   const { data: trendingBlogData } = useGet3TrendingBlogQuery({});
+  console.log(trendingBlogData);  
   return (
     <div className="">
       <div className="">

@@ -11,49 +11,49 @@ function Blogs({ blog }: { blog: Blog }) {
     <div className="">
       {" "}
       <div className="h-full mb-10 p-4">
-        <div
-          className=" p-4 rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
+        <Link href={`/blog/${blog.id}`}>
+          <div
+            className=" p-4 rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
           isDarkMode   h-72 flex flex-col justify-between"
-        >
-          <div className="h-full ">
-            <Link href={`/blog/${blog.id}`}>
+          >
+            <div className="h-full ">
               <h2
                 className="text-gray-800 mb-4 
              text-3xl font-semibold overflow-clip"
               >
                 {blogData.title}
               </h2>
-              <div
+              <p
                 className=" mb-2
             isDarkMode   line-clamp-5 text-justify"
               >
                 {blogData?.content && (
-                  <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
+                  <p dangerouslySetInnerHTML={{ __html: blogData.content }} />
                 )}
-              </div>
-            </Link>
-          </div>
-          <div className="flex items-center justify-between text-gray-600">
-            <div className="">
-              Updated At: <br />
-              <span className="text-gray-900"> {blgoUpdateAt}</span>
+              </p>
             </div>
-
-            <Link href={`/profile/`} className="flex items-center">
-              <div>
-                <Image
-                  priority={false}
-                  src={myPic}
-                  height={2}
-                  width={2}
-                  alt="Writer"
-                  className="flex w-8 h-8 rounded-full mr-2"
-                />
+            <div className="flex items-center justify-between text-gray-600">
+              <div className="">
+                Updated At: <br />
+                <span className="text-gray-900"> {blgoUpdateAt}</span>
               </div>
-              <span className="text-gray-900">Shamim Reza</span>
-            </Link>
+
+              <Link href={`/profile/`} className="flex items-center">
+                <div>
+                  <Image
+                    priority={false}
+                    src={myPic}
+                    height={2}
+                    width={2}
+                    alt="Writer"
+                    className="flex w-8 h-8 rounded-full mr-2"
+                  />
+                </div>
+                <span className="text-gray-900">Shamim Reza</span>
+              </Link>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );
