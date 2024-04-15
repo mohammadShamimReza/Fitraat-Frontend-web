@@ -7,6 +7,7 @@ import { KegelTimes } from "@/types/contantType";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
 function AuthMyTask({
@@ -69,16 +70,33 @@ function AuthMyTask({
   const handleNext = async () => {
     if (selectedTask === "suggestBlog") {
       localStorage.setItem("AuthDay", JSON.stringify(defaultLocalStorageData));
-      const result = await updataUserDay({
-        currentDay: authDayDataId + 1,
-        compliteDay: authDayDataId,
-        userId: userId,
-      });
-      message.success(
-        "congratulation!! You have successfully conplied this day"
-      );
-      window.location.reload();
-      router.push("/");
+      if (authDayDataId + 1 === 120) {
+        message.success(
+          "Hurray this is you last day of task. Then you becone spartan"
+        );
+        await updataUserDay({
+          currentDay: authDayDataId + 1,
+          compliteDay: authDayDataId,
+          userId: userId,
+        });
+        router.push("/blog");
+      } else if (authDayDataId + 1 > 120) {
+        message.success(
+          "Congratulations you have successfully completed your tasks for 120 day"
+        );
+
+        window.location.reload();
+      } else if (authDayDataId + 1 <= 121) {
+        message.success(
+          "Congratulations you have successfully completed your tasks for 120 day"
+        );
+        await updataUserDay({
+          currentDay: authDayDataId + 1,
+          compliteDay: authDayDataId,
+          userId: userId,
+        });
+        router.push("/blog");
+      }
     } else {
       setLocalStorageData((prevState: typeof localStorageData) => ({
         ...prevState,
@@ -149,20 +167,24 @@ function AuthMyTask({
 
   return (
     <>
-      <TaskPage
-        localStorageData={localStorageData}
-        handleTaskClick={handleTaskClick}
-        selectedTask={selectedTask}
-        selectedTaskIndex={selectedTaskIndex}
-        handlePrevious={handlePrevious}
-        handleNext={handleNext}
-        blog={blog}
-        quiz={quiz}
-        sort_note={sort_note}
-        video={video}
-        reward={reward}
-        kegel={kegel}
-      />
+      {authDayDataId > 120 ? (
+        <CompliteTask auth={true} daysCompleted={120} />
+      ) : (
+        <TaskPage
+          localStorageData={localStorageData}
+          handleTaskClick={handleTaskClick}
+          selectedTask={selectedTask}
+          selectedTaskIndex={selectedTaskIndex}
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          blog={blog}
+          quiz={quiz}
+          sort_note={sort_note}
+          video={video}
+          reward={reward}
+          kegel={kegel}
+        />
+      )}
     </>
   );
 }

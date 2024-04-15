@@ -115,7 +115,7 @@ function Kagel({
   return (
     <div>
       {selectedTask === "kagel" && (
-        <div className="flex flex-col items-center p-5 rounded-lg border-2">
+        <div className="flex flex-col items-center ">
           <p className="text-2xl">
             {type}, {currentTime / 1000}s, {kegel?.length}/{times + 1}
           </p>

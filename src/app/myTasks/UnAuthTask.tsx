@@ -3,8 +3,10 @@ import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
 import { KegelTimes } from "@/types/contantType";
+import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
 function UnAuthTask({}) {
@@ -59,7 +61,6 @@ function UnAuthTask({}) {
   };
   const handleNext = () => {
     if (selectedTask === "suggestBlog") {
-      let unAuthDayId = localStorage.getItem("unAuthDayId");
       localStorage.setItem(
         "UnAuthDay",
         JSON.stringify(defaultLocalStorageData)
@@ -69,10 +70,23 @@ function UnAuthTask({}) {
         localStorage.setItem("unAuthDayId", "1");
       } else if (unAuthDayId !== null) {
         let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
-        localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-        router.push("/");
+        if (parsedUnAuthDayId === 40) {
+          message.success(
+            "Hurray this is you last day of task. Then you becone spartan"
+          );
+          localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
+          router.push("/blog");
+        } else if (parsedUnAuthDayId > 40) {
+          message.success(
+            "Congratulations you have successfully completed your tasks for 40 day"
+          );
+          window.location.reload();
+        }
+        if (parsedUnAuthDayId <= 41) {
+          localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
+          router.push("/blog");
+        }
       }
-      router.push("/");
     } else {
       setLocalStorageData((prevState: typeof localStorageData) => ({
         ...prevState,
@@ -152,22 +166,27 @@ function UnAuthTask({}) {
       }
     }
   }, [unAuthenticatedDayData, unAuthDayId]);
+
   return (
     <>
-      <TaskPage
-        localStorageData={localStorageData}
-        handleTaskClick={handleTaskClick}
-        selectedTask={selectedTask}
-        selectedTaskIndex={selectedTaskIndex}
-        handlePrevious={handlePrevious}
-        handleNext={handleNext}
-        blog={blog}
-        quiz={quiz}
-        sort_note={sort_note}
-        video={video}
-        reward={reward}
-        kegel={kegel}
-      />
+      {parseInt(unAuthDayId) > 40 ? (
+        <CompliteTask auth={false} daysCompleted={40} />
+      ) : (
+        <TaskPage
+          localStorageData={localStorageData}
+          handleTaskClick={handleTaskClick}
+          selectedTask={selectedTask}
+          selectedTaskIndex={selectedTaskIndex}
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          blog={blog}
+          quiz={quiz}
+          sort_note={sort_note}
+          video={video}
+          reward={reward}
+          kegel={kegel}
+        />
+      )}
     </>
   );
 }
