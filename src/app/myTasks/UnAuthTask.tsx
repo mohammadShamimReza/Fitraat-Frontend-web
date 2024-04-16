@@ -140,6 +140,8 @@ function UnAuthTask({}) {
     rewardContant: "",
   });
 
+  console.log(unAuthenticatedDayData?.data[0].attributes);
+
   useEffect(() => {
     if (unAuthenticatedDayData) {
       const unAuthDayData = unAuthenticatedDayData?.data[0].attributes;

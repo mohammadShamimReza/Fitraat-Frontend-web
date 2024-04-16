@@ -140,6 +140,7 @@ function AuthMyTask({
     rewardContant: "",
   });
 
+
   useEffect(() => {
     if (authenticatedDayData) {
       const authDayData = authenticatedDayData?.data[0].attributes;

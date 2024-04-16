@@ -55,6 +55,18 @@ export const daysApi = baseApi.injectEndpoints({
         return baseQueryReturnValue.data;
       },
     }),
+    forgetPassword: builder.mutation({
+      query: (body) => ({
+        url: `auth/forgot-password`,
+        method: "POST",
+        body: {
+          email: body.email,
+        },
+      }),
+      transformResponse: (rawResult: any | Error) => {
+        return rawResult;
+      },
+    }),
   }),
 });
 
@@ -63,4 +75,5 @@ export const {
   useLoginUserMutation,
   useGetUserInfoQuery,
   useUpdateUserDayMutation,
+  useForgetPasswordMutation,
 } = daysApi;

@@ -131,7 +131,7 @@ function LoginPage() {
           {/* Forgot Password */}
           <div className="text-right mb-6">
             <Link
-              href="#"
+              href="/forgetPass"
               className="text-gray-600 hover:text-gray-800 underline"
             >
               Forgot Password?
