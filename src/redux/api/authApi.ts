@@ -38,6 +38,7 @@ export const daysApi = baseApi.injectEndpoints({
       transformResponse: (rawResult: UserDataWithDay) => {
         return rawResult;
       },
+      providesTags: ["updateUser"],
     }),
     updateUserDay: builder.mutation({
       query: (body) => ({
@@ -45,12 +46,13 @@ export const daysApi = baseApi.injectEndpoints({
         method: "PUT",
         body: {
           currentDay: body.currentDay,
-          compliteDay: body.currentDay,
+          compliteDay: body.compliteDay,
         },
       }),
       transformResponse: (rawResult: UserData | Error) => {
         return rawResult;
       },
+      invalidatesTags: ["updateUser"],
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         return baseQueryReturnValue.data;
       },

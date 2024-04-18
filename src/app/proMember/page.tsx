@@ -1,8 +1,25 @@
 "use client";
+import { useGetUserInfoQuery } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
 
 const MembershipCard = () => {
   const router = useRouter();
+  const {
+    data: authenticatedUserInfoData,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetUserInfoQuery();
+  if (isSuccess) {
+  }
+
+  const handlePremium = () => {
+    if (isSuccess) {
+      alert("You are already premium member");
+    } else if (isError) {
+      router.push("/register");
+    }
+  };
   return (
     <div className="mt-20">
       <div className="">
@@ -283,7 +300,7 @@ const MembershipCard = () => {
             <div className="bg-gray-800   px-4 py-4 sm:px-6">
               <button
                 className="w-full  hover:text-white rounded-md border border-transparent px-4 py-2 bg-white text-base font-medium  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center mt-2"
-                onClick={() => router.push("/register")}
+                onClick={() => handlePremium()}
               >
                 Upgrade to Premium{" "}
                 <svg

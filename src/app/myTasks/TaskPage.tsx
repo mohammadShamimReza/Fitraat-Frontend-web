@@ -23,6 +23,7 @@ function TaskPage({
   video,
   reward,
   kegel,
+  DayCount,
 }: {
   localStorageData: {
     video: boolean;
@@ -57,6 +58,7 @@ function TaskPage({
     rewardContant: string | undefined;
   };
   kegel: KegelTimes[] | undefined;
+  DayCount: number;
 }) {
   const tasks = [
     "video",
@@ -121,13 +123,17 @@ function TaskPage({
           <div className="lg:w-2/3">
             <div
               style={{ height: "500px" }}
-              className="p-3 rounded-lg shadow-md    mx-auto flex flex-col justify-evenly "
+              className="p-3  mx-auto flex flex-col justify-evenly "
             >
               <div className="basis-1/6">
-                <h3 className="text-2xl font-bold text-center">
+                <div className=""></div>
+                <p className="text-3xl font-bold text-left">Day: {DayCount}</p>
+                <p className="text-2xl font-bold text-center">
                   {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
-                </h3>
+                </p>
               </div>
+
+              <br />
               <div className="basis-4/6">
                 <Video selectedTask={selectedTask} video={video} />
                 <Kagel selectedTask={selectedTask} kegel={kegel} />

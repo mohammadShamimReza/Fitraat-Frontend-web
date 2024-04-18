@@ -195,9 +195,9 @@ function NavBar() {
                         tabIndex={-1}
                         id="user-menu-item-0"
                       >
-                        Your Profile
+                        Profile
                       </Link>
-                      <Link
+                      {/* <Link
                         href="#"
                         className="block px-4 py-2 text-sm text-gray-700"
                         role="menuitem"
@@ -205,7 +205,7 @@ function NavBar() {
                         id="user-menu-item-1"
                       >
                         Settings
-                      </Link>
+                      </Link> */}
                       <Link
                         href="/"
                         onClick={handleLogout}

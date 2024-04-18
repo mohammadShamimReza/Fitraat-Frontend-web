@@ -5,16 +5,16 @@ import bannerImage from "../../app/assets/spartan1.png";
 function Banner() {
   return (
     <div className="lg:h-96 sm:h-96 md:h-96 layoutComponent mt-14 ">
-      <div className="flex justify-between align-middle">
-        <div className=" font-bold text-2xl md:text-4xl lg:text-5xl pl-5">
+      <div className="flex justify-between align-middle  gap-3">
+        <div className=" font-bold text-2xl sm:text-4xl md:text-5xl pl-5">
           <div className="inline-block leading-normal mb-4 text-transparent bg-clip-text bg-gradient-to-br from-gray-800 to-gray-100">
             Let&apos;s become <br />
-            <span className="text-gray-900  text-3xl md:text-5xl lg:text-6xl font-extrabold">
+            <span className="text-gray-900  text-2xl sm:text-5xl md:text-6xl font-extrabold ">
               Unbeatable
             </span>{" "}
             <br />
             Open your <br />
-            <span className="text-gray-900  text-3xl md:text-5xl lg:text-6xl font-extrabold">
+            <span className="text-gray-900  text-2xl sm:text-5xl md:text-6xl font-extrabold">
               Spartan mode
             </span>
           </div>
@@ -43,7 +43,7 @@ function Banner() {
           </Link>
         </div>
 
-        <div className="relative  ">
+        <div className="relative  p-2">
           <Image
             className=" rounded-md "
             alt=""

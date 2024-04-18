@@ -140,7 +140,6 @@ function AuthMyTask({
     rewardContant: "",
   });
 
-
   useEffect(() => {
     if (authenticatedDayData) {
       const authDayData = authenticatedDayData?.data[0].attributes;
@@ -166,9 +165,11 @@ function AuthMyTask({
     }
   }, [authenticatedDayData]);
 
+  const DayCount = authDayDataId;
+
   return (
     <>
-      {authDayDataId > 120 ? (
+      {DayCount > 120 ? (
         <CompliteTask auth={true} daysCompleted={120} />
       ) : (
         <TaskPage
@@ -184,6 +185,7 @@ function AuthMyTask({
           video={video}
           reward={reward}
           kegel={kegel}
+          DayCount={DayCount}
         />
       )}
     </>

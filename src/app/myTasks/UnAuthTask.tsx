@@ -169,9 +169,11 @@ function UnAuthTask({}) {
     }
   }, [unAuthenticatedDayData, unAuthDayId]);
 
+  const DayCount = parseInt(unAuthDayId) || 0;
+
   return (
     <>
-      {parseInt(unAuthDayId) > 40 ? (
+      {DayCount > 40 ? (
         <CompliteTask auth={false} daysCompleted={40} />
       ) : (
         <TaskPage
@@ -187,6 +189,7 @@ function UnAuthTask({}) {
           video={video}
           reward={reward}
           kegel={kegel}
+          DayCount={DayCount}
         />
       )}
     </>

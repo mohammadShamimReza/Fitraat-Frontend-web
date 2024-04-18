@@ -248,7 +248,7 @@ export interface UserDataWithDay {
   quizComplete: boolean;
   sortNoteComplete: boolean;
   updateAt: string;
-  userName: string;
+  username: string;
   videoComplete: boolean;
 }
 

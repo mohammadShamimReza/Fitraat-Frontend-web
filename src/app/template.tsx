@@ -4,7 +4,7 @@ import NavBar from "@/components/structure/NavBar";
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <div className="">
-      <div className="mx-auto min-h-screen max-w-7xl">
+      <div className="mx-auto min-h-screen max-w-7xl p-1">
         <NavBar />
         {children}
       </div>
