@@ -109,7 +109,7 @@ function TaskPage({
                       style={{
                         color:
                           (localStorageData as any)[task] === true
-                            ? "blue"
+                            ? "#0578EA"
                             : "gray",
                         fontWeight: "bold",
                       }}
