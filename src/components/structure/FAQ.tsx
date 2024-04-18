@@ -1,10 +1,12 @@
 "use client";
 import { CaretRightOutlined } from "@ant-design/icons";
-import type { CollapseProps } from "antd";
 import { Collapse } from "antd";
 import React from "react";
+import { FaRegFaceSmileBeam } from "react-icons/fa6";
 
-const items: CollapseProps["items"] = [
+const { Panel } = Collapse;
+
+const items = [
   {
     key: "1",
     label: "How do I get started with MindReset? ",
@@ -53,7 +55,7 @@ const items: CollapseProps["items"] = [
   },
   {
     key: "5",
-    label: "What about community support",
+    label: "What about community support?",
     children: (
       <p>
         Connect with others facing similar challenges in a safe and
@@ -83,18 +85,27 @@ const Faq: React.FC = () => {
   return (
     <div className="mt-15 p-5">
       <p className="text-4xl font-bold my-10 text-center">
-        Frequently Asked Question
+        Frequently Asked Questions
       </p>
       <Collapse
-        items={items}
         defaultActiveKey={["1"]}
         expandIcon={({ isActive }) => (
           <CaretRightOutlined rotate={isActive ? 90 : 0} />
         )}
         expandIconPosition={"end"}
         onChange={onChange}
-        className="text-center "
-      />
+        className="text-center text-3xl"
+        size="large"
+      >
+        {items.map((item) => (
+          <Panel header={item.label} key={item.key} className="">
+            <div className="flex">
+              <FaRegFaceSmileBeam className="w-10 h-full text-red-500" />
+              <span className="text-lg "> {item.children}</span>
+            </div>
+          </Panel>
+        ))}
+      </Collapse>
     </div>
   );
 };

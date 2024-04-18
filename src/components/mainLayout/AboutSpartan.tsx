@@ -2,7 +2,7 @@ function AboutSpartan() {
   return (
     <div className="layoutComponent p-3 mt-14">
       <div className="flex justify-between align-middle sm:flex-row flex-col  gap-5 ">
-        <div className=" border p-6 hover:shadow-md rounded-xl transition duration-300  sm:w-1/2 md:w-full lg:w-full ">
+        <div className=" border p-6  rounded-xl transition duration-300  sm:w-1/2 md:w-full lg:w-full ">
           <div className="">
             <h2 className="text-3xl font-semibold text-gray-900 mb-3">
               <span className="text-gray-500"> What is </span>
@@ -40,7 +40,7 @@ function AboutSpartan() {
           </div>
         </div>
 
-        <div className="  border p-6 hover:shadow-md rounded-xl transition duration-300 sm:w-1/2 md:w-full lg:w-full">
+        <div className="  border p-6  rounded-xl transition duration-300 sm:w-1/2 md:w-full lg:w-full">
           <div className="">
             <h2 className="text-3xl font-semibold text-gray-900 mb-3">
               <span className="text-gray-500"> How to become </span>

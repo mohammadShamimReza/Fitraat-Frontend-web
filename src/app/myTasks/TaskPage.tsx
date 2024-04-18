@@ -128,7 +128,7 @@ function TaskPage({
               <div className="basis-1/6">
                 <div className=""></div>
                 <p className="text-3xl font-bold text-left">Day: {DayCount}</p>
-                <p className="text-2xl font-bold text-center">
+                <p className="text-2xl font-bold text-center ">
                   {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
                 </p>
               </div>

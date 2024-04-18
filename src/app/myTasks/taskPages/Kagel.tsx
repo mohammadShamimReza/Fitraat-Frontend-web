@@ -39,162 +39,178 @@ function Kagel({
 
   const timerId = useRef<NodeJS.Timeout | undefined | number>(undefined);
 
-  useEffect(() => {
+const isInitialRender = useRef(true);
+const isUnmounted = useRef(false);
+
+useEffect(() => {
+  if (isInitialRender.current) {
+    isInitialRender.current = false;
+    return;
+  }
+
+  if (!isUnmounted.current) {
     if (type === "Squizze") {
       new Audio(squizze).play();
     } else if (type === "Stop") {
       new Audio(stop).play();
     }
-  }, [type]);
+  }
 
-  const audioType = type === "Squizze" ? squizze : stop;
-
-  const startTimer = () => {
-    // clearInterval(timerId.current);
-    new Audio(audioType).play();
-    if (progressBarPercent === 100) {
-      setTimeLeft(currentTime);
-      setProgressBarPercent(0);
-    }
-    setIsRunning(true);
+  return () => {
+    // Set isUnmounted to true when the component unmounts
+    isUnmounted.current = true;
   };
+}, [type]);
 
-  const stopTimer = () => {
-    clearInterval(timerId.current);
-    setIsRunning(false);
-  };
+const audioType = type === "Squizze" ? squizze : stop;
 
-  useEffect(() => {
-    if (isRunning) {
-      timerId.current = window.setInterval(() => {
-        setTimeLeft((prevTimeLeft) => prevTimeLeft - 100);
-      }, 100);
+const startTimer = () => {
+  // clearInterval(timerId.current);
+  new Audio(audioType).play();
+  if (progressBarPercent === 100) {
+    setTimeLeft(currentTime);
+    setProgressBarPercent(0);
+  }
+  setIsRunning(true);
+};
 
-      return () => clearInterval(timerId.current);
-    }
-  }, [isRunning]);
+const stopTimer = () => {
+  clearInterval(timerId.current);
+  setIsRunning(false);
+};
 
-  useEffect(() => {
-    currentTimeIndex % 2 === 0 ? setType("Squizze") : setType("Stop");
+useEffect(() => {
+  if (isRunning) {
+    timerId.current = window.setInterval(() => {
+      setTimeLeft((prevTimeLeft) => prevTimeLeft - 100);
+    }, 100);
 
-    if (progressBarPercent < 100) {
-      let updateProgressPercent = Math.round(
-        ((currentTime - timeLeft) / currentTime) * 100
-      );
-      setProgressBarPercent(updateProgressPercent);
-    } else if (progressBarPercent === 100) {
-      if (currentTimeIndex + 1 === kegelTimes.length) {
-        clearInterval(timerId.current);
-        setIsRunning(false);
-      } else {
-        setCurrentTimeIndex(currentTimeIndex + 1);
-        setCurrentTime(kegelTimes[currentTimeIndex] * 1000);
-        setProgressBarPercent(0);
+    return () => clearInterval(timerId.current);
+  }
+}, [isRunning]);
 
-        setTimeLeft(kegelTimes[currentTimeIndex] * 1000);
-      }
-    }
-  }, [
-    currentTime,
-    currentTimeIndex,
-    timeLeft,
-    isRunning,
-    kegelTimes,
-    progressBarPercent,
-  ]);
+useEffect(() => {
+  currentTimeIndex % 2 === 0 ? setType("Squizze") : setType("Stop");
 
-  const handlePrevious = () => {
-    if (kegel && kegel.length > 0 && times > 0) {
-      setTimes(times - 1);
-      setCurrentTimeIndex(0);
+  if (progressBarPercent < 100) {
+    let updateProgressPercent = Math.round(
+      ((currentTime - timeLeft) / currentTime) * 100
+    );
+    setProgressBarPercent(updateProgressPercent);
+  } else if (progressBarPercent === 100) {
+    if (currentTimeIndex + 1 === kegelTimes.length) {
+      clearInterval(timerId.current);
+      setIsRunning(false);
+    } else {
+      setCurrentTimeIndex(currentTimeIndex + 1);
       setCurrentTime(kegelTimes[currentTimeIndex] * 1000);
       setProgressBarPercent(0);
 
       setTimeLeft(kegelTimes[currentTimeIndex] * 1000);
     }
-  };
+  }
+}, [
+  currentTime,
+  currentTimeIndex,
+  timeLeft,
+  isRunning,
+  kegelTimes,
+  progressBarPercent,
+]);
 
-  const handleNext = () => {
-    if (kegel && times < kegel.length - 1) {
-      setTimes(times + 1);
-      setCurrentTimeIndex(0);
-      setCurrentTime(kegelTimes[currentTimeIndex] * 1000);
-      setProgressBarPercent(0);
+const handlePrevious = () => {
+  if (kegel && kegel.length > 0 && times > 0) {
+    setTimes(times - 1);
+    setCurrentTimeIndex(0);
+    setCurrentTime(kegelTimes[currentTimeIndex] * 1000);
+    setProgressBarPercent(0);
 
-      setTimeLeft(kegelTimes[currentTimeIndex] * 1000);
-    }
-  };
+    setTimeLeft(kegelTimes[currentTimeIndex] * 1000);
+  }
+};
 
-  return (
-    <div>
-      {selectedTask === "kagel" && (
-        <div className="flex flex-col items-center ">
-          <p className="text-xl">
-            {type}, {kegel?.length}/{times + 1}
-          </p>
-          <div>
-            {kegelTimes.map((time, index) => (
-              <span
-                key={index}
-                style={{
-                  color: index === currentTimeIndex ? "red" : "black",
-                  marginRight: "10px", // Adjust spacing as needed
-                }}
-              >
-                {time}s
-              </span>
-            ))}
-          </div>
-          <br />
+const handleNext = () => {
+  if (kegel && times < kegel.length - 1) {
+    setTimes(times + 1);
+    setCurrentTimeIndex(0);
+    setCurrentTime(kegelTimes[currentTimeIndex] * 1000);
+    setProgressBarPercent(0);
 
-          <div className="mb-10 flex justify-center">
-            <Progress percent={progressBarPercent} type="circle" size={200} />
-          </div>
-          <Button.Group>
-            <Button onClick={startTimer}>Start</Button>
-            <Button onClick={stopTimer}>Stop</Button>
-          </Button.Group>
-          <div className="basis-1/6 flex justify-center align-bottom flex-col">
-            <div className="flex justify-between mt-4 gap-5">
-              <button
-                className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700
+    setTimeLeft(kegelTimes[currentTimeIndex] * 1000);
+  }
+};
+
+return (
+  <div>
+    {selectedTask === "kagel" && (
+      <div className="flex flex-col items-center ">
+        <p className="text-xl">
+          <span className="text-red-500">{type}</span>, {kegel?.length}/
+          {times + 1}
+        </p>
+        <div>
+          {kegelTimes.map((time, index) => (
+            <span
+              key={index}
+              style={{
+                color: index === currentTimeIndex ? "red" : "black",
+                marginRight: "10px", // Adjust spacing as needed
+              }}
+            >
+              {time}s
+            </span>
+          ))}
+        </div>
+        <br />
+
+        <div className="mb-10 flex justify-center">
+          <Progress percent={progressBarPercent} type="circle" size={200} />
+        </div>
+        <Button.Group>
+          <Button onClick={startTimer}>Start</Button>
+          <Button onClick={stopTimer}>Stop</Button>
+        </Button.Group>
+        <div className="basis-1/6 flex justify-center align-bottom flex-col">
+          <div className="flex justify-between mt-4 gap-5">
+            <button
+              className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700
                 ${
                   times === 0 || !kegel || kegel.length === 0
                     ? "bg-gray-500 cursor-not-allowed "
                     : "bg-gray-700 hover:bg-gray-700"
                 }
                 `}
-                onClick={handlePrevious}
-                disabled={times === 0 || !kegel || kegel.length === 0}
-              >
-                <span style={{ paddingRight: "10px" }}>
-                  {" "}
-                  <ArrowLeftOutlined />
-                </span>
-                Previous
-              </button>
+              onClick={handlePrevious}
+              disabled={times === 0 || !kegel || kegel.length === 0}
+            >
+              <span style={{ paddingRight: "10px" }}>
+                {" "}
+                <ArrowLeftOutlined />
+              </span>
+              Previous
+            </button>
 
-              <button
-                className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
+            <button
+              className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
                    ${
                      !kegel || times === kegel.length - 1
                        ? "bg-gray-500 cursor-not-allowed "
                        : "bg-gray-700 hover:bg-gray-700"
                    }`}
-                onClick={handleNext}
-                disabled={!kegel || times === kegel.length - 1}
-              >
-                Next
-                <span style={{ paddingLeft: "10px" }}>
-                  <ArrowRightOutlined />
-                </span>
-              </button>
-            </div>
+              onClick={handleNext}
+              disabled={!kegel || times === kegel.length - 1}
+            >
+              Next
+              <span style={{ paddingLeft: "10px" }}>
+                <ArrowRightOutlined />
+              </span>
+            </button>
           </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 }
 
 export default Kagel;
