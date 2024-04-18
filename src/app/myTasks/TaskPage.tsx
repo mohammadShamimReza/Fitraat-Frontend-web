@@ -134,7 +134,7 @@ function TaskPage({
               </div>
 
               <br />
-              <div className="basis-4/6">
+              <div className="basis-4/6 border p-3 rounded-lg">
                 <Video selectedTask={selectedTask} video={video} />
                 <Kagel selectedTask={selectedTask} kegel={kegel} />
                 <SortNote selectedTask={selectedTask} sort_note={sort_note} />

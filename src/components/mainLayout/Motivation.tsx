@@ -5,6 +5,11 @@ import Image from "next/image";
 function Motivation() {
   return (
     <div className="flex justify-center md:flex-row lg:flex-row sm:flex-row flex-col align-middle  gap-5  mt-14 p-5">
+      <div className=" sm:w-full md:w-1/2 lg:w-1/2 relative ">
+        <div className="">
+          <Image className=" rounded-md " src={image} alt="" />
+        </div>
+      </div>
       <div className="sm:w-full md:w-1/2 lg:w-1/2  ">
         <div className=" ">
           <p className="text-5xl  mb-4">Pornography</p>
@@ -17,11 +22,6 @@ function Motivation() {
             discover a new life. The program can be done in the privacy of your
             home or in a group context.
           </p>
-        </div>
-      </div>
-      <div className=" sm:w-full md:w-1/2 lg:w-1/2 relative ">
-        <div className="">
-          <Image className=" rounded-md " src={image} alt="" />
         </div>
       </div>
     </div>

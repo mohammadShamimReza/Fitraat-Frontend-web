@@ -1,13 +1,9 @@
-import Image from "next/image";
-import image1 from "../../app/assets/spartan2.png";
-import image2 from "../../app/assets/unbeatable.jpeg";
-
 function AboutSpartan() {
   return (
     <div className="layoutComponent p-3 mt-14">
       <div className="flex justify-between align-middle sm:flex-row flex-col  gap-5 ">
-        <div className="flex border p-6 hover:shadow-md rounded-xl transition duration-300  sm:w-1/2 md:w-full lg:w-full ">
-          <div className="w-2/3">
+        <div className=" border p-6 hover:shadow-md rounded-xl transition duration-300  sm:w-1/2 md:w-full lg:w-full ">
+          <div className="">
             <h2 className="text-3xl font-semibold text-gray-900 mb-3">
               <span className="text-gray-500"> What is </span>
               <span className="text-gray-950">Spartan Mode?</span>
@@ -42,13 +38,10 @@ function AboutSpartan() {
               </span>
             </p>
           </div>
-          <div className="relative w-1/3">
-            <Image className=" rounded-md " src={image1} fill alt="" />
-          </div>
         </div>
 
-        <div className=" flex border p-6 hover:shadow-md rounded-xl transition duration-300 sm:w-1/2 md:w-full lg:w-full">
-          <div className="w-2/3">
+        <div className="  border p-6 hover:shadow-md rounded-xl transition duration-300 sm:w-1/2 md:w-full lg:w-full">
+          <div className="">
             <h2 className="text-3xl font-semibold text-gray-900 mb-3">
               <span className="text-gray-500"> How to become </span>
               <span className="text-gray-950">Unbetable</span>
@@ -75,9 +68,6 @@ function AboutSpartan() {
                 <span className="font-bold"> unstoppable</span>
               </span>
             </p>
-          </div>
-          <div className="relative w-1/3 ">
-            <Image className=" rounded-md " src={image2} fill alt="" />
           </div>
         </div>
       </div>

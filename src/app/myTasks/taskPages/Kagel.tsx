@@ -2,6 +2,8 @@ import { KegelTimes } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Progress } from "antd";
 import { useEffect, useRef, useState } from "react";
+import squizze from "../../assets/squizze.mp3";
+import stop from "../../assets/stop.mp3";
 
 function Kagel({
   selectedTask,
@@ -37,9 +39,19 @@ function Kagel({
 
   const timerId = useRef<NodeJS.Timeout | undefined | number>(undefined);
 
+  useEffect(() => {
+    if (type === "Squizze") {
+      new Audio(squizze).play();
+    } else if (type === "Stop") {
+      new Audio(stop).play();
+    }
+  }, [type]);
+
+  const audioType = type === "Squizze" ? squizze : stop;
+
   const startTimer = () => {
     // clearInterval(timerId.current);
-
+    new Audio(audioType).play();
     if (progressBarPercent === 100) {
       setTimeLeft(currentTime);
       setProgressBarPercent(0);
@@ -63,7 +75,7 @@ function Kagel({
   }, [isRunning]);
 
   useEffect(() => {
-    currentTimeIndex % 2 === 0 ? setType("Squizz") : setType("Stop");
+    currentTimeIndex % 2 === 0 ? setType("Squizze") : setType("Stop");
 
     if (progressBarPercent < 100) {
       let updateProgressPercent = Math.round(
@@ -112,13 +124,29 @@ function Kagel({
       setTimeLeft(kegelTimes[currentTimeIndex] * 1000);
     }
   };
+
   return (
     <div>
       {selectedTask === "kagel" && (
         <div className="flex flex-col items-center ">
-          <p className="text-2xl">
-            {type}, {currentTime / 1000}s, {kegel?.length}/{times + 1}
+          <p className="text-xl">
+            {type}, {kegel?.length}/{times + 1}
           </p>
+          <div>
+            {kegelTimes.map((time, index) => (
+              <span
+                key={index}
+                style={{
+                  color: index === currentTimeIndex ? "red" : "black",
+                  marginRight: "10px", // Adjust spacing as needed
+                }}
+              >
+                {time}s
+              </span>
+            ))}
+          </div>
+          <br />
+
           <div className="mb-10 flex justify-center">
             <Progress percent={progressBarPercent} type="circle" size={200} />
           </div>
