@@ -37,6 +37,18 @@ function ProfilePage() {
         compliteDay: 0,
         userId: userId,
       });
+            localStorage.setItem(
+              "AuthDay",
+              JSON.stringify({
+                video: false,
+                kagel: false,
+                sortNote: false,
+                quiz: false,
+                rewards: false,
+                suggestBlog: false,
+              })
+            );
+
 
       console.log(result);
       message.success("You have successfully start your journy again!");
