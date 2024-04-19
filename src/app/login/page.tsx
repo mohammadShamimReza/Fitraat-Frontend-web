@@ -129,14 +129,14 @@ function LoginPage() {
             )}
           </div>
           {/* Forgot Password */}
-          <div className="text-right mb-6">
+          {/* <div className="text-right mb-6">
             <Link
               href="/forgetPass"
               className="text-gray-600 hover:text-gray-800 underline"
             >
               Forgot Password?
             </Link>
-          </div>
+          </div> */}
           {/* Login Button */}
           <button
             type="submit"
@@ -145,19 +145,15 @@ function LoginPage() {
             Login
           </button>
           {/* Or */}
-          <div className="text-center text-gray-600 mb-4">Or</div>
-          {/* Social Auth Buttons */}
+          {/* <div className="text-center text-gray-600 mb-4">Or</div>
           <div className="flex justify-center mb-4">
-            {/* Google Auth Button */}
             <button className="bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition-colors mr-4">
               Login with Google
             </button>
-            {/* Facebook Auth Button */}
             <button className="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
               Login with Facebook
             </button>
-          </div>
-          {/* Signup Link */}
+          </div> */}
           <div className="text-center text-gray-600 ">
             Don&apos;t have an account?{" "}
             <Link
