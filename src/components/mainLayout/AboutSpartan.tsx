@@ -1,6 +1,6 @@
 function AboutSpartan() {
   return (
-    <div className="layoutComponent p-3 mt-14">
+    <div className="layoutComponent p-3 mt-14 bg-white">
       <div className="flex justify-between align-middle sm:flex-row flex-col  gap-5 ">
         <div className=" border p-6  rounded-xl transition duration-300  sm:w-1/2 md:w-full lg:w-full ">
           <div className="">

@@ -48,7 +48,7 @@ function NavBar() {
       }
   };
   return (
-    <div className="mb-5 border rounded-xl shadow-md  mt-5">
+    <div className="mb-5 border rounded-xl shadow-md  mt-5 bg-white">
       <div className="p-2">
         <div className="  px-1 sm:px-4 lg:px-6">
           <div className="relative flex h-16 items-center justify-between">

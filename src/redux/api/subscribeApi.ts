@@ -21,3 +21,6 @@ export const subscribersApi = baseApi.injectEndpoints({
 });
 
 export const { useCreateSubscribersMutation } = subscribersApi;
+
+
+

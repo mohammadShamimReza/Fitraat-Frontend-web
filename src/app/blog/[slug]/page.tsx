@@ -1,8 +1,8 @@
 "use client";
 import { useGetBlogsByIdQuery } from "@/redux/api/blogApi";
 import Image from "next/image";
-import Link from "next/link";
 import * as yup from "yup";
+import stopPornImage from "../../assets/stopPorn.png";
 
 const schema = yup.object().shape({
   text: yup.string().required("Review is required"),
@@ -15,21 +15,6 @@ function Page({ params }: { params: { slug: string } }) {
   console.log(blogData);
   return (
     <div className="p-5">
-      <div className="flex justify-end align-middle">
-        <Link href={`/profile/`}>
-          <div className="">
-            <Image
-              src={""}
-              height={2}
-              width={2}
-              alt="Writer"
-              className="flex w-8 h-8 rounded-full mr-2"
-            />
-
-            {/* <span>{blogData?.user.name}</span> */}
-          </div>
-        </Link>
-      </div>
       <br />
       <br />
       <br />
@@ -43,7 +28,7 @@ function Page({ params }: { params: { slug: string } }) {
         <br />
         <div className="flex align-middle justify-center h-full ">
           <Image
-            src={""}
+            src={stopPornImage || blogData?.imageURL}
             height={200}
             width={200}
             // layout="responsive"
@@ -64,8 +49,15 @@ function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
       <br />
+      <p className="text-right p-20">
+        Total view:{" "}
+        <span className="text-red-500"> {blogData?.viewCount || 1}</span>{" "}
+      </p>
+
       <br />
-      <div className="text-2xl text-center p-5">Reviews</div>
+      <div className="text-2xl text-center pt-5 text-red-500 font-semibold">
+        Thanks for reading this Blog
+      </div>
       <br />
 
       <div className="text-base ">
