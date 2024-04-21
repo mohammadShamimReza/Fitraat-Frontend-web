@@ -1,9 +1,5 @@
 "use client";
-import {
-  getTokenFromCookie,
-  removeTokenFromCookie,
-  storeTokenInCookie,
-} from "@/lib/auth/token";
+import { getTokenFromCookie, storeTokenInCookie } from "@/lib/auth/token";
 import { useLoginUserMutation } from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
@@ -11,7 +7,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function LoginPage() {
   const router = useRouter();
@@ -39,10 +35,6 @@ function LoginPage() {
     });
   };
   const authTokenFromRedux = useAppSelector((state) => state.auth.authToken);
-
-  const removeTokenFromCookies = useCallback(() => {
-    return removeTokenFromCookie();
-  }, []); // empty dependency array means the function does not depend on any variables
 
   useEffect(() => {
     const authToken = getTokenFromCookie() || authTokenFromRedux;
@@ -73,7 +65,7 @@ function LoginPage() {
         console.log(error);
       }
     } else {
-      message.error("Login successfully");
+      message.error("Login is not successfully");
     }
   };
 

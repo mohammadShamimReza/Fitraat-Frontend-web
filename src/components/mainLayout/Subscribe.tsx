@@ -1,19 +1,41 @@
 "use client";
+import { useCreateSubscribersMutation } from "@/redux/api/subscribeApi";
+import { Error } from "@/types/contantType";
 import { message } from "antd";
 import { FormEvent, useState } from "react";
 
 const Subscribe = () => {
   const [email, setEmail] = useState("");
 
-  const handleSubscribe = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    const userEmail = (event.target as HTMLFormElement).email.value; // Get the value of the email input field
-    setEmail(userEmail); // Store the email in state
-    console.log("Email subscribed:", userEmail); // Log the email
-    message.success("Thanks for subscribing to us", 1.5, () => {
-      // Clear the input field after 1 second
-      setEmail("");
-    });
+  const [createSubscribers] = useCreateSubscribersMutation();
+
+  const handleSubscribe = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const userEmail = (event.target as HTMLFormElement).email.value;
+    setEmail(userEmail);
+
+    console.log(userEmail);
+
+    if (userEmail !== "") {
+      try {
+        const result: any | Error = await createSubscribers({
+          email: userEmail,
+        });
+        if (result?.error) {
+          result?.error.data.error.message === "This attribute must be unique"
+            ? message.error("Email is already subscribed")
+            : "";
+        } else {
+          setEmail("");
+
+          message.success("Thanks for subscribing us");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      message.error("Login successfully");
+    }
   };
 
   return (
@@ -43,7 +65,7 @@ const Subscribe = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)} // Update the email state on change
-              className="mt-1 focus:ring-gray-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md h-10"
+              className="mt-1 focus:ring-gray-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md h-10 p-5"
             />
           </div>
           <div>
