@@ -144,12 +144,15 @@ function Kagel({
   };
 
   return (
-    <div>
+    <div
+    //   className="h-full
+    // "
+    >
       {selectedTask === "kagel" && (
         <div className="flex flex-col items-center ">
           <p className="text-xl">
-            <span className="text-red-500">{type}</span>, {times + 1}/
-            {kegel?.length}
+            <span className="text-red-500">{type}</span>,{" "}
+            <span className=""> {times + 1}</span>/{kegel?.length}
           </p>
           <div>
             {kegelTimes.map((time, index) => (
@@ -158,6 +161,7 @@ function Kagel({
                 style={{
                   color: index === currentTimeIndex ? "red" : "black",
                   marginRight: "10px", // Adjust spacing as needed
+                  fontSize: index === currentTimeIndex ? "25px" : "",
                 }}
               >
                 {time}s

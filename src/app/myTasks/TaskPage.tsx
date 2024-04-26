@@ -86,7 +86,7 @@ function TaskPage({
                   }`}
                   title={
                     (localStorageData as any)[task] === false
-                      ? "This task is not available"
+                      ? "This task is not unlock yet"
                       : "you have completed this task"
                   }
                   onClick={() => {
@@ -134,14 +134,23 @@ function TaskPage({
               </div>
 
               <br />
-              <div className="basis-4/6 border p-3 rounded-lg">
-                <Video selectedTask={selectedTask} video={video} />
-                <Kagel selectedTask={selectedTask} kegel={kegel} />
-                <SortNote selectedTask={selectedTask} sort_note={sort_note} />
-                <Quiz selectedTask={selectedTask} quiz={quiz} />
-                <Reward selectedTask={selectedTask} reward={reward} />
-                <SuggestedBlog selectedTask={selectedTask} blog={blog} />
+              <div
+                className="h-[30rem]"
+                // style={{
+                //   width: "100%",
+                //   height: "380px",
+                // }}
+              >
+                <div className="basis-4/6 border p-3 rounded-lg h-full">
+                  <Video selectedTask={selectedTask} video={video} />
+                  <Kagel selectedTask={selectedTask} kegel={kegel} />
+                  <SortNote selectedTask={selectedTask} sort_note={sort_note} />
+                  <Quiz selectedTask={selectedTask} quiz={quiz} />
+                  <Reward selectedTask={selectedTask} reward={reward} />
+                  <SuggestedBlog selectedTask={selectedTask} blog={blog} />
+                </div>
               </div>
+
               <div className="basis-1/6 flex justify-center align-bottom flex-col">
                 <div className="flex justify-between mt-4">
                   <button
