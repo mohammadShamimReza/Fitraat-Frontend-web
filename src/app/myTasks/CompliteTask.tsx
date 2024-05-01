@@ -96,7 +96,7 @@ const CompliteTask: React.FC<Props> = ({ auth, daysCompleted }) => {
             If you have any questions or need further assistance, feel free to
             reach out:
           </p>
-          <p className="mt-2">Email: support@example.com</p>
+          <p className="mt-2">Email: support@detox-dopamine@gmail.com</p>
         </div>
       </div>
     </div>

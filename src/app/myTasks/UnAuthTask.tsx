@@ -11,102 +11,103 @@ import TaskPage from "./TaskPage";
 
 function UnAuthTask({}) {
   const router = useRouter();
+    const [unAuthDayId, setUnAuthDayId] = useState("1");
 
-  const tasks = [
-    "video",
-    "kagel",
-    "sortNote",
-    "quiz",
-    "rewards",
-    "suggestBlog",
-  ];
+    const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
+      parseInt(unAuthDayId)
+    );
 
-  const currentTask = useAppSelector((state) => state.taskSlice.currentTask);
-  const dispatch = useAppDispatch();
+    const tasks = [
+      "video",
+      "kagel",
+      "sortNote",
+      "quiz",
+      "rewards",
+      "suggestBlog",
+    ];
 
-  const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
-  const selectedTask = currentTask || tasks[selectedTaskIndex];
+    const currentTask = useAppSelector((state) => state.taskSlice.currentTask);
+    const dispatch = useAppDispatch();
 
-  const initialLocalStorageData = localStorage.getItem("UnAuthDay");
-  const defaultLocalStorageData = {
-    video: false,
-    kagel: false,
-    sortNote: false,
-    quiz: false,
-    rewards: false,
-    suggestBlog: false,
-  };
+    const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
+    const selectedTask = currentTask || tasks[selectedTaskIndex];
 
-  const [localStorageData, setLocalStorageData] = useState(
-    initialLocalStorageData
-      ? JSON.parse(initialLocalStorageData)
-      : defaultLocalStorageData
-  );
+    const initialLocalStorageData = localStorage.getItem("UnAuthDay");
+    const defaultLocalStorageData = {
+      video: false,
+      kagel: false,
+      sortNote: false,
+      quiz: false,
+      rewards: false,
+      suggestBlog: false,
+    };
 
-  // Update local storage whenever localStorageData changes
-  useEffect(() => {
-    localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
-  }, [localStorageData]);
+    const [localStorageData, setLocalStorageData] = useState(
+      initialLocalStorageData
+        ? JSON.parse(initialLocalStorageData)
+        : defaultLocalStorageData
+    );
 
-  const handleTaskClick = (index: number) => {
-    setSelectedTaskIndex(index);
-    dispatch(storeCurrentTask(tasks[index]));
-  };
+    // Update local storage whenever localStorageData changes
+    useEffect(() => {
+      localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
+    }, [localStorageData]);
 
-  const handlePrevious = () => {
-    if (selectedTaskIndex > 0) {
-      setSelectedTaskIndex(selectedTaskIndex - 1);
-      dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
-    }
-  };
-  const handleNext = () => {
-    if (selectedTask === "suggestBlog") {
-      localStorage.setItem(
-        "UnAuthDay",
-        JSON.stringify(defaultLocalStorageData)
-      );
+    const handleTaskClick = (index: number) => {
+      setSelectedTaskIndex(index);
+      dispatch(storeCurrentTask(tasks[index]));
+    };
 
-      if (unAuthDayId === null) {
-        localStorage.setItem("unAuthDayId", "1");
-      } else if (unAuthDayId !== null) {
-        let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
-        if (parsedUnAuthDayId === 40) {
-          message.success(
-            "Hurray this is you last day of task. Then you becone spartan"
-          );
-          localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-          router.push("/blog");
-        } else if (parsedUnAuthDayId > 40) {
-          message.success(
-            "Congratulations you have successfully completed your tasks for 40 day"
-          );
-          window.location.reload();
-        }
-        if (parsedUnAuthDayId <= 41) {
-          localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-          router.push("/blog");
-        }
+    const handlePrevious = () => {
+      if (selectedTaskIndex > 0) {
+        setSelectedTaskIndex(selectedTaskIndex - 1);
+        dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
       }
-    } else {
-      setLocalStorageData((prevState: typeof localStorageData) => ({
-        ...prevState,
-        [selectedTask]: true,
-      }));
-    }
-    if (selectedTaskIndex < tasks.length - 1) {
-      setSelectedTaskIndex(selectedTaskIndex + 1);
-      dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
-    }
-  };
-  const [unAuthDayId, setUnAuthDayId] = useState("1");
-  useEffect(() => {
-    setUnAuthDayId(window.localStorage.getItem("unAuthDayId") || "1");
-  }, []);
+    };
+    const handleNext = () => {
+      if (selectedTask === "suggestBlog") {
+        localStorage.setItem(
+          "UnAuthDay",
+          JSON.stringify(defaultLocalStorageData)
+        );
 
-  const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
-    parseInt(unAuthDayId)
-  );
+        if (unAuthDayId === null) {
+          localStorage.setItem("unAuthDayId", "1");
+        } else if (unAuthDayId !== null) {
+          let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
+          if (parsedUnAuthDayId === 40) {
+            message.success(
+              "Hurray this is you last day of task. Then you becone spartan"
+            );
+            localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
+            router.push("/blog");
+          } else if (parsedUnAuthDayId > 40) {
+            message.success(
+              "Congratulations you have successfully completed your tasks for 40 day"
+            );
+            window.location.reload();
+          }
+          if (parsedUnAuthDayId <= 41) {
+            localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
+            router.push("/blog");
+          }
+        }
+      } else {
+        setLocalStorageData((prevState: typeof localStorageData) => ({
+          ...prevState,
+          [selectedTask]: true,
+        }));
+      }
+      if (selectedTaskIndex < tasks.length - 1) {
+        setSelectedTaskIndex(selectedTaskIndex + 1);
+        dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
+      }
+    };
+    useEffect(() => {
+      setUnAuthDayId(window.localStorage.getItem("unAuthDayId") || "1");
+    }, []);
 
+ 
   const [blog, setBlog] = useState<{
     id: number | undefined;
 
