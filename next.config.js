@@ -1,16 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config) => {
+  webpack: (config, options) => {
+    const { isServer } = options;
     config.module.rules.push({
-      test: /\.(mov|mp3|webm)$/,
+      test: /\.(ogg|mp3|wav|mpe?g)$/i,
+      exclude: config.exclude,
       use: [
         {
-          loader: "file-loader",
+          loader: require.resolve("url-loader"),
           options: {
-            publicPath: "/_next/static/videos/",
-            outputPath: "static/videos/",
-            name: "[name].[hash].[ext]",
-            esModule: false,
+            limit: config.inlineImageLimit,
+            fallback: require.resolve("file-loader"),
+            publicPath: `${config.assetPrefix}/_next/static/images/`,
+            outputPath: `${isServer ? "../" : ""}static/images/`,
+            name: "[name]-[hash].[ext]",
+            esModule: config.esModule || false,
           },
         },
       ],
