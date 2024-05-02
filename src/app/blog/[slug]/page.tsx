@@ -28,7 +28,7 @@ function Page({ params }: { params: { slug: string } }) {
         <br />
         <div className="flex align-middle justify-center h-full ">
           <Image
-            src={stopPornImage || blogData?.imageURL}
+            src={blogData?.imageURL || stopPornImage}
             height={200}
             width={200}
             // layout="responsive"
