@@ -11,7 +11,7 @@ function Reward({
     <div>
       {" "}
       {selectedTask === "rewards" && (
-        <p className="">{reward?.rewardContant}</p>
+        <p className="text-center text-red-500">{reward?.rewardContant}</p>
         /* Add rewards component here */
       )}
     </div>

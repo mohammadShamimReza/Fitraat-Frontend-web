@@ -78,6 +78,7 @@ function Kagel({
   };
 
   const stopTimer = () => {
+
     clearInterval(timerId.current);
     setIsRunning(false);
   };

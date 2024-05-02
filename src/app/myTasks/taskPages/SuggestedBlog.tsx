@@ -31,7 +31,8 @@ function SuggestedBlog({
     <div>
       {selectedTask === "suggestBlog" && (
         <>
-          <p className="">
+          <p className="text-center m-7 text-2xl underline">{blog?.title}</p>
+          <p className="line-clamp-[11]">
             {blog?.content?.split(" ").map((word, index) => (
               <span
                 key={index}
@@ -41,6 +42,7 @@ function SuggestedBlog({
                   color: hoveredWords.includes(index) ? "red" : "inherit",
                   cursor: "pointer",
                 }}
+                className=""
               >
                 {word}{" "}
               </span>

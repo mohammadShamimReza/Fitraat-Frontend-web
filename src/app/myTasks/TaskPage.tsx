@@ -122,7 +122,7 @@ function TaskPage({
 
           <div className="lg:w-2/3">
             <div
-              style={{ height: "500px" }}
+              // style={{ height: "500px" }}
               className="p-3  mx-auto flex flex-col justify-evenly "
             >
               <div className="basis-1/6">
@@ -141,7 +141,7 @@ function TaskPage({
                 //   height: "380px",
                 // }}
               >
-                <div className="basis-4/6 border p-3 rounded-lg h-full">
+                <div className="basis-4/6 border p-3 rounded-lg h-full ">
                   <Video selectedTask={selectedTask} video={video} />
                   <Kagel selectedTask={selectedTask} kegel={kegel} />
                   <SortNote selectedTask={selectedTask} sort_note={sort_note} />

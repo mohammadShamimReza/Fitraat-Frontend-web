@@ -122,6 +122,13 @@ function NavBar() {
                   >
                     Pro Member
                   </Link>
+                  <Link
+                    href="/about"
+                    className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                    aria-current="page"
+                  >
+                    About us
+                  </Link>
 
                   <Link
                     href="/myTasks"
@@ -244,10 +251,17 @@ function NavBar() {
               </Link>
 
               <Link
-                href="/faq"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                href="/blog"
+                className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
               >
-                FAQ{" "}
+                Blog
+              </Link>
+
+              <Link
+                href="/proMember"
+                className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
+              >
+                Pro Member
               </Link>
               <Link
                 href="/about"

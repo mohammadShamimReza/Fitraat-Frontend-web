@@ -10,7 +10,7 @@ function page() {
         to provide holistic solutions that align with Islamic values and promote
         spiritual growth in the digital age.
       </p>
-      <div className="rounded-lg shadow-md bg-white p-6">
+      <div className=" p-6">
         <h2 className="text-2xl font-bold mb-4">Key Features</h2>
         <ul className="list-disc pl-6 mb-6">
           <li className="mb-2">

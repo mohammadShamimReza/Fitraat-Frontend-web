@@ -39,7 +39,7 @@ function Quiz({
   return (
     <div>
       {selectedTask === "quiz" && (
-        <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md">
+        <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md mt-16">
           <h2 className="text-lg font-semibold mb-4">{quiz?.question}</h2>
           <div className="grid grid-cols-1 gap-4">
             {quizOptions?.map((option, index) => (
