@@ -1,5 +1,6 @@
 "use client";
 import { useGetBlogsByIdQuery } from "@/redux/api/blogApi";
+import { Skeleton } from "antd";
 import Image from "next/image";
 import * as yup from "yup";
 import stopPornImage from "../../assets/stopPorn.png";
@@ -10,10 +11,15 @@ const schema = yup.object().shape({
 
 function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
-  const { data } = useGetBlogsByIdQuery(blogId);
+  const { data, isLoading } = useGetBlogsByIdQuery(blogId);
   const blogData = data?.data.attributes;
   console.log(blogData);
-  return (
+
+  return isLoading ? (
+    Array.from({ length: 4 }).map((_, index) => (
+      <Skeleton style={{ marginTop: "10px" }} key={index} active />
+    ))
+  ) : (
     <div className="p-5">
       <br />
       <br />
@@ -29,8 +35,8 @@ function Page({ params }: { params: { slug: string } }) {
         <div className="flex align-middle justify-center h-full ">
           <Image
             src={blogData?.imageURL || stopPornImage}
-            height={200}
-            width={200}
+            height={300}
+            width={500}
             // layout="responsive"
             objectFit="cover"
             alt="Writer"
@@ -96,5 +102,4 @@ function Page({ params }: { params: { slug: string } }) {
     </div>
   );
 }
-
 export default Page;

@@ -20,7 +20,7 @@ const MyTasks: React.FC = () => {
     <>
       {isLoading ? (
         Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton key={index} active />
+          <Skeleton style={{ marginTop: "40px" }} key={index} active />
         ))
       ) : authenticatedUserInfoData === undefined &&
         authenticatedUserInfoDataError === true ? (
