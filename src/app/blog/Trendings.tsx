@@ -20,8 +20,12 @@ function Trendings() {
                     <div className="mb-4 hover:shadow-lg border rounded-xl  ">
                       <div className="p-4">
                         <p className="font-bold text-lg truncate">
-                          {blog?.attributes.title}
+                          {blog?.attributes.title
+                            .split(" ")
+                            .slice(0, 2)
+                            .join(" ")}
                         </p>
+
                         <div className="mt-2  line-clamp-3  w-44 text-justify">
                           {blog?.attributes.content && (
                             <div
