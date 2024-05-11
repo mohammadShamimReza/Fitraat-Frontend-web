@@ -9,14 +9,12 @@ import SortNote from "./taskPages/SortNote";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, theme } from "antd";
 import { useState } from "react";
+import { CiVideoOn } from "react-icons/ci";
+import { FaBlogger } from "react-icons/fa6";
+import { GrStatusPlaceholder, GrSteps, GrTag, GrYoga } from "react-icons/gr";
 
 const { Header, Sider, Content } = Layout;
 
@@ -86,12 +84,12 @@ function TaskPage({
   } = theme.useToken();
 
   const icons = [
-    <VideoCameraOutlined key={1} />,
-    <UserOutlined key={2} />,
-    <VideoCameraOutlined key={3} />,
-    <UserOutlined key={4} />,
-    <VideoCameraOutlined key={5} />,
-    <UserOutlined key={6} />,
+    <CiVideoOn key={1} />,
+    <GrYoga key={2} />,
+    <GrSteps key={3} />,
+    <GrStatusPlaceholder key={4} />,
+    <GrTag key={5} />,
+    <FaBlogger key={6} />,
   ];
 
   return (
@@ -99,52 +97,64 @@ function TaskPage({
       <Layout>
         <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
           <div className="demo-logo-vertical" />
-          <p className="text-center text-2xl text-red-600 font-bold mb-5">
+          <p className="text-center text-2xl text-red-600 font-bold p-2 mt-4 border-b border-r">
             Tasks
           </p>
-          {tasks.map((task, index) => (
-            <div
-              key={index}
-              className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
-                (localStorageData as any)[task] === false
-                  ? " cursor-not-allowed"
-                  : "cursor-pointer"
-              }`}
-              title={
-                (localStorageData as any)[task] === false
-                  ? "This task is not unlock yet"
-                  : "you have completed this task"
-              }
-              onClick={() => {
-                if ((localStorageData as any)[task] === true) {
-                  handleTaskClick(index);
-                }
-              }}
-            >
-              {" "}
-              <span
-                className={`transition-colors duration-300  p-2 ${
-                  selectedTask === task && "font-bold text-blue-600"
+          <div className="mt-4">
+            {" "}
+            {tasks.map((task, index) => (
+              <div
+                key={index}
+                className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
+                  (localStorageData as any)[task] === false
+                    ? " cursor-not-allowed"
+                    : "cursor-pointer"
                 }`}
+                title={
+                  (localStorageData as any)[task] === false
+                    ? "This task is not unlock yet"
+                    : "you have completed this task"
+                }
+                onClick={() => {
+                  if ((localStorageData as any)[task] === true) {
+                    handleTaskClick(index);
+                  }
+                }}
               >
-                <span className="mr-2"> {icons[index]}</span>
-                {task.replace(/^\w/, (c) => c.toUpperCase())}
-              </span>
-              <span className="pl-3 right-0 p-2">
-                <FaCheckCircle
-                  className=""
-                  size={25}
-                  style={{
-                    color:
-                      (localStorageData as any)[task] === true
-                        ? "#0578EA"
-                        : "gray",
-                    fontWeight: "bold",
-                  }}
-                />
-              </span>
-            </div>
-          ))}
+                {" "}
+                <span
+                  className={`transition-colors duration-300  p-2 ${
+                    selectedTask === task && "font-bold text-blue-600"
+                  }`}
+                >
+                  <div className="flex align-middle justify-center">
+                    {" "}
+                    <span className="mr-2 mt-1"> {icons[index]}</span>
+                    {!collapsed ? (
+                      <span className="">
+                        {task.replace(/^\w/, (c) => c.toUpperCase())}
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </span>
+                <span className="pl-3 right-0 p-2">
+                  <FaCheckCircle
+                    className=""
+                    size={25}
+                    style={{
+                      color:
+                        (localStorageData as any)[task] === true
+                          ? "#0578EA"
+                          : "gray",
+                      fontWeight: "bold",
+                    }}
+                  />
+                </span>
+              </div>
+            ))}
+          </div>
         </Sider>
         <Layout>
           <Header style={{ padding: 0, background: colorBgContainer }}>
