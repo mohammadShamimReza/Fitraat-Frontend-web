@@ -105,20 +105,20 @@ function NavBar() {
                 <div className="flex space-x-4">
                   <Link
                     href="/"
-                    className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
                   >
                     Home
                   </Link>
                   <Link
                     href="/blog"
-                    className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
                   >
                     Blog
                   </Link>
 
                   <Link
                     href="/proMember"
-                    className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
                   >
                     Pro Member
                   </Link>
@@ -132,7 +132,7 @@ function NavBar() {
 
                   <Link
                     href="/myTasks"
-                    className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
                   >
                     My Tasks
                   </Link>
@@ -252,14 +252,14 @@ function NavBar() {
 
               <Link
                 href="/blog"
-                className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
+                className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
               >
                 Blog
               </Link>
 
               <Link
                 href="/proMember"
-                className=" hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-normal"
+                className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
               >
                 Pro Member
               </Link>

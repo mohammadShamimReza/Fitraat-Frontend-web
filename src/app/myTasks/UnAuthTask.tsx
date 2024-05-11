@@ -66,6 +66,8 @@ function UnAuthTask({}) {
     };
     const handleNext = () => {
       if (selectedTask === "suggestBlog") {
+        dispatch(storeCurrentTask(tasks[0]));
+
         localStorage.setItem(
           "UnAuthDay",
           JSON.stringify(defaultLocalStorageData)
@@ -107,41 +109,41 @@ function UnAuthTask({}) {
       setUnAuthDayId(window.localStorage.getItem("unAuthDayId") || "1");
     }, []);
 
- 
-  const [blog, setBlog] = useState<{
-    id: number | undefined;
+    const [blog, setBlog] = useState<{
+      id: number | undefined;
 
-    title: string | undefined;
-    content: string | undefined;
-  }>({
-    id: 1,
+      title: string | undefined;
+      content: string | undefined;
+    }>({
+      id: 1,
 
-    title: "",
-    content: "",
-  });
-  const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
-  const [quiz, setQuiz] = useState<{
-    question: string | undefined;
-    answer: string | undefined;
-    quizOptions: string | undefined;
-  }>({
-    question: "",
-    answer: "",
-    quizOptions: "",
-  });
-  const [sort_note, setSort_note] = useState<{
-    sortNoteContent: string | undefined;
-  }>({
-    sortNoteContent: "",
-  });
-  const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
-    videoUrl: "",
-  });
-  const [reward, setReward] = useState<{ rewardContant: string | undefined }>({
-    rewardContant: "",
-  });
+      title: "",
+      content: "",
+    });
+    const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
+    const [quiz, setQuiz] = useState<{
+      question: string | undefined;
+      answer: string | undefined;
+      quizOptions: string | undefined;
+    }>({
+      question: "",
+      answer: "",
+      quizOptions: "",
+    });
+    const [sort_note, setSort_note] = useState<{
+      sortNoteContent: string | undefined;
+    }>({
+      sortNoteContent: "",
+    });
+    const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
+      videoUrl: "",
+    });
+    const [reward, setReward] = useState<{ rewardContant: string | undefined }>(
+      {
+        rewardContant: "",
+      }
+    );
 
-  console.log(unAuthenticatedDayData?.data[0].attributes);
 
   useEffect(() => {
     if (unAuthenticatedDayData) {

@@ -67,8 +67,12 @@ function AuthMyTask({
       dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
     }
   };
+      console.log(selectedTask, "this is");
+
   const handleNext = async () => {
     if (selectedTask === "suggestBlog") {
+      console.log("blog");
+      dispatch(storeCurrentTask(tasks[0]));
       localStorage.setItem("AuthDay", JSON.stringify(defaultLocalStorageData));
       if (authDayDataId + 1 === 120) {
         message.success(
