@@ -18,6 +18,16 @@ const config: Config = {
     //   // => @media (min-width: 1280px) { ... }
     // },
     extend: {
+      keyframes: {
+        expand: {
+          "0%": { maxHeight: "0", opacity: "0" },
+          "100%": { maxHeight: "1000px", opacity: "1" },
+        },
+        collapse: {
+          "0%": { maxHeight: "1000px", opacity: "1" },
+          "100%": { maxHeight: "0", opacity: "0" },
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -26,6 +36,10 @@ const config: Config = {
       fontFamily: {
         sans: ["Graphik", "sans-serif"],
         serif: ["Merriweather", "serif"],
+      },
+      animation: {
+        expand: "expand 0.5s ease-out forwards",
+        collapse: "collapse 0.5s ease-out forwards",
       },
     },
   },
