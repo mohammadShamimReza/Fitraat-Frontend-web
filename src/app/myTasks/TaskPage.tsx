@@ -95,67 +95,70 @@ function TaskPage({
   return (
     <>
       <Layout>
-        <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
-          <div className="demo-logo-vertical" />
-          <p className="text-center text-2xl text-red-600 font-bold p-2 mt-4 border-b border-r">
-            Tasks
-          </p>
-          <div className="mt-4">
-            {" "}
-            {tasks.map((task, index) => (
-              <div
-                key={index}
-                className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
-                  (localStorageData as any)[task] === false
-                    ? " cursor-not-allowed"
-                    : "cursor-pointer"
-                }`}
-                title={
-                  (localStorageData as any)[task] === false
-                    ? "This task is not unlock yet"
-                    : "you have completed this task"
-                }
-                onClick={() => {
-                  if ((localStorageData as any)[task] === true) {
-                    handleTaskClick(index);
-                  }
-                }}
-              >
-                {" "}
-                <span
-                  className={`transition-colors duration-300  p-2 ${
-                    selectedTask === task && "font-bold text-blue-600"
+        <div className="bg-white hidden md:block">
+          <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
+            <div className="demo-logo-vertical" />
+            <p className="text-center text-2xl text-red-600 font-bold p-2 mt-4 border-b border-r">
+              Tasks
+            </p>
+            <div className="mt-4">
+              {" "}
+              {tasks.map((task, index) => (
+                <div
+                  key={index}
+                  className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
+                    (localStorageData as any)[task] === false
+                      ? " cursor-not-allowed"
+                      : "cursor-pointer"
                   }`}
+                  title={
+                    (localStorageData as any)[task] === false
+                      ? "This task is not unlock yet"
+                      : "you have completed this task"
+                  }
+                  onClick={() => {
+                    if ((localStorageData as any)[task] === true) {
+                      handleTaskClick(index);
+                    }
+                  }}
                 >
-                  <div className="flex align-middle justify-center">
-                    {" "}
-                    <span className="mr-2 mt-1"> {icons[index]}</span>
-                    {!collapsed ? (
-                      <span className="">
-                        {task.replace(/^\w/, (c) => c.toUpperCase())}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </span>
-                <span className="pl-3 right-0 p-2">
-                  <FaCheckCircle
-                    className=""
-                    size={25}
-                    style={{
-                      color:
-                        (localStorageData as any)[task] === true
-                          ? "#0578EA"
-                          : "gray",
-                      fontWeight: "bold",
-                    }}
-                  />
-                </span>
-              </div>
-            ))}
-          </div>
-        </Sider>
+                  {" "}
+                  <span
+                    className={`transition-colors duration-300  p-2 ${
+                      selectedTask === task && "font-bold text-blue-600"
+                    }`}
+                  >
+                    <div className="flex align-middle justify-center">
+                      {" "}
+                      <span className="mr-2 mt-1"> {icons[index]}</span>
+                      {!collapsed ? (
+                        <span className="">
+                          {task.replace(/^\w/, (c) => c.toUpperCase())}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </span>
+                  <span className="pl-3 right-0 p-2 hidden md:block">
+                    <FaCheckCircle
+                      className=""
+                      size={25}
+                      style={{
+                        color:
+                          (localStorageData as any)[task] === true
+                            ? "#0578EA"
+                            : "gray",
+                        fontWeight: "bold",
+                      }}
+                    />
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Sider>
+        </div>
+
         <Layout>
           <Header style={{ padding: 0, background: colorBgContainer }}>
             <Button

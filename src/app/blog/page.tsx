@@ -21,6 +21,8 @@ function Page() {
     isSuccess,
   } = useGetBlogsQuery({ searchTerm, pageCount });
 
+  console.log(blogData, "this is blog data");
+
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
   };

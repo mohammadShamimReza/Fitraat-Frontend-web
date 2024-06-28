@@ -7,7 +7,7 @@ export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl:
-      "https://detox-dopamine-backend.onrender.com/api" ||
+      // "https://detox-dopamine-backend.onrender.com/api" ||
       "http://localhost:1337/api",
     prepareHeaders: (headers, { getState }) => {
       const token =

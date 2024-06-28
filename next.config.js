@@ -23,7 +23,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["i.ibb.co", "res.cloudinary.com", "svgrepo.com"], // Add the hostname for your images here
+    domains: ["i.ibb.co", "res.cloudinary.com", "svgrepo.com", "delamere.com"], // Add the hostname for your images here
   },
 };
 

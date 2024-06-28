@@ -1,4 +1,3 @@
-import Footer from "@/components/structure/Footer";
 import NavBar from "@/components/structure/NavBar";
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -8,10 +7,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
         <NavBar />
         {children}
       </div>
-      <div className="mx-auto max-w-7xl">
+      {/* <div className="mx-auto max-w-7xl">
         {" "}
         <Footer />
-      </div>
+      </div> */}
     </div>
   );
 }
