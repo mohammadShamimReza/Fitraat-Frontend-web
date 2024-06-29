@@ -20,12 +20,12 @@ const config: Config = {
     extend: {
       keyframes: {
         expand: {
-          "0%": { maxHeight: "0", opacity: "0" },
+          "0%": { maxHeight: "150px", opacity: "1" },
           "100%": { maxHeight: "1000px", opacity: "1" },
         },
         collapse: {
           "0%": { maxHeight: "1000px", opacity: "1" },
-          "100%": { maxHeight: "0", opacity: "0" },
+          "100%": { maxHeight: "300px", opacity: "1" },
         },
       },
       backgroundImage: {
