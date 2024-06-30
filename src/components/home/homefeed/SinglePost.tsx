@@ -92,7 +92,7 @@ function SinglePost() {
           </div>
           <div className="mb-4">
             <div
-              className={`prose overflow-hidden transition-all duration-500 ease-in-out small-regular leading-7 tracking-wider text-base ${
+              className={`prose overflow-hidden transition-all duration-1000 ease-in-out small-regular leading-7 tracking-wider text-base ${
                 expanded ? "animate-expand" : "line-clamp-6 animate-collapse"
               }`}
               dangerouslySetInnerHTML={{ __html: mockData.postContent }}
@@ -113,7 +113,7 @@ function SinglePost() {
               </button>
             )}
           </div>
-          <div className="mb-4">
+          <div className="my-4">
             {comments.length > 0 ? (
               <>
                 <h3 className="text-lg font-semibold mb-2">Comments</h3>

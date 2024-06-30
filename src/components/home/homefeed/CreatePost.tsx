@@ -1,5 +1,6 @@
 // components/CreatePost.tsx
 
+import QuillEditor from "@/components/shared/QuillEditor";
 import { Button, Input, Modal } from "antd";
 import Head from "next/head";
 import React, { ChangeEvent, useState } from "react";
@@ -7,6 +8,7 @@ import React, { ChangeEvent, useState } from "react";
 const CreatePost: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [postContent, setPostContent] = useState<string>("");
+  const [valueEditor, setValueEditor] = useState("");
 
   const handleInputClick = () => {
     setModalVisible(true);
@@ -18,10 +20,10 @@ const CreatePost: React.FC = () => {
   };
 
   const handleCreatePost = () => {
-    console.log("Creating post with content:", postContent);
-    // Store unfinished post in session storage
-    sessionStorage.setItem("unfinishedPost", postContent);
-    setModalVisible(false);
+    console.log(valueEditor);
+    // console.log("Creating post with content:", postContent);
+    // sessionStorage.setItem("unfinishedPost", postContent);
+    // setModalVisible(false);
     setPostContent("");
   };
 
@@ -59,9 +61,9 @@ const CreatePost: React.FC = () => {
         visible={modalVisible}
         onCancel={handleModalCancel}
         footer={[
-          <Button key="save" onClick={handleCreatePost}>
-            Save Draft
-          </Button>,
+          // <Button key="save" onClick={handleCreatePost}>
+          //   Save Draft
+          // </Button>,
           <Button key="cancel" onClick={handleModalCancel}>
             Cancel
           </Button>,
@@ -72,20 +74,21 @@ const CreatePost: React.FC = () => {
               "mt-2 px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700 ml-3"
             }
           >
-            <span style={{ paddingRight: "10px" }}> submit</span>
+            <span onClick={handleCreatePost} style={{ paddingRight: "10px" }}>
+              {" "}
+              submit
+            </span>
           </button>,
-
-          //   <Button key="submit" type="primary" onClick={handleCreatePost}>
-          //     Create
-          //   </Button>,
         ]}
       >
-        <Input.TextArea
-          rows={4}
-          placeholder="Write your post here..."
-          value={postContent}
-          onChange={handleChange}
-        />
+        <div className="mb-4">
+          <label className="block font-semibold mb-2">Content</label>
+
+          <QuillEditor
+            valueEditor={valueEditor}
+            setValueEditor={setValueEditor}
+          />
+        </div>
       </Modal>
     </div>
   );
