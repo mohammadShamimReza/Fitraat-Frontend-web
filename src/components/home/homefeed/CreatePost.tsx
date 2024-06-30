@@ -91,9 +91,9 @@ const CreatePost: React.FC = () => {
             key="submit"
             onClick={handleCreatePost}
             disabled={isLoading ? false : true}
-            className={
-              "mt-2 px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700 ml-3"
-            }
+            className={`mt-2 px-4 py-2 text-white rounded  bg-gray-600 hover:bg-gray-700 ml-3 ${
+              isLoading ? "cursor-not-allowed" : "cursor-pointer"
+            }`}
           >
             <span style={{ paddingRight: "10px" }}> submit</span>
           </button>,

@@ -1,3 +1,4 @@
+import { PostData } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
 const POST = "/posts";
@@ -12,7 +13,17 @@ export const postApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["createPost"],
     }),
+    getPost: builder.query({
+      query: () => ({
+        url: `${POST}?sort[0]=createdAt:desc&populate[0]=user`,
+        method: "GET",
+      }),
+      providesTags: ["createPost"],
+      transformResponse: (rawResult: PostData) => {
+        return rawResult;
+      },
+    }),
   }),
 });
 
-export const { useCreatePostMutation } = postApi;
+export const { useCreatePostMutation, useGetPostQuery } = postApi;

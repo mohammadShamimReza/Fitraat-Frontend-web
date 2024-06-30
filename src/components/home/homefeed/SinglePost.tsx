@@ -1,5 +1,7 @@
 "use client";
+import { Post } from "@/types/contantType";
 import { Button, Input, Modal } from "antd";
+import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
@@ -13,7 +15,15 @@ interface Comment {
   content: string;
 }
 
-function SinglePost() {
+function SinglePost({ post }: { post: Post }) {
+  const postDescription = post.attributes.description[0].children[0].text;
+  const postUserName = post.attributes.user.data.attributes.username;
+  const postAt = formatDistanceToNow(new Date(post.attributes.createdAt), {
+    addSuffix: true,
+  });
+
+  console.log(postDescription, postUserName, postAt);
+
   const [expanded, setExpanded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);

@@ -14,7 +14,7 @@ const QuillEditor = ({
   const editorRef = useRef<HTMLDivElement>(null);
   const quillRef = useRef<any>(null);
   const [characterCount, setCharacterCount] = useState(0);
-  const characterLimit = 1000;
+  const characterLimit = 7000;
 
   useEffect(() => {
     let Quill: any;
@@ -28,7 +28,7 @@ const QuillEditor = ({
           const options = {
             modules: {
               toolbar: [
-                [{ header: [1, 2, false] }],
+                [{ header: [1, 2, 3, false] }],
                 ["bold", "italic", "underline"],
               ],
               // Correctly configure the 'limit' module
@@ -94,7 +94,7 @@ const QuillEditor = ({
         }}
       />
       <p>
-        Characters written: {characterCount - 1} / {characterLimit}
+        Characters written: {characterCount} / {characterLimit}
       </p>
     </div>
   );

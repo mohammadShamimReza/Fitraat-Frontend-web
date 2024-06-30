@@ -1,3 +1,49 @@
+export interface Post {
+  id: number;
+  attributes: {
+    description: Array<{
+      type: string;
+      children: Array<{
+        text: string;
+        type: string;
+      }>;
+    }>;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    user: {
+      data: {
+        id: number;
+        attributes: {
+          username: string;
+          email: string;
+          provider: string;
+          confirmed: boolean;
+          blocked: boolean;
+          createdAt: string;
+          updatedAt: string;
+          age: number;
+          phone: string;
+          compliteDay: number;
+          country: string;
+          videoComplete: boolean;
+          kagelComplete: boolean;
+          quizComplete: boolean;
+          sortNoteComplete: boolean;
+          gender: string;
+          language: string;
+          currentDay: number;
+        };
+      };
+    };
+  };
+}
+
+export interface PostData {
+  data: Post[];
+  meta: Meta;
+}
+
 export interface Blog {
   attributes: {
     BlogId: number;
