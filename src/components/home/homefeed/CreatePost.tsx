@@ -11,6 +11,8 @@ const CreatePost: React.FC = () => {
   const [createPost, { isError, isLoading, isSuccess }] =
     useCreatePostMutation();
 
+  console.log(isError, isLoading, isSuccess);
+
   const handleInputClick = () => {
     setModalVisible(true);
   };
@@ -21,6 +23,7 @@ const CreatePost: React.FC = () => {
   };
 
   const handleCreatePost = async () => {
+    console.log("hi");
     if (valueEditor.trim() !== "") {
       try {
         // Perform post creation logic
@@ -37,15 +40,16 @@ const CreatePost: React.FC = () => {
           user: 11,
         };
 
-        await createPost({ data: post });
-        if (isSuccess) {
+        const result = await createPost({ data: post });
+
+        if (result) {
           setModalVisible(false);
           setValueEditor(""); // Clear editor content after submission
           // ! it need to be chenge
           const qlEditor = document.getElementsByClassName("ql-editor");
           qlEditor[0].innerHTML = "";
           message.success("Thanks for sharing your valuable information");
-        } else if (isError) {
+        } else if (!result) {
           message.error("Something went wrong. Please try again later");
         }
       } catch (error) {
@@ -87,16 +91,16 @@ const CreatePost: React.FC = () => {
           <Button key="cancel" onClick={handleModalCancel}>
             Cancel
           </Button>,
-          <button
+          <Button
             key="submit"
+            type="primary"
             onClick={handleCreatePost}
-            disabled={isLoading ? false : true}
             className={`mt-2 px-4 py-2 text-white rounded  bg-gray-600 hover:bg-gray-700 ml-3 ${
               isLoading ? "cursor-not-allowed" : "cursor-pointer"
             }`}
           >
-            <span style={{ paddingRight: "10px" }}> submit</span>
-          </button>,
+            Submit
+          </Button>,
         ]}
       >
         <div className="my-4">

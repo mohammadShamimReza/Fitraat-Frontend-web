@@ -8,7 +8,7 @@ function FeedPost() {
   const posts = data?.data;
   console.log(posts ? posts[0] : "");
   return (
-    <div className="h-screen ">
+    <div className="h-full ">
       <CreatePost />
       {posts
         ? posts.map((post) => <SinglePost key={post.id} post={post} />)

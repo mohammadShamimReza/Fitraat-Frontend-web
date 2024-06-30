@@ -1,13 +1,13 @@
 import { Post, PostData } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
-const POST = "/posts";
+const LIKE = "/post-likes";
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createPost: builder.mutation({
+    createLike: builder.mutation({
       query: (body) => ({
-        url: `${POST}`,
+        url: `${LIKE}`,
         method: "POST",
         body: body,
       }),
@@ -16,9 +16,9 @@ export const postApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
-    getPost: builder.query({
-      query: () => ({
-        url: `${POST}?sort[0]=createdAt:desc&populate[0]=user`,
+    getLikeOfPost: builder.query({
+      query: (data: { postId: string }) => ({
+        url: `${LIKE}?populate[0]=user&populate[1]=post&filters[post][id][$eq]=${data.postId}`,
         method: "GET",
       }),
       providesTags: ["createPost"],
@@ -29,4 +29,4 @@ export const postApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreatePostMutation, useGetPostQuery } = postApi;
+export const { useCreateLikeMutation, useGetLikeOfPostQuery } = postApi;

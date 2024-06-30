@@ -22,7 +22,6 @@ function SinglePost({ post }: { post: Post }) {
     addSuffix: true,
   });
 
-  console.log(postDescription, postUserName, postAt);
 
   const [expanded, setExpanded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -86,7 +85,7 @@ function SinglePost({ post }: { post: Post }) {
   return (
     <div className="flex justify-center p-5">
       <div className="max-w-sm w-full lg:max-w-full lg:flex">
-        <div className="border rounded-2xl shadow-lg flex flex-col justify-between leading-normal bg-white p-8">
+        <div className="border rounded-2xl w-full shadow-lg flex flex-col justify-between leading-normal bg-white p-8">
           <div className="flex items-center mb-4">
             <img
               src={mockData.userImage}
@@ -96,8 +95,8 @@ function SinglePost({ post }: { post: Post }) {
               className="rounded-full"
             />
             <div className="ml-3">
-              <p>{mockData.userName}</p>
-              <p className="text-gray-600 text-sm ">{mockData.postTime}</p>
+              <p>{postUserName}</p>
+              <p className="text-gray-600 text-sm ">{postAt}</p>
             </div>
           </div>
           <div className="mb-4">
@@ -105,7 +104,7 @@ function SinglePost({ post }: { post: Post }) {
               className={`prose overflow-hidden transition-all duration-1000 ease-in-out small-regular leading-7 tracking-wider text-base ${
                 expanded ? "animate-expand" : "line-clamp-6 animate-collapse"
               }`}
-              dangerouslySetInnerHTML={{ __html: mockData.postContent }}
+              dangerouslySetInnerHTML={{ __html: postDescription }}
             />
             {!expanded ? (
               <button

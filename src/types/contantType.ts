@@ -44,6 +44,24 @@ export interface PostData {
   meta: Meta;
 }
 
+export interface PostLike {
+  id: number;
+  attributes: PostLikeAttributes;
+}
+interface PostLikeAttributes {
+  like: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  user: UserData;
+  post: Post;
+}
+
+export interface PostLikeData {
+  data: PostLike[];
+  meta: Meta;
+}
+
 export interface Blog {
   attributes: {
     BlogId: number;
