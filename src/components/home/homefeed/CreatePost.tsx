@@ -1,14 +1,15 @@
-// components/CreatePost.tsx
-
 import QuillEditor from "@/components/shared/QuillEditor";
-import { Button, Input, Modal } from "antd";
+import { useCreatePostMutation } from "@/redux/api/postApi";
+import { Button, Input, Modal, message } from "antd";
 import Head from "next/head";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 
 const CreatePost: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [postContent, setPostContent] = useState<string>("");
   const [valueEditor, setValueEditor] = useState("");
+
+  const [createPost, { isError, isLoading, isSuccess }] =
+    useCreatePostMutation();
 
   const handleInputClick = () => {
     setModalVisible(true);
@@ -16,19 +17,41 @@ const CreatePost: React.FC = () => {
 
   const handleModalCancel = () => {
     setModalVisible(false);
-    setPostContent(""); // Clear post content when modal is closed
+    setValueEditor(""); // Clear editor content when modal is closed
   };
 
-  const handleCreatePost = () => {
-    console.log(valueEditor);
-    // console.log("Creating post with content:", postContent);
-    // sessionStorage.setItem("unfinishedPost", postContent);
-    // setModalVisible(false);
-    setPostContent("");
-  };
+  const handleCreatePost = async () => {
+    if (valueEditor.trim() !== "") {
+      try {
+        // Perform post creation logic
+        console.log("Creating post with content:", valueEditor);
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setPostContent(e.target.value);
+        // Example post object
+        const post = {
+          description: [
+            {
+              type: "paragraph",
+              children: [{ text: valueEditor, type: "text" }],
+            },
+          ],
+          user: 11,
+        };
+
+        await createPost({ data: post });
+        if (isSuccess) {
+          setModalVisible(false);
+          setValueEditor(""); // Clear editor content after submission
+          // ! it need to be chenge
+          const qlEditor = document.getElementsByClassName("ql-editor");
+          qlEditor[0].innerHTML = "";
+          message.success("Thanks for sharing your valuable information");
+        } else if (isError) {
+          message.error("Something went wrong. Please try again later");
+        }
+      } catch (error) {
+        console.error("Error creating post:", error);
+      }
+    }
   };
 
   return (
@@ -49,7 +72,7 @@ const CreatePost: React.FC = () => {
         />
         <div className="ml-3 w-full">
           <Input
-            placeholder="What you wnat to tell us."
+            placeholder="What you want to tell us."
             onClick={handleInputClick}
             className="h-16"
           />
@@ -61,29 +84,23 @@ const CreatePost: React.FC = () => {
         visible={modalVisible}
         onCancel={handleModalCancel}
         footer={[
-          // <Button key="save" onClick={handleCreatePost}>
-          //   Save Draft
-          // </Button>,
           <Button key="cancel" onClick={handleModalCancel}>
             Cancel
           </Button>,
           <button
             key="submit"
             onClick={handleCreatePost}
+            disabled={isLoading ? false : true}
             className={
               "mt-2 px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700 ml-3"
             }
           >
-            <span onClick={handleCreatePost} style={{ paddingRight: "10px" }}>
-              {" "}
-              submit
-            </span>
+            <span style={{ paddingRight: "10px" }}> submit</span>
           </button>,
         ]}
       >
-        <div className="mb-4">
-          <label className="block font-semibold mb-2">Content</label>
-
+        <div className="my-4">
+          {/* need to chenge the editor  */}
           <QuillEditor
             valueEditor={valueEditor}
             setValueEditor={setValueEditor}

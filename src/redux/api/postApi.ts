@@ -4,7 +4,7 @@ const POST = "/posts";
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    postBlog: builder.mutation({
+    createPost: builder.mutation({
       query: (body) => ({
         url: `${POST}`,
         method: "POST",
@@ -14,3 +14,5 @@ export const postApi = baseApi.injectEndpoints({
     }),
   }),
 });
+
+export const { useCreatePostMutation } = postApi;

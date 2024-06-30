@@ -1,6 +1,8 @@
+"use client";
 import dynamic from "next/dynamic";
+import DeltaStatic from "quill";
 import "quill/dist/quill.snow.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const QuillEditor = ({
   valueEditor,
@@ -11,6 +13,8 @@ const QuillEditor = ({
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const quillRef = useRef<any>(null);
+  const [characterCount, setCharacterCount] = useState(0);
+  const characterLimit = 1000;
 
   useEffect(() => {
     let Quill: any;
@@ -22,22 +26,27 @@ const QuillEditor = ({
 
         if (editorRef.current && !quillRef.current) {
           const options = {
-            debug: "info",
             modules: {
               toolbar: [
                 [{ header: [1, 2, false] }],
                 ["bold", "italic", "underline"],
-                ["image", "code-block"],
               ],
+              // Correctly configure the 'limit' module
+              limit: {
+                maxLength: characterLimit,
+                maxDeltaLength: characterLimit,
+              },
             },
             placeholder: "Write what you want to say",
             theme: "snow",
           };
+
           quillRef.current = new Quill(editorRef.current, options);
 
           quillRef.current.on("text-change", () => {
             setValueEditor(quillRef.current.root.innerHTML);
           });
+          quillRef.current.on("text-change", handleTextChange);
 
           // Apply Tailwind classes to the toolbar
           const toolbar = document.querySelector(".ql-toolbar");
@@ -56,17 +65,38 @@ const QuillEditor = ({
         quillRef.current = null;
       }
     };
-  }, []);
+  }, [characterLimit]);
+
+  const handleTextChange = (
+    delta: DeltaStatic,
+    oldDelta: DeltaStatic,
+    source: string
+  ) => {
+    const text = quillRef.current?.getText() || "";
+    setCharacterCount(text.length);
+
+    if (text.length > characterLimit) {
+      // Calculate excess characters
+      const excess = text.length - characterLimit;
+      // Delete excess characters starting from characterLimit index
+      quillRef.current?.deleteText(characterLimit, excess);
+    }
+  };
 
   return (
-    <div
-      ref={editorRef}
-      style={{
-        height: "400px",
-        borderRadius: "10px",
-        border: "1px solid black",
-      }}
-    />
+    <div>
+      <div
+        ref={editorRef}
+        style={{
+          height: "400px",
+          borderRadius: "10px",
+          border: "1px solid black",
+        }}
+      />
+      <p>
+        Characters written: {characterCount - 1} / {characterLimit}
+      </p>
+    </div>
   );
 };
 

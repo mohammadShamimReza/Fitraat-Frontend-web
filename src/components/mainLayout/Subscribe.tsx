@@ -34,7 +34,7 @@ const Subscribe = () => {
         console.log(error);
       }
     } else {
-      message.error("Login successfully");
+      message.error("Something went wrong");
     }
   };
 
