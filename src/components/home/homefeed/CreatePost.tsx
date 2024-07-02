@@ -1,3 +1,4 @@
+"use client";
 import QuillEditor from "@/components/shared/QuillEditor";
 import { useCreatePostMutation } from "@/redux/api/postApi";
 import { Button, Input, Modal, message } from "antd";
