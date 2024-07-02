@@ -94,9 +94,15 @@ function TaskPage({
 
   return (
     <>
-      <Layout>
-        <div className="bg-white hidden md:block">
-          <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
+      <Layout style={{ minHeight: "100vh", borderRadius: "30px" }}>
+        <div className="bg-white hidden md:block min-h-screen">
+          <Sider
+            theme="light"
+            trigger={null}
+            collapsible
+            collapsed={collapsed}
+            className="border"
+          >
             <div className="demo-logo-vertical" />
             <p className="text-center text-2xl text-red-600 font-bold p-2 mt-4 border-b border-r">
               Tasks
@@ -181,7 +187,7 @@ function TaskPage({
               borderRadius: borderRadiusLG,
             }}
           >
-            <div className="">
+            <div className="backgroundDot">
               <div
                 // style={{ height: "500px" }}
                 className="p-3  mx-auto flex flex-col justify-evenly "
@@ -219,9 +225,9 @@ function TaskPage({
               </div>
             </div>
             <div className="basis-1/6 flex justify-center align-bottom flex-col">
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-between">
                 <button
-                  className={`px-4 py-2 text-white rounded focus:outline-none ${
+                  className={`px-4 py-2 text-white rounded focus:outline-none text-lg ${
                     selectedTaskIndex === 0
                       ? "bg-gray-500 cursor-not-allowed "
                       : "bg-gray-600 hover:bg-gray-700"
@@ -237,8 +243,9 @@ function TaskPage({
                 </button>
 
                 <button
-                  className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
-                  }`}
+                  className={
+                    "px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700 text-lg"
+                  }
                   onClick={handleNext}
                 >
                   Next
