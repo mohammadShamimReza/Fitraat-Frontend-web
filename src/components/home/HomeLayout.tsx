@@ -78,6 +78,7 @@ function HomeLayout() {
         <Header
           style={{
             padding: 0,
+            margin: 10,
             background: colorBgContainer,
             display: "flex",
             alignItems: "center",
@@ -97,11 +98,7 @@ function HomeLayout() {
           />
           <Link href={"/login"}>
             {" "}
-            <button
-              className={
-                " px-3  text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
-              }
-            >
+            <button className={" px-3  text-black rounded  hover:bg-gray-100"}>
               <div className="flex items-center justify-center gap-1">
                 <p>Login</p>{" "}
                 <svg
