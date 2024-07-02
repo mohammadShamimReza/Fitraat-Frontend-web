@@ -1,3 +1,4 @@
+"use client";
 import { useGetPostQuery } from "@/redux/api/postApi";
 import CreatePost from "./CreatePost";
 import SinglePost from "./SinglePost";

@@ -1,9 +1,10 @@
-import HomeLayout from "@/components/home/HomeLayout";
+import FeedPost from "@/components/home/homefeed/FeedPost";
 
 export default function Home() {
   return (
     <main className="">
-      <HomeLayout />
+      <FeedPost />
+      <h2>thisis me</h2>
       {/* <Banner />
       <AboutSpartan />
       <Motivation />
