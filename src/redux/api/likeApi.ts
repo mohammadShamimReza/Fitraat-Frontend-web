@@ -17,7 +17,7 @@ export const postApi = baseApi.injectEndpoints({
       },
     }),
     getLikeOfPost: builder.query({
-      query: (data: { postId: string }) => ({
+      query: (data: { postId: number }) => ({
         url: `${LIKE}?populate[0]=user&populate[1]=post&filters[post][id][$eq]=${data.postId}`,
         method: "GET",
       }),

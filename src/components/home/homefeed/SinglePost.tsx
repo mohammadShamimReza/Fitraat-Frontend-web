@@ -1,4 +1,5 @@
 "use client";
+import { useGetLikeOfPostQuery } from "@/redux/api/likeApi";
 import { Post } from "@/types/contantType";
 import { Button, Input, Modal } from "antd";
 import { formatDistanceToNow } from "date-fns";
@@ -21,7 +22,9 @@ function SinglePost({ post }: { post: Post }) {
   const postAt = formatDistanceToNow(new Date(post.attributes.createdAt), {
     addSuffix: true,
   });
+  const postId = post.id;
 
+  const { data } = useGetLikeOfPostQuery({ postId: postId });
 
   const [expanded, setExpanded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -50,22 +53,7 @@ function SinglePost({ post }: { post: Post }) {
   };
 
   const mockData = {
-    userName: "Shamim Reza",
     userImage: "https://via.placeholder.com/150",
-    postTime: "1 hour ago",
-    postContent: `
-      <p>This is a <strong>blog post</strong> with <em>HTML</em> content. It might include various <a href="#">HTML tags</a>.</p>
-      <p>More content to show in the preview. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros, pulvinar facilisis justo mollis.</p>
-      <p>Here is the third paragraph to ensure the content spans more than six lines.</p>
-      <p>Another line of text for the preview.</p>
-      <p>Yet another line of text to fill the six-line limit.</p>
-      <p>The final line to display in the preview mode before "See More" is shown.</p> <p>This is a <strong>blog post</strong> with <em>HTML</em> content. It might include various <a href="#">HTML tags</a>.</p>
-      <p>More content to show in the preview. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros, pulvinar facilisis justo mollis.</p>
-      <p>Here is the third paragraph to ensure the content spans more than six lines.</p>
-      <p>Another line of text for the preview.</p>
-      <p>Yet another line of text to fill the six-line limit.</p>
-      <p>The final line to display in the preview mode before "See More" is shown.</p>
-    `,
   };
 
   const handleAddComment = () => {
