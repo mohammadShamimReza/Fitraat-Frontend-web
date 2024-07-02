@@ -1,4 +1,5 @@
 "use client";
+import Subscribe from "@/components/mainLayout/Subscribe";
 import { getTokenFromCookie, removeTokenFromCookie } from "@/lib/auth/token";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { removeAuthToken } from "@/redux/slice/authSlice";
@@ -136,7 +137,7 @@ function CustomLayout({ children }: { children: React.ReactNode }) {
               className="border"
             >
               <div className="demo-logo-vertical" />
-              <div className="flex flex-shrink-0 items-center justify-center text-lg font-bold mb-5">
+              <div className="flex flex-shrink-0 items-center justify-center text-lg font-bold mb-5 border-b">
                 <Link href={"/"}>
                   <Image src={siteLogo} width={70} alt="website logo" />
                 </Link>
@@ -150,7 +151,7 @@ function CustomLayout({ children }: { children: React.ReactNode }) {
                 ))}
               </Menu>
             </Sider>
-            <Layout className="rounded-2xl">
+            <Layout className="rounded-2xl border-r">
               <Header
                 style={{
                   padding: 0,
@@ -223,8 +224,9 @@ function CustomLayout({ children }: { children: React.ReactNode }) {
                   </button>
                 )}
               </Header>
-              <Content>{children}</Content>
-              <Footer style={{ textAlign: "center" }}>
+              <Content style={{ minHeight: "100vh" }}>{children}</Content>
+              <Subscribe />
+              <Footer style={{ textAlign: "center", backgroundColor: "white" }}>
                 Save Ummah ©{new Date().getFullYear()} Created by Shamim Reza
               </Footer>
             </Layout>

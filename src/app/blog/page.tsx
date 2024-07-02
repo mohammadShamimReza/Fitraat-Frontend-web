@@ -39,7 +39,7 @@ function Page() {
 
   return (
     <div>
-      <div className="">
+      <div className="min-h-screen">
         <div className="flex flex-col justify-between  gap-3 sm:flex-row">
           {/* <BlogType /> */}
           <div className="order-3">

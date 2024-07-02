@@ -93,18 +93,18 @@ function TaskPage({
   ];
 
   return (
-    <>
+    <div className="mx-auto min-h-screen ">
       <Layout style={{ minHeight: "100vh", borderRadius: "30px" }}>
-        <div className="bg-white hidden md:block min-h-screen">
+        <div className="bg-white hidden md:block min-h-screen border">
           <Sider
             theme="light"
             trigger={null}
             collapsible
             collapsed={collapsed}
-            className="border"
+            className=""
           >
             <div className="demo-logo-vertical" />
-            <p className="text-center text-2xl text-red-600 font-bold p-2 mt-4 border-b border-r">
+            <p className="text-center text-2xl tracking-wider font-extralight  p-2 mt-4 border-b ">
               Tasks
             </p>
             <div className="mt-4">
@@ -112,11 +112,11 @@ function TaskPage({
               {tasks.map((task, index) => (
                 <div
                   key={index}
-                  className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
+                  className={`flex justify-between hover:bg-slate-100 rounded ${
                     (localStorageData as any)[task] === false
                       ? " cursor-not-allowed"
                       : "cursor-pointer"
-                  }`}
+                  } ${selectedTask === task && "bg-blue-100"}`}
                   title={
                     (localStorageData as any)[task] === false
                       ? "This task is not unlock yet"
@@ -166,7 +166,10 @@ function TaskPage({
         </div>
 
         <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Header
+            style={{ padding: 0, background: colorBgContainer }}
+            className="border-r border-b rounded"
+          >
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -180,7 +183,7 @@ function TaskPage({
           </Header>
           <Content
             style={{
-              margin: "24px 16px",
+              // margin: "24px 16px",
               padding: 24,
               minHeight: 280,
               background: colorBgContainer,
@@ -342,7 +345,7 @@ function TaskPage({
           </div>
         </div>
       </div> */}
-    </>
+    </div>
   );
 }
 

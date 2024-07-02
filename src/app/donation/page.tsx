@@ -21,7 +21,7 @@ const MembershipCard = () => {
     }
   };
   return (
-    <div className="">
+    <div className=" min-h-screen">
       <div className="">
         <div className=" p-5">
           <p className="text-center text-4xl font-bold text-gray-700 underline">
@@ -46,7 +46,7 @@ const MembershipCard = () => {
           </p>
         </div>
       </div>
-      <div className="flex justify-center items-center mt-32 ">
+      <div className="flex justify-center items-center  ">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:p-3 md:p-3 lg:p-0">
           {/* Freemium Membership Card */}
           <div className="bg-white overflow-hidden   shadow-md rounded-xl border-2 flex justify-between flex-col">
