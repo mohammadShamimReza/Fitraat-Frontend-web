@@ -3,8 +3,7 @@ import Subscribe from "@/components/mainLayout/Subscribe";
 import { getTokenFromCookie, removeTokenFromCookie } from "@/lib/auth/token";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { removeAuthToken } from "@/redux/slice/authSlice";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
@@ -131,13 +130,18 @@ function CustomLayout({ children }: { children: React.ReactNode }) {
           <Layout style={{ minHeight: "100vh", borderRadius: "30px" }}>
             <Sider
               theme="light"
-              trigger={null}
-              collapsible
-              collapsed={collapsed}
-              className="border"
+              className=""
+              breakpoint="sm"
+              collapsedWidth="0"
+              // onBreakpoint={(broken) => {
+              //   console.log(broken);
+              // }}
+              // onCollapse={(collapsed, type) => {
+              //   setCollapsed(collapsed);
+              // }}
             >
               <div className="demo-logo-vertical" />
-              <div className="flex flex-shrink-0 items-center justify-center text-lg font-bold mb-5 border-b">
+              <div className="flex flex-shrink-0 items-center justify-center text-lg font-bold mb-5 ">
                 <Link href={"/"}>
                   <Image src={siteLogo} width={70} alt="website logo" />
                 </Link>
@@ -151,7 +155,7 @@ function CustomLayout({ children }: { children: React.ReactNode }) {
                 ))}
               </Menu>
             </Sider>
-            <Layout className="rounded-2xl border-r">
+            <Layout className="rounded-2xl ">
               <Header
                 style={{
                   padding: 0,
@@ -160,26 +164,13 @@ function CustomLayout({ children }: { children: React.ReactNode }) {
                   alignItems: "center",
                   justifyContent: "space-between",
                 }}
-                className="border rounded"
+                className="border-b "
               >
-                <Button
-                  type="text"
-                  icon={
-                    collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />
-                  }
-                  onClick={() => setCollapsed(!collapsed)}
-                  style={{
-                    fontSize: "16px",
-                    width: 64,
-                    height: 64,
-                  }}
-                />
+                <div className=""></div>
                 {!authenticated ? (
                   <Link href={"/login"}>
                     {" "}
-                    <button
-                      className={" px-3  text-black rounded  hover:bg-gray-100"}
-                    >
+                    <button className={" px-3  text-black   hover:bg-gray-100"}>
                       <div className="flex items-center justify-center gap-1">
                         <p>Login</p>{" "}
                         <svg

@@ -9,8 +9,7 @@ import SortNote from "./taskPages/SortNote";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, theme } from "antd";
+import { Layout, theme } from "antd";
 import { useState } from "react";
 import { CiVideoOn } from "react-icons/ci";
 import { FaBlogger } from "react-icons/fa6";
@@ -95,16 +94,10 @@ function TaskPage({
   return (
     <div className="mx-auto min-h-screen ">
       <Layout style={{ minHeight: "100vh", borderRadius: "30px" }}>
-        <div className="bg-white hidden md:block min-h-screen border">
-          <Sider
-            theme="light"
-            trigger={null}
-            collapsible
-            collapsed={collapsed}
-            className=""
-          >
+        <div className="bg-white  min-h-screen ">
+          <Sider theme="light" className="" breakpoint="sm" collapsedWidth="0">
             <div className="demo-logo-vertical" />
-            <p className="text-center text-2xl tracking-wider font-extralight  p-2 mt-4 border-b ">
+            <p className="text-center text-2xl tracking-wider font-extralight  p-2 border-b border-l border-r">
               Tasks
             </p>
             <div className="mt-4">
@@ -146,7 +139,7 @@ function TaskPage({
                       )}
                     </div>
                   </span>
-                  <span className="pl-3 right-0 p-2 hidden md:block">
+                  <span className="pl-3 right-0 p-2 ">
                     <FaCheckCircle
                       className=""
                       size={25}
@@ -168,19 +161,8 @@ function TaskPage({
         <Layout>
           <Header
             style={{ padding: 0, background: colorBgContainer }}
-            className="border-r border-b rounded"
-          >
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "16px",
-                width: 64,
-                height: 64,
-              }}
-            />
-          </Header>
+            className=" rounded"
+          ></Header>
           <Content
             style={{
               // margin: "24px 16px",
