@@ -7,7 +7,7 @@ function FeedPost() {
   const { data, isLoading, isFetching } = useGetPostQuery(undefined);
 
   const posts = data?.data;
-  console.log(posts ? posts[0] : "");
+  console.log(data?.data[0]);
   return (
     <div className="h-full ">
       <CreatePost />

@@ -11,7 +11,7 @@ export const postApi = baseApi.injectEndpoints({
         method: "POST",
         body: body,
       }),
-      invalidatesTags: ["createPost"],
+      invalidatesTags: ["createLike"],
       transformResponse: (rawResult: Post) => {
         return rawResult;
       },
@@ -21,7 +21,17 @@ export const postApi = baseApi.injectEndpoints({
         url: `${LIKE}?populate[0]=user&populate[1]=post&filters[post][id][$eq]=${data.postId}`,
         method: "GET",
       }),
-      providesTags: ["createPost"],
+      providesTags: ["createLike"],
+      transformResponse: (rawResult: PostData) => {
+        return rawResult;
+      },
+    }),
+    postLikeForCurrentUser: builder.query({
+      query: (data: { postId: number; userId: number }) => ({
+        url: `${LIKE}??populate[0]=user&filters[user][id][$eq]=${data.userId}&populate[1]=post&filters[post][id][$eq]=${data.postId}`,
+        method: "GET",
+      }),
+      providesTags: ["createLike"],
       transformResponse: (rawResult: PostData) => {
         return rawResult;
       },
@@ -29,4 +39,8 @@ export const postApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateLikeMutation, useGetLikeOfPostQuery } = postApi;
+export const {
+  useCreateLikeMutation,
+  useGetLikeOfPostQuery,
+  usePostLikeForCurrentUserQuery,
+} = postApi;

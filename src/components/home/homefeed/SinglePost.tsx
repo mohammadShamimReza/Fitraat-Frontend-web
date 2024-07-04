@@ -1,13 +1,16 @@
 "use client";
-import { useGetLikeOfPostQuery } from "@/redux/api/likeApi";
+import {
+  useCreateLikeMutation,
+  useGetLikeOfPostQuery,
+  usePostLikeForCurrentUserQuery,
+} from "@/redux/api/likeApi";
 import { Post } from "@/types/contantType";
-import { Button, Input, Modal } from "antd";
+import { Input, Modal, message } from "antd";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
-import { useState } from "react";
-import { AiOutlineSave } from "react-icons/ai";
+import { useEffect, useRef, useState } from "react";
 import { CiHeart } from "react-icons/ci";
-import { IoHeart, IoSave } from "react-icons/io5";
+import { IoHeart } from "react-icons/io5";
 
 const { TextArea } = Input;
 
@@ -18,7 +21,17 @@ interface Comment {
 }
 
 function SinglePost({ post }: { post: Post }) {
-  const postDescription = post.attributes.description[0].children[0].text;
+  const [createLike, { isError, isLoading, isSuccess }] =
+    useCreateLikeMutation();
+  const { data: postLike } = useGetLikeOfPostQuery({ postId: post?.id });
+  const { data: postLikeForCurrentUser } = usePostLikeForCurrentUserQuery({
+    postId: post?.id,
+    userId: 3,
+  });
+  const totlaLike = postLike?.meta.pagination.total;
+  const postDescription = post.attributes.description
+    .map((desc) => desc.children.map((chil) => chil.text))
+    .flat();
   const postUserName = post.attributes.user.data.attributes.username;
   const postAt = formatDistanceToNow(new Date(post.attributes.createdAt), {
     addSuffix: true,
@@ -26,33 +39,61 @@ function SinglePost({ post }: { post: Post }) {
   const userId = post.attributes.user.data.id;
   const postId = post.id;
 
-  const { data } = useGetLikeOfPostQuery({ postId: postId });
+  const likePost = postLikeForCurrentUser?.data?.length !== 0 ? false : true;
 
   const [expanded, setExpanded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
-  const [showLikeAnimation, setShowLikeAnimation] = useState(false);
-  const [showSaveAnimation, setShowSaveAnimation] = useState(false);
-  const [like, setLike] = useState(false);
+  // const [showLikeAnimation, setShowLikeAnimation] = useState(false);
+  // const [showSaveAnimation, setShowSaveAnimation] = useState(false);
+  const [like, setLike] = useState(likePost);
   const [save, setSave] = useState(false);
-  const handleLikeClick = () => {
-    !like && setShowLikeAnimation(true);
-    setLike(!like);
+  const [isClamped, setIsClamped] = useState(false);
 
-    setTimeout(() => {
-      setShowLikeAnimation(false);
-    }, 500);
+  console.log(
+    postLikeForCurrentUser?.data?.length !== 0 ? postLikeForCurrentUser : null
+  );
+  const textRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (textRef.current) {
+      const { clientHeight, scrollHeight } = textRef.current;
+      if (scrollHeight > clientHeight) {
+        setIsClamped(true);
+      }
+    }
+  }, []);
+
+  const handleLikeUnlickClick = async () => {
+    try {
+      const result = await createLike({ data: { user: 10, post: postId } });
+      if (isSuccess) {
+        message.success("Thanks for like the post!");
+      } else if (isError) {
+        message.error("Something went wrong. Please try again later");
+      }
+    } catch (error) {
+      message.error("Something went wrong. Please try again later");
+    } finally {
+    }
+
+    // !like && setShowLikeAnimation(true);
+    // setLike(!like);
+
+    // setTimeout(() => {
+    //   setShowLikeAnimation(false);
+    // }, 500);
   };
 
-  const handleSaveClick = () => {
-    !save && setShowSaveAnimation(true);
-    setSave(!save);
+  // const handleSaveClick = () => {
+  //   !save && setShowSaveAnimation(true);
+  //   setSave(!save);
 
-    setTimeout(() => {
-      setShowSaveAnimation(false);
-    }, 500);
-  };
+  //   setTimeout(() => {
+  //     setShowSaveAnimation(false);
+  //   }, 500);
+  // };
 
   const mockData = {
     userImage: "https://via.placeholder.com/150",
@@ -95,27 +136,27 @@ function SinglePost({ post }: { post: Post }) {
           </div>
           <div className="mb-4">
             <div
-              className={`prose overflow-hidden transition-all duration-1000 ease-in-out small-regular leading-7 tracking-wider text-base ${
-                expanded ? "animate-expand" : "line-clamp-6 animate-collapse"
+              ref={textRef}
+              className={`prose overflow-hidden transition-all duration-700 ease-in-out small-regular leading-7 tracking-wider text-base ${
+                expanded ? "max-h-full" : "max-h-40"
               }`}
               dangerouslySetInnerHTML={{ __html: postDescription }}
+              style={{
+                maxHeight: expanded
+                  ? `${textRef.current?.scrollHeight}px`
+                  : "160px", // 160px corresponds to max-h-40
+              }}
             />
-            {!expanded ? (
+            {isClamped && (
               <button
-                className="text-blue-500 mt-2"
-                onClick={() => setExpanded(true)}
+                className="text-blue-500 mt-5"
+                onClick={() => setExpanded(!expanded)}
               >
-                See More
-              </button>
-            ) : (
-              <button
-                className="text-blue-500 mt-2"
-                onClick={() => setExpanded(false)}
-              >
-                Show Less
+                {expanded ? "Show Less" : "See More"}
               </button>
             )}
           </div>
+
           <div className="my-4">
             {comments.length > 0 ? (
               <>
@@ -163,28 +204,21 @@ function SinglePost({ post }: { post: Post }) {
           <div className="flex justify-between items-center mt-4 relative">
             <button
               className="flex items-center text-gray-600"
-              onClick={handleLikeClick}
+              onClick={handleLikeUnlickClick}
             >
-              {showLikeAnimation ? (
-                <img
-                  src="/likeAnimation.gif"
-                  alt="like animation"
-                  className=" h-16 w-16 absolute z-10"
-                />
-              ) : (
-                <div className="ml-4 absolute">
-                  {like ? (
-                    <IoHeart style={{ color: "red" }} size={30} />
-                  ) : (
-                    <CiHeart style={{ color: "red" }} size={30} />
-                  )}
-                </div>
-              )}
+              <div className="ml-4 absolute">
+                {like ? (
+                  <IoHeart style={{ color: "red" }} size={30} />
+                ) : (
+                  <CiHeart style={{ color: "red" }} size={30} />
+                )}
+              </div>
+
               <p className="ml-14 text-base text-gray-500">
-                {like ? "Liked" : "Like"}{" "}
+                {totlaLike} {like ? "Liked" : "Like"}{" "}
               </p>
             </button>
-            <button
+            {/* <button
               className="flex items-center text-base text-gray-500"
               onClick={handleSaveClick}
             >
@@ -202,7 +236,7 @@ function SinglePost({ post }: { post: Post }) {
               <p className="ml-12 text-base text-gray-500">
                 {save ? "Saved" : "Save"}{" "}
               </p>
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -237,18 +271,13 @@ function SinglePost({ post }: { post: Post }) {
         />
         <button
           className={`px-4 py-2 text-white rounded focus:outline-none ${"bg-gray-600 hover:bg-gray-700"}`}
-        >
-          <span style={{ paddingRight: "10px" }}> Post Comment</span>
-          Previous
-        </button>
-        <Button
-          type="primary"
-          className="mt-2"
           onClick={() => {
             handleAddComment();
             setModalVisible(false);
           }}
-        ></Button>
+        >
+          <span style={{ paddingRight: "10px" }}> Post Comment</span>
+        </button>
       </Modal>
     </div>
   );

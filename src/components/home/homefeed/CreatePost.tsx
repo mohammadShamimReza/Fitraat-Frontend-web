@@ -12,7 +12,7 @@ const CreatePost: React.FC = () => {
   const [createPost, { isError, isLoading, isSuccess }] =
     useCreatePostMutation();
 
-  console.log(isError, isLoading, isSuccess);
+  // console.log(isError, isLoading, isSuccess);
 
   const handleInputClick = () => {
     setModalVisible(true);
@@ -24,13 +24,8 @@ const CreatePost: React.FC = () => {
   };
 
   const handleCreatePost = async () => {
-    console.log("hi");
     if (valueEditor.trim() !== "") {
       try {
-        // Perform post creation logic
-        console.log("Creating post with content:", valueEditor);
-
-        // Example post object
         const post = {
           description: [
             {
