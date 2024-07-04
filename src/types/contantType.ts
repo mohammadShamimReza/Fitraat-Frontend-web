@@ -29,7 +29,6 @@ export interface Post {
           videoComplete: boolean;
           kagelComplete: boolean;
           quizComplete: boolean;
-          sortNoteComplete: boolean;
           gender: string;
           language: string;
           currentDay: number;
@@ -128,19 +127,6 @@ export interface Kegel {
   };
 }
 
-export interface SortNote {
-  data: {
-    attributes: {
-      sortNoteId: number;
-      sortNoteContent: string;
-      createdAt: string;
-      publishedAt: string;
-      updatedAt: string;
-    };
-    id: number;
-  };
-}
-
 export interface Video {
   data: {
     attributes: {
@@ -169,7 +155,6 @@ export interface Day {
     kegel: Kegel;
     publishedAt: string;
     reward: string;
-    sort_note: SortNote;
     video: Video;
     id: number;
     quiz: {
@@ -226,7 +211,6 @@ export interface UserData {
   phone: string;
   provider: string;
   quizComplete: boolean;
-  sortNoteComplete: boolean;
   updateAt: string;
   userName: string;
   videoComplete: boolean;
@@ -284,8 +268,6 @@ export interface UserDataWithDay {
   //   publishedAt: string;
   //   reward: string;
   //   sort_note: {
-  //     sortNoteId: number;
-  //     sortNoteContent: string;
   //     createdAt: string;
   //     publishedAt: string;
   //     updatedAt: string;
@@ -310,7 +292,6 @@ export interface UserDataWithDay {
   phone: string;
   provider: string;
   quizComplete: boolean;
-  sortNoteComplete: boolean;
   updateAt: string;
   username: string;
   videoComplete: boolean;

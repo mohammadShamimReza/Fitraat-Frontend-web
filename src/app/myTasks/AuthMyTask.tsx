@@ -19,14 +19,7 @@ function AuthMyTask({
 }) {
   const router = useRouter();
 
-  const tasks = [
-    "video",
-    "kagel",
-    "sortNote",
-    "quiz",
-    "rewards",
-    "suggestBlog",
-  ];
+  const tasks = ["video", "kagel", "quiz", "rewards", "Blog"];
 
   const { data: authenticatedDayData, isError } =
     useGetDaysByDayIdQuery(authDayDataId);
@@ -42,10 +35,9 @@ function AuthMyTask({
   const defaultLocalStorageData = {
     video: false,
     kagel: false,
-    sortNote: false,
     quiz: false,
     rewards: false,
-    suggestBlog: false,
+    Blog: false,
   };
   const [localStorageData, setLocalStorageData] = useState(
     initialLocalStorageData
@@ -67,10 +59,10 @@ function AuthMyTask({
       dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
     }
   };
-      console.log(selectedTask, "this is");
+  console.log(selectedTask, "this is");
 
   const handleNext = async () => {
-    if (selectedTask === "suggestBlog") {
+    if (selectedTask === "Blog") {
       console.log("blog");
       dispatch(storeCurrentTask(tasks[0]));
       localStorage.setItem("AuthDay", JSON.stringify(defaultLocalStorageData));
@@ -132,11 +124,7 @@ function AuthMyTask({
     answer: "",
     quizOptions: "",
   });
-  const [sort_note, setSort_note] = useState<{
-    sortNoteContent: string | undefined;
-  }>({
-    sortNoteContent: "",
-  });
+
   const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
     videoUrl: "",
   });
@@ -158,10 +146,7 @@ function AuthMyTask({
           question: authDayData.quiz.data.attributes.question,
           quizOptions: authDayData.quiz.data.attributes.quizOptions,
         });
-        setSort_note({
-          sortNoteContent:
-            authDayData.sort_note.data.attributes.sortNoteContent,
-        });
+
         setVideo({ videoUrl: authDayData.video.data.attributes.VideoUrl });
         setReward({ rewardContant: authDayData.reward });
         setKegel(authDayData?.kegel.data.attributes.kegel_times.data);
@@ -185,7 +170,6 @@ function AuthMyTask({
           handleNext={handleNext}
           blog={blog}
           quiz={quiz}
-          sort_note={sort_note}
           video={video}
           reward={reward}
           kegel={kegel}

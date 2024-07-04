@@ -17,14 +17,7 @@ function UnAuthTask({}) {
       parseInt(unAuthDayId)
     );
 
-    const tasks = [
-      "video",
-      "kagel",
-      "sortNote",
-      "quiz",
-      "rewards",
-      "suggestBlog",
-    ];
+    const tasks = ["video", "kagel", "quiz", "rewards", "Blog"];
 
     const currentTask = useAppSelector((state) => state.taskSlice.currentTask);
     const dispatch = useAppDispatch();
@@ -36,10 +29,9 @@ function UnAuthTask({}) {
     const defaultLocalStorageData = {
       video: false,
       kagel: false,
-      sortNote: false,
       quiz: false,
       rewards: false,
-      suggestBlog: false,
+      Blog: false,
     };
 
     const [localStorageData, setLocalStorageData] = useState(
@@ -65,7 +57,7 @@ function UnAuthTask({}) {
       }
     };
     const handleNext = () => {
-      if (selectedTask === "suggestBlog") {
+      if (selectedTask === "Blog") {
         dispatch(storeCurrentTask(tasks[0]));
 
         localStorage.setItem(
@@ -130,11 +122,7 @@ function UnAuthTask({}) {
       answer: "",
       quizOptions: "",
     });
-    const [sort_note, setSort_note] = useState<{
-      sortNoteContent: string | undefined;
-    }>({
-      sortNoteContent: "",
-    });
+
     const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
       videoUrl: "",
     });
@@ -144,59 +132,54 @@ function UnAuthTask({}) {
       }
     );
 
+    useEffect(() => {
+      if (unAuthenticatedDayData) {
+        const unAuthDayData = unAuthenticatedDayData?.data[0].attributes;
+        if (unAuthDayData) {
+          setBlog({
+            id: unAuthDayData.blog.data.id,
 
-  useEffect(() => {
-    if (unAuthenticatedDayData) {
-      const unAuthDayData = unAuthenticatedDayData?.data[0].attributes;
-      if (unAuthDayData) {
-        setBlog({
-          id: unAuthDayData.blog.data.id,
+            title: unAuthDayData.blog.data.attributes.title,
+            content: unAuthDayData.blog.data.attributes.content,
+          });
+          setQuiz({
+            answer: unAuthDayData.quiz.data.attributes.answer,
+            question: unAuthDayData.quiz.data.attributes.question,
+            quizOptions: unAuthDayData.quiz.data.attributes.quizOptions,
+          });
 
-          title: unAuthDayData.blog.data.attributes.title,
-          content: unAuthDayData.blog.data.attributes.content,
-        });
-        setQuiz({
-          answer: unAuthDayData.quiz.data.attributes.answer,
-          question: unAuthDayData.quiz.data.attributes.question,
-          quizOptions: unAuthDayData.quiz.data.attributes.quizOptions,
-        });
-        setSort_note({
-          sortNoteContent:
-            unAuthDayData.sort_note.data.attributes.sortNoteContent,
-        });
-        setVideo({ videoUrl: unAuthDayData.video.data.attributes.VideoUrl });
-        setReward({ rewardContant: unAuthDayData.reward });
+          setVideo({ videoUrl: unAuthDayData.video.data.attributes.VideoUrl });
+          setReward({ rewardContant: unAuthDayData.reward });
 
-        setKegel(unAuthDayData?.kegel.data.attributes.kegel_times.data);
+          setKegel(unAuthDayData?.kegel.data.attributes.kegel_times.data);
+        }
       }
-    }
-  }, [unAuthenticatedDayData, unAuthDayId]);
+    }, [unAuthenticatedDayData, unAuthDayId]);
 
-  const DayCount = parseInt(unAuthDayId) || 0;
+    const DayCount = parseInt(unAuthDayId) || 0;
 
-  return (
-    <>
-      {DayCount > 40 ? (
-        <CompliteTask auth={false} daysCompleted={40} />
-      ) : (
-        <TaskPage
-          localStorageData={localStorageData}
-          handleTaskClick={handleTaskClick}
-          selectedTask={selectedTask}
-          selectedTaskIndex={selectedTaskIndex}
-          handlePrevious={handlePrevious}
-          handleNext={handleNext}
-          blog={blog}
-          quiz={quiz}
-          sort_note={sort_note}
-          video={video}
-          reward={reward}
-          kegel={kegel}
-          DayCount={DayCount}
-        />
-      )}
-    </>
-  );
+    return (
+      <>
+        {DayCount > 40 ? (
+          <CompliteTask auth={false} daysCompleted={40} />
+        ) : (
+          <TaskPage
+            localStorageData={localStorageData}
+            handleTaskClick={handleTaskClick}
+            selectedTask={selectedTask}
+            selectedTaskIndex={selectedTaskIndex}
+            handlePrevious={handlePrevious}
+            handleNext={handleNext}
+            blog={blog}
+            quiz={quiz}
+            video={video}
+            reward={reward}
+            kegel={kegel}
+            DayCount={DayCount}
+          />
+        )}
+      </>
+    );
 }
 
 export default UnAuthTask;

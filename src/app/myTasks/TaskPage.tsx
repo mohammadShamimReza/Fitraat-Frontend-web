@@ -5,7 +5,6 @@ import { FaCheckCircle } from "react-icons/fa";
 import Kagel from "./taskPages/Kagel";
 import Quiz from "./taskPages/Quiz";
 import Reward from "./taskPages/Reward";
-import SortNote from "./taskPages/SortNote";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
@@ -13,7 +12,7 @@ import { Layout, theme } from "antd";
 import { useState } from "react";
 import { CiVideoOn } from "react-icons/ci";
 import { FaBlogger } from "react-icons/fa6";
-import { GrStatusPlaceholder, GrSteps, GrTag, GrYoga } from "react-icons/gr";
+import { GrStatusPlaceholder, GrTag, GrYoga } from "react-icons/gr";
 
 const { Header, Sider, Content } = Layout;
 
@@ -27,7 +26,6 @@ function TaskPage({
   handleNext,
   blog,
   quiz,
-  sort_note,
   video,
   reward,
   kegel,
@@ -36,10 +34,9 @@ function TaskPage({
   localStorageData: {
     video: boolean;
     kagel: boolean;
-    sortNote: boolean;
     quiz: boolean;
     rewards: boolean;
-    suggestBlog: boolean;
+    Blog: boolean;
   };
   handleTaskClick: (index: number) => void;
   selectedTask: string;
@@ -56,9 +53,7 @@ function TaskPage({
     answer: string | undefined;
     quizOptions: string | undefined;
   };
-  sort_note: {
-    sortNoteContent: string | undefined;
-  };
+
   video: {
     videoUrl: string | undefined;
   };
@@ -68,14 +63,7 @@ function TaskPage({
   kegel: KegelTimes[] | undefined;
   DayCount: number;
 }) {
-  const tasks = [
-    "video",
-    "kagel",
-    "sortNote",
-    "quiz",
-    "rewards",
-    "suggestBlog",
-  ];
+  const tasks = ["video", "kagel", "quiz", "rewards", "Blog"];
 
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -85,19 +73,19 @@ function TaskPage({
   const icons = [
     <CiVideoOn key={1} />,
     <GrYoga key={2} />,
-    <GrSteps key={3} />,
+    // <GrSteps key={3} />,
     <GrStatusPlaceholder key={4} />,
     <GrTag key={5} />,
     <FaBlogger key={6} />,
   ];
 
   return (
-    <div className="mx-auto min-h-screen ">
+    <div className="mx-auto min-h-screen p-3">
       <Layout style={{ minHeight: "100vh", borderRadius: "30px" }}>
         <div className="bg-white  min-h-screen ">
           <Sider theme="light" className="" breakpoint="sm" collapsedWidth="0">
             <div className="demo-logo-vertical" />
-            <p className="text-center text-2xl tracking-wider font-extralight  p-2 border-b border-l border-r">
+            <p className="text-center text-2xl tracking-wider font-extralight  p-2 border">
               Tasks
             </p>
             <div className="mt-4">
@@ -159,10 +147,10 @@ function TaskPage({
         </div>
 
         <Layout>
-          <Header
+          {/* <Header
             style={{ padding: 0, background: colorBgContainer }}
             className=" rounded"
-          ></Header>
+          ></Header> */}
           <Content
             style={{
               // margin: "24px 16px",
@@ -172,10 +160,10 @@ function TaskPage({
               borderRadius: borderRadiusLG,
             }}
           >
-            <div className="backgroundDot">
+            <div className="backgroundDot p-5">
               <div
                 // style={{ height: "500px" }}
-                className="p-3  mx-auto flex flex-col justify-evenly "
+                className=" mx-auto flex flex-col justify-evenly "
               >
                 <div className="basis-1/6">
                   <div className=""></div>
@@ -198,10 +186,7 @@ function TaskPage({
                   <div className="basis-4/6 border p-3 rounded-lg h-full ">
                     <Video selectedTask={selectedTask} video={video} />
                     <Kagel selectedTask={selectedTask} kegel={kegel} />
-                    <SortNote
-                      selectedTask={selectedTask}
-                      sort_note={sort_note}
-                    />
+
                     <Quiz selectedTask={selectedTask} quiz={quiz} />
                     <Reward selectedTask={selectedTask} reward={reward} />
                     <SuggestedBlog selectedTask={selectedTask} blog={blog} />
@@ -209,7 +194,7 @@ function TaskPage({
                 </div>
               </div>
             </div>
-            <div className="basis-1/6 flex justify-center align-bottom flex-col">
+            <div className="basis-1/6 flex justify-center align-bottom flex-col p-10">
               <div className="flex justify-between">
                 <button
                   className={`px-4 py-2 text-white rounded focus:outline-none text-lg ${
@@ -317,7 +302,6 @@ function TaskPage({
                 <div className="basis-4/6 border p-3 rounded-lg h-full ">
                   <Video selectedTask={selectedTask} video={video} />
                   <Kagel selectedTask={selectedTask} kegel={kegel} />
-                  <SortNote selectedTask={selectedTask} sort_note={sort_note} />
                   <Quiz selectedTask={selectedTask} quiz={quiz} />
                   <Reward selectedTask={selectedTask} reward={reward} />
                   <SuggestedBlog selectedTask={selectedTask} blog={blog} />

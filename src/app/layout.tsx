@@ -1,10 +1,10 @@
 "use client";
+import NavBar from "@/components/structure/NavBar";
 import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Layout, Menu } from "antd";
 import { Inter } from "next/font/google";
 import React from "react";
-import CustomLayout from "./CustomLayout";
 import "./globals.css";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -34,7 +34,13 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <AntdRegistry>
-            <CustomLayout>{children}</CustomLayout>
+            {/* <CustomLayout> */}
+            <div className="mx-auto min-h-screen max-w-7xl">
+              <NavBar />
+              {children}
+            </div>
+
+            {/* </CustomLayout> */}
           </AntdRegistry>
         </body>
       </html>

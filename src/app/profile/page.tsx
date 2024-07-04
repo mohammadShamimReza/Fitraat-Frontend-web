@@ -42,10 +42,9 @@ function ProfilePage() {
               JSON.stringify({
                 video: false,
                 kagel: false,
-                sortNote: false,
                 quiz: false,
                 rewards: false,
-                suggestBlog: false,
+                Blog: false,
               })
             );
 
