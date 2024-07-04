@@ -2,20 +2,9 @@
 import NavBar from "@/components/structure/NavBar";
 import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { Layout, Menu } from "antd";
 import { Inter } from "next/font/google";
 import React from "react";
 import "./globals.css";
-
-const { Header, Content, Footer, Sider } = Layout;
-const { Item } = Menu;
-
-type MenuItem = {
-  key: string;
-  icon: React.ReactNode;
-  label: React.ReactNode;
-  children?: MenuItem[];
-};
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,13 +23,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <AntdRegistry>
-            {/* <CustomLayout> */}
             <div className="mx-auto min-h-screen max-w-7xl">
               <NavBar />
-              {children}
+              <div className="mx-auto max-w-6xl">{children}</div>
             </div>
-
-            {/* </CustomLayout> */}
           </AntdRegistry>
         </body>
       </html>

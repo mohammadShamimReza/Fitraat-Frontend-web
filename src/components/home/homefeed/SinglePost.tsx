@@ -3,6 +3,7 @@ import { useGetLikeOfPostQuery } from "@/redux/api/likeApi";
 import { Post } from "@/types/contantType";
 import { Button, Input, Modal } from "antd";
 import { formatDistanceToNow } from "date-fns";
+import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineSave } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
@@ -22,6 +23,7 @@ function SinglePost({ post }: { post: Post }) {
   const postAt = formatDistanceToNow(new Date(post.attributes.createdAt), {
     addSuffix: true,
   });
+  const userId = post.attributes.user.data.id;
   const postId = post.id;
 
   const { data } = useGetLikeOfPostQuery({ postId: postId });
@@ -75,17 +77,21 @@ function SinglePost({ post }: { post: Post }) {
       <div className="max-w-sm w-full lg:max-w-full lg:flex">
         <div className="border rounded-2xl w-full shadow-lg flex flex-col justify-between leading-normal bg-white p-8">
           <div className="flex items-center mb-4">
-            <img
-              src={mockData.userImage}
-              alt="User image"
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
-            <div className="ml-3">
-              <p>{postUserName}</p>
-              <p className="text-gray-600 text-sm ">{postAt}</p>
-            </div>
+            <Link href={`/postUser/${userId}`}>
+              <div className="flex">
+                <img
+                  src={mockData.userImage}
+                  alt="User image"
+                  width={50}
+                  height={50}
+                  className="rounded-full"
+                />
+                <div className="ml-3">
+                  <p>{postUserName}</p>
+                  <p className="text-gray-600 text-sm ">{postAt}</p>
+                </div>
+              </div>
+            </Link>
           </div>
           <div className="mb-4">
             <div
