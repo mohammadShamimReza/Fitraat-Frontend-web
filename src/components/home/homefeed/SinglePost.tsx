@@ -39,7 +39,10 @@ function SinglePost({ post }: { post: Post }) {
   const userId = post.attributes.user.data.id;
   const postId = post.id;
 
-  const likePost = postLikeForCurrentUser?.data?.length !== 0 ? false : true;
+  const likedPostForCurrentUser =
+    postLikeForCurrentUser?.meta.pagination.total === 0 ? false : true;
+
+  console.log(likedPostForCurrentUser);
 
   const [expanded, setExpanded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -47,13 +50,10 @@ function SinglePost({ post }: { post: Post }) {
   const [newComment, setNewComment] = useState("");
   // const [showLikeAnimation, setShowLikeAnimation] = useState(false);
   // const [showSaveAnimation, setShowSaveAnimation] = useState(false);
-  const [like, setLike] = useState(likePost);
+  const [like, setLike] = useState(false);
   const [save, setSave] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
 
-  console.log(
-    postLikeForCurrentUser?.data?.length !== 0 ? postLikeForCurrentUser : null
-  );
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -207,7 +207,7 @@ function SinglePost({ post }: { post: Post }) {
               onClick={handleLikeUnlickClick}
             >
               <div className="ml-4 absolute">
-                {like ? (
+                {likedPostForCurrentUser ? (
                   <IoHeart style={{ color: "red" }} size={30} />
                 ) : (
                   <CiHeart style={{ color: "red" }} size={30} />
@@ -215,7 +215,8 @@ function SinglePost({ post }: { post: Post }) {
               </div>
 
               <p className="ml-14 text-base text-gray-500">
-                {totlaLike} {like ? "Liked" : "Like"}{" "}
+                {likedPostForCurrentUser && "you and"} {totlaLike}{" "}
+                {likedPostForCurrentUser ? "Liked" : "Like"}{" "}
               </p>
             </button>
             {/* <button
