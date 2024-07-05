@@ -1,6 +1,7 @@
 "use client";
 import {
   useCreateLikeMutation,
+  useDeleteLikeMutation,
   useGetLikeOfPostQuery,
   usePostLikeForCurrentUserQuery,
 } from "@/redux/api/likeApi";
@@ -23,10 +24,11 @@ interface Comment {
 function SinglePost({ post }: { post: Post }) {
   const [createLike, { isError, isLoading, isSuccess }] =
     useCreateLikeMutation();
+  const [deleteLike] = useDeleteLikeMutation();
   const { data: postLike } = useGetLikeOfPostQuery({ postId: post?.id });
   const { data: postLikeForCurrentUser } = usePostLikeForCurrentUserQuery({
     postId: post?.id,
-    userId: 3,
+    userId: 10,
   });
   const totlaLike = postLike?.meta.pagination.total;
   const postDescription = post.attributes.description
@@ -42,7 +44,9 @@ function SinglePost({ post }: { post: Post }) {
   const likedPostForCurrentUser =
     postLikeForCurrentUser?.meta.pagination.total === 0 ? false : true;
 
-  console.log(likedPostForCurrentUser);
+  const postLikeForCurrentUserId = postLikeForCurrentUser?.data[0]?.id;
+
+  console.log(postLikeForCurrentUser);
 
   const [expanded, setExpanded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -66,16 +70,24 @@ function SinglePost({ post }: { post: Post }) {
   }, []);
 
   const handleLikeUnlickClick = async () => {
-    try {
-      const result = await createLike({ data: { user: 10, post: postId } });
-      if (isSuccess) {
-        message.success("Thanks for like the post!");
-      } else if (isError) {
+    if (likedPostForCurrentUser && postLikeForCurrentUserId) {
+      const result = await deleteLike({
+        postLikeForCurrentUserId: postLikeForCurrentUserId,
+      });
+      console.log(result, "deleteLike");
+    } else if (!likedPostForCurrentUser) {
+      try {
+        const result = await createLike({ data: { user: 10, post: postId } });
+        console.log(result, "create Like");
+        if (isSuccess) {
+          message.success("Thanks for like the post!");
+        } else if (isError) {
+          message.error("Something went wrong. Please try again later");
+        }
+      } catch (error) {
         message.error("Something went wrong. Please try again later");
+      } finally {
       }
-    } catch (error) {
-      message.error("Something went wrong. Please try again later");
-    } finally {
     }
 
     // !like && setShowLikeAnimation(true);

@@ -16,12 +16,23 @@ export const postApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
+    deleteLike: builder.mutation({
+      query: (data: { postLikeForCurrentUserId: number }) => ({
+        url: `${LIKE}/${data.postLikeForCurrentUserId}`,
+        method: "DELETE",
+      }),
+
+      invalidatesTags: ["deleteLike"],
+      transformResponse: (rawResult: Post) => {
+        return rawResult;
+      },
+    }),
     getLikeOfPost: builder.query({
       query: (data: { postId: number }) => ({
         url: `${LIKE}?populate[0]=user&populate[1]=post&filters[post][id][$eq]=${data.postId}`,
         method: "GET",
       }),
-      providesTags: ["createLike"],
+      providesTags: ["createLike", "deleteLike"],
       transformResponse: (rawResult: PostData) => {
         return rawResult;
       },
@@ -31,7 +42,7 @@ export const postApi = baseApi.injectEndpoints({
         url: `${LIKE}??populate[0]=user&filters[user][id][$eq]=${data.userId}&populate[1]=post&filters[post][id][$eq]=${data.postId}`,
         method: "GET",
       }),
-      providesTags: ["createLike"],
+      providesTags: ["createLike", "deleteLike"],
       transformResponse: (rawResult: PostData) => {
         return rawResult;
       },
@@ -41,6 +52,7 @@ export const postApi = baseApi.injectEndpoints({
 
 export const {
   useCreateLikeMutation,
+  useDeleteLikeMutation,
   useGetLikeOfPostQuery,
   usePostLikeForCurrentUserQuery,
 } = postApi;
