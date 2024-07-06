@@ -23,7 +23,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <AntdRegistry>
-            <div className="mx-auto min-h-screen max-w-7xl">
+            <div className="mx-auto min-h-screen max-w-7xl ">
               <NavBar />
               <div className="mx-auto max-w-6xl">{children}</div>
             </div>

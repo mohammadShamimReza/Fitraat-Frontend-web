@@ -15,6 +15,21 @@ export const postApi = baseApi.injectEndpoints({
       transformResponse: (rawResult: Post) => {
         return rawResult;
       },
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(
+            postApi.util.updateQueryData(
+              "getLikeOfPost",
+              { postId: body.data.post },
+              (draft) => {
+                draft.meta.pagination.total += 1;
+                draft.data.push(data);
+              }
+            )
+          );
+        } catch {}
+      },
     }),
     deleteLike: builder.mutation({
       query: (data: { postLikeForCurrentUserId: number }) => ({
@@ -25,6 +40,23 @@ export const postApi = baseApi.injectEndpoints({
       invalidatesTags: ["deleteLike"],
       transformResponse: (rawResult: Post) => {
         return rawResult;
+      },
+      async onQueryStarted(data, { dispatch, queryFulfilled }) {
+        try {
+          const { data: responseData } = await queryFulfilled;
+          dispatch(
+            postApi.util.updateQueryData(
+              "getLikeOfPost",
+              { postId: responseData.id },
+              (draft) => {
+                draft.meta.pagination.total -= 1;
+                draft.data = draft.data.filter(
+                  (like) => like.id !== responseData.id
+                );
+              }
+            )
+          );
+        } catch {}
       },
     }),
     getLikeOfPost: builder.query({
