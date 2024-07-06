@@ -18,7 +18,7 @@ export const postApi = baseApi.injectEndpoints({
     }),
     getPost: builder.query({
       query: () => ({
-        url: `${POST}?sort[0]=createdAt:desc&populate[0]=user`,
+        url: `${POST}?sort[0]=updatedAt:desc&populate[0]=user`,
         method: "GET",
       }),
       providesTags: ["createPost"],

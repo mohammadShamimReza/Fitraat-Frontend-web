@@ -1,9 +1,9 @@
-import { Post, PostData } from "@/types/contantType";
+import { CreateLikeForPost, Post, PostData } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
 const LIKE = "/post-likes";
 
-export const postApi = baseApi.injectEndpoints({
+export const likeApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createLike: builder.mutation({
       query: (body) => ({
@@ -12,19 +12,19 @@ export const postApi = baseApi.injectEndpoints({
         body: body,
       }),
       invalidatesTags: ["createLike"],
-      transformResponse: (rawResult: Post) => {
+      transformResponse: (rawResult: CreateLikeForPost) => {
         return rawResult;
       },
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           dispatch(
-            postApi.util.updateQueryData(
+            likeApi.util.updateQueryData(
               "getLikeOfPost",
               { postId: body.data.post },
               (draft) => {
                 draft.meta.pagination.total += 1;
-                draft.data.push(data);
+                // draft.data.push(data);
               }
             )
           );
@@ -45,7 +45,7 @@ export const postApi = baseApi.injectEndpoints({
         try {
           const { data: responseData } = await queryFulfilled;
           dispatch(
-            postApi.util.updateQueryData(
+            likeApi.util.updateQueryData(
               "getLikeOfPost",
               { postId: responseData.id },
               (draft) => {
@@ -87,4 +87,4 @@ export const {
   useDeleteLikeMutation,
   useGetLikeOfPostQuery,
   usePostLikeForCurrentUserQuery,
-} = postApi;
+} = likeApi;

@@ -43,22 +43,85 @@ export interface PostData {
   meta: Meta;
 }
 
-export interface PostLike {
+export interface CreateLikeForPost {
   id: number;
-  attributes: PostLikeAttributes;
+  attributes: {
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
 }
-interface PostLikeAttributes {
-  like: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  user: UserData;
-  post: Post;
+export interface CreateCommentForPost {
+  id: number;
+  attributes: {
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
 }
 
-export interface PostLikeData {
-  data: PostLike[];
+export interface postForCommentData {
+  data: {
+    id: number;
+    attributes: {
+      comment: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      user: {
+        data: { id: number; attributes: UserData };
+      };
+      post: {
+        data: {
+          id: number;
+          attributes: {
+            description: Array<{
+              type: string;
+              children: Array<{
+                text: string;
+                type: string;
+              }>;
+            }>;
+            createdAt: string;
+            updatedAt: string;
+            publishedAt: string;
+          };
+        };
+      };
+    };
+  }[];
   meta: Meta;
+}
+
+export interface singleCommentForPostData {
+  id: number;
+  attributes: {
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    user: {
+      data: { id: number; attributes: UserData };
+    };
+    post: {
+      data: {
+        id: number;
+        attributes: {
+          description: Array<{
+            type: string;
+            children: Array<{
+              text: string;
+              type: string;
+            }>;
+          }>;
+          createdAt: string;
+          updatedAt: string;
+          publishedAt: string;
+        };
+      };
+    };
+  };
 }
 
 export interface Blog {
@@ -212,7 +275,7 @@ export interface UserData {
   provider: string;
   quizComplete: boolean;
   updateAt: string;
-  userName: string;
+  username: string;
   videoComplete: boolean;
 }
 

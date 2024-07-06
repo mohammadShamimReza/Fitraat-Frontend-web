@@ -19,5 +19,13 @@ export const baseApi = createApi({
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ["updateUser", "createPost", "createLike", "deleteLike"],
+  tagTypes: [
+    "updateUser",
+    "createPost",
+    "createLike",
+    "deleteLike",
+    "createComment",
+    "updateComment",
+    "deleteComment",
+  ],
 });

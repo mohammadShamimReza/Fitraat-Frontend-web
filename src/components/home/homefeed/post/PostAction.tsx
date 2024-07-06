@@ -5,11 +5,14 @@ const PostActions = ({
   totalLikes,
   likedPostForCurrentUser,
   handleLikeUnlickClick,
+  totalComment,
 }: {
   totalLikes: number;
   likedPostForCurrentUser: boolean;
   handleLikeUnlickClick: () => void;
+  totalComment: number;
 }) => {
+  const currentLike = totalLikes - 1;
   return (
     <div className="flex justify-between items-center mt-4 relative">
       <button
@@ -25,7 +28,7 @@ const PostActions = ({
         </div>
         <p className="ml-14 text-base text-gray-500">
           {likedPostForCurrentUser && "you and"} {totalLikes}{" "}
-          {likedPostForCurrentUser ? "Liked" : "Like"}{" "}
+          {likedPostForCurrentUser ? "Likes" : "Liked"} , {totalComment}comments
         </p>
       </button>
     </div>
