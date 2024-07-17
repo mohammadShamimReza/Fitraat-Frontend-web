@@ -4,9 +4,13 @@ import {
   useUpdateCommentMutation,
 } from "@/redux/api/commentApi";
 import { singleCommentForPostData } from "@/types/contantType";
-import { Dropdown, Input, Menu, Modal } from "antd";
+import { Input, Modal } from "antd";
 import { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
+
+const mockData = {
+  userImage: "https://via.placeholder.com/150",
+};
 
 const { TextArea } = Input;
 
@@ -87,10 +91,13 @@ const PostComments = ({
     }
   };
 
-  const menu = (commentId: number) => (
-    <Menu>
-      <Menu.Item key="edit">
+  const renderDropdownMenu = (commentId: number) => {
+    if (editModalVisible) return null;
+
+    return (
+      <div className="dropdown-menu absolute z-10 right-0 w-32 bg-white shadow-lg rounded-lg border">
         <button
+          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
           onClick={() => {
             const commentToEdit = postComment?.find(
               (comment) => comment.id === commentId
@@ -99,54 +106,66 @@ const PostComments = ({
               setEditCommentId(commentId);
               setEditCommentText(commentToEdit.attributes.comment);
               setEditModalVisible(true);
+              setModalVisible(false);
             }
           }}
         >
           Edit
         </button>
-      </Menu.Item>
-      <Menu.Item key="delete">
-        <button onClick={() => handleDeleteComment(commentId)}>Delete</button>
-      </Menu.Item>
-    </Menu>
-  );
+        <button
+          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          onClick={() => handleDeleteComment(commentId)}
+        >
+          Delete
+        </button>
+      </div>
+    );
+  };
   if (postComment) {
     return (
       <>
-        <div className="my-4">
+        <div className="mt-10">
           {postComment.length > 0 ? (
             <>
-              <h3 className="text-lg font-semibold mb-2">Comments</h3>
               {postComment.slice(0, 1).map((comment) => (
                 <div
-                  className="flex justify-between items-start align-middle mb-2 p-3 border rounded-lg"
+                  className="flex justify-between items-start align-middle mb-2 p-3 shadow rounded-lg"
                   key={comment.id}
                 >
-                  <div>
-                    <p className="font-semibold">
-                      {comment.attributes.user.data.attributes.username}
-                    </p>
-                    <p>{comment.attributes.comment}</p>
+                  <div className="flex gap-3 items-center">
+                    <img
+                      src={mockData.userImage}
+                      alt="User image"
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
+                    <div className="">
+                      <p className="font-semibold">
+                        {comment.attributes.user.data.attributes.username}
+                      </p>
+                      <p>{comment.attributes.comment}</p>
+                    </div>
                   </div>
                   {currentUserId === comment.attributes.user.data.id && (
-                    <Dropdown
-                      overlay={menu(comment.id)}
-                      trigger={["click"]}
-                      onVisibleChange={(visible) =>
-                        setDropdownVisible(visible ? comment.id : null)
-                      }
-                      visible={dropdownVisible === comment.id}
-                    >
+                    <div className="relative">
                       <HiDotsHorizontal
                         size={20}
-                        className="cursor-pointer border rounded-full "
+                        className="cursor-pointer border rounded-full relative"
+                        onClick={() =>
+                          setDropdownVisible(
+                            dropdownVisible === comment.id ? null : comment.id
+                          )
+                        }
                       />
-                    </Dropdown>
+                      {dropdownVisible === comment.id &&
+                        renderDropdownMenu(comment.id)}
+                    </div>
                   )}
                 </div>
               ))}
               <button
-                className="text-blue-500 mt-2"
+                className="text-blue-500 mt-2 mb-5"
                 onClick={() => setModalVisible(true)}
               >
                 Show More Comments
@@ -164,7 +183,7 @@ const PostComments = ({
           />
           <button
             onClick={handleAddComment}
-            className="mt-2 px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
+            className="mt-3 px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
           >
             <span style={{ paddingRight: "10px" }}>Post Comment</span>
           </button>
@@ -188,19 +207,19 @@ const PostComments = ({
                   <p>{comment.attributes.comment}</p>
                 </div>
                 {currentUserId === comment.attributes.user.data.id && (
-                  <Dropdown
-                    overlay={menu(comment.id)}
-                    trigger={["click"]}
-                    onVisibleChange={(visible) =>
-                      setDropdownVisible(visible ? comment.id : null)
-                    }
-                    visible={dropdownVisible === comment.id}
-                  >
+                  <div className="relative">
                     <HiDotsHorizontal
                       size={20}
-                      className="cursor-pointer border rounded-full "
+                      className="cursor-pointer border rounded-full relative"
+                      onClick={() =>
+                        setDropdownVisible(
+                          dropdownVisible === comment.id ? null : comment.id
+                        )
+                      }
                     />
-                  </Dropdown>
+                    {dropdownVisible === comment.id &&
+                      renderDropdownMenu(comment.id)}
+                  </div>
                 )}
               </div>
             ))}
@@ -215,7 +234,6 @@ const PostComments = ({
             className="px-4 mt-3 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
             onClick={() => {
               handleModalAddComment();
-              // setModalVisible(false);
             }}
           >
             <span style={{ paddingRight: "10px" }}>Post Comment</span>

@@ -1,5 +1,6 @@
 import { CiHeart } from "react-icons/ci";
 import { IoHeart } from "react-icons/io5";
+import { TfiComment } from "react-icons/tfi";
 
 const PostActions = ({
   totalLikes,
@@ -26,9 +27,11 @@ const PostActions = ({
             <CiHeart style={{ color: "red" }} size={30} />
           )}
         </div>
-        <p className="ml-14 text-base text-gray-500">
-          {likedPostForCurrentUser && "you and"} {totalLikes}{" "}
-          {likedPostForCurrentUser ? "Likes" : "Liked"} , {totalComment}comments
+        <p className="ml-14 text-base text-gray-500 ">{totalLikes} </p>
+        <p className="flex align-middle items-center gap-2 pl-3 ml-5">
+          {" "}
+          <TfiComment style={{ color: "red" }} size={20} />
+          {totalComment}
         </p>
       </button>
     </div>

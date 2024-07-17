@@ -99,13 +99,14 @@ function SinglePost({ post }: { post: Post }) {
             postAt={postAt}
           />
           <PostContent postDescription={postDescription} />
-          <PostComments postId={postId} postComment={postComment} />
           <PostActions
             totalLikes={totalLikes}
             likedPostForCurrentUser={likedPostForCurrentUser}
             handleLikeUnlickClick={handleLikeUnlickClick}
             totalComment={totalComment}
           />
+          <PostComments postId={postId} postComment={postComment} />
+
           {/* <PostCommentBox
             newComment={newComment}
             setNewComment={setNewComment}
