@@ -1,4 +1,5 @@
 "use client";
+import FancyLoading from "@/app/loading";
 import { useGetPostQuery } from "@/redux/api/postApi";
 import CreatePost from "./CreatePost";
 import SinglePost from "./SinglePost";
@@ -10,9 +11,11 @@ function FeedPost() {
   return (
     <div className="h-full ">
       <CreatePost />
-      {posts
-        ? posts.map((post) => <SinglePost key={post.id} post={post} />)
-        : "null"}
+      {posts ? (
+        posts.map((post) => <SinglePost key={post.id} post={post} />)
+      ) : (
+        <FancyLoading />
+      )}
     </div>
   );
 }

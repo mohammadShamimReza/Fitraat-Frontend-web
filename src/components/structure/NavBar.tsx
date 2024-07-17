@@ -49,10 +49,10 @@ function NavBar() {
   };
   return (
     <div className="mb-5 border rounded-xl shadow-md  mt-5 bg-white">
-      <div className="p-2">
-        <div className="  px-1 sm:px-4 lg:px-6">
-          <div className="relative flex h-16 items-center justify-between">
-            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <div className="">
+        <div className="  p-1 sm:px-4 lg:px-6">
+          <div className=" flex h-16 items-center justify-between ">
+            <div className="   flex items-center sm:hidden">
               <button
                 type="button"
                 onClick={() => setMenuToggle(!menuToggle)}
@@ -94,7 +94,8 @@ function NavBar() {
                 </svg>
               </button>
             </div>
-            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+
+            <div className="flex  items-center justify-center sm:items-stretch sm:justify-start ">
               <div className="flex flex-shrink-0 items-center text-lg font-bold">
                 <Link href={"/"}>
                   {" "}
@@ -124,7 +125,7 @@ function NavBar() {
                   </Link>
                   <Link
                     href="/about"
-                    className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
                     aria-current="page"
                   >
                     About us
@@ -140,7 +141,7 @@ function NavBar() {
               </div>
             </div>
 
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer">
+            <div className="  flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer">
               {!authenticated ? (
                 <div className="relative ml-3">
                   <Link href={"/login"}>
@@ -233,10 +234,10 @@ function NavBar() {
 
         {menuToggle ? (
           <div
-            className="sm:hidden absolute z-10 bg-white w-full"
+            className="sm:hidden absolute z-10 bg-white w-screen border rounded-lg shadow"
             id="mobile-menu"
           >
-            <div className="space-y-1 px-2 pb-3 pt-2">
+            <div className="space-y-1 px-2 pb-3 pt-2 ">
               <Link
                 href="/"
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
@@ -246,13 +247,6 @@ function NavBar() {
               <Link
                 href="/blog"
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
-              >
-                Blog
-              </Link>
-
-              <Link
-                href="/blog"
-                className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
               >
                 Blog
               </Link>
