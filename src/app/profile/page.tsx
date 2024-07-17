@@ -43,7 +43,6 @@ function ProfilePage() {
                 video: false,
                 kagel: false,
                 quiz: false,
-                rewards: false,
                 Blog: false,
               })
             );

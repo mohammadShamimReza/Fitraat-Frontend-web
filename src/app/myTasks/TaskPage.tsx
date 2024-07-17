@@ -4,7 +4,6 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { FaCheckCircle } from "react-icons/fa";
 import Kagel from "./taskPages/Kagel";
 import Quiz from "./taskPages/Quiz";
-import Reward from "./taskPages/Reward";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
@@ -12,7 +11,14 @@ import { Layout, theme } from "antd";
 import { useState } from "react";
 import { CiVideoOn } from "react-icons/ci";
 import { FaBlogger } from "react-icons/fa6";
-import { GrStatusPlaceholder, GrTag, GrYoga } from "react-icons/gr";
+import {
+  GiFrankensteinCreature,
+  GiRank1,
+  GiRank2,
+  GiRank3,
+} from "react-icons/gi";
+import { GrStatusPlaceholder, GrYoga } from "react-icons/gr";
+import { TbCurrencyFrank, TbMilitaryRank } from "react-icons/tb";
 
 const { Header, Sider, Content } = Layout;
 
@@ -27,15 +33,14 @@ function TaskPage({
   blog,
   quiz,
   video,
-  reward,
   kegel,
   DayCount,
+  handleDayid,
 }: {
   localStorageData: {
     video: boolean;
     kagel: boolean;
     quiz: boolean;
-    rewards: boolean;
     Blog: boolean;
   };
   handleTaskClick: (index: number) => void;
@@ -57,13 +62,12 @@ function TaskPage({
   video: {
     videoUrl: string | undefined;
   };
-  reward: {
-    rewardContant: string | undefined;
-  };
+
   kegel: KegelTimes[] | undefined;
   DayCount: number;
+  handleDayid: (id: string) => void;
 }) {
-  const tasks = ["video", "kagel", "quiz", "rewards", "Blog"];
+  const tasks = ["video", "kagel", "quiz", "Blog"];
 
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -75,17 +79,23 @@ function TaskPage({
     <GrYoga key={2} />,
     // <GrSteps key={3} />,
     <GrStatusPlaceholder key={4} />,
-    <GrTag key={5} />,
-    <FaBlogger key={6} />,
+    <FaBlogger key={5} />,
   ];
+
+  const allDays = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div className="mx-auto min-h-screen p-3">
       <Layout style={{ minHeight: "100vh", borderRadius: "30px" }}>
-        <div className="bg-white  min-h-screen ">
-          <Sider theme="light" className="" breakpoint="sm" collapsedWidth="0">
+        <div className="bg-white  min-h-screen relative">
+          <Sider
+            theme="light"
+            className="border rounded-lg"
+            breakpoint="sm"
+            collapsedWidth="0"
+          >
             <div className="demo-logo-vertical" />
-            <p className="text-center text-2xl tracking-wider font-extralight  p-2 border">
+            <p className="text-center text-2xl tracking-wider font-extralight  p-2 border-b">
               Tasks
             </p>
             <div className="mt-4">
@@ -115,7 +125,7 @@ function TaskPage({
                       selectedTask === task && "font-bold text-blue-600"
                     }`}
                   >
-                    <div className="flex align-middle justify-center">
+                    <div className="flex align-middlehandleDayid justify-center">
                       {" "}
                       <span className="mr-2 mt-1"> {icons[index]}</span>
                       {!collapsed ? (
@@ -136,6 +146,46 @@ function TaskPage({
                           (localStorageData as any)[task] === true
                             ? "#0578EA"
                             : "gray",
+                        fontWeight: "bold",
+                      }}
+                    />
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-2xl tracking-wider font-extralight  p-2 border-b border-t mt-[100%]">
+              Days
+            </p>
+            <div className="mt-4 h-60 overflow-scroll">
+              {" "}
+              {allDays.map((day, index) => (
+                <div
+                  key={index}
+                  className={`flex justify-between hover:bg-slate-100 rounded ${
+                    DayCount >= day ? "cursor-pointer " : "cursor-not-allowed"
+                  } ${DayCount === day ? "bg-blue-100" : ""}`}
+                  title={DayCount >= day ? "Unlocked" : "lock"}
+                  onClick={() =>
+                    DayCount >= day ? handleDayid(day.toString()) : ""
+                  }
+                >
+                  {" "}
+                  <span
+                    className={`transition-colors duration-300  p-2 ${
+                      DayCount === day && "font-bold text-blue-600"
+                    }`}
+                  >
+                    <div className="flex align-middle justify-center">
+                      {" "}
+                      {!collapsed ? <span className="">Day: {day}</span> : ""}
+                    </div>
+                  </span>
+                  <span className="pl-3 right-0 p-2 ">
+                    <FaCheckCircle
+                      className=""
+                      size={25}
+                      style={{
+                        color: DayCount >= day ? "#0578EA" : "gray",
                         fontWeight: "bold",
                       }}
                     />
@@ -166,9 +216,24 @@ function TaskPage({
                 className=" mx-auto flex flex-col justify-evenly "
               >
                 <div className="basis-1/6">
-                  <div className=""></div>
-                  <p className="text-3xl font-bold text-left">
-                    Day: {DayCount}
+                  <p className="text-3xl font-bold text-left flex justify-between ">
+                    <span>Day: {DayCount}</span>{" "}
+                    <span className="flex items-center gap-2">
+                      Rank:{" "}
+                      {DayCount < 5 ? (
+                        <GiFrankensteinCreature />
+                      ) : DayCount >= 40 ? (
+                        <TbMilitaryRank style={{ color: "red" }} />
+                      ) : DayCount > 30 ? (
+                        <GiRank3 style={{ color: "red" }} />
+                      ) : DayCount > 20 ? (
+                        <GiRank2 style={{ color: "red" }} />
+                      ) : DayCount >= 10 ? (
+                        <GiRank1 style={{ color: "red" }} />
+                      ) : (
+                        <TbCurrencyFrank />
+                      )}
+                    </span>
                   </p>
                   <p className="text-2xl font-bold text-center ">
                     {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
@@ -188,7 +253,7 @@ function TaskPage({
                     <Kagel selectedTask={selectedTask} kegel={kegel} />
 
                     <Quiz selectedTask={selectedTask} quiz={quiz} />
-                    <Reward selectedTask={selectedTask} reward={reward} />
+
                     <SuggestedBlog selectedTask={selectedTask} blog={blog} />
                   </div>
                 </div>
@@ -228,89 +293,6 @@ function TaskPage({
           </Content>
         </Layout>
       </Layout>
-      {/* 
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row">
-          <div className="lg:w-1/3 pr-8 mb-8 lg:mb-0">
-            <h2 className="text-2xl font-bold ">Your Task for Today</h2>
-            <ul className="list-decimal pl-6">
-              {tasks.map((task, index) => (
-                <div
-                  key={index}
-                  className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
-                    (localStorageData as any)[task] === false
-                      ? " cursor-not-allowed"
-                      : "cursor-pointer"
-                  }`}
-                  title={
-                    (localStorageData as any)[task] === false
-                      ? "This task is not unlock yet"
-                      : "you have completed this task"
-                  }
-                  onClick={() => {
-                    if ((localStorageData as any)[task] === true) {
-                      handleTaskClick(index);
-                    }
-                  }}
-                >
-                  <li
-                    className={`transition-colors duration-300  p-2 ${
-                      selectedTask === task && "font-bold text-blue-600"
-                    }`}
-                  >
-                    {task.replace(/^\w/, (c) => c.toUpperCase())}
-                  </li>
-                  <span className="pl-3 right-0 p-2">
-                    <FaCheckCircle
-                      className=""
-                      size={25}
-                      style={{
-                        color:
-                          (localStorageData as any)[task] === true
-                            ? "#0578EA"
-                            : "gray",
-                        fontWeight: "bold",
-                      }}
-                    />
-                  </span>
-                </div>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:w-2/3">
-            <div
-              // style={{ height: "500px" }}
-              className="p-3  mx-auto flex flex-col justify-evenly "
-            >
-              <div className="basis-1/6">
-                <div className=""></div>
-                <p className="text-3xl font-bold text-left">Day: {DayCount}</p>
-                <p className="text-2xl font-bold text-center ">
-                  {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
-                </p>
-              </div>
-
-              <br />
-              <div
-                className="h-[30rem]"
-                // style={{
-                //   width: "100%",
-                //   height: "380px",
-                // }}
-              >
-                <div className="basis-4/6 border p-3 rounded-lg h-full ">
-                  <Video selectedTask={selectedTask} video={video} />
-                  <Kagel selectedTask={selectedTask} kegel={kegel} />
-                  <Quiz selectedTask={selectedTask} quiz={quiz} />
-                  <Reward selectedTask={selectedTask} reward={reward} />
-                  <SuggestedBlog selectedTask={selectedTask} blog={blog} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }

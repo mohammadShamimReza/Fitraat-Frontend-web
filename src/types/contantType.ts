@@ -217,7 +217,6 @@ export interface Day {
     };
     kegel: Kegel;
     publishedAt: string;
-    reward: string;
     video: Video;
     id: number;
     quiz: {

@@ -24,13 +24,13 @@ const PostActions = ({
           {likedPostForCurrentUser ? (
             <IoHeart style={{ color: "red" }} size={30} />
           ) : (
-            <CiHeart style={{ color: "red" }} size={30} />
+            <CiHeart size={30} />
           )}
         </div>
         <p className="ml-14 text-base text-gray-500 ">{totalLikes} </p>
         <p className="flex align-middle items-center gap-2 pl-3 ml-5">
           {" "}
-          <TfiComment style={{ color: "red" }} size={20} />
+          <TfiComment size={20} />
           {totalComment}
         </p>
       </button>

@@ -19,7 +19,9 @@ function AuthMyTask({
 }) {
   const router = useRouter();
 
-  const tasks = ["video", "kagel", "quiz", "rewards", "Blog"];
+  const tasks = ["video", "kagel", "quiz", "Blog"];
+
+  const [dayId, setDayId] = useState(authDayDataId);
 
   const { data: authenticatedDayData, isError } =
     useGetDaysByDayIdQuery(authDayDataId);
@@ -36,7 +38,6 @@ function AuthMyTask({
     video: false,
     kagel: false,
     quiz: false,
-    rewards: false,
     Blog: false,
   };
   const [localStorageData, setLocalStorageData] = useState(
@@ -128,9 +129,6 @@ function AuthMyTask({
   const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
     videoUrl: "",
   });
-  const [reward, setReward] = useState<{ rewardContant: string | undefined }>({
-    rewardContant: "",
-  });
 
   useEffect(() => {
     if (authenticatedDayData) {
@@ -148,33 +146,37 @@ function AuthMyTask({
         });
 
         setVideo({ videoUrl: authDayData.video.data.attributes.VideoUrl });
-        setReward({ rewardContant: authDayData.reward });
         setKegel(authDayData?.kegel.data.attributes.kegel_times.data);
       }
     }
   }, [authenticatedDayData]);
 
   const DayCount = authDayDataId;
-
+  const handleDayid = (id: string) => {
+    console.log(dayId);
+    setDayId(parseInt(id));
+  };
   return (
     <>
       {DayCount > 120 ? (
         <CompliteTask auth={true} daysCompleted={120} />
       ) : (
-        <TaskPage
-          localStorageData={localStorageData}
-          handleTaskClick={handleTaskClick}
-          selectedTask={selectedTask}
-          selectedTaskIndex={selectedTaskIndex}
-          handlePrevious={handlePrevious}
-          handleNext={handleNext}
-          blog={blog}
-          quiz={quiz}
-          video={video}
-          reward={reward}
-          kegel={kegel}
-          DayCount={DayCount}
-        />
+        <>
+          <TaskPage
+            localStorageData={localStorageData}
+            handleTaskClick={handleTaskClick}
+            selectedTask={selectedTask}
+            selectedTaskIndex={selectedTaskIndex}
+            handlePrevious={handlePrevious}
+            handleNext={handleNext}
+            blog={blog}
+            quiz={quiz}
+            video={video}
+            kegel={kegel}
+            DayCount={DayCount}
+            handleDayid={handleDayid}
+          />
+        </>
       )}
     </>
   );
