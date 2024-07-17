@@ -75,7 +75,7 @@ export const postApi = baseApi.injectEndpoints({
       },
     }),
     updateComment: builder.mutation({
-      query: (data: { commentId: number; body: { comment: string } }) => ({
+      query: (data: { commentId: number; data: { comment: string } }) => ({
         url: `${COMMENT}/${data.commentId}`,
         method: "PUT",
         body: data,
