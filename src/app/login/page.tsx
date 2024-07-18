@@ -8,10 +8,23 @@ import { message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { z } from "zod";
+
+// Zod schema for form validation
+const loginSchema = z.object({
+  identifier: z.string().nonempty("Email or Username is required"),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters long")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    ),
+});
 
 function LoginPage() {
   const router = useRouter();
-
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -45,27 +58,38 @@ function LoginPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (formData.identifier !== "" && formData.password !== "") {
-      try {
-        const result: any | Error = await loginUser(formData);
-        if (result?.error) {
-          message.error("User is not valid");
-        } else {
-          message.success("Login successfully");
-          storeTokenInCookie(result?.data?.jwt);
-          dispatch(storeAuthToken(result?.data?.jwt));
 
-          dispatch(storeUserInfo(result?.data?.user));
-          router.push("/myTasks");
-          // if (typeof window !== "undefined") {
-          //   window.location.reload();
-          // }
+    try {
+      // Validate form data with Zod
+      loginSchema.parse(formData);
+
+      if (formData.identifier !== "" && formData.password !== "") {
+        try {
+          const result: any | Error = await loginUser(formData);
+          if (result?.error) {
+            message.error("User is not valid");
+          } else {
+            message.success("Login successfully");
+            storeTokenInCookie(result?.data?.jwt);
+            dispatch(storeAuthToken(result?.data?.jwt));
+
+            dispatch(storeUserInfo(result?.data?.user));
+            router.push("/myTasks");
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+      } else {
+        message.error("Login is not successfully");
       }
-    } else {
-      message.error("Login is not successfully");
+    } catch (error: any) {
+      if (error instanceof z.ZodError) {
+        // Display validation errors
+        error.errors.forEach((e) => message.error(e.message));
+      } else {
+        console.error(error);
+        message.error("An unexpected error occurred");
+      }
     }
   };
 
@@ -76,8 +100,11 @@ function LoginPage() {
         <form onSubmit={handleSubmit}>
           {/* Email Input */}
           <div className="mb-4">
-            <label htmlFor="email" className="block text-lg font-semibold mb-2">
-              Email of Username
+            <label
+              htmlFor="identifier"
+              className="block text-lg font-semibold mb-2"
+            >
+              Email or Username <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -96,7 +123,7 @@ function LoginPage() {
               htmlFor="password"
               className="block text-lg font-semibold mb-2"
             >
-              Password
+              Password <span className="text-red-500">*</span>
             </label>
             <input
               type={showPassword ? "text" : "password"}
@@ -120,15 +147,6 @@ function LoginPage() {
               />
             )}
           </div>
-          {/* Forgot Password */}
-          {/* <div className="text-right mb-6">
-            <Link
-              href="/forgetPass"
-              className="text-gray-600 hover:text-gray-800 underline"
-            >
-              Forgot Password?
-            </Link>
-          </div> */}
           {/* Login Button */}
           <button
             type="submit"
@@ -136,17 +154,7 @@ function LoginPage() {
           >
             Login
           </button>
-          {/* Or */}
-          {/* <div className="text-center text-gray-600 mb-4">Or</div>
-          <div className="flex justify-center mb-4">
-            <button className="bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition-colors mr-4">
-              Login with Google
-            </button>
-            <button className="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-              Login with Facebook
-            </button>
-          </div> */}
-          <div className="text-center text-gray-600 ">
+          <div className="text-center text-gray-600">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"

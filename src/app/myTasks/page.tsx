@@ -17,6 +17,7 @@ const MyTasks: React.FC = () => {
   const userId = authenticatedUserInfoData?.id!;
   const paid = authenticatedUserInfoData?.paid;
 
+
   return (
     <>
       {isLoading ? (
@@ -24,8 +25,11 @@ const MyTasks: React.FC = () => {
           <Skeleton style={{ marginTop: "40px" }} key={index} active />
         ))
       ) : authenticatedUserInfoData === undefined &&
-        authenticatedUserInfoDataError === true ? (
+        authenticatedUserInfoDataError === true &&
+        paid === undefined ? (
         // Unauthenticated user render
+        <UnAuthTask paid={paid} />
+      ) : paid === false ? (
         <UnAuthTask paid={paid} />
       ) : authenticatedUserInfoData &&
         authenticatedUserInfoDataError === false &&

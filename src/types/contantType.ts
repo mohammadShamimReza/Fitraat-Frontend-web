@@ -32,6 +32,7 @@ export interface Post {
           gender: string;
           language: string;
           currentDay: number;
+          paid: boolean;
         };
       };
     };
