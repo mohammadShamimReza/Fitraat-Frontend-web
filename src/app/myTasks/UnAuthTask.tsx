@@ -2,7 +2,7 @@
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
-import { KegelTimes } from "@/types/contantType";
+import { KegelTimes, Quizzes } from "@/types/contantType";
 import { Button, message, Modal } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,15 +12,13 @@ import TaskPage from "./TaskPage";
 
 import DayFinishImage from "../assets/dayFinish.gif";
 
-function UnAuthTask({}) {
+function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 
   const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
     parseInt(unAuthDayId)
   );
-
-  console.log(unAuthenticatedDayData);
 
   const tasks = ["video", "kagel", "quiz", "Blog"];
 
@@ -109,15 +107,8 @@ function UnAuthTask({}) {
   useEffect(() => {
     setUnAuthDayId(window.localStorage.getItem("unAuthDayId") || "1");
   }, []);
-  const showModal = () => {
-    setIsFinishModalOpen(true);
-  };
 
   const handleOk = () => {
-    setIsFinishModalOpen(false);
-  };
-
-  const handleCancel = () => {
     setIsFinishModalOpen(false);
   };
 
@@ -133,19 +124,13 @@ function UnAuthTask({}) {
     content: "",
   });
   const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
-  const [quiz, setQuiz] = useState<{
-    question: string | undefined;
-    answer: string | undefined;
-    quizOptions: string | undefined;
-  }>({
-    question: "",
-    answer: "",
-    quizOptions: "",
-  });
+  const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
 
   const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
     videoUrl: "",
   });
+
+  console.log(quiz);
 
   useEffect(() => {
     if (unAuthenticatedDayData) {
@@ -157,11 +142,7 @@ function UnAuthTask({}) {
           title: unAuthDayData.blog.data.attributes.title,
           content: unAuthDayData.blog.data.attributes.content,
         });
-        setQuiz({
-          answer: unAuthDayData.quiz.data.attributes.answer,
-          question: unAuthDayData.quiz.data.attributes.question,
-          quizOptions: unAuthDayData.quiz.data.attributes.quizOptions,
-        });
+        setQuiz(unAuthDayData?.quizzes.data);
 
         setVideo({ videoUrl: unAuthDayData.video.data.attributes.VideoUrl });
 
@@ -211,6 +192,7 @@ function UnAuthTask({}) {
           kegel={kegel}
           DayCount={DayCount}
           handleDayid={handleDayid}
+          paid={paid}
         />
       )}
     </>

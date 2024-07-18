@@ -15,6 +15,7 @@ const MyTasks: React.FC = () => {
 
   const authDayDataId = authenticatedUserInfoData?.currentDay!;
   const userId = authenticatedUserInfoData?.id!;
+  const paid = authenticatedUserInfoData?.paid;
 
   return (
     <>
@@ -25,11 +26,12 @@ const MyTasks: React.FC = () => {
       ) : authenticatedUserInfoData === undefined &&
         authenticatedUserInfoDataError === true ? (
         // Unauthenticated user render
-        <UnAuthTask />
+        <UnAuthTask paid={paid} />
       ) : authenticatedUserInfoData &&
-        authenticatedUserInfoDataError === false ? (
+        authenticatedUserInfoDataError === false &&
+        paid === true ? (
         // Authenticated user render
-        <AuthMyTask authDayDataId={authDayDataId} userId={userId} />
+        <AuthMyTask authDayDataId={authDayDataId} userId={userId} paid={paid} />
       ) : null}
     </>
   );

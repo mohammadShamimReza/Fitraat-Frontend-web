@@ -1,18 +1,16 @@
+import { Quizzes } from "@/types/contantType";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 
-function Quiz({
-  selectedTask,
-  quiz,
-}: {
+interface QuizProps {
   selectedTask: string;
-  quiz: {
-    question: string | undefined;
-    answer: string | undefined;
-    quizOptions: string | undefined;
-  };
-}) {
+  quiz: Quizzes[] | undefined;
+}
+
+function Quiz({ selectedTask, quiz }: QuizProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
+  const [currentQuizIndex, setCurrentQuizIndex] = useState<number>(0);
 
   function getQuizOptions(text: string) {
     const optionsArray = text.split(/,\s*/);
@@ -22,11 +20,19 @@ function Quiz({
   const [quizOptions, setQuizOptions] = useState<string[] | null>(null);
 
   useEffect(() => {
-    if (quiz && quiz?.quizOptions) {
-      const newTimes = getQuizOptions(quiz?.quizOptions);
-      setQuizOptions(newTimes);
+    if (
+      quiz &&
+      quiz.length > 0 &&
+      quiz[currentQuizIndex]?.attributes.quizOptions
+    ) {
+      const newOptions = getQuizOptions(
+        quiz[currentQuizIndex].attributes.quizOptions
+      );
+      setQuizOptions(newOptions);
+      setSelectedAnswer(null); // Reset selected answer on quiz change
+      setShowAnswer(false); // Reset show answer on quiz change
     }
-  }, [quiz]);
+  }, [quiz, currentQuizIndex]);
 
   const handleOptionClick = (option: string) => {
     setSelectedAnswer(option);
@@ -36,18 +42,32 @@ function Quiz({
     setShowAnswer((prevShowAnswer) => !prevShowAnswer); // Toggle showAnswer state
   };
 
+  const handlePrevious = () => {
+    if (currentQuizIndex > 0) {
+      setCurrentQuizIndex(currentQuizIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (quiz && currentQuizIndex < quiz.length - 1) {
+      setCurrentQuizIndex(currentQuizIndex + 1);
+    }
+  };
+
   return (
     <div>
       {selectedTask === "quiz" && (
-        <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md mt-16">
-          <h2 className="text-lg font-semibold mb-4">{quiz?.question}</h2>
+        <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md mt-2">
+          <h2 className="text-lg font-semibold mb-4">
+            {quiz && quiz[currentQuizIndex]?.attributes.question}
+          </h2>
           <div className="grid grid-cols-1 gap-4">
             {quizOptions?.map((option, index) => (
               <button
                 key={index}
-                className={`w-full bg-gray-200  py-2 px-4 rounded-md text-left ${
+                className={`w-full bg-gray-200 py-2 px-4 rounded-md text-left ${
                   selectedAnswer === option
-                    ? " text-white bg-slate-800"
+                    ? "text-white bg-slate-800"
                     : "hover:bg-gray-300"
                 }`}
                 onClick={() => handleOptionClick(option)}
@@ -80,11 +100,46 @@ function Quiz({
               </button>
               {showAnswer && (
                 <p className="mt-4 text-green-900 text-center">
-                  {quiz?.question} : <strong>{quiz.answer}</strong>
+                  {quiz && quiz[currentQuizIndex]?.attributes.question} :{" "}
+                  <strong>
+                    {quiz && quiz[currentQuizIndex]?.attributes.answer}
+                  </strong>
                 </p>
               )}
             </div>
           )}
+          <div className="flex justify-between mt-4 gap-5">
+            <button
+              className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700
+                ${
+                  currentQuizIndex === 0 || !quiz || quiz.length === 0
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-gray-700 hover:bg-gray-700"
+                }`}
+              onClick={handlePrevious}
+              disabled={currentQuizIndex === 0 || !quiz || quiz.length === 0}
+            >
+              <span style={{ paddingRight: "10px" }}>
+                <ArrowLeftOutlined />
+              </span>
+              Previous
+            </button>
+            <button
+              className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700
+                ${
+                  !quiz || currentQuizIndex === quiz.length - 1
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-gray-700 hover:bg-gray-700"
+                }`}
+              onClick={handleNext}
+              disabled={!quiz || currentQuizIndex === quiz.length - 1}
+            >
+              Next
+              <span style={{ paddingLeft: "10px" }}>
+                <ArrowRightOutlined />
+              </span>
+            </button>
+          </div>
         </div>
       )}
     </div>

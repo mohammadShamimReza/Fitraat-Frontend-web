@@ -3,7 +3,7 @@ import { useUpdateUserDayMutation } from "@/redux/api/authApi";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
-import { KegelTimes } from "@/types/contantType";
+import { KegelTimes, Quizzes } from "@/types/contantType";
 import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,9 +13,11 @@ import TaskPage from "./TaskPage";
 function AuthMyTask({
   authDayDataId,
   userId,
+  paid,
 }: {
   authDayDataId: number;
   userId: number;
+  paid: boolean | undefined;
 }) {
   const router = useRouter();
 
@@ -116,15 +118,7 @@ function AuthMyTask({
     content: "",
   });
   const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
-  const [quiz, setQuiz] = useState<{
-    question: string | undefined;
-    answer: string | undefined;
-    quizOptions: string | undefined;
-  }>({
-    question: "",
-    answer: "",
-    quizOptions: "",
-  });
+  const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
 
   const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
     videoUrl: "",
@@ -139,11 +133,7 @@ function AuthMyTask({
           title: authDayData.blog.data.attributes.title,
           content: authDayData.blog.data.attributes.content,
         });
-        setQuiz({
-          answer: authDayData.quiz.data.attributes.answer,
-          question: authDayData.quiz.data.attributes.question,
-          quizOptions: authDayData.quiz.data.attributes.quizOptions,
-        });
+        setQuiz(authDayData?.quizzes.data);
 
         setVideo({ videoUrl: authDayData.video.data.attributes.VideoUrl });
         setKegel(authDayData?.kegel.data.attributes.kegel_times.data);
@@ -175,6 +165,7 @@ function AuthMyTask({
             kegel={kegel}
             DayCount={DayCount}
             handleDayid={handleDayid}
+            paid={paid}
           />
         </>
       )}

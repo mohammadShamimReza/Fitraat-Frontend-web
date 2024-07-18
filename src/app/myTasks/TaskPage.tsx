@@ -1,5 +1,5 @@
 "use client";
-import { KegelTimes } from "@/types/contantType";
+import { KegelTimes, Quizzes } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { FaCheckCircle } from "react-icons/fa";
 import Kagel from "./taskPages/Kagel";
@@ -36,6 +36,7 @@ function TaskPage({
   kegel,
   DayCount,
   handleDayid,
+  paid,
 }: {
   localStorageData: {
     video: boolean;
@@ -53,11 +54,7 @@ function TaskPage({
     title: string | undefined;
     content: string | undefined;
   };
-  quiz: {
-    question: string | undefined;
-    answer: string | undefined;
-    quizOptions: string | undefined;
-  };
+  quiz: Quizzes[] | undefined;
 
   video: {
     videoUrl: string | undefined;
@@ -66,6 +63,7 @@ function TaskPage({
   kegel: KegelTimes[] | undefined;
   DayCount: number;
   handleDayid: (id: string) => void;
+  paid: boolean | undefined;
 }) {
   const tasks = ["video", "kagel", "quiz", "Blog"];
 
@@ -83,6 +81,8 @@ function TaskPage({
   ];
 
   const allDays = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  console.log(paid);
 
   return (
     <div className="mx-auto min-h-screen p-3">
@@ -163,7 +163,13 @@ function TaskPage({
                   key={index}
                   className={`flex justify-between hover:bg-slate-100 rounded ${
                     DayCount >= day ? "cursor-pointer " : "cursor-not-allowed"
-                  } ${DayCount === day ? "bg-blue-100" : ""}`}
+                  } ${DayCount === day ? "bg-blue-100" : ""}  ${
+                    paid === undefined || false
+                      ? day > 3
+                        ? "blur-sm"
+                        : "blur-none"
+                      : ""
+                  }`}
                   title={DayCount >= day ? "Unlocked" : "lock"}
                   onClick={() =>
                     DayCount >= day ? handleDayid(day.toString()) : ""
@@ -171,14 +177,20 @@ function TaskPage({
                 >
                   {" "}
                   <span
-                    className={`transition-colors duration-300  p-2 ${
-                      DayCount === day && "font-bold text-blue-600"
+                    className={`transition-colors duration-300  p-2  ${
+                      DayCount === day && "font-bold text-blue-600 "
                     }`}
                   >
                     <div className="flex align-middle justify-center">
-                      {" "}
                       {!collapsed ? <span className="">Day: {day}</span> : ""}
                     </div>
+                  </span>
+                  <span className={`mt-2 `}>
+                    {paid === undefined || false
+                      ? day > 3
+                        ? "Paid"
+                        : "Demo"
+                      : ""}
                   </span>
                   <span className="pl-3 right-0 p-2 ">
                     <FaCheckCircle
@@ -235,7 +247,7 @@ function TaskPage({
                       )}
                     </span>
                   </p>
-                  <p className="text-2xl font-bold text-center ">
+                  <p className="text-2xl font-bold text-center mb-2">
                     {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
                   </p>
                 </div>

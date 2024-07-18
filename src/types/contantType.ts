@@ -219,20 +219,22 @@ export interface Day {
     publishedAt: string;
     video: Video;
     id: number;
-    quiz: {
-      data: {
-        attributes: {
-          question: string;
-          answer: string;
-          quizOptions: string;
-          quizId: number;
-          createdAt: string;
-          updatedAt: string;
-          publishedAt: string;
-        };
-        id: number;
-      };
+    quizzes: {
+      data: Quizzes[];
     };
+  };
+  id: number;
+}
+
+export interface Quizzes {
+  attributes: {
+    question: string;
+    answer: string;
+    quizOptions: string;
+    quizId: number;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
   };
   id: number;
 }
@@ -357,6 +359,7 @@ export interface UserDataWithDay {
   updateAt: string;
   username: string;
   videoComplete: boolean;
+  paid: boolean;
 }
 
 export interface UserAuthData {

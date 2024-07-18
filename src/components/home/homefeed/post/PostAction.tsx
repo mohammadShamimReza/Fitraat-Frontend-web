@@ -16,11 +16,8 @@ const PostActions = ({
   const currentLike = totalLikes - 1;
   return (
     <div className="flex justify-between items-center mt-4 relative">
-      <button
-        className="flex items-center text-gray-600"
-        onClick={handleLikeUnlickClick}
-      >
-        <div className="ml-4 absolute">
+      <button className="flex items-center text-gray-600">
+        <div className="ml-4 absolute" onClick={handleLikeUnlickClick}>
           {likedPostForCurrentUser ? (
             <IoHeart style={{ color: "red" }} size={30} />
           ) : (
