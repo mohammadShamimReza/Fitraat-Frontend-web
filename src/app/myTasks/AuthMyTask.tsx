@@ -4,9 +4,11 @@ import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
 import { KegelTimes, Quizzes } from "@/types/contantType";
-import { message } from "antd";
+import { Button, message, Modal } from "antd";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import DayFinishImage from "../assets//dayFinish.gif";
 import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
@@ -35,6 +37,7 @@ function AuthMyTask({
 
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
   const selectedTask = currentTask || tasks[selectedTaskIndex];
+
   const initialLocalStorageData = localStorage.getItem("AuthDay");
   const defaultLocalStorageData = {
     video: false,
@@ -62,14 +65,25 @@ function AuthMyTask({
       dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
     }
   };
-  console.log(selectedTask, "this is");
+  const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
 
   const handleNext = async () => {
     if (selectedTask === "Blog") {
-      console.log("blog");
+      setIsFinishModalOpen(true);
       dispatch(storeCurrentTask(tasks[0]));
-      localStorage.setItem("AuthDay", JSON.stringify(defaultLocalStorageData));
-      if (authDayDataId + 1 === 120) {
+      if (authDayDataId === 40) {
+        setLocalStorageData((prevState: typeof localStorageData) => ({
+          ...prevState,
+          [selectedTask]: true,
+        }));
+      } else {
+        localStorage.setItem(
+          "AuthDay",
+          JSON.stringify(defaultLocalStorageData)
+        );
+      }
+
+      if (authDayDataId + 1 === 40) {
         message.success(
           "Hurray this is you last day of task. Then you becone spartan"
         );
@@ -79,16 +93,13 @@ function AuthMyTask({
           userId: userId,
         });
         router.push("/blog");
-      } else if (authDayDataId + 1 > 120) {
+      } else if (authDayDataId + 1 > 40) {
         message.success(
-          "Congratulations you have successfully completed your tasks for 120 day"
+          "Congratulations you have successfully completed your tasks for 40 day"
         );
 
-        window.location.reload();
-      } else if (authDayDataId + 1 <= 121) {
-        message.success(
-          "Congratulations you have successfully completed your tasks for 120 day"
-        );
+        router.push("/CompletedTask");
+      } else if (authDayDataId + 1 <= 40) {
         await updataUserDay({
           currentDay: authDayDataId + 1,
           compliteDay: authDayDataId,
@@ -106,6 +117,10 @@ function AuthMyTask({
       setSelectedTaskIndex(selectedTaskIndex + 1);
       dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
     }
+  };
+  const handleOk = () => {
+    setIsFinishModalOpen(false);
+    router.push("/blog");
   };
 
   const [blog, setBlog] = useState<{
@@ -143,13 +158,29 @@ function AuthMyTask({
 
   const DayCount = authDayDataId;
   const handleDayid = (id: string) => {
-    console.log(dayId);
     setDayId(parseInt(id));
   };
   return (
     <>
-      {DayCount > 120 ? (
-        <CompliteTask auth={true} daysCompleted={120} />
+      <Modal
+        title="Hurra you have finished another Day! Congratulations"
+        open={isFinishModalOpen}
+        onOk={handleOk}
+        closable={false}
+        footer={[
+          <Button key="ok" type="primary" onClick={handleOk}>
+            OK
+          </Button>,
+        ]}
+      >
+        <Image
+          className="mx-auto"
+          src={DayFinishImage}
+          alt="Day Fininsh Congratulation image"
+        />
+      </Modal>
+      {DayCount > 40 ? (
+        <CompliteTask auth={true} daysCompleted={40} />
       ) : (
         <>
           <TaskPage

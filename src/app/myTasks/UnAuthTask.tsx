@@ -19,6 +19,14 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
     parseInt(unAuthDayId)
   );
+  useEffect(() => {
+    const dayId = window.localStorage.getItem("unAuthDayId") || "1";
+    if (parseInt(dayId) > 3) {
+      router.push("/CompletedFreeTask");
+    }
+    console.log(dayId);
+    setUnAuthDayId(dayId);
+  }, []);
 
   const tasks = ["video", "kagel", "quiz", "Blog"];
 
@@ -62,11 +70,10 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
 
   const handleNext = () => {
-    setIsFinishModalOpen(true);
-
     if (selectedTask === "Blog") {
-      dispatch(storeCurrentTask(tasks[0]));
       setIsFinishModalOpen(true);
+
+      dispatch(storeCurrentTask(tasks[0]));
       localStorage.setItem(
         "UnAuthDay",
         JSON.stringify(defaultLocalStorageData)
@@ -76,21 +83,22 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
         localStorage.setItem("unAuthDayId", "1");
       } else if (unAuthDayId !== null) {
         let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
-        if (parsedUnAuthDayId === 40) {
+        if (parsedUnAuthDayId === 3) {
           message.success(
             "Hurray this is you last day of task. Then you becone spartan"
           );
           localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
           router.push("/blog");
-        } else if (parsedUnAuthDayId > 40) {
+        } else if (parsedUnAuthDayId > 3) {
           message.success(
-            "Congratulations you have successfully completed your tasks for 40 day"
+            "Congratulations you have successfully completed your tasks for 3 day"
           );
+          router.push("/CompletedFreeTask");
+
           window.location.reload();
         }
-        if (parsedUnAuthDayId <= 41) {
+        if (parsedUnAuthDayId <= 4) {
           localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-          router.push("/blog");
         }
       }
     } else {
@@ -104,12 +112,10 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
       dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
     }
   };
-  useEffect(() => {
-    setUnAuthDayId(window.localStorage.getItem("unAuthDayId") || "1");
-  }, []);
 
   const handleOk = () => {
     setIsFinishModalOpen(false);
+    router.push("/blog");
   };
 
   const [blog, setBlog] = useState<{
@@ -176,7 +182,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
           alt="Day Fininsh Congratulation image"
         />
       </Modal>
-      {DayCount > 40 ? (
+      {DayCount > 4 ? (
         <CompliteTask auth={false} daysCompleted={40} />
       ) : (
         <TaskPage
