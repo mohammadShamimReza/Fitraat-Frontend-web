@@ -111,6 +111,12 @@ function NavBar() {
                     Home
                   </Link>
                   <Link
+                    href="/feed"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                  >
+                    Feed
+                  </Link>
+                  <Link
                     href="/blog"
                     className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
                   >
@@ -129,13 +135,6 @@ function NavBar() {
                     aria-current="page"
                   >
                     About us
-                  </Link>
-
-                  <Link
-                    href="/myTasks"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
-                  >
-                    My Tasks
                   </Link>
                 </div>
               </div>
@@ -250,7 +249,12 @@ function NavBar() {
               >
                 Blog
               </Link>
-
+              <Link
+                href="/feed"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+              >
+                Feed
+              </Link>
               <Link
                 href="/proMember"
                 className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
@@ -263,12 +267,6 @@ function NavBar() {
                 aria-current="page"
               >
                 About us
-              </Link>
-              <Link
-                href="/myTasks"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
-              >
-                My Tasks
               </Link>
             </div>
           </div>
