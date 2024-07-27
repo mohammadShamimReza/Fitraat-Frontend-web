@@ -27,7 +27,7 @@ function NavBar() {
 
   const removeTokenFromCookies = useCallback(() => {
     return removeTokenFromCookie();
-  }, []); // empty dependency array means the function does not depend on any variables
+  }, []);
 
   useEffect(() => {
     const authToken = getTokenFromCookie() || authTokenFromRedux;
@@ -44,7 +44,7 @@ function NavBar() {
     dispatch(removeAuthToken(null));
 
     if (typeof window !== "undefined") {
-      window.location.href = "/"; // Directly set the href to trigger page reload
+      window.location.href = "/";
     }
   };
   return (

@@ -37,7 +37,6 @@ function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const currentDate = formatISO(new Date());
-  console.log(currentDate);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -74,7 +73,6 @@ function RegisterPage() {
       registerSchema.parse(formData);
 
       const result: any = await registerUser(formData);
-      console.log(result);
       if (result?.error) {
         if (result?.error?.error?.message === "This attribute must be unique") {
           message.error("Phone is used already.");

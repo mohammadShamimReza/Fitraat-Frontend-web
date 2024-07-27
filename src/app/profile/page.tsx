@@ -37,18 +37,16 @@ function ProfilePage() {
         compliteDay: 0,
         userId: userId,
       });
-            localStorage.setItem(
-              "AuthDay",
-              JSON.stringify({
-                video: false,
-                kagel: false,
-                quiz: false,
-                Blog: false,
-              })
-            );
+      localStorage.setItem(
+        "AuthDay",
+        JSON.stringify({
+          video: false,
+          kagel: false,
+          quiz: false,
+          Blog: false,
+        })
+      );
 
-
-      console.log(result);
       message.success("You have successfully start your journy again!");
     } catch (error) {
       console.log(error);
@@ -61,31 +59,31 @@ function ProfilePage() {
         {/* Profile Info */}
         <div className={"bg-white shadow-lg rounded-lg p-6"}>
           <div className={" "}>
-            <h1 className="text-3xl font-semibold  mb-4 underline text-red-500">
+            <h1 className="text-3xl font-semibold  mb-4 underline text-blue-500">
               Profile
             </h1>
             <p className="text-xl font-semibold">
-              Name: <span className="text-red-500">{name}</span>
+              Name: <span className="text-blue-500">{name}</span>
             </p>
             <p className="text-xl font-semibold">
-              Age: <span className="text-red-500"> {age}</span>
+              Age: <span className="text-blue-500"> {age}</span>
             </p>
             <p className="text-xl font-semibold">
-              Location: <span className="text-red-500"> {location}</span>
+              Location: <span className="text-blue-500"> {location}</span>
             </p>
             <p className="text-xl font-semibold">
-              Email: <span className="text-red-500"> {email}</span>
+              Email: <span className="text-blue-500"> {email}</span>
             </p>
             <p className="text-xl font-semibold">
               Completed:{" "}
-              <span className="text-red-500"> {compliteDay} Days</span>
+              <span className="text-blue-500"> {compliteDay} Days</span>
             </p>
           </div>
         </div>
 
         {/* Additional Information */}
         <div className={"bg-white shadow-lg rounded-lg p-6"}>
-          <h1 className="text-3xl font-semibold text-center mb-4 text-red-500">
+          <h1 className="text-3xl font-semibold text-center mb-4 text-blue-500">
             Do you want to start again?
           </h1>
           <p className="text-center">
@@ -108,7 +106,7 @@ function ProfilePage() {
 
       <div className={`bg-white border rounded-lg p-6 mt-8`}>
         <h1 className="text-3xl  font-semibold text-center mb-4 underline">
-          Remaining: <span className="text-red-500">{120 - compliteDay} </span>
+          Remaining: <span className="text-blue-500">{120 - compliteDay} </span>
           Days
         </h1>
         <br />

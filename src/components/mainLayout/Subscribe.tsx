@@ -14,7 +14,6 @@ const Subscribe = () => {
     const userEmail = (event.target as HTMLFormElement).email.value;
     setEmail(userEmail);
 
-    console.log(userEmail);
 
     if (userEmail !== "") {
       try {

@@ -13,7 +13,6 @@ const CreatePost: React.FC = () => {
   const [createPost, { isError, isLoading, isSuccess }] =
     useCreatePostMutation();
 
-  // console.log(isError, isLoading, isSuccess);
 
   const handleInputClick = () => {
     setModalVisible(true);

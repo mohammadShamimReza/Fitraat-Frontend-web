@@ -35,14 +35,10 @@ const PostComments = ({
   const [updateComment] = useUpdateCommentMutation();
 
   const handleAddComment = async () => {
-    console.log("New comment:", newComment);
-    console.log("Post ID:", postId);
-
     try {
       const result = await createComment({
         data: { user: currentUserId, post: postId, comment: newComment },
       });
-      console.log("Comment added:", result);
       setNewComment(""); // Clear the comment input after successful addition
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -50,14 +46,10 @@ const PostComments = ({
   };
 
   const handleModalAddComment = async () => {
-    console.log("Modal comment:", modalComment);
-    console.log("Post ID:", postId);
-
     try {
       const result = await createComment({
         data: { user: currentUserId, post: postId, comment: modalComment },
       });
-      console.log("Comment added:", result);
       setModalComment(""); // Clear the modal comment input after successful addition
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -67,14 +59,12 @@ const PostComments = ({
   const handleDeleteComment = async (commentId: number) => {
     try {
       const result = await deleteComment({ postId: commentId });
-      console.log("Comment deleted:", result);
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
   };
 
   const handleUpdateComment = async () => {
-    console.log(editCommentId, editCommentText);
     if (editCommentId && editCommentText.trim() !== "") {
       try {
         const result = await updateComment({
@@ -83,7 +73,6 @@ const PostComments = ({
             comment: editCommentText,
           },
         });
-        console.log("Comment updated:", result, editCommentId);
         setEditModalVisible(false); // Close the edit modal after successful update
       } catch (error) {
         console.error("Error updating comment:", error);

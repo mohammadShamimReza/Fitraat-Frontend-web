@@ -74,20 +74,18 @@ function SinglePost({ post }: { post: Post }) {
     }
   };
   const [newComment, setNewComment] = useState("");
-  const handleAddComment = async () => {
-    console.log("New comment:", newComment);
-    console.log("Post ID:", postId);
 
-    try {
-      const result = await createComment({
-        data: { user: 10, post: postId, comment: newComment },
-      });
-      console.log("Comment added:", result);
-      setNewComment(""); // Clear the comment input after successful addition
-    } catch (error) {
-      console.error("Error adding comment:", error);
-    }
-  };
+  // const handleAddComment = async () => {
+  //   try {
+  //     const result = await createComment({
+  //       data: { user: 10, post: postId, comment: newComment },
+  //     });
+  //     console.log("Comment added:", result);
+  //     setNewComment(""); // Clear the comment input after successful addition
+  //   } catch (error) {
+  //     console.error("Error adding comment:", error);
+  //   }
+  // };
 
   return (
     <div className="flex justify-center p-5">
@@ -106,12 +104,6 @@ function SinglePost({ post }: { post: Post }) {
             totalComment={totalComment}
           />
           <PostComments postId={postId} postComment={postComment} />
-
-          {/* <PostCommentBox
-            newComment={newComment}
-            setNewComment={setNewComment}
-            handleAddComment={handleAddComment}
-          /> */}
         </div>
       </div>
     </div>
