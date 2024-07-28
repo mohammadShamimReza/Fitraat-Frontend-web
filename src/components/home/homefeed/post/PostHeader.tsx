@@ -2,17 +2,17 @@ import Link from "next/link";
 
 
 const PostHeader = ({
-  userId,
+  postUserId,
   postUserName,
   postAt,
 }: {
-  userId: number;
+  postUserId: number;
   postUserName: string;
   postAt: string;
 }) => {
   return (
     <div className="flex items-center mb-4">
-      <Link href={`/postUser/${userId}`}>
+      <Link href={`/postUser/${postUserId}`}>
         <div className="flex">
           <div className="">
             <p className="text-2xl text-blue-500 font-bold">{postUserName}</p>

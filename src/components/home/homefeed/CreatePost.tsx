@@ -1,18 +1,22 @@
 "use client";
 import QuillEditor from "@/components/shared/QuillEditor";
 import { useCreatePostMutation } from "@/redux/api/postApi";
+import { UserData } from "@/types/contantType";
 import { Button, Modal, Tooltip, message } from "antd";
 import Head from "next/head";
-import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 
-const CreatePost: React.FC = () => {
+const CreatePost = ({ user }: { user: UserData | null }) => {
+  const router = useRouter();
+  const userId = user ? user.id : null;
   const [modalVisible, setModalVisible] = useState(false);
   const [valueEditor, setValueEditor] = useState("");
 
   const [createPost, { isError, isLoading, isSuccess }] =
     useCreatePostMutation();
-
 
   const handleInputClick = () => {
     setModalVisible(true);
@@ -33,7 +37,7 @@ const CreatePost: React.FC = () => {
               children: [{ text: valueEditor, type: "text" }],
             },
           ],
-          user: 11,
+          user: userId,
         };
 
         const result = await createPost({ data: post });
@@ -41,21 +45,24 @@ const CreatePost: React.FC = () => {
         if (result) {
           setModalVisible(false);
           setValueEditor(""); // Clear editor content after submission
-          // ! it need to be chenge
+          // Clear the Quill editor content
           const qlEditor = document.getElementsByClassName("ql-editor");
-          qlEditor[0].innerHTML = "";
+          if (qlEditor.length > 0) {
+            qlEditor[0].innerHTML = "";
+          }
           message.success("Thanks for sharing your valuable information");
-        } else if (!result) {
+        } else {
           message.error("Something went wrong. Please try again later");
         }
       } catch (error) {
         console.error("Error creating post:", error);
+        message.error("An error occurred while creating the post.");
       }
     }
   };
 
   return (
-    <div className="p-5  z-10">
+    <div className="p-5 z-10">
       <Head>
         <link
           rel="stylesheet"
@@ -63,44 +70,66 @@ const CreatePost: React.FC = () => {
         />
       </Head>
       <div
-        className="fixed bottom-8 right-8 text-gray-600 hover:text-white rounded-full  cursor-pointer hover:bg-blue-500 transition duration-300 ease-in-out hover:rotate-360"
+        className="fixed bottom-8 right-8 text-gray-600 hover:text-white rounded-full cursor-pointer hover:bg-blue-500 transition duration-300 ease-in-out hover:rotate-360"
         onClick={handleInputClick}
       >
         <Tooltip
           title="Make a post"
           overlayClassName="rounded-lg p-2 bg-gray-800 text-white text-sm"
         >
-          {" "}
           <CiCirclePlus size={80} />
         </Tooltip>
       </div>
 
       <Modal
-        title="Create Post"
+        title={userId ? "Create Post" : "Login Required"}
         visible={modalVisible}
         onCancel={handleModalCancel}
         footer={[
-          <Button key="cancel" onClick={handleModalCancel}>
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            onClick={handleCreatePost}
-            className={`mt-2 px-4 py-2 text-white rounded bg-gray-600 hover:bg-gray-700 ml-3 ${
-              isLoading ? "cursor-not-allowed" : "cursor-pointer"
-            }`}
-          >
-            Submit
-          </Button>,
+          userId ? (
+            <Button key="cancel" onClick={handleModalCancel}>
+              Cancel
+            </Button>
+          ) : null,
+          userId ? (
+            <Button
+              key="submit"
+              type="primary"
+              onClick={handleCreatePost}
+              className={`mt-2 px-4 py-2 text-white rounded bg-gray-600 hover:bg-gray-700 ml-3 ${
+                isLoading ? "cursor-not-allowed" : "cursor-pointer"
+              }`}
+              disabled={isLoading}
+            >
+              Submit
+            </Button>
+          ) : (
+            <Link href={"/login"}>
+              <Button
+                key="login"
+                type="primary"
+                className="mt-2 px-4 py-2 text-white rounded bg-blue-600 hover:bg-blue-700 ml-3"
+              >
+                Login
+              </Button>
+            </Link>
+          ),
         ]}
       >
-        <div className="my-4">
-          <QuillEditor
-            valueEditor={valueEditor}
-            setValueEditor={setValueEditor}
-          />
-        </div>
+        {userId ? (
+          <div className="my-4">
+            <QuillEditor
+              valueEditor={valueEditor}
+              setValueEditor={setValueEditor}
+            />
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center space-y-4">
+            <p className="text-lg text-blue-600 font-semibold">
+              Please log in first to create a post.
+            </p>
+          </div>
+        )}
       </Modal>
     </div>
   );

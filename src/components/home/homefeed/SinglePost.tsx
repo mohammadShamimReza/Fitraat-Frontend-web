@@ -19,7 +19,13 @@ import { useState } from "react";
 import PostActions from "./post/PostAction";
 import PostComments from "./post/PostComment";
 
-function SinglePost({ post }: { post: Post }) {
+function SinglePost({
+  post,
+  userId,
+}: {
+  post: Post;
+  userId: number | undefined;
+}) {
   const [createLike] = useCreateLikeMutation();
   const [createComment] = useCreateCommentMutation();
 
@@ -27,8 +33,9 @@ function SinglePost({ post }: { post: Post }) {
   const { data: postLike } = useGetLikeOfPostQuery({ postId: post?.id });
   const { data: postLikeForCurrentUser } = usePostLikeForCurrentUserQuery({
     postId: post?.id,
-    userId: 10,
+    userId: userId || 0,
   });
+  console.log(postLikeForCurrentUser, userId);
   const { data: postComments } = useGetCommentOfPostQuery({ postId: post?.id });
 
   const postComment = postComments?.data;
@@ -42,7 +49,7 @@ function SinglePost({ post }: { post: Post }) {
   const postAt = formatDistanceToNow(new Date(post.attributes.createdAt), {
     addSuffix: true,
   });
-  const userId = post.attributes.user.data.id;
+  const postUserId = post.attributes.user.data.id;
   const postId = post.id;
 
   const likedPostForCurrentUser =
@@ -51,6 +58,10 @@ function SinglePost({ post }: { post: Post }) {
   const postLikeForCurrentUserId = postLikeForCurrentUser?.data[0]?.id;
 
   const handleLikeUnlickClick = async () => {
+    if (!userId) {
+      return message.info("Please login first for like this post");
+    }
+
     if (likedPostForCurrentUser && postLikeForCurrentUserId) {
       try {
         const result = await deleteLike({ postLikeForCurrentUserId });
@@ -62,7 +73,9 @@ function SinglePost({ post }: { post: Post }) {
       }
     } else if (!likedPostForCurrentUser) {
       try {
-        const result = await createLike({ data: { user: 10, post: postId } });
+        const result = await createLike({
+          data: { user: userId, post: postId },
+        });
         if (!result) {
           message.error("something went wrong, try again later");
         } else if (result) {
@@ -92,7 +105,7 @@ function SinglePost({ post }: { post: Post }) {
       <div className="w-full lg:max-w-full lg:flex">
         <div className="border rounded-2xl w-full shadow-lg flex flex-col justify-between leading-normal bg-white p-8">
           <PostHeader
-            userId={userId}
+            postUserId={postUserId}
             postUserName={postUserName}
             postAt={postAt}
           />
@@ -102,8 +115,13 @@ function SinglePost({ post }: { post: Post }) {
             likedPostForCurrentUser={likedPostForCurrentUser}
             handleLikeUnlickClick={handleLikeUnlickClick}
             totalComment={totalComment}
+            userId={userId}
           />
-          <PostComments postId={postId} postComment={postComment} />
+          <PostComments
+            postId={postId}
+            postComment={postComment}
+            userId={userId}
+          />
         </div>
       </div>
     </div>

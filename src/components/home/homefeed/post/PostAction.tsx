@@ -7,11 +7,13 @@ const PostActions = ({
   likedPostForCurrentUser,
   handleLikeUnlickClick,
   totalComment,
+  userId,
 }: {
   totalLikes: number;
   likedPostForCurrentUser: boolean;
   handleLikeUnlickClick: () => void;
   totalComment: number;
+  userId: number | undefined;
 }) => {
   const currentLike = totalLikes - 1;
   return (

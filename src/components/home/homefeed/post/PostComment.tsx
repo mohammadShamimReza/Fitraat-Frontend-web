@@ -4,7 +4,7 @@ import {
   useUpdateCommentMutation,
 } from "@/redux/api/commentApi";
 import { singleCommentForPostData } from "@/types/contantType";
-import { Input, Modal } from "antd";
+import { Input, message, Modal } from "antd";
 import { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 
@@ -17,11 +17,13 @@ const { TextArea } = Input;
 const PostComments = ({
   postId,
   postComment,
+  userId,
 }: {
   postId: number;
   postComment: singleCommentForPostData[] | undefined;
+  userId: number | undefined;
 }) => {
-  const currentUserId = 10;
+  const currentUserId = userId || 0;
   const [newComment, setNewComment] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [modalComment, setModalComment] = useState("");
@@ -35,6 +37,9 @@ const PostComments = ({
   const [updateComment] = useUpdateCommentMutation();
 
   const handleAddComment = async () => {
+    if (!currentUserId) {
+      return message.info("please login first for the comment");
+    }
     try {
       const result = await createComment({
         data: { user: currentUserId, post: postId, comment: newComment },
@@ -46,6 +51,11 @@ const PostComments = ({
   };
 
   const handleModalAddComment = async () => {
+    setModalVisible(false);
+    setEditModalVisible(false);
+    if (!currentUserId) {
+        return message.info("please login first for the comment");
+    }
     try {
       const result = await createComment({
         data: { user: currentUserId, post: postId, comment: modalComment },
@@ -65,6 +75,7 @@ const PostComments = ({
   };
 
   const handleUpdateComment = async () => {
+    setEditModalVisible(false); // Close the edit modal after successful update
     if (editCommentId && editCommentText.trim() !== "") {
       try {
         const result = await updateComment({
@@ -73,9 +84,9 @@ const PostComments = ({
             comment: editCommentText,
           },
         });
-        setEditModalVisible(false); // Close the edit modal after successful update
       } catch (error) {
         console.error("Error updating comment:", error);
+        message.error("Sorry for technical issue try again later");
       }
     }
   };
@@ -121,7 +132,7 @@ const PostComments = ({
                   className="flex justify-between items-start align-middle mb-2 p-3 shadow rounded-lg"
                   key={comment.id}
                 >
-                  <div className="flex gap-3 items-center">
+                  <div className="flex gap-3 items-center ">
                     <img
                       src={mockData.userImage}
                       alt="User image"
@@ -187,7 +198,7 @@ const PostComments = ({
             {postComment.slice(1).map((comment) => (
               <div
                 key={comment.id}
-                className="flex items-start justify-between mb-2"
+                className="flex items-start justify-between mb-2 shadow-sm rounded-lg border p-3"
               >
                 <div>
                   <p className="font-semibold">
@@ -213,6 +224,7 @@ const PostComments = ({
               </div>
             ))}
           </div>
+          <br />
           <TextArea
             rows={2}
             value={modalComment}

@@ -10,14 +10,17 @@ function FeedPost() {
 
   const userInfoFromRedux = useAppSelector((state) => state.auth.userInfo);
 
-  console.log(userInfoFromRedux);
+  const user = userInfoFromRedux;
+  const userId = userInfoFromRedux?.id;
 
   const posts = data?.data;
   return (
     <div className="h-full ">
-      <CreatePost />
+      <CreatePost user={user} />
       {posts ? (
-        posts.map((post) => <SinglePost key={post.id} post={post} />)
+        posts.map((post) => (
+          <SinglePost key={post.id} post={post} userId={userId} />
+        ))
       ) : (
         <FancyLoading />
       )}

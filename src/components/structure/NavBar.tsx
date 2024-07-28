@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { removeAuthToken } from "@/redux/slice/authSlice";
+import { useGetUserInfoQuery } from "@/redux/api/authApi";
+import { removeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import siteLogo from "../../app/assets/detox1.png";
@@ -29,15 +30,29 @@ function NavBar() {
     return removeTokenFromCookie();
   }, []);
 
-  useEffect(() => {
-    const authToken = getTokenFromCookie() || authTokenFromRedux;
+  const authToken = getTokenFromCookie() || authTokenFromRedux;
+  const { data, error, isLoading } = useGetUserInfoQuery(undefined);
 
+  useEffect(() => {
+    if (data) {
+      dispatch(storeUserInfo(data)); // Set user in Redux if data is returned
+    }
+    if (error) {
+      dispatch(storeUserInfo(null)); // Clear user state if there's an error
+    }
     if (!authToken) {
       setAuthenticated(false);
     } else {
       setAuthenticated(true);
     }
-  }, [authTokenFromRedux, removeTokenFromCookies]); // include removeTokenFromCookies in the dependency array
+  }, [
+    authToken,
+    authTokenFromRedux,
+    data,
+    dispatch,
+    error,
+    removeTokenFromCookies,
+  ]); // include removeTokenFromCookies in the dependency array
 
   const handleLogout = () => {
     removeTokenFromCookies();

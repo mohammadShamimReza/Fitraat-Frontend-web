@@ -1,7 +1,11 @@
+import { UserData } from "@/types/contantType";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  userInfo: {},
+const initialState: {
+  userInfo: UserData | null; // Use UserData type here
+  authToken: string | null;
+} = {
+  userInfo: null,
   authToken: null,
 };
 

@@ -52,7 +52,7 @@ function LoginPage() {
   useEffect(() => {
     const authToken = getTokenFromCookie() || authTokenFromRedux;
     if (authToken) {
-      router.push("/myTasks");
+      router.push("/");
     }
   }, []);
 
