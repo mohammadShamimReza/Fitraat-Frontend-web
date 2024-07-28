@@ -250,7 +250,7 @@ function TaskPage({
                         )}
                       </span>
                     </p>
-                    <p className="text-2xl font-bold text-center mb-2">
+                    <p className="text-2xl font-bold text-center mb-3 text-blue-500 ">
                       {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
                     </p>
                   </div>

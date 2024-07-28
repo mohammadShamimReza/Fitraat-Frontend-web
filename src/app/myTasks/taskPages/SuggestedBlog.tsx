@@ -31,8 +31,8 @@ function SuggestedBlog({
     <div>
       {selectedTask === "Blog" && (
         <>
-          <p className="text-center m-7 text-2xl underline">{blog?.title}</p>
-          <p className="line-clamp-[11]">
+          <p className="text-center m-7 text-2xl underline ">{blog?.title}</p>
+          <p className="line-clamp-[11] text-lg tracking-wider">
             {blog?.content?.split(" ").map((word, index) => (
               <span
                 key={index}

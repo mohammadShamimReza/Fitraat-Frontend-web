@@ -35,7 +35,6 @@ function SinglePost({
     postId: post?.id,
     userId: userId || 0,
   });
-  console.log(postLikeForCurrentUser, userId);
   const { data: postComments } = useGetCommentOfPostQuery({ postId: post?.id });
 
   const postComment = postComments?.data;

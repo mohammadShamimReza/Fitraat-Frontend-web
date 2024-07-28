@@ -5,11 +5,11 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 
+import Pagination from "@/components/shared/Pagination";
 import { useGetBlogsQuery } from "@/redux/api/blogApi";
 import { Blog } from "@/types/contantType";
 import * as yup from "yup";
 import Blogs from "./Blogs";
-import Pagination from "./Pagination";
 import Trendings from "./Trendings";
 
 function Page() {
@@ -20,7 +20,6 @@ function Page() {
     isLoading,
     isSuccess,
   } = useGetBlogsQuery({ searchTerm, pageCount });
-
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
@@ -34,7 +33,7 @@ function Page() {
     resolver: yupResolver(validationSchema),
   });
 
-  const totalBlog: number = blogData?.meta.pagination.total || 0;
+  const total: number = blogData?.meta.pagination.total || 0;
 
   return (
     <div>
@@ -99,7 +98,7 @@ function Page() {
         <Pagination
           pageCount={pageCount}
           setPageCount={setPageCount}
-          totalBlog={totalBlog}
+          total={total}
         />
       </div>
     </div>
