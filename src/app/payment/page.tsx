@@ -1,145 +1,162 @@
 "use client";
 
-import { Button, Card, Form, Input, message, Select } from "antd";
-import axios from "axios";
-import { useState } from "react";
-const SSLCommerzPayment = require("sslcommerz-lts");
-const store_id = "detox66a61e060bcb8";
-const store_passwd = "detox66a61e060bcb8@ssl";
-const is_live = false; //true for live, false for sandbox
+import { useAppSelector } from "@/redux/hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Card, Form, Input, Select } from "antd";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
 
 const { Option } = Select;
 
-interface PaymentFormValues {
-  name: string;
-  email: string;
-  amount: number;
-  paymentMethod: string;
-}
+// Define the schema using zod
+const schema = z.object({
+  cus_name: z.string().min(1, "Please enter your name"),
+  cus_email: z
+    .string()
+    .email("Please enter a valid email")
+    .min(1, "Please enter your email"),
+  total_amount: z.number().positive(),
+  product_name: z.string(),
+  product_category: z.string(),
+  product_profile: z.string(),
+  cus_add1: z.string(),
+  cus_country: z.string(),
+  cus_phone: z.string(),
+  currency: z.enum(["USD", "BDT"], {
+    required_error: "Please select a currency",
+  }),
+  tran_id: z.string().uuid("Invalid transaction ID format"),
+  userId: z.string().min(1, "User ID is required"),
+});
+
+type PaymentFormValues = z.infer<typeof schema>;
 
 const PaymentPage = () => {
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values: PaymentFormValues) => {
-    setLoading(true);
+  // Get user info from Redux store
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
 
-    const data = {
-      total_amount: 100,
+  // Initialize the form using react-hook-form with zod schema
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<PaymentFormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      cus_name: userInfo?.username,
+      cus_email: userInfo?.email,
+      tran_id: uuidv4(),
       currency: "BDT",
-      tran_id: "REF123", // use unique tran_id for each api call
-      success_url: "http://localhost:3030/success",
-      fail_url: "http://localhost:3030/fail",
-      cancel_url: "http://localhost:3030/cancel",
-      ipn_url: "http://localhost:3030/ipn",
-      shipping_method: "Courier",
-      product_name: "Computer.",
-      product_category: "Electronic",
-      product_profile: "general",
-      cus_name: "Customer Name",
-      cus_email: "customer@example.com",
+      total_amount: 20,
+      userId: userInfo?.id?.toString() || "",
+      product_name: "Detox-dopamine",
+      product_category: "Mental & physical",
+      product_profile: "Fitraat",
       cus_add1: "Dhaka",
-      cus_add2: "Dhaka",
-      cus_city: "Dhaka",
-      cus_state: "Dhaka",
-      cus_postcode: "1000",
-      cus_country: "Bangladesh",
-      cus_phone: "01711111111",
-      cus_fax: "01711111111",
-      ship_name: "Customer Name",
-      ship_add1: "Dhaka",
-      ship_add2: "Dhaka",
-      ship_city: "Dhaka",
-      ship_state: "Dhaka",
-      ship_postcode: 1000,
-      ship_country: "Bangladesh",
-    };
+      cus_country: userInfo?.country || "",
+      cus_phone: userInfo?.phone || "",
+    },
+  });
 
-    try {
-      const response = await axios.post(
-        "https://sandbox.sslcommerz.com/gwprocess/v4/api.php", // SSLCommerz sandbox URL
-        data
-      );
+  // Watch for currency changes
+  const selectedCurrency = watch("currency");
 
-      console.log(response);
-
-      if (response.data.status === "SUCCESS") {
-        // Redirect the user to the payment gateway
-        const GatewayPageURL = response.data.GatewayPageURL;
-        window.location.href = GatewayPageURL; // Redirect to payment URL
-      } else {
-        message.error(
-          `Payment initialization failed: ${response.data.failedreason}`
-        );
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      message.error("An error occurred while processing your payment.");
-    } finally {
-      setLoading(false);
+  // Update the total_amount field based on the currency selection
+  useEffect(() => {
+    if (selectedCurrency === "USD") {
+      setValue("total_amount", 20);
+    } else if (selectedCurrency === "BDT") {
+      setValue("total_amount", 2000);
     }
+  }, [selectedCurrency, setValue]);
+
+  // Handle form submission
+  const onSubmit = (data: PaymentFormValues) => {
+    console.log(data);
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen  ">
+    <div className="flex items-center justify-center min-h-screen">
       <Card className="w-full max-w-md p-8 bg-gray-900 shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-4 ">
-          Payment Details
-        </h2>
-        <Form layout="vertical" onFinish={handleSubmit}>
+        <h2 className="text-2xl font-bold text-center mb-4">Payment Details</h2>
+        <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
           <Form.Item
-            name="name"
-            label={<span className="">Name</span>}
-            rules={[{ required: true, message: "Please enter your name" }]}
+            label={<span>Name</span>}
+            validateStatus={errors.cus_name ? "error" : ""}
+            help={errors.cus_name?.message}
           >
-            <Input
-              placeholder="Enter your name"
-              className="  border-gray-700"
+            <Controller
+              name="cus_name"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="Enter your name"
+                  className="border-gray-700"
+                  {...field}
+                />
+              )}
             />
           </Form.Item>
 
           <Form.Item
-            name="email"
-            label={<span className="">Email</span>}
-            rules={[{ required: true, message: "Please enter your email" }]}
+            label={<span>Email</span>}
+            validateStatus={errors.cus_email ? "error" : ""}
+            help={errors.cus_email?.message}
           >
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              className="  border-gray-700"
+            <Controller
+              name="cus_email"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="border-gray-700"
+                  {...field}
+                />
+              )}
             />
           </Form.Item>
 
           <Form.Item
-            name="amount"
-            label={<span className="">Amount</span>}
-            rules={[{ required: true, message: "Please enter the amount" }]}
+            label={<span>Total Amount</span>}
+            validateStatus={errors.total_amount ? "error" : ""}
+            help={errors.total_amount?.message}
           >
             <Input
               type="number"
               placeholder="Enter the amount"
-              className="  border-gray-700"
+              className="border-gray-700"
+              disabled
+              value={selectedCurrency === "USD" ? 20 : 2000}
             />
           </Form.Item>
 
           <Form.Item
-            name="paymentMethod"
-            label={<span className="">Payment Method</span>}
-            rules={[
-              { required: true, message: "Please select a payment method" },
-            ]}
+            label={<span>Currency</span>}
+            validateStatus={errors.currency ? "error" : ""}
+            help={errors.currency?.message}
           >
-            <Select
-              placeholder="Select a payment method"
-              className="  border-gray-700"
-            >
-              <Option value="creditCard" className=" ">
-                Credit Card
-              </Option>
-              <Option value="bankTransfer" className=" ">
-                Bank Transfer
-              </Option>
-              {/* Add more payment methods as required */}
-            </Select>
+            <Controller
+              name="currency"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  placeholder="Select a currency"
+                  className="border-gray-700"
+                  value={field.value} // Set value explicitly
+                  onChange={(value) => field.onChange(value)} // Handle change explicitly
+                >
+                  <Option value="USD">USD</Option>
+                  <Option value="BDT">BDT</Option>
+                </Select>
+              )}
+            />
           </Form.Item>
 
           <Form.Item>
@@ -147,9 +164,9 @@ const PaymentPage = () => {
               type="primary"
               htmlType="submit"
               loading={loading}
-              className="w-full bg-blue-500 hover:bg-blue-600 "
+              className="w-full bg-blue-500 hover:bg-blue-600"
             >
-              Pay Now
+              Pay Now With sslcommerz
             </Button>
           </Form.Item>
         </Form>
