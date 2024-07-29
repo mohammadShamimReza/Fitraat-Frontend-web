@@ -279,6 +279,7 @@ export interface UserData {
   updateAt: string;
   username: string;
   videoComplete: boolean;
+  tran_id: string;
 }
 
 export interface UserDataWithDay {

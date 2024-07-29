@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, Form, Input, message, Select } from "antd";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
 const { Option } = Select;
@@ -28,7 +27,6 @@ const schema = z.object({
   currency: z.enum(["USD", "BDT"], {
     required_error: "Please select a currency",
   }),
-  tran_id: z.string().uuid("Invalid transaction ID format"),
   userId: z.string().min(1, "User ID is required"),
 });
 
@@ -40,7 +38,7 @@ const PaymentPage = () => {
 
   // Get user info from Redux store
   const userInfo = useAppSelector((state) => state.auth.userInfo);
-
+  console.log(userInfo?.id);
   // Initialize the form using react-hook-form with zod schema
   const {
     handleSubmit,
@@ -53,10 +51,9 @@ const PaymentPage = () => {
     defaultValues: {
       cus_name: userInfo?.username,
       cus_email: userInfo?.email,
-      tran_id: uuidv4(),
       currency: "BDT",
       total_amount: 20,
-      userId: userInfo?.id?.toString() || "",
+      userId: userInfo?.id.toString(),
       product_name: "Detox-dopamine",
       product_category: "Mental & physical",
       product_profile: "Fitraat",
@@ -80,9 +77,9 @@ const PaymentPage = () => {
 
   // Handle form submission
   const onSubmit = async (data: PaymentFormValues) => {
-    console.log(data);
     try {
       const result = await paymentInit(data).unwrap();
+      console.log(result);
       if (result) {
         window.location.replace(result.url);
       } else {
