@@ -1,8 +1,9 @@
 "use client";
 
+import { usePaymentInitMutation } from "@/redux/api/payment";
 import { useAppSelector } from "@/redux/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Card, Form, Input, Select } from "antd";
+import { Button, Card, Form, Input, message, Select } from "antd";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
@@ -32,8 +33,9 @@ const schema = z.object({
 });
 
 type PaymentFormValues = z.infer<typeof schema>;
-
 const PaymentPage = () => {
+  const [paymentInit] = usePaymentInitMutation();
+
   const [loading, setLoading] = useState(false);
 
   // Get user info from Redux store
@@ -77,8 +79,18 @@ const PaymentPage = () => {
   }, [selectedCurrency, setValue]);
 
   // Handle form submission
-  const onSubmit = (data: PaymentFormValues) => {
+  const onSubmit = async (data: PaymentFormValues) => {
     console.log(data);
+    try {
+      const result = await paymentInit(data).unwrap();
+      if (result) {
+        window.location.replace(result.url);
+      } else {
+        message.error("Please try again later");
+      }
+    } catch (error) {
+      message.error("Server have some issues please try again leter");
+    }
   };
 
   return (

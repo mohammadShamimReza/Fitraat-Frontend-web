@@ -369,3 +369,20 @@ export interface UserAuthData {
     user: UserData;
   };
 }
+
+
+
+export interface PaymentFormValues {
+  cus_name: string;
+  cus_email: string;
+  tran_id: string;
+  currency: "USD" | "BDT";
+  total_amount: number;
+  userId: string;
+  product_name: string;
+  product_category: string;
+  product_profile: string;
+  cus_add1: string;
+  cus_country: string;
+  cus_phone: string;
+}
