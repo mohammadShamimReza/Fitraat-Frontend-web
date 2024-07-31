@@ -71,7 +71,7 @@ export const likeApi = baseApi.injectEndpoints({
     }),
     postLikeForCurrentUser: builder.query({
       query: (data: { postId: number; userId: number }) => ({
-        url: `${LIKE}??populate[0]=user&filters[user][id][$eq]=${data.userId}&populate[1]=post&filters[post][id][$eq]=${data.postId}`,
+        url: `${LIKE}?populate[0]=user&filters[user][id][$eq]=${data.userId}&populate[1]=post&filters[post][id][$eq]=${data.postId}`,
         method: "GET",
       }),
       providesTags: ["createLike", "deleteLike"],

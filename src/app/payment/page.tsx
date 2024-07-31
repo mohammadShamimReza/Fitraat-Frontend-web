@@ -38,7 +38,6 @@ const PaymentPage = () => {
 
   // Get user info from Redux store
   const userInfo = useAppSelector((state) => state.auth.userInfo);
-  console.log(userInfo?.id);
   // Initialize the form using react-hook-form with zod schema
   const {
     handleSubmit,

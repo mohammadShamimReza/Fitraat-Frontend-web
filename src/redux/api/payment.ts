@@ -8,7 +8,7 @@ export const paymentAPi = baseApi.injectEndpoints({
         url: `${PAYMENT}/init`,
         method: "POST",
         body: body,
-        transformResponse: (rawResult: { url: string }) => {
+        transformResponse: (rawResult: { url: string; response: any }) => {
           return rawResult;
         },
       }),

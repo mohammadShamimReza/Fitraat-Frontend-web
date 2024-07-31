@@ -26,7 +26,33 @@ export const postApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
+    updatePost: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `${POST}/${id}`,
+        method: "PUT",
+        body: body,
+      }),
+      invalidatesTags: ["createPost"],
+      transformResponse: (rawResult: Post) => {
+        return rawResult;
+      },
+    }),
+    getPostsByUserId: builder.query({
+      query: (body: { userId: number }) => ({
+        url: `${POST}?sort[0]=updatedAt:desc&populate[0]=user&filters[user][id][$eq]=${body.userId}`,
+        method: "GET",
+      }),
+      providesTags: ["createPost"],
+      transformResponse: (rawResult: PostData) => {
+        return rawResult;
+      },
+    }),
   }),
 });
 
-export const { useCreatePostMutation, useGetPostQuery } = postApi;
+export const {
+  useCreatePostMutation,
+  useGetPostQuery,
+  useUpdatePostMutation,
+  useGetPostsByUserIdQuery,
+} = postApi;
