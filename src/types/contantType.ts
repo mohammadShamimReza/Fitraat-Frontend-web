@@ -1,13 +1,7 @@
 export interface Post {
   id: number;
   attributes: {
-    description: Array<{
-      type: string;
-      children: Array<{
-        text: string;
-        type: string;
-      }>;
-    }>;
+    description: string;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;

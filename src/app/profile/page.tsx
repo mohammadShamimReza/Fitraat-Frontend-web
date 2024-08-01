@@ -1,9 +1,13 @@
 "use client";
+
+import PostContent from "@/components/home/homefeed/post/PostContent";
+import ReactQuilEditor from "@/components/shared/ReactQuilEditor";
 import {
   useGetUserInfoQuery,
   useUpdateUserDayMutation,
 } from "@/redux/api/authApi";
 import {
+  useDeletePostMutation,
   useGetPostsByUserIdQuery,
   useUpdatePostMutation,
 } from "@/redux/api/postApi";
@@ -27,11 +31,15 @@ function ProfilePage() {
   const [updateUserProfile] = useUpdateUserMutation();
   const [updateUserPassword] = useUpdateUserPasswordMutation();
   const [updatePost] = useUpdatePostMutation(); // Add update post mutation
+  const [deletePost] = useDeletePostMutation(); // Add delete post mutation
 
   const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
   const [isPostModalVisible, setIsPostModalVisible] = useState(false); // State for post modal
-  const [currentPost, setCurrentPost] = useState(null); // State to hold the post being edited
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // State for delete confirmation modal
+
+  const [currentPost, setCurrentPost] = useState<any>(null); // State to hold the post being edited or deleted
+  const [valueEditor, setValueEditor] = useState<string>("");
 
   const name = authenticatedUserInfoData?.username;
   const age = authenticatedUserInfoData?.age;
@@ -40,11 +48,12 @@ function ProfilePage() {
   const userId = authenticatedUserInfoData?.id;
   const location = authenticatedUserInfoData?.country;
 
-  const { data: postsByUser } = useGetPostsByUserIdQuery({
-    userId: 11,
+  const { data: posts } = useGetPostsByUserIdQuery({
+    userId: userId || 0,
   });
 
-  console.log(postsByUser);
+  const postsByUser = posts?.data;
+
   const days = Array.from({ length: 40 }, (_, i) => i + 1);
   const progressData = days.map((day) => ({
     day,
@@ -55,7 +64,7 @@ function ProfilePage() {
     alert("Do you want to restart!");
 
     try {
-      const result = await updataUserDay({
+      await updataUserDay({
         currentDay: 1,
         compliteDay: 0,
         userId: userId,
@@ -72,7 +81,7 @@ function ProfilePage() {
 
       message.success("You have successfully started your journey again!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -82,7 +91,7 @@ function ProfilePage() {
 
   const handleProfileOk = async (values: any) => {
     try {
-      const result = await updateUserProfile({
+      await updateUserProfile({
         userId: userId,
         username: values.username,
         age: values.age,
@@ -91,7 +100,7 @@ function ProfilePage() {
       message.success("Profile updated successfully!");
       setIsProfileModalVisible(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -109,10 +118,14 @@ function ProfilePage() {
         userId: userId,
         password: values.password,
       });
-      message.success("Password updated successfully!");
       setIsPasswordModalVisible(false);
+      if (result) {
+        message.success("Password updated successfully!");
+      } else {
+        message.info("something went wrong. please try again letter");
+      }
     } catch (error) {
-      console.log(error);
+      message.info("something went wrong. please try again letter");
     }
   };
 
@@ -122,83 +135,131 @@ function ProfilePage() {
 
   const showPostModal = (post: any) => {
     setCurrentPost(post);
+    setValueEditor(post.attributes.description); // Set initial content for the editor
     setIsPostModalVisible(true);
   };
 
-  // const handlePostOk = async (values) => {
-  //   try {
-  //     await updatePost({
-  //       id: currentPost.id,
-  //       body: { title: values.title, description: values.description },
-  //     });
-  //     message.success("Post updated successfully!");
-  //     setIsPostModalVisible(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handlePostOk = async () => {
+    console.log("hi", valueEditor);
 
-  // const handlePostCancel = () => {
-  //   setIsPostModalVisible(false);
-  // };
+    if (currentPost) {
+      try {
+        const result = await updatePost({
+          body: {
+            postId: currentPost.id,
+
+            data: {
+              description: valueEditor,
+            },
+          },
+        });
+        if (result) {
+          message.success("Post updated successfully!");
+        } else {
+          message.info("something went wrong. please try again letter");
+        }
+        setIsPostModalVisible(false);
+        setValueEditor(""); // Clear editor content after successful update
+      } catch (error) {
+        message.info("something went wrong. please try again letter");
+      }
+    }
+  };
+  const handlePostCancel = () => {
+    setValueEditor(""); // Clear editor content on cancel
+    setIsPostModalVisible(false);
+  };
+
+  const showDeleteModal = (post: any) => {
+    setCurrentPost(post);
+    console.log(post);
+    setIsDeleteModalVisible(true);
+  };
+
+  const handleDeleteOk = async () => {
+    console.log(currentPost);
+    try {
+      const result = await deletePost({ id: currentPost });
+      console.log(result);
+      if (result) {
+        message.success("Post deleted successfully!");
+      } else {
+        message.info("something went wrong. please try again letter");
+      }
+      setIsDeleteModalVisible(false);
+      setCurrentPost(null); // Clear the current post
+    } catch (error) {
+      message.info("something went wrong. please try again letter");
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteModalVisible(false);
+    setCurrentPost(null); // Clear the current post
+  };
 
   return (
-    <div className={"container mx-auto py-8 px-4"}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Profile Info */}
-        <div className={"bg-white shadow-lg rounded-lg p-6"}>
-          <div className={" "}>
-            <h1 className="text-3xl font-semibold mb-4 underline text-blue-500">
-              Profile
-            </h1>
-            <p className="text-xl font-semibold">
-              Name: <span className="text-blue-500">{name}</span>
-            </p>
-            <p className="text-xl font-semibold">
-              Age: <span className="text-blue-500"> {age}</span>
-            </p>
-            <p className="text-xl font-semibold">
-              Location: <span className="text-blue-500"> {location}</span>
-            </p>
-            <p className="text-xl font-semibold">
-              Email: <span className="text-blue-500"> {email}</span>
-            </p>
-            <p className="text-xl font-semibold">
-              Completed:{" "}
-              <span className="text-blue-500"> {compliteDay} Days</span>
-            </p>
-            <div className="flex justify-end gap-1">
-              <Button type="primary" onClick={showProfileModal}>
-                Edit Profile
-              </Button>
-              <Button type="primary" onClick={showPasswordModal}>
-                Update Password
-              </Button>
-            </div>
-          </div>
-        </div>
+    <div className="w-full px-4 py-6">
+      <h1 className="text-2xl font-semibold mb-6">Profile</h1>
 
-        {/* Additional Information */}
-        <div className={"bg-white shadow-lg rounded-lg p-6"}>
-          <h1 className="text-3xl font-semibold text-center mb-4 text-blue-500">
-            Do you want to start again?
-          </h1>
-          <p className="text-center">
-            Do you break your commitment. Don&apos;t worry. Start again from
-            scratch.
-          </p>
-          <div className="flex justify-center">
-            <div className="bg-white p-6 ">
-              <button
-                className={`px-4 py-2 text-white rounded focus:outline-none 
-                bg-gray-600 hover:bg-gray-700
-                `}
-                onClick={handleRestart}
-              >
-                Restart from Day 0
-              </button>
+      <div className="mb-4">
+        <h2 className="text-lg font-medium">Username: {name}</h2>
+        <h2 className="text-lg font-medium">Age: {age}</h2>
+        <h2 className="text-lg font-medium">Email: {email}</h2>
+        <h2 className="text-lg font-medium">Country: {location}</h2>
+      </div>
+
+      <div className="flex items-center mb-6 gap-2">
+        <button
+          className={`px-4 py-2  rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+          onClick={showProfileModal}
+        >
+          Edit Profile
+        </button>
+        <button
+          className={`px-4 py-2  rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+          onClick={showPasswordModal}
+        >
+          Change Password
+        </button>
+        <button
+          className={`px-4 py-2  rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+          onClick={handleRestart}
+        >
+          Restart Journey
+        </button>
+      </div>
+
+      <div className={`bg-white border rounded-lg p-6 mt-8`}>
+        <h1 className="text-3xl font-semibold text-center mb-4 ">
+          My <span className="text-blue-500"> posts </span>
+        </h1>
+        <br />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+          {postsByUser?.map((data) => (
+            <div
+              className="border p-2 m-2 relative flex flex-col justify-between h-full"
+              key={data.id}
+            >
+              <div className="flex-grow">
+                <PostContent postDescription={data.attributes.description} />
+              </div>
+              <div className="flex justify-between gap-2 mt-2">
+                <button
+                  className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+                  onClick={() => showPostModal(data)}
+                >
+                  Edit post
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-xl focus:outline-none bg-red-400 hover:bg-red-500 text-white`}
+                  onClick={() => showDeleteModal(data.id)} // Show delete confirmation modal
+                >
+                  Delete post
+                </button>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -227,16 +288,67 @@ function ProfilePage() {
         </div>
       </div>
 
-      {/* Profile Modal */}
+      <Modal
+        title="Edit Post"
+        visible={isPostModalVisible}
+        onOk={handlePostOk}
+        closable={false}
+        footer={[
+          <button
+            key={"ok"}
+            className={`px-4 py-2 rounded-xl focus:outline-none border `}
+            onClick={() => handlePostCancel()}
+          >
+            Cancel
+          </button>,
+          <button
+            key={"ok"}
+            className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white ml-2`}
+            onClick={() => handlePostOk()}
+          >
+            Update
+          </button>,
+        ]}
+      >
+        <ReactQuilEditor
+          valueEditor={valueEditor}
+          setValueEditor={setValueEditor}
+        />
+      </Modal>
+
+      <Modal
+        title="Delete Post"
+        visible={isDeleteModalVisible}
+        onOk={handleDeleteOk} // Call the delete function on confirmation
+        onCancel={handleDeleteCancel} // Close the modal on cancel
+        closable={false}
+        footer={[
+          <button
+            key={"cancel"}
+            className={`px-4 py-2 rounded-xl focus:outline-none border `}
+            onClick={() => handleDeleteCancel()}
+          >
+            Cancel
+          </button>,
+          <button
+            key={"delete"}
+            className={`px-4 py-2 rounded-xl focus:outline-none bg-red-400 hover:bg-red-500 text-white ml-2`}
+            onClick={() => handleDeleteOk()}
+          >
+            Delete
+          </button>,
+        ]}
+      >
+        <p>Are you sure you want to delete this post?</p>
+      </Modal>
+
       <Modal
         title="Edit Profile"
         visible={isProfileModalVisible}
-        onOk={handleProfileOk}
         onCancel={handleProfileCancel}
         footer={null}
       >
         <Form
-          name="profile"
           onFinish={handleProfileOk}
           initialValues={{
             username: name,
@@ -245,38 +357,31 @@ function ProfilePage() {
           }}
         >
           <Form.Item
-            label="Username"
             name="username"
             rules={[{ required: true, message: "Please input your username!" }]}
           >
-            <Input />
+            <Input placeholder="Username" />
           </Form.Item>
-
           <Form.Item
-            label="Age"
             name="age"
             rules={[{ required: true, message: "Please input your age!" }]}
           >
-            <Input />
+            <Input placeholder="Age" type="number" />
           </Form.Item>
-
           <Form.Item
-            label="Country"
             name="country"
             rules={[{ required: true, message: "Please input your country!" }]}
           >
-            <Input />
+            <Input placeholder="Country" />
           </Form.Item>
-
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Update Profile
+              Save Changes
             </Button>
           </Form.Item>
         </Form>
       </Modal>
 
-      {/* Password Modal */}
       <Modal
         title="Change Password"
         visible={isPasswordModalVisible}
@@ -292,12 +397,12 @@ function ProfilePage() {
           }}
         >
           <Form.Item
-            label="currenty Password"
+            label="Current Password"
             name="currentPassword"
             rules={[
               {
                 required: true,
-                message: "Please input your Current password!",
+                message: "Please input your current password!",
               },
             ]}
           >
@@ -318,7 +423,7 @@ function ProfilePage() {
             rules={[
               {
                 required: true,
-                message: "Please input your new password for confirm! ",
+                message: "Please confirm your new password!",
               },
             ]}
           >
@@ -328,50 +433,6 @@ function ProfilePage() {
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Update Password
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      {/* Post Update Modal */}
-      <Modal
-        title="Edit Post"
-        visible={isPostModalVisible}
-        // onOk={handlePostOk}
-        // onCancel={handlePostCancel}
-        footer={null}
-      >
-        <Form
-          name="post"
-          // onFinish={handlePostOk}
-          // initialValues={{
-          //   title: currentPost?.attributes.title,
-          //   description: currentPost?.attributes.description.join(" "), // Assuming description is an array
-          // }}
-        >
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[
-              { required: true, message: "Please input the post title!" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[
-              { required: true, message: "Please input the post description!" },
-            ]}
-          >
-            <Input.TextArea />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Update Post
             </Button>
           </Form.Item>
         </Form>

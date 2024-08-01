@@ -22,6 +22,7 @@ export const baseApi = createApi({
   tagTypes: [
     "updateUser",
     "createPost",
+    "deletePost",
     "createLike",
     "deleteLike",
     "createComment",

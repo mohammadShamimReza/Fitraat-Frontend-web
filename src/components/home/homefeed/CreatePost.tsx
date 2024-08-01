@@ -1,5 +1,5 @@
 "use client";
-import QuillEditor from "@/components/shared/QuillEditor";
+import ReactQuilEditor from "@/components/shared/ReactQuilEditor";
 import { useCreatePostMutation } from "@/redux/api/postApi";
 import { UserData } from "@/types/contantType";
 import { Button, Modal, Tooltip, message } from "antd";
@@ -28,15 +28,10 @@ const CreatePost = ({ user }: { user: UserData | null }) => {
   };
 
   const handleCreatePost = async () => {
-    if (valueEditor.trim() !== "") {
+    if (valueEditor !== "") {
       try {
         const post = {
-          description: [
-            {
-              type: "paragraph",
-              children: [{ text: valueEditor, type: "text" }],
-            },
-          ],
+          description: valueEditor,
           user: userId,
         };
 
@@ -118,7 +113,7 @@ const CreatePost = ({ user }: { user: UserData | null }) => {
       >
         {userId ? (
           <div className="my-4">
-            <QuillEditor
+            <ReactQuilEditor
               valueEditor={valueEditor}
               setValueEditor={setValueEditor}
             />

@@ -21,14 +21,14 @@ export const postApi = baseApi.injectEndpoints({
         url: `${POST}?sort[0]=updatedAt:desc&populate[0]=user&pagination[page]=${body.pageCount}&pagination[pageSize]=10`,
         method: "GET",
       }),
-      providesTags: ["createPost"],
+      providesTags: ["createPost", "deletePost"],
       transformResponse: (rawResult: PostData) => {
         return rawResult;
       },
     }),
     updatePost: builder.mutation({
       query: ({ id, body }) => ({
-        url: `${POST}/${id}`,
+        url: `${POST}/${body.postId}`,
         method: "PUT",
         body: body,
       }),
@@ -42,8 +42,18 @@ export const postApi = baseApi.injectEndpoints({
         url: `${POST}?sort[0]=updatedAt:desc&populate[0]=user&filters[user][id][$eq]=${body.userId}`,
         method: "GET",
       }),
-      providesTags: ["createPost"],
+      providesTags: ["createPost", "deletePost"],
       transformResponse: (rawResult: PostData) => {
+        return rawResult;
+      },
+    }),
+    deletePost: builder.mutation({
+      query: ({ id }) => ({
+        url: `${POST}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["deletePost"],
+      transformResponse: (rawResult: Post) => {
         return rawResult;
       },
     }),
@@ -55,4 +65,5 @@ export const {
   useGetPostQuery,
   useUpdatePostMutation,
   useGetPostsByUserIdQuery,
+  useDeletePostMutation,
 } = postApi;

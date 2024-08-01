@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const PostContent = ({ postDescription }: { postDescription: string[] }) => {
+const PostContent = ({ postDescription }: { postDescription: string }) => {
   const [expanded, setExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);

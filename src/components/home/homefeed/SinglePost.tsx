@@ -41,9 +41,7 @@ function SinglePost({
   const totalComment = postComments?.meta.pagination.total || 0;
 
   const totalLikes = postLike?.meta.pagination.total || 0;
-  const postDescription = post.attributes.description
-    .map((desc) => desc.children.map((chil) => chil.text))
-    .flat();
+  const postDescription = post.attributes.description;
   const postUserName = post.attributes.user.data.attributes.username;
   const postAt = formatDistanceToNow(new Date(post.attributes.createdAt), {
     addSuffix: true,
