@@ -85,7 +85,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
         let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
         if (parsedUnAuthDayId === 3) {
           message.success(
-            "Hurray this is you last day of task. Then you becone spartan"
+            " This is you last day of free task. Upgrade membership to access pro contants"
           );
           localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
           router.push("/blog");

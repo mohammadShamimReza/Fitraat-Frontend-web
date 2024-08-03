@@ -6,6 +6,7 @@ import {
 import { singleCommentForPostData } from "@/types/contantType";
 import { Input, message, Modal } from "antd";
 import { useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
 
 const mockData = {
@@ -18,10 +19,12 @@ const PostComments = ({
   postId,
   postComment,
   userId,
+  varifiedSine,
 }: {
   postId: number;
   postComment: singleCommentForPostData[] | undefined;
   userId: number | undefined;
+  varifiedSine: boolean | undefined;
 }) => {
   const currentUserId = userId || 0;
   const [newComment, setNewComment] = useState("");
@@ -65,9 +68,14 @@ const PostComments = ({
       return message.info("Please write a valid comment");
     }
     try {
-      await createComment({
+      const result = await createComment({
         data: { user: currentUserId, post: postId, comment: modalComment },
       });
+      if (result) {
+        message.success("Comment successfull");
+      } else {
+        message.info("Something went wrong. Try again leter");
+      }
       setModalComment(""); // Clear the modal comment input after successful addition
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -76,7 +84,12 @@ const PostComments = ({
 
   const handleDeleteComment = async (commentId: number) => {
     try {
-      await deleteComment({ postId: commentId });
+      const result = await deleteComment({ postId: commentId });
+      if (result) {
+        message.success("Comment deleted successfully");
+      } else {
+        message.info("Something went wrong. Try again leter");
+      }
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -145,8 +158,13 @@ const PostComments = ({
                 >
                   <div className="flex gap-3 items-center ">
                     <div className="">
-                      <p className="font-semibold">
+                      <p className="font-semibold flex items-center gap-2">
                         {comment.attributes.user.data.attributes.username}
+                        {varifiedSine ? (
+                          <FaCheckCircle className="text-blue-500" size={15} />
+                        ) : (
+                          ""
+                        )}
                       </p>
                       <p>{comment.attributes.comment}</p>
                     </div>
@@ -199,7 +217,7 @@ const PostComments = ({
         </div>
         <Modal
           title="All Comments"
-          visible={modalVisible}
+          open={modalVisible}
           onCancel={() => setModalVisible(false)}
           footer={null}
         >
@@ -210,8 +228,13 @@ const PostComments = ({
                 className="flex items-start justify-between mb-2 shadow-sm rounded-lg border p-3"
               >
                 <div>
-                  <p className="font-semibold">
-                    {comment.attributes.user.data.attributes.username}
+                  <p className="font-semibold flex items-center gap-2">
+                    {comment.attributes.user.data.attributes.username}{" "}
+                    {varifiedSine ? (
+                      <FaCheckCircle className="text-blue-500" size={15} />
+                    ) : (
+                      ""
+                    )}
                   </p>
                   <p>{comment.attributes.comment}</p>
                 </div>
@@ -255,7 +278,7 @@ const PostComments = ({
         {/* Edit Modal */}
         <Modal
           title="Edit Comment"
-          visible={editModalVisible}
+          open={editModalVisible}
           onCancel={() => setEditModalVisible(false)}
           footer={[
             <button

@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/structure/Footer";
 import NavBar from "@/components/structure/NavBar";
 import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
@@ -26,6 +27,7 @@ export default function RootLayout({
             <div className="mx-auto min-h-screen max-w-7xl ">
               <NavBar />
               <div className="mx-auto max-w-6xl">{children}</div>
+              <Footer />
             </div>
           </AntdRegistry>
         </body>

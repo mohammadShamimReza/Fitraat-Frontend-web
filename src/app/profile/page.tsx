@@ -11,42 +11,67 @@ import {
   useGetPostsByUserIdQuery,
   useUpdatePostMutation,
 } from "@/redux/api/postApi";
-import {
-  useUpdateUserMutation,
-  useUpdateUserPasswordMutation,
-} from "@/redux/api/userApi";
-import { Button, Form, Input, message, Modal } from "antd";
+import { useUpdateUserPasswordMutation } from "@/redux/api/userApi";
+import { InboxOutlined } from "@ant-design/icons";
+import { Button, Form, Input, message, Modal, Upload } from "antd";
+import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import "tailwindcss/tailwind.css";
 
 function ProfilePage() {
   const {
-    data: authenticatedUserInfoData,
-    isLoading,
-    isError: authenticatedUserInfoDataError,
-    isSuccess,
+    data: getUserInfoData,
+    isLoading: getUserInfoLoading,
+    isError: getUserInfoDataError,
+    isSuccess: getUserInfoSuccess,
   } = useGetUserInfoQuery();
 
-  const [updataUserDay] = useUpdateUserDayMutation();
-  const [updateUserProfile] = useUpdateUserMutation();
+  const [
+    updataUserDay,
+    {
+      isError: updateUserDayError,
+      isLoading: updateUserUpdateDayLoading,
+      isSuccess: updateUserDaySuccess,
+    },
+  ] = useUpdateUserDayMutation();
+
   const [updateUserPassword] = useUpdateUserPasswordMutation();
-  const [updatePost] = useUpdatePostMutation(); // Add update post mutation
-  const [deletePost] = useDeletePostMutation(); // Add delete post mutation
+  const [
+    updatePost,
+    {
+      isError: updatePostError,
+      isLoading: updatePostLoading,
+      isSuccess: updatePostSuccess,
+    },
+  ] = useUpdatePostMutation(); // Add update post mutation
+  const [
+    deletePost,
+    {
+      isError: deletePostError,
+      isLoading: deletePostLoading,
+      isSuccess: deletePostSuccess,
+    },
+  ] = useDeletePostMutation(); // Add delete post mutation
 
   const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
   const [isPostModalVisible, setIsPostModalVisible] = useState(false); // State for post modal
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // State for delete confirmation modal
+  const [isImageUploadModalVisible, setIsImageUploadModalVisible] =
+    useState(false); // State for image upload modal
 
   const [currentPost, setCurrentPost] = useState<any>(null); // State to hold the post being edited or deleted
   const [valueEditor, setValueEditor] = useState<string>("");
 
-  const name = authenticatedUserInfoData?.username;
-  const age = authenticatedUserInfoData?.age;
-  const email = authenticatedUserInfoData?.email;
-  const compliteDay = authenticatedUserInfoData?.compliteDay || 0;
-  const userId = authenticatedUserInfoData?.id;
-  const location = authenticatedUserInfoData?.country;
+  const [profileImage, setProfileImage] = useState<string | null>(null); // State for profile image
+
+  const name = getUserInfoData?.username;
+  const age = getUserInfoData?.age;
+  const email = getUserInfoData?.email;
+  const compliteDay = getUserInfoData?.compliteDay || 0;
+  const userId = getUserInfoData?.id;
+  const location = getUserInfoData?.country;
+  const paid = getUserInfoData?.paid || false;
 
   const { data: posts } = useGetPostsByUserIdQuery({
     userId: userId || 0,
@@ -64,7 +89,7 @@ function ProfilePage() {
     alert("Do you want to restart!");
 
     try {
-      await updataUserDay({
+      const result = await updataUserDay({
         currentDay: 1,
         compliteDay: 0,
         userId: userId,
@@ -78,34 +103,15 @@ function ProfilePage() {
           Blog: false,
         })
       );
-
-      message.success("You have successfully started your journey again!");
+      console.log(result);
+      if (updateUserDaySuccess) {
+        message.success("You have successfully started your journey again!");
+      } else if (updateUserDayError) {
+        message.info("Something went wrong. Please try again later.");
+      }
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const showProfileModal = () => {
-    setIsProfileModalVisible(true);
-  };
-
-  const handleProfileOk = async (values: any) => {
-    try {
-      await updateUserProfile({
-        userId: userId,
-        username: values.username,
-        age: values.age,
-        country: values.country,
-      });
-      message.success("Profile updated successfully!");
-      setIsProfileModalVisible(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleProfileCancel = () => {
-    setIsProfileModalVisible(false);
   };
 
   const showPasswordModal = () => {
@@ -122,10 +128,10 @@ function ProfilePage() {
       if (result) {
         message.success("Password updated successfully!");
       } else {
-        message.info("something went wrong. please try again letter");
+        message.info("Something went wrong. Please try again later.");
       }
     } catch (error) {
-      message.info("something went wrong. please try again letter");
+      message.info("Something went wrong. Please try again later.");
     }
   };
 
@@ -153,24 +159,26 @@ function ProfilePage() {
             },
           },
         });
-        if (result) {
+        console.log(result);
+        if (updatePostSuccess) {
           message.success("Post updated successfully!");
-        } else {
-          message.info("something went wrong. please try again letter");
+        } else if (updatePostError) {
+          message.info("Something went wrong. Please try again later.");
         }
         setIsPostModalVisible(false);
         setValueEditor(""); // Clear editor content after successful update
       } catch (error) {
-        message.info("something went wrong. please try again letter");
+        message.info("Something went wrong. Please try again later.");
       }
     }
   };
+
   const handlePostCancel = () => {
     setValueEditor(""); // Clear editor content on cancel
     setIsPostModalVisible(false);
   };
 
-  const showDeleteModal = (post: any) => {
+  const showDeletePostModal = (post: any) => {
     setCurrentPost(post);
     console.log(post);
     setIsDeleteModalVisible(true);
@@ -184,12 +192,12 @@ function ProfilePage() {
       if (result) {
         message.success("Post deleted successfully!");
       } else {
-        message.info("something went wrong. please try again letter");
+        message.info("Something went wrong. Please try again later.");
       }
       setIsDeleteModalVisible(false);
       setCurrentPost(null); // Clear the current post
     } catch (error) {
-      message.info("something went wrong. please try again letter");
+      message.info("Something went wrong. Please try again later.");
     }
   };
 
@@ -198,49 +206,103 @@ function ProfilePage() {
     setCurrentPost(null); // Clear the current post
   };
 
+  const handleImageUploadModal = () => {
+    setIsImageUploadModalVisible(true);
+  };
+
+  const handleImageUploadModalCancel = () => {
+    setIsImageUploadModalVisible(false);
+  };
+
+  // Handle image before uploading
+  const handleImageUpload = (file: File) => {
+    const isValidSize = file.size / 1024 / 1024 < 2; // Check if image size is less than 2MB
+    if (!isValidSize) {
+      message.error("Image must be smaller than 2MB!");
+      return Upload.LIST_IGNORE;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setProfileImage(reader.result as string); // Convert image to base64 and set it to state
+      console.log("Uploaded Image:", reader.result); // Log the image data
+    };
+    reader.readAsDataURL(file);
+
+    return false; // Prevent automatic upload
+  };
+
   return (
     <div className="w-full px-4 py-6">
       <h1 className="text-2xl font-semibold mb-6">Profile</h1>
 
       <div className="mb-4">
-        <h2 className="text-lg font-medium">Username: {name}</h2>
+        <h2 className="text-lg font-medium">Name: {name}</h2>
         <h2 className="text-lg font-medium">Age: {age}</h2>
         <h2 className="text-lg font-medium">Email: {email}</h2>
         <h2 className="text-lg font-medium">Country: {location}</h2>
+        <h2 className="text-lg font-medium">
+          Membership: {paid ? "Pro" : "Free"}
+        </h2>
       </div>
 
       <div className="flex items-center mb-6 gap-2">
-        <button
-          className={`px-4 py-2  rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
-          onClick={showProfileModal}
-        >
-          Edit Profile
-        </button>
-        <button
-          className={`px-4 py-2  rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
-          onClick={showPasswordModal}
-        >
-          Change Password
-        </button>
         <button
           className={`px-4 py-2  rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
           onClick={handleRestart}
         >
           Restart Journey
         </button>
+
+        {/* <button
+          className={`px-4 py-2 rounded-xl focus:outline-none bg-blue-500 hover:bg-blue-600 text-white`}
+          onClick={handleImageUploadModal}
+        >
+          Upload Profile Image
+        </button> */}
+
+        {/* <button
+          className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+          onClick={showPasswordModal}
+        >
+          Change Password
+        </button> */}
       </div>
+
+      {/* <div>
+        <Upload
+          name="profileImage"
+          accept="image/*"
+          beforeUpload={handleImageUpload}
+          showUploadList={false}
+        >
+          <Button icon={<UploadOutlined />}>Upload</Button>
+        </Upload>
+        {profileImage && (
+          <img
+            src={profileImage}
+            alt="Profile"
+            className="mt-4 w-32 h-32 rounded-full"
+          />
+        )}
+      </div> */}
 
       <div className={`bg-white border rounded-lg p-6 mt-8`}>
         <h1 className="text-3xl font-semibold text-center mb-4 ">
-          My <span className="text-blue-500"> posts </span>
+          My <span className="text-blue-500">posts</span>
         </h1>
         <br />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
           {postsByUser?.map((data) => (
             <div
-              className="border p-2 m-2 relative flex flex-col justify-between h-full"
+              className="border rounded-lg p-2 m-2 relative flex flex-col justify-between h-full"
               key={data.id}
             >
+              <div className="">
+                {formatDistanceToNow(new Date(data.attributes.createdAt), {
+                  addSuffix: true,
+                })}
+              </div>
               <div className="flex-grow">
                 <PostContent postDescription={data.attributes.description} />
               </div>
@@ -253,7 +315,7 @@ function ProfilePage() {
                 </button>
                 <button
                   className={`px-4 py-2 rounded-xl focus:outline-none bg-red-400 hover:bg-red-500 text-white`}
-                  onClick={() => showDeleteModal(data.id)} // Show delete confirmation modal
+                  onClick={() => showDeletePostModal(data.id)} // Show delete confirmation modal
                 >
                   Delete post
                 </button>
@@ -288,9 +350,11 @@ function ProfilePage() {
         </div>
       </div>
 
+      {/* Edit post modal */}
+
       <Modal
         title="Edit Post"
-        visible={isPostModalVisible}
+        open={isPostModalVisible}
         onOk={handlePostOk}
         closable={false}
         footer={[
@@ -316,9 +380,11 @@ function ProfilePage() {
         />
       </Modal>
 
+      {/* Delete post modal */}
+
       <Modal
         title="Delete Post"
-        visible={isDeleteModalVisible}
+        open={isDeleteModalVisible}
         onOk={handleDeleteOk} // Call the delete function on confirmation
         onCancel={handleDeleteCancel} // Close the modal on cancel
         closable={false}
@@ -342,49 +408,52 @@ function ProfilePage() {
         <p>Are you sure you want to delete this post?</p>
       </Modal>
 
+      {/* Image Upload Modal */}
+
       <Modal
-        title="Edit Profile"
-        visible={isProfileModalVisible}
-        onCancel={handleProfileCancel}
-        footer={null}
+        title="Upload Image"
+        open={isImageUploadModalVisible}
+        onCancel={handleImageUploadModalCancel}
+        footer={[
+          <button
+            key={"cancel"}
+            className={`px-4 py-2 rounded-xl focus:outline-none border `}
+            onClick={() => handleImageUploadModalCancel()}
+          >
+            Cancel
+          </button>,
+        ]}
       >
-        <Form
-          onFinish={handleProfileOk}
-          initialValues={{
-            username: name,
-            age: age,
-            country: location,
-          }}
+        <Upload.Dragger
+          name="image"
+          accept="image/*"
+          beforeUpload={handleImageUpload}
+          showUploadList={false}
         >
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
-          >
-            <Input placeholder="Username" />
-          </Form.Item>
-          <Form.Item
-            name="age"
-            rules={[{ required: true, message: "Please input your age!" }]}
-          >
-            <Input placeholder="Age" type="number" />
-          </Form.Item>
-          <Form.Item
-            name="country"
-            rules={[{ required: true, message: "Please input your country!" }]}
-          >
-            <Input placeholder="Country" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Save Changes
-            </Button>
-          </Form.Item>
-        </Form>
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined />
+          </p>
+          <p className="ant-upload-text">
+            Click or drag file to this area to upload
+          </p>
+          <p className="ant-upload-hint">
+            Support for a single upload. Image must be less than 2MB.
+          </p>
+        </Upload.Dragger>
+        {profileImage && (
+          <img
+            src={profileImage}
+            alt="Uploaded"
+            className="mt-4 w-32 h-32 rounded-full"
+          />
+        )}
       </Modal>
+
+      {/* Change password modal  */}
 
       <Modal
         title="Change Password"
-        visible={isPasswordModalVisible}
+        open={isPasswordModalVisible}
         onOk={handlePasswordOk}
         onCancel={handlePasswordCancel}
         footer={null}

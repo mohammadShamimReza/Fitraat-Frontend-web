@@ -63,7 +63,7 @@ function NavBar() {
     }
   };
   return (
-    <div className="mb-5 border rounded-xl shadow-md  mt-5 bg-white">
+    <div className="mb-7 border rounded-lg shadow-sm  mt-7 bg-white">
       <div className="">
         <div className="  p-1 sm:px-4 lg:px-6">
           <div className=" flex h-16 items-center justify-between ">
@@ -110,43 +110,44 @@ function NavBar() {
               </button>
             </div>
 
+            <div className="flex flex-shrink-0 items-center text-lg font-bold">
+              <Link href={"/"}>
+                {" "}
+                <Image src={siteLogo} width={70} alt="website logo" />
+              </Link>
+            </div>
+
             <div className="flex  items-center justify-center sm:items-stretch sm:justify-start ">
-              <div className="flex flex-shrink-0 items-center text-lg font-bold">
-                <Link href={"/"}>
-                  {" "}
-                  <Image src={siteLogo} width={70} alt="website logo" />
-                </Link>
-              </div>
-              <div className="hidden sm:ml-6 sm:block mt-5">
-                <div className="flex space-x-4">
+              <div className="hidden sm:ml-6 sm:block mt-2 ">
+                <div className="flex space-x-4 ">
                   <Link
                     href="/"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
                     Home
                   </Link>
                   <Link
                     href="/feed"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
                     Feed
                   </Link>
                   <Link
                     href="/blog"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
                     Blog
                   </Link>
 
                   <Link
                     href="/proMember"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
                     Pro Member
                   </Link>
                   <Link
                     href="/about"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                     aria-current="page"
                   >
                     About us
@@ -160,7 +161,7 @@ function NavBar() {
                 <div className="relative ml-3">
                   <Link href={"/login"}>
                     <span className="sr-only">Login</span>
-                    <span className="flex items-center gap-1 text-sm hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span className="flex items-center gap-1 text-md hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span>Login</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -183,7 +184,7 @@ function NavBar() {
                 <div className="relative ml-3">
                   <div
                     onClick={handleUserMenuToggle}
-                    className="relative flex text-sm hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative flex text-md hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span className="sr-only">Open user menu</span>
                     <div className="flex gap-1">
@@ -212,7 +213,7 @@ function NavBar() {
                     >
                       <Link
                         href="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-t-xl"
+                        className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-200 rounded-t-xl"
                         role="menuitem"
                         tabIndex={-1}
                         id="user-menu-item-0"
@@ -221,7 +222,7 @@ function NavBar() {
                       </Link>
                       {/* <Link
                         href="#"
-                        className="block px-4 py-2 text-sm text-gray-700"
+                        className="block px-4 py-2 text-md text-gray-700"
                         role="menuitem"
                         tabIndex={-1}
                         id="user-menu-item-1"
@@ -231,7 +232,7 @@ function NavBar() {
                       <Link
                         href="/"
                         onClick={handleLogout}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-b-xl"
+                        className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-200 rounded-b-xl"
                         role="menuitem"
                         tabIndex={-1}
                         id="user-menu-item-2"
@@ -254,31 +255,31 @@ function NavBar() {
             <div className="space-y-1 px-2 pb-3 pt-2 ">
               <Link
                 href="/"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Home
               </Link>
               <Link
                 href="/blog"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Blog
               </Link>
               <Link
                 href="/feed"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Feed
               </Link>
               <Link
                 href="/proMember"
-                className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
               >
                 Pro Member
               </Link>
               <Link
                 href="/about"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
                 aria-current="page"
               >
                 About us

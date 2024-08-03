@@ -78,7 +78,7 @@ const CreatePost = ({ user }: { user: UserData | null }) => {
 
       <Modal
         title={userId ? "Create Post" : "Login Required"}
-        visible={modalVisible}
+        open={modalVisible}
         onCancel={handleModalCancel}
         footer={[
           userId ? (

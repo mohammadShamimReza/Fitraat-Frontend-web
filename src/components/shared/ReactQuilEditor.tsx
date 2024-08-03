@@ -1,17 +1,18 @@
 "use client";
 
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 
-function ReactQuilEditor({
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+function ReactQuillEditor({
   valueEditor,
   setValueEditor,
 }: {
   valueEditor: any;
   setValueEditor: any;
 }) {
-  //   const [value, setValue] = useState("");
-  console.log(valueEditor);
   return (
     <ReactQuill
       style={{
@@ -26,4 +27,4 @@ function ReactQuilEditor({
   );
 }
 
-export default ReactQuilEditor;
+export default ReactQuillEditor;

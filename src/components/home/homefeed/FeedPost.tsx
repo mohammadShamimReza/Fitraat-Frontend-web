@@ -21,6 +21,7 @@ function FeedPost() {
 
   const user = userInfoFromRedux;
   const userId = userInfoFromRedux?.id;
+  const varifiedSine = userInfoFromRedux?.varifiedSine;
 
   const posts = feedPosts?.data;
   return (
@@ -28,7 +29,12 @@ function FeedPost() {
       <CreatePost user={user} />
       {posts ? (
         posts.map((post) => (
-          <SinglePost key={post.id} post={post} userId={userId} />
+          <SinglePost
+            key={post.id}
+            post={post}
+            userId={userId}
+            varifiedSine={varifiedSine}
+          />
         ))
       ) : (
         <FancyLoading />

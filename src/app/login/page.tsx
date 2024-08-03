@@ -1,5 +1,5 @@
 "use client";
-import { getTokenFromCookie, storeTokenInCookie } from "@/lib/auth/token";
+import { storeTokenInCookie } from "@/lib/auth/token";
 import { useLoginUserMutation } from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
@@ -7,7 +7,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 
 // Zod schema for form validation
@@ -49,13 +49,6 @@ function LoginPage() {
   };
   const authTokenFromRedux = useAppSelector((state) => state.auth.authToken);
 
-  useEffect(() => {
-    const authToken = getTokenFromCookie() || authTokenFromRedux;
-    if (authToken) {
-      router.push("/");
-    }
-  }, []);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -74,7 +67,7 @@ function LoginPage() {
             dispatch(storeAuthToken(result?.data?.jwt));
 
             dispatch(storeUserInfo(result?.data?.user));
-            router.push("/myTasks");
+            router.push("/authTask");
           }
         } catch (error) {
           console.log(error);

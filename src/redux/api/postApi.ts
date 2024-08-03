@@ -27,7 +27,7 @@ export const postApi = baseApi.injectEndpoints({
       },
     }),
     updatePost: builder.mutation({
-      query: ({ id, body }) => ({
+      query: ({ body }) => ({
         url: `${POST}/${body.postId}`,
         method: "PUT",
         body: body,

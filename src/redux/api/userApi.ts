@@ -6,11 +6,12 @@ const USER = "/users";
 export const daysApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     updateUser: builder.mutation({
-      query: (body) => ({
+      query: ({ body }) => ({
         url: `${USER}/${body.userId}`,
-        method: "POST",
-        body: body.data,
+        method: "PUT",
+        body: body,
       }),
+      invalidatesTags: ["updateUser"],
       transformResponse: (rawResult: UserData | Error) => {
         return rawResult;
       },

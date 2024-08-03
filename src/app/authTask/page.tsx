@@ -2,7 +2,7 @@
 import { useGetUserInfoQuery } from "@/redux/api/authApi";
 import { Skeleton } from "antd";
 import React from "react";
-import UnAuthTask from "./myTasks/UnAuthTask";
+import AuthMyTask from "../myTasks/AuthMyTask";
 
 const MyTasks: React.FC = () => {
   const {
@@ -22,13 +22,11 @@ const MyTasks: React.FC = () => {
         Array.from({ length: 4 }).map((_, index) => (
           <Skeleton style={{ marginTop: "40px" }} key={index} active />
         ))
-      ) : authenticatedUserInfoData === undefined &&
-        authenticatedUserInfoDataError === true &&
-        paid === undefined ? (
-        // Unauthenticated user render
-        <UnAuthTask paid={paid} />
-      ) : paid === false ? (
-        <UnAuthTask paid={paid} />
+      ) : authenticatedUserInfoData &&
+        authenticatedUserInfoDataError === false &&
+        paid === true ? (
+        // Authenticated user render
+        <AuthMyTask authDayDataId={authDayDataId} userId={userId} paid={paid} />
       ) : null}
     </>
   );

@@ -22,9 +22,11 @@ import PostComments from "./post/PostComment";
 function SinglePost({
   post,
   userId,
+  varifiedSine,
 }: {
   post: Post;
   userId: number | undefined;
+  varifiedSine: boolean | undefined;
 }) {
   const [createLike] = useCreateLikeMutation();
   const [createComment] = useCreateCommentMutation();
@@ -105,6 +107,7 @@ function SinglePost({
             postUserId={postUserId}
             postUserName={postUserName}
             postAt={postAt}
+            varifiedSine={varifiedSine}
           />
           <PostContent postDescription={postDescription} />
           <PostActions
@@ -118,6 +121,7 @@ function SinglePost({
             postId={postId}
             postComment={postComment}
             userId={userId}
+            varifiedSine={varifiedSine}
           />
         </div>
       </div>
