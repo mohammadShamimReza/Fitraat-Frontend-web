@@ -92,7 +92,7 @@ function AuthMyTask({
           compliteDay: authDayDataId,
           userId: userId,
         });
-        router.push("/blog");
+        router.push("/freeBlog");
       } else if (authDayDataId + 1 > 40) {
         message.success(
           "Congratulations you have successfully completed your tasks for 40 day"
@@ -105,7 +105,7 @@ function AuthMyTask({
           compliteDay: authDayDataId,
           userId: userId,
         });
-        router.push("/blog");
+        router.push("/freeBlog");
       }
     } else {
       setLocalStorageData((prevState: typeof localStorageData) => ({
@@ -120,7 +120,7 @@ function AuthMyTask({
   };
   const handleOk = () => {
     setIsFinishModalOpen(false);
-    router.push("/blog");
+    router.push("/freeBlog");
   };
 
   const [blog, setBlog] = useState<{

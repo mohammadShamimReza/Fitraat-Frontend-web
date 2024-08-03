@@ -7,9 +7,14 @@ export function middleware(request: NextRequest) {
 
   // Handle unauthenticated user access
   if (!currentUser) {
-    if (pathname.startsWith("/profile") || pathname.startsWith("/authTask")) {
+    if (
+      pathname.startsWith("/profile") ||
+      pathname.startsWith("/authTask") ||
+      pathname.startsWith("/authBlog")
+    ) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
+
     return NextResponse.next(); // Allow access to other routes
   }
 

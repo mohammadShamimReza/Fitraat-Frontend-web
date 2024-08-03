@@ -11,7 +11,7 @@ function Blogs({ blog }: { blog: Blog }) {
     <div className="">
       {" "}
       <div className="h-full mb-10 p-4 bg-white">
-        <Link href={`/blog/${blog.id}`}>
+        <Link href={`/freeBlog/${blog.id}`}>
           <div
             className=" p-4 rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
              h-72 flex flex-col justify-between"
@@ -58,6 +58,5 @@ function Blogs({ blog }: { blog: Blog }) {
     </div>
   );
 }
-
 
 export default Blogs;

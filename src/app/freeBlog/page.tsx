@@ -4,9 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-
 import Pagination from "@/components/shared/Pagination";
-import { useGetBlogsQuery } from "@/redux/api/blogApi";
+import { useGetFreeBlogsQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
 import * as yup from "yup";
 import Blogs from "./Blogs";
@@ -19,11 +18,12 @@ function Page() {
     data: blogData,
     isLoading,
     isSuccess,
-  } = useGetBlogsQuery({ searchTerm, pageCount });
+  } = useGetFreeBlogsQuery({ searchTerm, pageCount });
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
   };
+  console.log(blogData);
 
   const validationSchema = yup.object().shape({
     searchTerm: yup.string(),

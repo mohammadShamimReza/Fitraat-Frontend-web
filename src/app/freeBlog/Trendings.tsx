@@ -1,10 +1,10 @@
-import { useGet3TrendingBlogQuery } from "@/redux/api/blogApi";
+import { useGet3TrendingFreeBlogQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
 import Link from "next/link";
 
 function Trendings() {
-  const { data: trendingBlogData } = useGet3TrendingBlogQuery({});
-  console.log(trendingBlogData);  
+  const { data: trendingBlogData } = useGet3TrendingFreeBlogQuery({});
+  console.log(trendingBlogData);
   return (
     <div className="pr-3">
       <div className="">

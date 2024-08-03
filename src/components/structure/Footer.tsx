@@ -11,7 +11,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="border rounded-lg p-8">
+    <footer className="border rounded-lg p-8 mt-3">
       <div className="container mx-auto  max-w-5xl ">
         {/* First Row of Buttons */}
         <div className="flex flex-wrap justify-center mb-4">

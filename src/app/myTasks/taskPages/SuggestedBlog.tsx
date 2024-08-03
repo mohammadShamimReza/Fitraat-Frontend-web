@@ -50,7 +50,7 @@ function SuggestedBlog({
           </p>
 
           <Link
-            href={`/blog/${blog.id}`}
+            href={`/authBlog/${blog.id}`}
             className="flex justify-center align-middle "
           >
             <div className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mt-5">

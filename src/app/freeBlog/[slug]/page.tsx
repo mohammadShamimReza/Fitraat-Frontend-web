@@ -1,5 +1,5 @@
 "use client";
-import { useGetBlogsByIdQuery } from "@/redux/api/blogApi";
+import { useGetFreeBlogsByIdQuery } from "@/redux/api/freeBlogApi";
 import { Skeleton } from "antd";
 import Image from "next/image";
 import * as yup from "yup";
@@ -11,7 +11,7 @@ const schema = yup.object().shape({
 
 function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
-  const { data, isLoading } = useGetBlogsByIdQuery(blogId);
+  const { data, isLoading } = useGetFreeBlogsByIdQuery(blogId);
   const blogData = data?.data.attributes;
   console.log(blogData);
 

@@ -88,7 +88,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
             " This is you last day of free task. Upgrade membership to access pro contants"
           );
           localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-          router.push("/blog");
+          router.push("/freeBlog");
         } else if (parsedUnAuthDayId > 3) {
           message.success(
             "Congratulations you have successfully completed your tasks for 3 day"
@@ -115,7 +115,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   const handleOk = () => {
     setIsFinishModalOpen(false);
-    router.push("/blog");
+    router.push("/freeBlog");
   };
 
   const [blog, setBlog] = useState<{

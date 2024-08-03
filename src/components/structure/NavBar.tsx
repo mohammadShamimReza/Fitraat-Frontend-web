@@ -133,24 +133,10 @@ function NavBar() {
                     Feed
                   </Link>
                   <Link
-                    href="/blog"
+                    href="/freeBlog"
                     className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
                     Blog
-                  </Link>
-
-                  <Link
-                    href="/proMember"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
-                  >
-                    Pro Member
-                  </Link>
-                  <Link
-                    href="/about"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
-                    aria-current="page"
-                  >
-                    About us
                   </Link>
                 </div>
               </div>
@@ -260,7 +246,7 @@ function NavBar() {
                 Home
               </Link>
               <Link
-                href="/blog"
+                href="/free-blogs"
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Blog
@@ -270,19 +256,6 @@ function NavBar() {
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Feed
-              </Link>
-              <Link
-                href="/proMember"
-                className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
-              >
-                Pro Member
-              </Link>
-              <Link
-                href="/about"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
-                aria-current="page"
-              >
-                About us
               </Link>
             </div>
           </div>
