@@ -80,7 +80,7 @@ function RegisterPage() {
           message.error(result?.error.error.message);
         }
       } else {
-        router.push("/myTasks");
+        router.push("/");
         message.success("User created successfully");
         storeTokenInCookie(result?.data?.jwt);
         dispatch(storeAuthToken(result?.data?.jwt));

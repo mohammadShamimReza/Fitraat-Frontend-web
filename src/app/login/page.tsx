@@ -1,7 +1,7 @@
 "use client";
 import { storeTokenInCookie } from "@/lib/auth/token";
 import { useLoginUserMutation } from "@/redux/api/authApi";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
@@ -47,7 +47,6 @@ function LoginPage() {
       [name]: value,
     });
   };
-  const authTokenFromRedux = useAppSelector((state) => state.auth.authToken);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
