@@ -2,12 +2,7 @@
 import { useGetFreeBlogsByIdQuery } from "@/redux/api/freeBlogApi";
 import { Skeleton } from "antd";
 import Image from "next/image";
-import * as yup from "yup";
 import stopPornImage from "../../assets/stopPorn.png";
-
-const schema = yup.object().shape({
-  text: yup.string().required("Review is required"),
-});
 
 function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
@@ -66,39 +61,10 @@ function Page({ params }: { params: { slug: string } }) {
       </div>
       <br />
 
-      <div className="text-base ">
-        {/* {blogData?.review.map((review: IReview, index: number) => (
-          <div key={index} className=" p-4 my-4 border rounded-xl">
-            {review.text}
-          </div>
-        ))} */}
-      </div>
+      <div className="text-base "></div>
       <br />
       <br />
       <br />
-      {/* <form>
-        <div className="mb-4">
-          <label htmlFor="text" className="block  font-semibold mb-2">
-            Give Review
-          </label>
-          <Controller
-            name="text"
-            render={({ field }) => (
-              <textarea
-                {...field}
-                className="border rounded-xl w-full py-2 px-3"
-              />
-            )}
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="bg-gray-200 border rounded-xl py-2 px-4 hover:bg-gray-300  dark:bg-gray-500 dark:hover:bg-slate-400 dark:text-white"
-        >
-          Review
-        </button>
-      </form> */}
     </div>
   );
 }

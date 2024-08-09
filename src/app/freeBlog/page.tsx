@@ -14,16 +14,16 @@ import Trendings from "./Trendings";
 function Page() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [pageCount, setPageCount] = useState<number>(1);
+  const paginationSize = 10;
   const {
     data: blogData,
     isLoading,
     isSuccess,
-  } = useGetFreeBlogsQuery({ searchTerm, pageCount });
+  } = useGetFreeBlogsQuery({ searchTerm, pageCount, paginationSize });
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
   };
-  console.log(blogData);
 
   const validationSchema = yup.object().shape({
     searchTerm: yup.string(),
@@ -39,7 +39,6 @@ function Page() {
     <div>
       <div className="min-h-screen">
         <div className="flex flex-col justify-between  gap-3 sm:flex-row">
-          {/* <BlogType /> */}
           <div className="order-3">
             <Trendings />
           </div>

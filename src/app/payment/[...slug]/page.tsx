@@ -9,7 +9,7 @@ function PaymentResult({ params }: { params: { slug: string } }) {
     useUpdateUserDayMutation();
   const userId = userInfo?.id;
   const result =
-    params.slug[0] === "success"
+    params.slug[0] === "redirectSuccess"
       ? "success"
       : params.slug[0] === "fail"
       ? "fail"

@@ -132,6 +132,7 @@ export interface Blog {
     publishedAt: string;
     updatedAt: string;
     viewCount: string;
+    authorName: string;
   };
   id: number;
 }
@@ -275,6 +276,7 @@ export interface UserData {
   videoComplete: boolean;
   tran_id: string;
   varifiedSine: boolean;
+  paid: boolean;
 }
 
 export interface UserDataWithDay {
