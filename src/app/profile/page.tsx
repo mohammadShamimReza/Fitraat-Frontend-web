@@ -13,12 +13,44 @@ import {
 } from "@/redux/api/postApi";
 import { useUpdateUserPasswordMutation } from "@/redux/api/userApi";
 import { InboxOutlined } from "@ant-design/icons";
-import { Button, Form, Input, message, Modal, Upload } from "antd";
+import {
+  Button,
+  Form,
+  FormInstance,
+  Input,
+  message,
+  Modal,
+  Upload,
+} from "antd";
 import { formatDistanceToNow } from "date-fns";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "tailwindcss/tailwind.css";
+import { z } from "zod";
+
+const passwordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Please input your current password!"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least one special character"
+      ),
+    passwordConfirmation: z
+      .string()
+      .min(1, "Please confirm your new password!"),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: "Passwords do not match!",
+    path: ["passwordConfirmation"], // The path to the field with the error
+  });
 
 function ProfilePage() {
+  const formRef = useRef<FormInstance>(null);
   const {
     data: getUserInfoData,
     isLoading: getUserInfoLoading,
@@ -118,25 +150,41 @@ function ProfilePage() {
     setIsPasswordModalVisible(true);
   };
 
+  // ...
+
   const handlePasswordOk = async (values: any) => {
+    console.log(values);
     try {
+      // Validate the form data using Zod
+      passwordSchema.parse(values);
+
+      // Proceed with the API call if validation passes
       const result = await updateUserPassword({
-        userId: userId,
-        password: values.password,
+        data: values,
       });
+      formRef.current?.resetFields();
       setIsPasswordModalVisible(false);
-      if (result) {
+      console.log(result);
+
+      if (result && "error" in result) {
+        message.info("current password is incorrect");
+      } else {
         message.success("Password updated successfully!");
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        message.error(error.errors[0].message);
       } else {
         message.info("Something went wrong. Please try again later.");
       }
-    } catch (error) {
-      message.info("Something went wrong. Please try again later.");
     }
   };
 
+  // ...
+
   const handlePasswordCancel = () => {
     setIsPasswordModalVisible(false);
+    formRef.current?.resetFields();
   };
 
   const showPostModal = (post: any) => {
@@ -261,12 +309,12 @@ function ProfilePage() {
           Upload Profile Image
         </button> */}
 
-        {/* <button
+        <button
           className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
           onClick={showPasswordModal}
         >
           Change Password
-        </button> */}
+        </button>
       </div>
 
       {/* <div>
@@ -459,6 +507,7 @@ function ProfilePage() {
         footer={null}
       >
         <Form
+          ref={formRef}
           name="password"
           onFinish={handlePasswordOk}
           initialValues={{
