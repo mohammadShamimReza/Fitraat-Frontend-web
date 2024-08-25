@@ -1,56 +1,66 @@
 "use client";
 import { getTokenFromCookie } from "@/lib/auth/token";
 import { useGetUserInfoQuery } from "@/redux/api/authApi";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { Skeleton } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import UnAuthTask from "./myTasks/UnAuthTask";
 
 const MyTasks: React.FC = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
   const {
     data: userData,
     isLoading,
     isError: authenticatedUserInfoDataError,
-    isSuccess,
   } = useGetUserInfoQuery();
 
-  const authDayDataId = userData?.currentDay!;
-  const userId = userData?.id!;
-  const paid = userData?.paid;
-
-  const userInfo = useAppSelector((store) => store.auth.userInfo);
-  const userToken = useAppSelector((store) => store.auth.authToken);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchToken = () => {
-      const tokenFromLocalStorage = getTokenFromCookie();
-      if (tokenFromLocalStorage) {
-        dispatch(storeUserInfo(userData));
-        dispatch(storeAuthToken(tokenFromLocalStorage));
-      }
-    };
+    setIsMounted(true);
+    const tokenFromLocalStorage = getTokenFromCookie();
+    if (tokenFromLocalStorage) {
+      dispatch(storeAuthToken(tokenFromLocalStorage));
+    }
+  }, [dispatch]);
 
-    fetchToken(); // Fetch the token on component mount
-  }, []);
+  useEffect(() => {
+    if (userData) {
+      dispatch(storeUserInfo(userData));
+    }
+  }, [userData, dispatch]);
 
-  return (
-    <>
-      {isLoading ? (
-        Array.from({ length: 4 }).map((_, index) => (
+  if (!isMounted) {
+    return (
+      <>
+        {Array.from({ length: 4 }).map((_, index) => (
           <Skeleton style={{ marginTop: "40px" }} key={index} active />
-        ))
-      ) : userData === undefined &&
-        authenticatedUserInfoDataError === true &&
-        paid === undefined ? (
-        // Unauthenticated user render
-        <UnAuthTask paid={paid} />
-      ) : paid === false ? (
-        <UnAuthTask paid={paid} />
-      ) : null}
-    </>
-  );
+        ))}
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton style={{ marginTop: "40px" }} key={index} active />
+        ))}
+      </>
+    );
+  }
+
+  if (
+    authenticatedUserInfoDataError ||
+    userData === undefined ||
+    !userData.paid
+  ) {
+    return <UnAuthTask paid={userData?.paid} />;
+  }
+
+  return null;
 };
 
 export default MyTasks;

@@ -47,7 +47,12 @@ const passwordSchema = z
   .refine((data) => data.password === data.passwordConfirmation, {
     message: "Passwords do not match!",
     path: ["passwordConfirmation"], // The path to the field with the error
+  })
+  .refine((data) => data.currentPassword !== data.password, {
+    message: "New password cannot be the same as the current password!",
+    path: ["password"], // The path to the field with the error
   });
+
 
 function ProfilePage() {
   const formRef = useRef<FormInstance>(null);
