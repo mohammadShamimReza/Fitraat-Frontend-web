@@ -1,50 +1,66 @@
 "use client";
 import FancyLoading from "@/app/loading";
-import Pagination from "@/components/shared/Pagination";
 import { useGetPostQuery } from "@/redux/api/postApi";
 import { useAppSelector } from "@/redux/hooks";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CreatePost from "./CreatePost";
 import SinglePost from "./SinglePost";
 
 function FeedPost() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [pageCount, setPageCount] = useState<number>(1);
+  const [allPosts, setAllPosts] = useState<any[]>([]); // State to accumulate all posts
+
   const {
     data: feedPosts,
     isLoading,
     isFetching,
   } = useGetPostQuery({ pageCount });
-  const total = feedPosts?.meta.pagination.total || 0;
+
+  const totalPosts = feedPosts?.meta.pagination.total || 0;
+  const postsPerPage = 10;
 
   const userInfoFromRedux = useAppSelector((state) => state.auth.userInfo);
-
-  const user = userInfoFromRedux;
   const userId = userInfoFromRedux?.id;
   const varifiedSine = userInfoFromRedux?.varifiedSine;
 
-  const posts = feedPosts?.data;
+  // Append new posts to the existing posts
+  useEffect(() => {
+    if (feedPosts?.data) {
+      setAllPosts((prevPosts) => [...prevPosts, ...feedPosts.data]);
+    }
+  }, [feedPosts]);
+
+  const loadMorePosts = useCallback(() => {
+    if (isFetching) return;
+    const hasMorePosts = pageCount * postsPerPage < totalPosts;
+    if (hasMorePosts) {
+      setPageCount((prev) => prev + 1);
+    }
+  }, [isFetching, pageCount, totalPosts]);
+
+  const handleScroll = useCallback(() => {
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+      loadMorePosts();
+    }
+  }, [loadMorePosts]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
   return (
-    <div className="h-full ">
-      <CreatePost user={user} />
-      {posts ? (
-        posts.map((post) => (
-          <SinglePost
-            key={post.id}
-            post={post}
-            userId={userId}
-            varifiedSine={varifiedSine}
-          />
-        ))
-      ) : (
-        <FancyLoading />
-      )}
-      <br />
-      <Pagination
-        pageCount={pageCount}
-        setPageCount={setPageCount}
-        total={total}
-      />
+    <div className="h-full">
+      <CreatePost user={userInfoFromRedux} />
+      {allPosts.map((post) => (
+        <SinglePost
+          key={post.id}
+          post={post}
+          userId={userId}
+          varifiedSine={varifiedSine}
+        />
+      ))}
+      {(isLoading || isFetching) && <FancyLoading />}
     </div>
   );
 }
