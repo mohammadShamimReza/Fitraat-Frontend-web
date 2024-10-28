@@ -63,7 +63,7 @@ function Kagel({
         new Audio(stop).play();
       }
     }
-  }, [type]);
+  }, [dispatch, initialRender.initialRender, type]);
   const audioType = type === "Squizze" ? squizze : stop;
 
   const startTimer = () => {

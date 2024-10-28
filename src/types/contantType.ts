@@ -1,3 +1,124 @@
+export interface Post {
+  id: number;
+  attributes: {
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    user: {
+      data: {
+        id: number;
+        attributes: {
+          username: string;
+          email: string;
+          provider: string;
+          confirmed: boolean;
+          blocked: boolean;
+          createdAt: string;
+          updatedAt: string;
+          age: number;
+          phone: string;
+          compliteDay: number;
+          country: string;
+          videoComplete: boolean;
+          kagelComplete: boolean;
+          quizComplete: boolean;
+          gender: string;
+          language: string;
+          currentDay: number;
+          paid: boolean;
+        };
+      };
+    };
+  };
+}
+
+export interface PostData {
+  data: Post[];
+  meta: Meta;
+}
+
+export interface CreateLikeForPost {
+  id: number;
+  attributes: {
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+}
+export interface CreateCommentForPost {
+  id: number;
+  attributes: {
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
+}
+
+export interface postForCommentData {
+  data: {
+    id: number;
+    attributes: {
+      comment: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      user: {
+        data: { id: number; attributes: UserData };
+      };
+      post: {
+        data: {
+          id: number;
+          attributes: {
+            description: Array<{
+              type: string;
+              children: Array<{
+                text: string;
+                type: string;
+              }>;
+            }>;
+            createdAt: string;
+            updatedAt: string;
+            publishedAt: string;
+          };
+        };
+      };
+    };
+  }[];
+  meta: Meta;
+}
+
+export interface singleCommentForPostData {
+  id: number;
+  attributes: {
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    user: {
+      data: { id: number; attributes: UserData };
+    };
+    post: {
+      data: {
+        id: number;
+        attributes: {
+          description: Array<{
+            type: string;
+            children: Array<{
+              text: string;
+              type: string;
+            }>;
+          }>;
+          createdAt: string;
+          updatedAt: string;
+          publishedAt: string;
+        };
+      };
+    };
+  };
+}
+
 export interface Blog {
   attributes: {
     BlogId: number;
@@ -11,6 +132,7 @@ export interface Blog {
     publishedAt: string;
     updatedAt: string;
     viewCount: string;
+    authorName: string;
   };
   id: number;
 }
@@ -64,19 +186,6 @@ export interface Kegel {
   };
 }
 
-export interface SortNote {
-  data: {
-    attributes: {
-      sortNoteId: number;
-      sortNoteContent: string;
-      createdAt: string;
-      publishedAt: string;
-      updatedAt: string;
-    };
-    id: number;
-  };
-}
-
 export interface Video {
   data: {
     attributes: {
@@ -104,24 +213,24 @@ export interface Day {
     };
     kegel: Kegel;
     publishedAt: string;
-    reward: string;
-    sort_note: SortNote;
     video: Video;
     id: number;
-    quiz: {
-      data: {
-        attributes: {
-          question: string;
-          answer: string;
-          quizOptions: string;
-          quizId: number;
-          createdAt: string;
-          updatedAt: string;
-          publishedAt: string;
-        };
-        id: number;
-      };
+    quizzes: {
+      data: Quizzes[];
     };
+  };
+  id: number;
+}
+
+export interface Quizzes {
+  attributes: {
+    question: string;
+    answer: string;
+    quizOptions: string;
+    quizId: number;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
   };
   id: number;
 }
@@ -162,10 +271,12 @@ export interface UserData {
   phone: string;
   provider: string;
   quizComplete: boolean;
-  sortNoteComplete: boolean;
   updateAt: string;
-  userName: string;
+  username: string;
   videoComplete: boolean;
+  tran_id: string;
+  varifiedSine: boolean;
+  paid: boolean;
 }
 
 export interface UserDataWithDay {
@@ -220,8 +331,6 @@ export interface UserDataWithDay {
   //   publishedAt: string;
   //   reward: string;
   //   sort_note: {
-  //     sortNoteId: number;
-  //     sortNoteContent: string;
   //     createdAt: string;
   //     publishedAt: string;
   //     updatedAt: string;
@@ -246,10 +355,10 @@ export interface UserDataWithDay {
   phone: string;
   provider: string;
   quizComplete: boolean;
-  sortNoteComplete: boolean;
   updateAt: string;
   username: string;
   videoComplete: boolean;
+  paid: boolean;
 }
 
 export interface UserAuthData {
@@ -257,4 +366,21 @@ export interface UserAuthData {
     jwt: string;
     user: UserData;
   };
+}
+
+
+
+export interface PaymentFormValues {
+  cus_name: string;
+  cus_email: string;
+  tran_id: string;
+  currency: "USD" | "BDT";
+  total_amount: number;
+  userId: string;
+  product_name: string;
+  product_category: string;
+  product_profile: string;
+  cus_add1: string;
+  cus_country: string;
+  cus_phone: string;
 }

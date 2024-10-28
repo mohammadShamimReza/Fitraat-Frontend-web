@@ -38,7 +38,7 @@ export const daysApi = baseApi.injectEndpoints({
       transformResponse: (rawResult: UserDataWithDay) => {
         return rawResult;
       },
-      providesTags: ["updateUser"],
+      providesTags: ["updateUserDay", "updateUser"],
     }),
     updateUserDay: builder.mutation({
       query: (body) => ({
@@ -52,7 +52,7 @@ export const daysApi = baseApi.injectEndpoints({
       transformResponse: (rawResult: UserData | Error) => {
         return rawResult;
       },
-      invalidatesTags: ["updateUser"],
+      invalidatesTags: ["updateUserDay"],
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         return baseQueryReturnValue.data;
       },
@@ -60,6 +60,18 @@ export const daysApi = baseApi.injectEndpoints({
     forgetPassword: builder.mutation({
       query: (body) => ({
         url: `auth/forgot-password`,
+        method: "POST",
+        body: {
+          email: body.email,
+        },
+      }),
+      transformResponse: (rawResult: any | Error) => {
+        return rawResult;
+      },
+    }),
+    chengePassword: builder.mutation({
+      query: (body) => ({
+        url: `auth/chenge-password`,
         method: "POST",
         body: {
           email: body.email,
@@ -78,4 +90,5 @@ export const {
   useGetUserInfoQuery,
   useUpdateUserDayMutation,
   useForgetPasswordMutation,
+  useChengePasswordMutation,
 } = daysApi;

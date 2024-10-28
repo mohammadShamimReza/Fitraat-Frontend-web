@@ -1,12 +1,12 @@
-import { useGet3TrendingBlogQuery } from "@/redux/api/blogApi";
+import { useGet3TrendingFreeBlogQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
 import Link from "next/link";
 
 function Trendings() {
-  const { data: trendingBlogData } = useGet3TrendingBlogQuery({});
-  console.log(trendingBlogData);  
+  const { data: trendingBlogData } = useGet3TrendingFreeBlogQuery({});
+  console.log(trendingBlogData);
   return (
-    <div className="">
+    <div className="pr-3">
       <div className="">
         <div className="">
           <div className="">
@@ -14,19 +14,20 @@ function Trendings() {
               <p className="text-center text-xl font-semibold py-10">
                 Trending Blogs
               </p>
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center text-gray-500">
                 {trendingBlogData?.data?.map((blog: Blog) => (
                   <Link key={1} href={`/blog/${blog.id}`}>
                     <div className="mb-4 hover:shadow-lg border rounded-xl  ">
                       <div className="p-4">
-                        <p className="font-bold text-lg truncate">
+                        <p className="font-bold text-lg truncate text-black">
                           {blog?.attributes.title
                             .split(" ")
-                            .slice(0, 2)
+                            .slice(0, 3)
                             .join(" ")}
+                          ...
                         </p>
 
-                        <div className="mt-2  line-clamp-3  w-44 text-justify">
+                        <div className="mt-2  line-clamp-3  w-44 text-justify text-gray-500">
                           {blog?.attributes.content && (
                             <div
                               dangerouslySetInnerHTML={{

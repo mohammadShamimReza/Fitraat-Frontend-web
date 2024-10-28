@@ -3,14 +3,14 @@ import { Dispatch, SetStateAction } from "react";
 function Pagination({
   pageCount,
   setPageCount,
-  totalBlog,
+  total,
 }: {
   pageCount: number;
   setPageCount: Dispatch<SetStateAction<number>>;
-  totalBlog: number;
+  total: number;
 }) {
   // Calculate the total number of pages based on the total number of blogs
-  const totalPages = Math.ceil(totalBlog / 10); // Assuming 3 blogs per page
+  const totalPages = Math.ceil(total / 10); // Assuming 3 blogs per page
 
   // Function to generate pagination button elements
   const renderPaginationButtons = () => {
@@ -199,7 +199,7 @@ function Pagination({
         <li>
           <button
             onClick={() => setPageCount(pageCount === 1 ? 1 : pageCount - 1)}
-            className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white   hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2 "
+            className="flex items-center justify-center px-3 h-8  leading-tight text-gray-500 bg-white   hover:bg-gray-100 hover:text-gray-700 text-2xl rounded-lg ml-2 "
           >
             <svg
               className="w-3.5 h-3.5 mr-2"
@@ -226,7 +226,7 @@ function Pagination({
                 pageCount === totalPages ? totalPages : pageCount + 1
               )
             }
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white rounded-lg  hover:bg-gray-100 hover:text-gray-700 text-2xl "
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white rounded-lg  hover:bg-gray-100 hover:text-gray-700 text-2xl ml-2"
           >
             <svg
               className="w-3.5 h-3.5 ml-2"

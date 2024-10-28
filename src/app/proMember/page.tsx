@@ -1,33 +1,15 @@
 "use client";
-import { useGetUserInfoQuery } from "@/redux/api/authApi";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const MembershipCard = () => {
-  const router = useRouter();
-  const {
-    data: authenticatedUserInfoData,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useGetUserInfoQuery();
-  if (isSuccess) {
-  }
-
-  const handlePremium = () => {
-    if (isSuccess) {
-      alert("You are already premium member");
-    } else if (isError) {
-      router.push("/register");
-    }
-  };
   return (
-    <div className="mt-20">
+    <div className=" min-h-screen">
       <div className="">
         <div className=" p-5">
           <p className="text-center text-4xl font-bold text-gray-700 underline">
             Become <span className="text-red-600">premium</span> member
           </p>
-          <p className="mt-5 max-w-5xl p-5 mx-auto">
+          {/* <p className="mt-5 max-w-5xl p-5 mx-auto">
             &quot;We suggest not buying the premium membership right away. We
             offer a 40-day free trial of our app without requiring any login. We
             believe this 40-day trial is sufficient for most people. However, if
@@ -43,10 +25,10 @@ const MembershipCard = () => {
               habit and become
               <span className="text-red-600"> unbeatable</span>.
             </span>
-          </p>
+          </p> */}
         </div>
       </div>
-      <div className="flex justify-center items-center mt-32 ">
+      <div className="flex justify-center items-center  ">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:p-3 md:p-3 lg:p-0">
           {/* Freemium Membership Card */}
           <div className="bg-white overflow-hidden   shadow-md rounded-xl border-2 flex justify-between flex-col">
@@ -173,10 +155,7 @@ const MembershipCard = () => {
               </ul>
             </div>
             <div className="bg-gray-800   px-4 py-4 sm:px-6">
-              <button
-                className="w-full  hover:text-white rounded-md border border-transparent px-4 py-2 bg-white text-base font-medium  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center mt-2"
-                onClick={() => router.push("myTasks")}
-              >
+              <div className="w-full   rounded-md border border-transparent px-4 py-2 bg-white text-base font-medium   focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center mt-2">
                 Start Fremium{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -185,7 +164,7 @@ const MembershipCard = () => {
                 >
                   <path d="M12 2L8.45 8.33 2 9l5.17 4.43L5.8 19 12 15.5 18.2 19l-1.37-5.57L22 9l-6.45-.67z" />
                 </svg>
-              </button>
+              </div>
             </div>
           </div>
 
@@ -297,11 +276,8 @@ const MembershipCard = () => {
                 </li>
               </ul>
             </div>
-            <div className="bg-gray-800   px-4 py-4 sm:px-6">
-              <button
-                className="w-full  hover:text-white rounded-md border border-transparent px-4 py-2 bg-white text-base font-medium  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center mt-2"
-                onClick={() => handlePremium()}
-              >
+            <Link href={"/payment"} className="bg-gray-800   px-4 py-4 sm:px-6">
+              <button className="w-full  hover:text-white rounded-md border border-transparent px-4 py-2 bg-white text-base font-medium  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center justify-center mt-2">
                 Upgrade to Premium{" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -312,7 +288,7 @@ const MembershipCard = () => {
                   <path d="M12 2L8.45 8.33 2 9l5.17 4.43L5.8 19 12 15.5 18.2 19l-1.37-5.57L22 9l-6.45-.67z" />
                 </svg>
               </button>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

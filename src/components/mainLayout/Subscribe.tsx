@@ -14,7 +14,6 @@ const Subscribe = () => {
     const userEmail = (event.target as HTMLFormElement).email.value;
     setEmail(userEmail);
 
-    console.log(userEmail);
 
     if (userEmail !== "") {
       try {
@@ -34,12 +33,12 @@ const Subscribe = () => {
         console.log(error);
       }
     } else {
-      message.error("Login successfully");
+      message.error("Something went wrong");
     }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white border overflow-hidden md:max-w-2xl mt-32 mb-10 rounded-xl shadow-md p-10 m-10">
+    <div className=" mx-auto bg-white border-t overflow-hidden  w-full  ">
       <div className="md:flex flex-col">
         <div className="p-8 text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-2 ">
@@ -49,7 +48,10 @@ const Subscribe = () => {
             Get updates on our latest projects and news straight to your inbox.
           </p>
         </div>
-        <form onSubmit={handleSubscribe} className="p-8 space-y-4">
+        <form
+          onSubmit={handleSubscribe}
+          className="mx-auto p-8 space-y-4 w-2/3"
+        >
           <div>
             <label
               htmlFor="email"

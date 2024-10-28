@@ -1,20 +1,24 @@
 "use client";
-import { KegelTimes } from "@/types/contantType";
+import { KegelTimes, Quizzes } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { FaCheckCircle } from "react-icons/fa";
 import Kagel from "./taskPages/Kagel";
 import Quiz from "./taskPages/Quiz";
-import Reward from "./taskPages/Reward";
-import SortNote from "./taskPages/SortNote";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, theme } from "antd";
+import { Layout, theme } from "antd";
 import { useState } from "react";
 import { CiVideoOn } from "react-icons/ci";
 import { FaBlogger } from "react-icons/fa6";
-import { GrStatusPlaceholder, GrSteps, GrTag, GrYoga } from "react-icons/gr";
+import {
+  GiFrankensteinCreature,
+  GiRank1,
+  GiRank2,
+  GiRank3,
+} from "react-icons/gi";
+import { GrStatusPlaceholder, GrYoga } from "react-icons/gr";
+import { TbCurrencyFrank, TbMilitaryRank } from "react-icons/tb";
 
 const { Header, Sider, Content } = Layout;
 
@@ -28,19 +32,17 @@ function TaskPage({
   handleNext,
   blog,
   quiz,
-  sort_note,
   video,
-  reward,
   kegel,
   DayCount,
+  handleDayid,
+  paid,
 }: {
   localStorageData: {
     video: boolean;
     kagel: boolean;
-    sortNote: boolean;
     quiz: boolean;
-    rewards: boolean;
-    suggestBlog: boolean;
+    Blog: boolean;
   };
   handleTaskClick: (index: number) => void;
   selectedTask: string;
@@ -52,31 +54,18 @@ function TaskPage({
     title: string | undefined;
     content: string | undefined;
   };
-  quiz: {
-    question: string | undefined;
-    answer: string | undefined;
-    quizOptions: string | undefined;
-  };
-  sort_note: {
-    sortNoteContent: string | undefined;
-  };
+  quiz: Quizzes[] | undefined;
+
   video: {
     videoUrl: string | undefined;
   };
-  reward: {
-    rewardContant: string | undefined;
-  };
+
   kegel: KegelTimes[] | undefined;
   DayCount: number;
+  handleDayid: (id: string) => void;
+  paid: boolean | undefined;
 }) {
-  const tasks = [
-    "video",
-    "kagel",
-    "sortNote",
-    "quiz",
-    "rewards",
-    "suggestBlog",
-  ];
+  const tasks = ["video", "kagel", "quiz", "Blog"];
 
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -86,254 +75,240 @@ function TaskPage({
   const icons = [
     <CiVideoOn key={1} />,
     <GrYoga key={2} />,
-    <GrSteps key={3} />,
+    // <GrSteps key={3} />,
     <GrStatusPlaceholder key={4} />,
-    <GrTag key={5} />,
-    <FaBlogger key={6} />,
+    <FaBlogger key={5} />,
   ];
 
-  return (
-    <>
-      <Layout>
-        <Sider theme="light" trigger={null} collapsible collapsed={collapsed}>
-          <div className="demo-logo-vertical" />
-          <p className="text-center text-2xl text-red-600 font-bold p-2 mt-4 border-b border-r">
-            Tasks
-          </p>
-          <div className="mt-4">
-            {" "}
-            {tasks.map((task, index) => (
-              <div
-                key={index}
-                className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
-                  (localStorageData as any)[task] === false
-                    ? " cursor-not-allowed"
-                    : "cursor-pointer"
-                }`}
-                title={
-                  (localStorageData as any)[task] === false
-                    ? "This task is not unlock yet"
-                    : "you have completed this task"
-                }
-                onClick={() => {
-                  if ((localStorageData as any)[task] === true) {
-                    handleTaskClick(index);
-                  }
-                }}
-              >
-                {" "}
-                <span
-                  className={`transition-colors duration-300  p-2 ${
-                    selectedTask === task && "font-bold text-blue-600"
-                  }`}
-                >
-                  <div className="flex align-middle justify-center">
-                    {" "}
-                    <span className="mr-2 mt-1"> {icons[index]}</span>
-                    {!collapsed ? (
-                      <span className="">
-                        {task.replace(/^\w/, (c) => c.toUpperCase())}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </span>
-                <span className="pl-3 right-0 p-2">
-                  <FaCheckCircle
-                    className=""
-                    size={25}
-                    style={{
-                      color:
-                        (localStorageData as any)[task] === true
-                          ? "#0578EA"
-                          : "gray",
-                      fontWeight: "bold",
-                    }}
-                  />
-                </span>
-              </div>
-            ))}
-          </div>
-        </Sider>
-        <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "16px",
-                width: 64,
-                height: 64,
-              }}
-            />
-          </Header>
-          <Content
-            style={{
-              margin: "24px 16px",
-              padding: 24,
-              minHeight: 280,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <div className="">
-              <div
-                // style={{ height: "500px" }}
-                className="p-3  mx-auto flex flex-col justify-evenly "
-              >
-                <div className="basis-1/6">
-                  <div className=""></div>
-                  <p className="text-3xl font-bold text-left">
-                    Day: {DayCount}
-                  </p>
-                  <p className="text-2xl font-bold text-center ">
-                    {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
-                  </p>
-                </div>
 
-                <br />
-                <div
-                  className="h-[30rem]"
-                  // style={{
-                  //   width: "100%",
-                  //   height: "380px",
-                  // }}
-                >
-                  <div className="basis-4/6 border p-3 rounded-lg h-full ">
-                    <Video selectedTask={selectedTask} video={video} />
-                    <Kagel selectedTask={selectedTask} kegel={kegel} />
-                    <SortNote
-                      selectedTask={selectedTask}
-                      sort_note={sort_note}
-                    />
-                    <Quiz selectedTask={selectedTask} quiz={quiz} />
-                    <Reward selectedTask={selectedTask} reward={reward} />
-                    <SuggestedBlog selectedTask={selectedTask} blog={blog} />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="basis-1/6 flex justify-center align-bottom flex-col">
-              <div className="flex justify-between mt-4">
-                <button
-                  className={`px-4 py-2 text-white rounded focus:outline-none ${
-                    selectedTaskIndex === 0
-                      ? "bg-gray-500 cursor-not-allowed "
-                      : "bg-gray-600 hover:bg-gray-700"
-                  }`}
-                  onClick={handlePrevious}
-                  disabled={selectedTaskIndex === 0}
-                >
-                  <span style={{ paddingRight: "10px" }}>
-                    {" "}
-                    <ArrowLeftOutlined />
-                  </span>
-                  Previous
-                </button>
+  const allDays = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+  ];
 
-                <button
-                  className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700"
-                  }`}
-                  onClick={handleNext}
-                >
-                  Next
-                  <span style={{ paddingLeft: "10px" }}>
-                    <ArrowRightOutlined />
-                  </span>
-                </button>
-              </div>
-            </div>
-          </Content>
-        </Layout>
-      </Layout>
-      {/* 
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row">
-          <div className="lg:w-1/3 pr-8 mb-8 lg:mb-0">
-            <h2 className="text-2xl font-bold ">Your Task for Today</h2>
-            <ul className="list-decimal pl-6">
-              {tasks.map((task, index) => (
-                <div
-                  key={index}
-                  className={`flex justify-between h-10  hover:bg-slate-100 rounded ${
-                    (localStorageData as any)[task] === false
-                      ? " cursor-not-allowed"
-                      : "cursor-pointer"
-                  }`}
-                  title={
-                    (localStorageData as any)[task] === false
-                      ? "This task is not unlock yet"
-                      : "you have completed this task"
-                  }
-                  onClick={() => {
-                    if ((localStorageData as any)[task] === true) {
-                      handleTaskClick(index);
-                    }
-                  }}
-                >
-                  <li
-                    className={`transition-colors duration-300  p-2 ${
-                      selectedTask === task && "font-bold text-blue-600"
-                    }`}
-                  >
-                    {task.replace(/^\w/, (c) => c.toUpperCase())}
-                  </li>
-                  <span className="pl-3 right-0 p-2">
-                    <FaCheckCircle
-                      className=""
-                      size={25}
-                      style={{
-                        color:
-                          (localStorageData as any)[task] === true
-                            ? "#0578EA"
-                            : "gray",
-                        fontWeight: "bold",
-                      }}
-                    />
-                  </span>
-                </div>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:w-2/3">
-            <div
-              // style={{ height: "500px" }}
-              className="p-3  mx-auto flex flex-col justify-evenly "
+    return (
+      <div className="mx-auto min-h-screen p-3">
+        <Layout style={{ minHeight: "100vh", borderRadius: "30px" }}>
+          <div className="bg-white  min-h-screen relative">
+            <Sider
+              theme="light"
+              className="border rounded-lg"
+              breakpoint="sm"
+              collapsedWidth="0"
             >
-              <div className="basis-1/6">
-                <div className=""></div>
-                <p className="text-3xl font-bold text-left">Day: {DayCount}</p>
-                <p className="text-2xl font-bold text-center ">
-                  {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
-                </p>
+              <div className="demo-logo-vertical" />
+              <p className="text-center text-2xl tracking-wider font-extralight  p-2 border-b">
+                Tasks
+              </p>
+              <div className="mt-4">
+                {" "}
+                {tasks.map((task, index) => (
+                  <div
+                    key={index}
+                    className={`flex justify-between hover:bg-slate-100 rounded ${
+                      (localStorageData as any)[task] === false
+                        ? " cursor-not-allowed"
+                        : "cursor-pointer"
+                    } ${selectedTask === task && "bg-blue-100"}`}
+                    title={
+                      (localStorageData as any)[task] === false
+                        ? "This task is not unlock yet"
+                        : "you have completed this task"
+                    }
+                    onClick={() => {
+                      if ((localStorageData as any)[task] === true) {
+                        handleTaskClick(index);
+                      }
+                    }}
+                  >
+                    {" "}
+                    <span
+                      className={`transition-colors duration-300  p-2 ${
+                        selectedTask === task && "font-bold text-blue-600"
+                      }`}
+                    >
+                      <div className="flex align-middlehandleDayid justify-center">
+                        {" "}
+                        <span className="mr-2 mt-1"> {icons[index]}</span>
+                        {!collapsed ? (
+                          <span className="">
+                            {task.replace(/^\w/, (c) => c.toUpperCase())}
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </span>
+                    <span className="pl-3 right-0 p-2 ">
+                      <FaCheckCircle
+                        className=""
+                        size={25}
+                        style={{
+                          color:
+                            (localStorageData as any)[task] === true
+                              ? "#0578EA"
+                              : "gray",
+                          fontWeight: "bold",
+                        }}
+                      />
+                    </span>
+                  </div>
+                ))}
               </div>
+              <p className="text-center text-2xl tracking-wider font-extralight  p-2 border-b border-t mt-[100%]">
+                Days
+              </p>
+              <div className="mt-4 h-60 overflow-scroll">
+                {" "}
+                {allDays.map((day, index) => (
+                  <div
+                    key={index}
+                    className={`flex justify-between hover:bg-slate-100 rounded ${
+                      DayCount >= day ? "cursor-pointer " : "cursor-not-allowed"
+                    } ${DayCount === day ? "bg-blue-100" : ""}  ${
+                      paid === undefined || paid === false
+                        ? day > 3
+                          ? "blur-sm"
+                          : "blur-none"
+                        : ""
+                    }`}
+                    title={DayCount >= day ? "Unlocked" : "lock"}
+                    onClick={() =>
+                      DayCount >= day ? handleDayid(day.toString()) : ""
+                    }
+                  >
+                    {" "}
+                    <span
+                      className={`transition-colors duration-300  p-2  ${
+                        DayCount === day && "font-bold text-blue-600 "
+                      }`}
+                    >
+                      <div className="flex align-middle justify-center">
+                        {!collapsed ? <span className="">Day: {day}</span> : ""}
+                      </div>
+                    </span>
+                    <span className="mt-2">
+                      {paid === undefined || paid === false
+                        ? day > 3
+                          ? "Paid"
+                          : "Demo"
+                        : ""}
+                    </span>
+                    <span className="pl-3 right-0 p-2 ">
+                      <FaCheckCircle
+                        className=""
+                        size={25}
+                        style={{
+                          color: DayCount >= day ? "#0578EA" : "gray",
+                          fontWeight: "bold",
+                        }}
+                      />
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Sider>
+          </div>
 
-              <br />
-              <div
-                className="h-[30rem]"
-                // style={{
-                //   width: "100%",
-                //   height: "380px",
-                // }}
-              >
-                <div className="basis-4/6 border p-3 rounded-lg h-full ">
-                  <Video selectedTask={selectedTask} video={video} />
-                  <Kagel selectedTask={selectedTask} kegel={kegel} />
-                  <SortNote selectedTask={selectedTask} sort_note={sort_note} />
-                  <Quiz selectedTask={selectedTask} quiz={quiz} />
-                  <Reward selectedTask={selectedTask} reward={reward} />
-                  <SuggestedBlog selectedTask={selectedTask} blog={blog} />
+          <Layout>
+            {/* <Header
+            style={{ padding: 0, background: colorBgContainer }}
+            className=" rounded"
+          ></Header> */}
+            <Content
+              style={{
+                // margin: "24px 16px",
+                padding: 24,
+                minHeight: 280,
+                background: colorBgContainer,
+                borderRadius: borderRadiusLG,
+              }}
+            >
+              <div className="backgroundDot p-5">
+                <div
+                  // style={{ height: "500px" }}
+                  className=" mx-auto flex flex-col justify-evenly "
+                >
+                  <div className="basis-1/6">
+                    <p className="text-3xl font-bold text-left flex justify-between ">
+                      <span>Day: {DayCount}</span>{" "}
+                      <span className="flex items-center gap-2">
+                        Rank:{" "}
+                        {DayCount < 5 ? (
+                          <GiFrankensteinCreature />
+                        ) : DayCount >= 40 ? (
+                          <TbMilitaryRank style={{ color: "red" }} />
+                        ) : DayCount > 30 ? (
+                          <GiRank3 style={{ color: "red" }} />
+                        ) : DayCount > 20 ? (
+                          <GiRank2 style={{ color: "red" }} />
+                        ) : DayCount >= 10 ? (
+                          <GiRank1 style={{ color: "red" }} />
+                        ) : (
+                          <TbCurrencyFrank />
+                        )}
+                      </span>
+                    </p>
+                    <p className="text-2xl font-bold text-center mb-3 text-blue-500 ">
+                      {selectedTask.replace(/^\w/, (c) => c.toUpperCase())}
+                    </p>
+                  </div>
+
+                  <br />
+                  <div
+                    className="h-[30rem]"
+                    // style={{
+                    //   width: "100%",
+                    //   height: "380px",
+                    // }}
+                  >
+                    <div className="basis-4/6 border p-3 rounded-lg h-full ">
+                      <Video selectedTask={selectedTask} video={video} />
+                      <Kagel selectedTask={selectedTask} kegel={kegel} />
+
+                      <Quiz selectedTask={selectedTask} quiz={quiz} />
+
+                      <SuggestedBlog selectedTask={selectedTask} blog={blog} />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-    </>
-  );
+              <div className="basis-1/6 flex justify-center align-bottom flex-col p-10">
+                <div className="flex justify-between">
+                  <button
+                    className={`px-4 py-2 text-white rounded focus:outline-none text-lg ${
+                      selectedTaskIndex === 0
+                        ? "bg-gray-500 cursor-not-allowed "
+                        : "bg-gray-600 hover:bg-gray-700"
+                    }`}
+                    onClick={handlePrevious}
+                    disabled={selectedTaskIndex === 0}
+                  >
+                    <span style={{ paddingRight: "10px" }}>
+                      {" "}
+                      <ArrowLeftOutlined />
+                    </span>
+                    Previous
+                  </button>
+
+                  <button
+                    className={
+                      "px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700 text-lg"
+                    }
+                    onClick={handleNext}
+                  >
+                    {selectedTask === "Blog" ? "Complete" : "Next"}
+                    <span style={{ paddingLeft: "10px" }}>
+                      <ArrowRightOutlined />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </Content>
+          </Layout>
+        </Layout>
+      </div>
+    );
 }
 
 export default TaskPage;

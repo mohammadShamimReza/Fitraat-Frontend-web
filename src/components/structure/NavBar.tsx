@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { removeAuthToken } from "@/redux/slice/authSlice";
+import { useGetUserInfoQuery } from "@/redux/api/authApi";
+import { removeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import siteLogo from "../../app/assets/detox1.png";
@@ -27,32 +28,46 @@ function NavBar() {
 
   const removeTokenFromCookies = useCallback(() => {
     return removeTokenFromCookie();
-  }, []); // empty dependency array means the function does not depend on any variables
+  }, []);
+
+  const authToken = getTokenFromCookie() || authTokenFromRedux;
+  const { data, error, isLoading } = useGetUserInfoQuery(undefined);
 
   useEffect(() => {
-    const authToken = getTokenFromCookie() || authTokenFromRedux;
-
+    if (data) {
+      dispatch(storeUserInfo(data)); // Set user in Redux if data is returned
+    }
+    if (error) {
+      dispatch(storeUserInfo(null)); // Clear user state if there's an error
+    }
     if (!authToken) {
       setAuthenticated(false);
     } else {
       setAuthenticated(true);
     }
-  }, [authTokenFromRedux, removeTokenFromCookies]); // include removeTokenFromCookies in the dependency array
+  }, [
+    authToken,
+    authTokenFromRedux,
+    data,
+    dispatch,
+    error,
+    removeTokenFromCookies,
+  ]); // include removeTokenFromCookies in the dependency array
 
   const handleLogout = () => {
     removeTokenFromCookies();
     dispatch(removeAuthToken(null));
 
-      if (typeof window !== "undefined") {
-        window.location.href = "/"; // Directly set the href to trigger page reload
-      }
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+    }
   };
   return (
-    <div className="mb-5 border rounded-xl shadow-md  mt-5 bg-white">
-      <div className="p-2">
-        <div className="  px-1 sm:px-4 lg:px-6">
-          <div className="relative flex h-16 items-center justify-between">
-            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+    <div className="mb-7 border rounded-lg shadow-sm  mt-7 bg-white">
+      <div className="">
+        <div className="  p-1 sm:px-4 lg:px-6">
+          <div className=" flex h-16 items-center justify-between ">
+            <div className="   flex items-center sm:hidden">
               <button
                 type="button"
                 onClick={() => setMenuToggle(!menuToggle)}
@@ -94,58 +109,45 @@ function NavBar() {
                 </svg>
               </button>
             </div>
-            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <div className="flex flex-shrink-0 items-center text-lg font-bold">
-                <Link href={"/"}>
-                  {" "}
-                  <Image src={siteLogo} width={70} alt="website logo" />
-                </Link>
-              </div>
-              <div className="hidden sm:ml-6 sm:block mt-5">
-                <div className="flex space-x-4">
+
+            <div className="flex flex-shrink-0 items-center text-lg font-bold">
+              <Link href={"/"}>
+                {" "}
+                <Image src={siteLogo} width={70} alt="website logo" />
+              </Link>
+            </div>
+
+            <div className="flex  items-center justify-center sm:items-stretch sm:justify-start ">
+              <div className="hidden sm:ml-6 sm:block mt-2 ">
+                <div className="flex space-x-4 ">
                   <Link
                     href="/"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
                     Home
                   </Link>
                   <Link
-                    href="/blog"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                    href="/feed"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
+                  >
+                    Feed
+                  </Link>
+                  <Link
+                    href="/freeBlog"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
                     Blog
-                  </Link>
-
-                  <Link
-                    href="/proMember"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
-                  >
-                    Pro Member
-                  </Link>
-                  <Link
-                    href="/about"
-                    className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
-                    aria-current="page"
-                  >
-                    About us
-                  </Link>
-
-                  <Link
-                    href="/myTasks"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
-                  >
-                    My Tasks
                   </Link>
                 </div>
               </div>
             </div>
 
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer">
+            <div className="  flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer">
               {!authenticated ? (
                 <div className="relative ml-3">
                   <Link href={"/login"}>
                     <span className="sr-only">Login</span>
-                    <span className="flex items-center gap-1 text-sm hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span className="flex items-center gap-1 text-md hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span>Login</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +170,7 @@ function NavBar() {
                 <div className="relative ml-3">
                   <div
                     onClick={handleUserMenuToggle}
-                    className="relative flex text-sm hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative flex text-md hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span className="sr-only">Open user menu</span>
                     <div className="flex gap-1">
@@ -197,7 +199,7 @@ function NavBar() {
                     >
                       <Link
                         href="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-t-xl"
+                        className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-200 rounded-t-xl"
                         role="menuitem"
                         tabIndex={-1}
                         id="user-menu-item-0"
@@ -206,7 +208,7 @@ function NavBar() {
                       </Link>
                       {/* <Link
                         href="#"
-                        className="block px-4 py-2 text-sm text-gray-700"
+                        className="block px-4 py-2 text-md text-gray-700"
                         role="menuitem"
                         tabIndex={-1}
                         id="user-menu-item-1"
@@ -216,7 +218,7 @@ function NavBar() {
                       <Link
                         href="/"
                         onClick={handleLogout}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-b-xl"
+                        className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-200 rounded-b-xl"
                         role="menuitem"
                         tabIndex={-1}
                         id="user-menu-item-2"
@@ -233,48 +235,27 @@ function NavBar() {
 
         {menuToggle ? (
           <div
-            className="sm:hidden absolute z-10 bg-white w-full"
+            className="sm:hidden absolute z-10 bg-white w-screen border rounded-lg shadow"
             id="mobile-menu"
           >
-            <div className="space-y-1 px-2 pb-3 pt-2">
+            <div className="space-y-1 px-2 pb-3 pt-2 ">
               <Link
                 href="/"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Home
               </Link>
               <Link
-                href="/blog"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
+                href="/free-blogs"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Blog
               </Link>
-
               <Link
-                href="/blog"
-                className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
+                href="/feed"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
-                Blog
-              </Link>
-
-              <Link
-                href="/proMember"
-                className=" hover:bg-gray-200 rounded-md px-3 py-2 text-sm font-normal"
-              >
-                Pro Member
-              </Link>
-              <Link
-                href="/about"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
-                aria-current="page"
-              >
-                About us
-              </Link>
-              <Link
-                href="/myTasks"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal"
-              >
-                My Tasks
+                Feed
               </Link>
             </div>
           </div>

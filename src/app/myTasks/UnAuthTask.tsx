@@ -2,148 +2,141 @@
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
-import { KegelTimes } from "@/types/contantType";
-import { message } from "antd";
+import { KegelTimes, Quizzes } from "@/types/contantType";
+import { Button, message, Modal } from "antd";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
-function UnAuthTask({}) {
+import DayFinishImage from "../assets/dayFinish.gif";
+
+function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   const router = useRouter();
-    const [unAuthDayId, setUnAuthDayId] = useState("1");
+  const [unAuthDayId, setUnAuthDayId] = useState("1");
 
-    const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
-      parseInt(unAuthDayId)
-    );
+  const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
+    parseInt(unAuthDayId)
+  );
+  useEffect(() => {
+    const dayId = window.localStorage.getItem("unAuthDayId") || "1";
+    if (parseInt(dayId) > 3) {
+      router.push("/CompletedFreeTask");
+    }
+    console.log(dayId);
+    setUnAuthDayId(dayId);
+  }, []);
 
-    const tasks = [
-      "video",
-      "kagel",
-      "sortNote",
-      "quiz",
-      "rewards",
-      "suggestBlog",
-    ];
+  const tasks = ["video", "kagel", "quiz", "Blog"];
 
-    const currentTask = useAppSelector((state) => state.taskSlice.currentTask);
-    const dispatch = useAppDispatch();
+  const currentTask = useAppSelector((state) => state.taskSlice.currentTask);
+  const dispatch = useAppDispatch();
 
-    const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
-    const selectedTask = currentTask || tasks[selectedTaskIndex];
+  const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
+  const selectedTask = currentTask || tasks[selectedTaskIndex];
 
-    const initialLocalStorageData = localStorage.getItem("UnAuthDay");
-    const defaultLocalStorageData = {
-      video: false,
-      kagel: false,
-      sortNote: false,
-      quiz: false,
-      rewards: false,
-      suggestBlog: false,
-    };
+  const initialLocalStorageData = localStorage.getItem("UnAuthDay");
+  const defaultLocalStorageData = {
+    video: false,
+    kagel: false,
+    quiz: false,
+    Blog: false,
+  };
 
-    const [localStorageData, setLocalStorageData] = useState(
-      initialLocalStorageData
-        ? JSON.parse(initialLocalStorageData)
-        : defaultLocalStorageData
-    );
+  const [localStorageData, setLocalStorageData] = useState(
+    initialLocalStorageData
+      ? JSON.parse(initialLocalStorageData)
+      : defaultLocalStorageData
+  );
 
-    // Update local storage whenever localStorageData changes
-    useEffect(() => {
-      localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
-    }, [localStorageData]);
+  // Update local storage whenever localStorageData changes
+  useEffect(() => {
+    localStorage.setItem("UnAuthDay", JSON.stringify(localStorageData));
+  }, [localStorageData]);
 
-    const handleTaskClick = (index: number) => {
-      setSelectedTaskIndex(index);
-      dispatch(storeCurrentTask(tasks[index]));
-    };
+  const handleTaskClick = (index: number) => {
+    setSelectedTaskIndex(index);
+    dispatch(storeCurrentTask(tasks[index]));
+  };
 
-    const handlePrevious = () => {
-      if (selectedTaskIndex > 0) {
-        setSelectedTaskIndex(selectedTaskIndex - 1);
-        dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
-      }
-    };
-    const handleNext = () => {
-      if (selectedTask === "suggestBlog") {
-        dispatch(storeCurrentTask(tasks[0]));
+  const handlePrevious = () => {
+    if (selectedTaskIndex > 0) {
+      setSelectedTaskIndex(selectedTaskIndex - 1);
+      dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
+    }
+  };
 
-        localStorage.setItem(
-          "UnAuthDay",
-          JSON.stringify(defaultLocalStorageData)
-        );
+  const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
 
-        if (unAuthDayId === null) {
-          localStorage.setItem("unAuthDayId", "1");
-        } else if (unAuthDayId !== null) {
-          let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
-          if (parsedUnAuthDayId === 40) {
-            message.success(
-              "Hurray this is you last day of task. Then you becone spartan"
-            );
-            localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-            router.push("/blog");
-          } else if (parsedUnAuthDayId > 40) {
-            message.success(
-              "Congratulations you have successfully completed your tasks for 40 day"
-            );
-            window.location.reload();
-          }
-          if (parsedUnAuthDayId <= 41) {
-            localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-            router.push("/blog");
-          }
+  const handleNext = () => {
+    if (selectedTask === "Blog") {
+      setIsFinishModalOpen(true);
+
+      dispatch(storeCurrentTask(tasks[0]));
+      localStorage.setItem(
+        "UnAuthDay",
+        JSON.stringify(defaultLocalStorageData)
+      );
+
+      if (unAuthDayId === null) {
+        localStorage.setItem("unAuthDayId", "1");
+      } else if (unAuthDayId !== null) {
+        let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
+        if (parsedUnAuthDayId === 3) {
+          message.success(
+            " This is you last day of free task. Upgrade membership to access pro contants"
+          );
+          localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
+          router.push("/freeBlog");
+        } else if (parsedUnAuthDayId > 3) {
+          message.success(
+            "Congratulations you have successfully completed your tasks for 3 day"
+          );
+          router.push("/CompletedFreeTask");
+
+          window.location.reload();
         }
-      } else {
-        setLocalStorageData((prevState: typeof localStorageData) => ({
-          ...prevState,
-          [selectedTask]: true,
-        }));
+        if (parsedUnAuthDayId <= 4) {
+          localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
+        }
       }
-      if (selectedTaskIndex < tasks.length - 1) {
-        setSelectedTaskIndex(selectedTaskIndex + 1);
-        dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
-      }
-    };
-    useEffect(() => {
-      setUnAuthDayId(window.localStorage.getItem("unAuthDayId") || "1");
-    }, []);
+    } else {
+      setLocalStorageData((prevState: typeof localStorageData) => ({
+        ...prevState,
+        [selectedTask]: true,
+      }));
+    }
+    if (selectedTaskIndex < tasks.length - 1) {
+      setSelectedTaskIndex(selectedTaskIndex + 1);
+      dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
+    }
+  };
 
-    const [blog, setBlog] = useState<{
-      id: number | undefined;
+  const handleOk = () => {
+    setIsFinishModalOpen(false);
+    router.push("/freeBlog");
+  };
 
-      title: string | undefined;
-      content: string | undefined;
-    }>({
-      id: 1,
+  const [blog, setBlog] = useState<{
+    id: number | undefined;
 
-      title: "",
-      content: "",
-    });
-    const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
-    const [quiz, setQuiz] = useState<{
-      question: string | undefined;
-      answer: string | undefined;
-      quizOptions: string | undefined;
-    }>({
-      question: "",
-      answer: "",
-      quizOptions: "",
-    });
-    const [sort_note, setSort_note] = useState<{
-      sortNoteContent: string | undefined;
-    }>({
-      sortNoteContent: "",
-    });
-    const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
-      videoUrl: "",
-    });
-    const [reward, setReward] = useState<{ rewardContant: string | undefined }>(
-      {
-        rewardContant: "",
-      }
-    );
+    title: string | undefined;
+    content: string | undefined;
+  }>({
+    id: 1,
 
+    title: "",
+    content: "",
+  });
+  const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
+  const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
+
+  const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
+    videoUrl: "",
+  });
+
+  console.log(quiz);
 
   useEffect(() => {
     if (unAuthenticatedDayData) {
@@ -155,17 +148,9 @@ function UnAuthTask({}) {
           title: unAuthDayData.blog.data.attributes.title,
           content: unAuthDayData.blog.data.attributes.content,
         });
-        setQuiz({
-          answer: unAuthDayData.quiz.data.attributes.answer,
-          question: unAuthDayData.quiz.data.attributes.question,
-          quizOptions: unAuthDayData.quiz.data.attributes.quizOptions,
-        });
-        setSort_note({
-          sortNoteContent:
-            unAuthDayData.sort_note.data.attributes.sortNoteContent,
-        });
+        setQuiz(unAuthDayData?.quizzes.data);
+
         setVideo({ videoUrl: unAuthDayData.video.data.attributes.VideoUrl });
-        setReward({ rewardContant: unAuthDayData.reward });
 
         setKegel(unAuthDayData?.kegel.data.attributes.kegel_times.data);
       }
@@ -174,9 +159,30 @@ function UnAuthTask({}) {
 
   const DayCount = parseInt(unAuthDayId) || 0;
 
+  const handleDayid = (id: string) => {
+    setUnAuthDayId(id.toString());
+  };
+
   return (
     <>
-      {DayCount > 40 ? (
+      <Modal
+        title="Hurra you have finished another Day! Congratulations"
+        open={isFinishModalOpen}
+        onOk={handleOk}
+        closable={false}
+        footer={[
+          <Button key="ok" type="primary" onClick={handleOk}>
+            OK
+          </Button>,
+        ]}
+      >
+        <Image
+          className="mx-auto"
+          src={DayFinishImage}
+          alt="Day Fininsh Congratulation image"
+        />
+      </Modal>
+      {DayCount > 4 ? (
         <CompliteTask auth={false} daysCompleted={40} />
       ) : (
         <TaskPage
@@ -188,11 +194,11 @@ function UnAuthTask({}) {
           handleNext={handleNext}
           blog={blog}
           quiz={quiz}
-          sort_note={sort_note}
           video={video}
-          reward={reward}
           kegel={kegel}
           DayCount={DayCount}
+          handleDayid={handleDayid}
+          paid={paid}
         />
       )}
     </>

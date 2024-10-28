@@ -1,49 +1,82 @@
+// components/Footer.js
+
+import { Button } from "antd";
+import Link from "next/link";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
+
 const Footer = () => {
   return (
-    <footer className="layoutComponent mb-5 mt-24">
-      <div className="container mx-auto">
-        <div className="flex flex-col justify-evenly border m-2 rounded-xl p-10  sm:flex-row">
-          <div className="text-center   items-center  w-full sm:w-1/2">
-            <h3 className="text-xl font-bold mb-4">About Us</h3>
-            <p className="text-justify sm:text-center">
-              Overcoming addictions, especially those linked to{" "}
-              <span className="font-bold text-red-600"> social media</span> and{" "}
-              <span className="font-bold text-red-600">pornography</span> <br />{" "}
-              Using science-backed techniques like behavioral science, Inspiring
-              task, and build{" "}
-              <span className="font-bold text-red-600"> daily routine.</span>
-            </p>
-          </div>
+    <footer className="border rounded-lg p-8 mt-3">
+      <div className="container mx-auto  max-w-5xl ">
+        {/* First Row of Buttons */}
+        <div className="flex flex-wrap justify-center mb-4">
+          <Link href={"/proMember"}>
+            <Button type="primary" className="mx-2 my-2" ghost>
+              Pro member
+            </Button>
+          </Link>
 
-          <div className="text-center md:text-left flex flex-col justify-center items-center w-full sm:w-1/2">
-            <h3 className="text-xl font-bold mb-4">Contact</h3>
-            <p className="text-sm">kolopara 156/3</p>
-            <p className="text-sm">Gazipur, Bangladesh</p>
-            <p className="text-sm">
-              Email:{" "}
-              <a
-                href="fitraat70@gmail.com
-"
-                className="text-red-500"
-              >
-                fitraat70@gmail.com
-              </a>
-            </p>
-            <p className="text-sm">
-              Phone:{" "}
-              <a href="tel:+8801719317307" className="text-red-500">
-                +8801719317307
-              </a>
-            </p>
-          </div>
+          <Link href={"/about"}>
+            <Button type="primary" className="mx-2 my-2" ghost>
+              About us
+            </Button>
+          </Link>
         </div>
-      </div>
-      <div className="  ">
-        <div className="text-center ">
-          <p className="text-sm my-5">
-            &copy; 2024 Your Company. All rights reserved by{" "}
-            <span className="text-red-600 font-bold"> Fitraat</span>.
+
+        {/* Second Row of Buttons */}
+        <div className="flex flex-wrap justify-center mb-4">
+          <Link href={"/privecy"}>
+            <Button type="primary" className="mx-2 my-2" ghost>
+              Privecy policy
+            </Button>
+          </Link>
+        </div>
+
+        {/* Bottom Section with Copyright, Email, and Social Media Links */}
+        <div className="flex flex-col md:flex-row items-center justify-between mt-8 ">
+          <p className="text-sm text-center md:text-left">
+            &copy; 2024 Fitraat. All rights reserved.
           </p>
+          <div className="flex items-center justify-center md:justify-end mt-4 md:mt-0">
+            <span className="mr-4">contact@Fitraat.com</span>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-2"
+            >
+              <FaFacebookF className="text-xl hover:text-blue-500" />
+            </a>
+            <a
+              href="https://www.twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-2 hover:text-blue-500"
+            >
+              <FaTwitter className="text-xl" />
+            </a>
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-2"
+            >
+              <FaInstagram className="text-xl hover:text-red-400" />
+            </a>
+            <a
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-2"
+            >
+              <FaLinkedinIn className="text-xl hover:text-blue-500" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -17,7 +17,25 @@ const config: Config = {
     //   desktop: "1280px",
     //   // => @media (min-width: 1280px) { ... }
     // },
+    layers: {
+      "no-tailwindcss": {
+        // Add any styles you want to disable here
+        ".no-tailwindcss": {
+          all: "unset",
+        },
+      },
+    },
     extend: {
+      keyframes: {
+        expand: {
+          "0%": { maxHeight: "150px", opacity: "1" },
+          "100%": { maxHeight: "1000px", opacity: "1" },
+        },
+        collapse: {
+          "0%": { maxHeight: "1000px", opacity: "1" },
+          "100%": { maxHeight: "300px", opacity: "1" },
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -26,6 +44,10 @@ const config: Config = {
       fontFamily: {
         sans: ["Graphik", "sans-serif"],
         serif: ["Merriweather", "serif"],
+      },
+      animation: {
+        expand: "expand 0.5s ease-out forwards",
+        collapse: "collapse 0.5s ease-out forwards",
       },
     },
   },

@@ -1,21 +1,66 @@
-import AboutSpartan from "@/components/mainLayout/AboutSpartan";
-import Banner from "@/components/mainLayout/Banner";
-import Motivation from "@/components/mainLayout/Motivation";
-import RecoveryFeature from "@/components/mainLayout/RecoveryFeature";
-import Reviews from "@/components/mainLayout/Reviews";
-import Subscribe from "@/components/mainLayout/Subscribe";
-import Faq from "@/components/structure/FAQ";
+"use client";
+import { getTokenFromCookie } from "@/lib/auth/token";
+import { useGetUserInfoQuery } from "@/redux/api/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
+import { Skeleton } from "antd";
+import React, { useEffect, useState } from "react";
+import UnAuthTask from "./myTasks/UnAuthTask";
 
-export default function Home() {
-  return (
-    <main className="">
-      <Banner />
-      <AboutSpartan />
-      <Motivation />
-      <RecoveryFeature />
-      <Reviews />
-      <Faq />
-      <Subscribe />
-    </main>
-  );
-}
+const MyTasks: React.FC = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  const {
+    data: userData,
+    isLoading,
+    isError: authenticatedUserInfoDataError,
+  } = useGetUserInfoQuery();
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setIsMounted(true);
+    const tokenFromLocalStorage = getTokenFromCookie();
+    if (tokenFromLocalStorage) {
+      dispatch(storeAuthToken(tokenFromLocalStorage));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(storeUserInfo(userData));
+    }
+  }, [userData, dispatch]);
+
+  if (!isMounted) {
+    return (
+      <>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton style={{ marginTop: "40px" }} key={index} active />
+        ))}
+      </>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Skeleton style={{ marginTop: "40px" }} key={index} active />
+        ))}
+      </>
+    );
+  }
+
+  if (
+    authenticatedUserInfoDataError ||
+    userData === undefined ||
+    !userData.paid
+  ) {
+    return <UnAuthTask paid={userData?.paid} />;
+  }
+
+  return null;
+};
+
+export default MyTasks;

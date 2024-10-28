@@ -1,28 +1,38 @@
 "use client";
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-
-
-import { useGetBlogsQuery } from "@/redux/api/blogApi";
+import { useGetFreeBlogsQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useCallback, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import Blogs from "./Blogs";
-import Pagination from "./Pagination";
 import Trendings from "./Trendings";
 
 function Page() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [pageCount, setPageCount] = useState<number>(1);
+  const [allBlogs, setAllBlogs] = useState<Blog[]>([]); // State to accumulate all blogs
+  const paginationSize = 10;
+
   const {
     data: blogData,
     isLoading,
     isSuccess,
-  } = useGetBlogsQuery({ searchTerm, pageCount });
+    isFetching,
+  } = useGetFreeBlogsQuery({ searchTerm, pageCount, paginationSize });
+
+  // Append new blogs to the existing blogs
+  useEffect(() => {
+    if (blogData?.data) {
+      setAllBlogs((prevBlogs) => [...prevBlogs, ...blogData.data]);
+    }
+  }, [blogData]);
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
+    setPageCount(1); // Reset to first page on new search
+    setAllBlogs([]); // Clear previous blogs on new search
   };
 
   const validationSchema = yup.object().shape({
@@ -33,13 +43,31 @@ function Page() {
     resolver: yupResolver(validationSchema),
   });
 
-  const totalBlog: number = blogData?.meta.pagination.total || 0;
+  const total: number = blogData?.meta.pagination.total || 0;
+
+  const loadMoreBlogs = useCallback(() => {
+    if (isFetching) return;
+    const hasMoreBlogs = pageCount * paginationSize < total;
+    if (hasMoreBlogs) {
+      setPageCount((prev) => prev + 1);
+    }
+  }, [isFetching, pageCount, total]);
+
+  const handleScroll = useCallback(() => {
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+      loadMoreBlogs();
+    }
+  }, [loadMoreBlogs]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return (
     <div>
-      <div className="">
+      <div className="min-h-screen">
         <div className="flex flex-col justify-between  gap-3 sm:flex-row">
-          {/* <BlogType /> */}
           <div className="order-3">
             <Trendings />
           </div>
@@ -55,8 +83,8 @@ function Page() {
                   render={({ field }) => (
                     <input
                       {...field}
-                      id="emasearchTermil"
-                      type="searchTerm"
+                      id="searchTerm"
+                      type="text"
                       placeholder="Search here"
                       className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20  ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
                     />
@@ -87,19 +115,16 @@ function Page() {
                     </div>
                   </div>
                 ))
-              : isSuccess
-              ? blogData?.data.map((blog: Blog) => (
-                  <Blogs key={1} blog={blog} />
-                ))
-              : ""}
+              : isSuccess &&
+                allBlogs.map((blog: Blog) => (
+                  <Blogs key={blog.id} blog={blog} />
+                ))}
           </div>
         </div>
 
-        <Pagination
-          pageCount={pageCount}
-          setPageCount={setPageCount}
-          totalBlog={totalBlog}
-        />
+        {(isLoading || isFetching) && (
+          <div className="text-center">Loading more blogs...</div>
+        )}
       </div>
     </div>
   );

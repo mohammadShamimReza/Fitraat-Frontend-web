@@ -11,21 +11,21 @@ function Blogs({ blog }: { blog: Blog }) {
     <div className="">
       {" "}
       <div className="h-full mb-10 p-4 bg-white">
-        <Link href={`/blog/${blog.id}`}>
+        <Link href={`/freeBlog/${blog.id}`}>
           <div
             className=" p-4 rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
-          isDarkMode   h-72 flex flex-col justify-between"
+             h-72 flex flex-col justify-between"
           >
             <div className="h-full ">
               <h2
                 className="text-gray-800 mb-4 
-             text-3xl font-semibold overflow-clip"
+             text-3xl font-semibold overflow-clip tracking-wide"
               >
                 {blogData.title}
               </h2>
               <p
                 className=" mb-2
-            isDarkMode   line-clamp-5 text-justify"
+               line-clamp-5 text-justify text-gray-500"
               >
                 {blogData?.content && (
                   <p dangerouslySetInnerHTML={{ __html: blogData.content }} />
@@ -58,6 +58,5 @@ function Blogs({ blog }: { blog: Blog }) {
     </div>
   );
 }
-
 
 export default Blogs;

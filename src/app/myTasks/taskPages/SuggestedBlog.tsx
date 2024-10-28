@@ -29,10 +29,10 @@ function SuggestedBlog({
 
   return (
     <div>
-      {selectedTask === "suggestBlog" && (
+      {selectedTask === "Blog" && (
         <>
-          <p className="text-center m-7 text-2xl underline">{blog?.title}</p>
-          <p className="line-clamp-[11]">
+          <p className="text-center m-7 text-2xl underline ">{blog?.title}</p>
+          <p className="line-clamp-[11] text-lg tracking-wider">
             {blog?.content?.split(" ").map((word, index) => (
               <span
                 key={index}
@@ -50,7 +50,7 @@ function SuggestedBlog({
           </p>
 
           <Link
-            href={`/blog/${blog.id}`}
+            href={`/authBlog/${blog.id}`}
             className="flex justify-center align-middle "
           >
             <div className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mt-5">

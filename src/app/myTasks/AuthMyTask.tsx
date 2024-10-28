@@ -3,30 +3,29 @@ import { useUpdateUserDayMutation } from "@/redux/api/authApi";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
-import { KegelTimes } from "@/types/contantType";
-import { message } from "antd";
+import { KegelTimes, Quizzes } from "@/types/contantType";
+import { Button, message, Modal } from "antd";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import DayFinishImage from "../assets//dayFinish.gif";
 import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
 function AuthMyTask({
   authDayDataId,
   userId,
+  paid,
 }: {
   authDayDataId: number;
   userId: number;
+  paid: boolean | undefined;
 }) {
   const router = useRouter();
 
-  const tasks = [
-    "video",
-    "kagel",
-    "sortNote",
-    "quiz",
-    "rewards",
-    "suggestBlog",
-  ];
+  const tasks = ["video", "kagel", "quiz", "Blog"];
+
+  const [dayId, setDayId] = useState(authDayDataId);
 
   const { data: authenticatedDayData, isError } =
     useGetDaysByDayIdQuery(authDayDataId);
@@ -38,14 +37,13 @@ function AuthMyTask({
 
   const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
   const selectedTask = currentTask || tasks[selectedTaskIndex];
+
   const initialLocalStorageData = localStorage.getItem("AuthDay");
   const defaultLocalStorageData = {
     video: false,
     kagel: false,
-    sortNote: false,
     quiz: false,
-    rewards: false,
-    suggestBlog: false,
+    Blog: false,
   };
   const [localStorageData, setLocalStorageData] = useState(
     initialLocalStorageData
@@ -67,14 +65,25 @@ function AuthMyTask({
       dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
     }
   };
-      console.log(selectedTask, "this is");
+  const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
 
   const handleNext = async () => {
-    if (selectedTask === "suggestBlog") {
-      console.log("blog");
+    if (selectedTask === "Blog") {
+      setIsFinishModalOpen(true);
       dispatch(storeCurrentTask(tasks[0]));
-      localStorage.setItem("AuthDay", JSON.stringify(defaultLocalStorageData));
-      if (authDayDataId + 1 === 120) {
+      if (authDayDataId === 40) {
+        setLocalStorageData((prevState: typeof localStorageData) => ({
+          ...prevState,
+          [selectedTask]: true,
+        }));
+      } else {
+        localStorage.setItem(
+          "AuthDay",
+          JSON.stringify(defaultLocalStorageData)
+        );
+      }
+
+      if (authDayDataId + 1 === 40) {
         message.success(
           "Hurray this is you last day of task. Then you becone spartan"
         );
@@ -83,23 +92,20 @@ function AuthMyTask({
           compliteDay: authDayDataId,
           userId: userId,
         });
-        router.push("/blog");
-      } else if (authDayDataId + 1 > 120) {
+        router.push("/freeBlog");
+      } else if (authDayDataId + 1 > 40) {
         message.success(
-          "Congratulations you have successfully completed your tasks for 120 day"
+          "Congratulations you have successfully completed your tasks for 40 day"
         );
 
-        window.location.reload();
-      } else if (authDayDataId + 1 <= 121) {
-        message.success(
-          "Congratulations you have successfully completed your tasks for 120 day"
-        );
+        router.push("/CompletedTask");
+      } else if (authDayDataId + 1 <= 40) {
         await updataUserDay({
           currentDay: authDayDataId + 1,
           compliteDay: authDayDataId,
           userId: userId,
         });
-        router.push("/blog");
+        router.push("/freeBlog");
       }
     } else {
       setLocalStorageData((prevState: typeof localStorageData) => ({
@@ -112,6 +118,10 @@ function AuthMyTask({
       dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
     }
   };
+  const handleOk = () => {
+    setIsFinishModalOpen(false);
+    router.push("/freeBlog");
+  };
 
   const [blog, setBlog] = useState<{
     id: number | undefined;
@@ -123,25 +133,10 @@ function AuthMyTask({
     content: "",
   });
   const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
-  const [quiz, setQuiz] = useState<{
-    question: string | undefined;
-    answer: string | undefined;
-    quizOptions: string | undefined;
-  }>({
-    question: "",
-    answer: "",
-    quizOptions: "",
-  });
-  const [sort_note, setSort_note] = useState<{
-    sortNoteContent: string | undefined;
-  }>({
-    sortNoteContent: "",
-  });
+  const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
+
   const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
     videoUrl: "",
-  });
-  const [reward, setReward] = useState<{ rewardContant: string | undefined }>({
-    rewardContant: "",
   });
 
   useEffect(() => {
@@ -153,44 +148,57 @@ function AuthMyTask({
           title: authDayData.blog.data.attributes.title,
           content: authDayData.blog.data.attributes.content,
         });
-        setQuiz({
-          answer: authDayData.quiz.data.attributes.answer,
-          question: authDayData.quiz.data.attributes.question,
-          quizOptions: authDayData.quiz.data.attributes.quizOptions,
-        });
-        setSort_note({
-          sortNoteContent:
-            authDayData.sort_note.data.attributes.sortNoteContent,
-        });
+        setQuiz(authDayData?.quizzes.data);
+
         setVideo({ videoUrl: authDayData.video.data.attributes.VideoUrl });
-        setReward({ rewardContant: authDayData.reward });
         setKegel(authDayData?.kegel.data.attributes.kegel_times.data);
       }
     }
   }, [authenticatedDayData]);
 
   const DayCount = authDayDataId;
-
+  const handleDayid = (id: string) => {
+    setDayId(parseInt(id));
+  };
   return (
     <>
-      {DayCount > 120 ? (
-        <CompliteTask auth={true} daysCompleted={120} />
-      ) : (
-        <TaskPage
-          localStorageData={localStorageData}
-          handleTaskClick={handleTaskClick}
-          selectedTask={selectedTask}
-          selectedTaskIndex={selectedTaskIndex}
-          handlePrevious={handlePrevious}
-          handleNext={handleNext}
-          blog={blog}
-          quiz={quiz}
-          sort_note={sort_note}
-          video={video}
-          reward={reward}
-          kegel={kegel}
-          DayCount={DayCount}
+      <Modal
+        title="Hurra you have finished another Day! Congratulations"
+        open={isFinishModalOpen}
+        onOk={handleOk}
+        closable={false}
+        footer={[
+          <Button key="ok" type="primary" onClick={handleOk}>
+            OK
+          </Button>,
+        ]}
+      >
+        <Image
+          className="mx-auto"
+          src={DayFinishImage}
+          alt="Day Fininsh Congratulation image"
         />
+      </Modal>
+      {DayCount > 40 ? (
+        <CompliteTask auth={true} daysCompleted={40} />
+      ) : (
+        <>
+          <TaskPage
+            localStorageData={localStorageData}
+            handleTaskClick={handleTaskClick}
+            selectedTask={selectedTask}
+            selectedTaskIndex={selectedTaskIndex}
+            handlePrevious={handlePrevious}
+            handleNext={handleNext}
+            blog={blog}
+            quiz={quiz}
+            video={video}
+            kegel={kegel}
+            DayCount={DayCount}
+            handleDayid={handleDayid}
+            paid={paid}
+          />
+        </>
       )}
     </>
   );
