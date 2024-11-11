@@ -6,6 +6,7 @@ import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { Skeleton } from "antd";
 import React, { useEffect } from "react";
 import AuthMyTask from "../myTasks/AuthMyTask";
+import UnAuthTask from "../myTasks/UnAuthTask";
 
 const MyTasks: React.FC = () => {
   const {
@@ -46,7 +47,9 @@ const MyTasks: React.FC = () => {
         paid === true ? (
         // Authenticated user render
         <AuthMyTask authDayDataId={authDayDataId} userId={userId} paid={paid} />
-      ) : null}
+      ) : (
+        <UnAuthTask paid={userData?.paid} />
+      )}
     </>
   );
 };

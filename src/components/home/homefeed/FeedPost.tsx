@@ -50,7 +50,7 @@ function FeedPost() {
   }, [handleScroll]);
 
   return (
-    <div className="h-full">
+    <div className=" min-h-screen">
       <CreatePost user={userInfoFromRedux} />
       {allPosts.map((post) => (
         <SinglePost
