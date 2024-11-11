@@ -21,3 +21,17 @@ body {
   margin: 0;
   padding: 0;
 }
+
+
+@keyframes borderGlow {
+  0%, 100% {
+    box-shadow: 0 0 8px #888, 0 0 16px #888, 0 0 24px #888, 0 0 32px #888;
+  }
+  50% {
+    box-shadow: 0 0 12px #aaa, 0 0 24px #aaa, 0 0 36px #aaa, 0 0 48px #aaa;
+  }
+}
+
+.animate-border-glow {
+  animation: borderGlow 1.5s infinite ease-in-out;
+}
