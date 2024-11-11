@@ -162,6 +162,16 @@ export interface SingleBlogData {
   meta: Meta;
 }
 
+export interface Emergencys {
+  data: {
+    attributes: {
+      vedio_url: string;
+      message: string;
+    };
+  }[];
+  meta: Meta;
+}
+
 export interface KegelTimes {
   attributes: {
     times: string;
