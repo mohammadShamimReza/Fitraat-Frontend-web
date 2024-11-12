@@ -6,6 +6,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Inter } from "next/font/google";
 import React from "react";
 import "./globals.css";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,8 +25,25 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <AntdRegistry>
-            <div className="mx-auto min-h-screen max-w-7xl ">
-              <NavBar />
+            <div className="  ">
+              <div className="w-full bg-green-700 text-white py-2 px-2 flex justify-center items-center space-x-4 text-sm md:text-base">
+                <span className="font-semibold">
+                  Stand with Palestine 🇵🇸 - Show your support for peace and
+                  justice.
+                </span>
+                <Link href="https://www.supportpalestine.org" passHref>
+                  <p
+                    className="underline font-semibold hover:text-gray-200 transition-colors duration-200"
+                    rel="noopener noreferrer"
+                  >
+                    Learn More & Support
+                  </p>
+                </Link>
+              </div>
+              <div className="mx-auto  max-w-7xl">
+                {" "}
+                <NavBar />
+              </div>
               <div className="mx-auto max-w-6xl">{children}</div>
               <Footer />
             </div>

@@ -63,8 +63,9 @@ function NavBar() {
     }
   };
   return (
-    <div className="mb-7 border rounded-lg shadow-sm  mt-7 bg-white">
-      <div className="">
+    <div className="">
+   
+      <div className="mb-7   shadow-sm  p-1 bg-white">
         <div className="  p-1 sm:px-4 lg:px-6">
           <div className=" flex h-16 items-center justify-between ">
             <div className="   flex items-center sm:hidden">
