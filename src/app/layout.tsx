@@ -26,17 +26,16 @@ export default function RootLayout({
         <body className={inter.className}>
           <AntdRegistry>
             <div className="  ">
-              <div className="w-full bg-green-700 text-white py-2 px-2 flex justify-center items-center space-x-4 text-sm md:text-base">
+              <div className="w-full bg-green-700 text-white py-2 px-2 flex justify-center items-center space-x-4 text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden">
                 <span className="font-semibold">
-                  Stand with Palestine 🇵🇸 - Show your support for peace and
-                  justice.
+                  Stand with Palestine 🇵🇸 
                 </span>
                 <Link href="https://www.supportpalestine.org" passHref>
                   <p
                     className="underline font-semibold hover:text-gray-200 transition-colors duration-200"
                     rel="noopener noreferrer"
                   >
-                    Learn More & Support
+                     Support
                   </p>
                 </Link>
               </div>
