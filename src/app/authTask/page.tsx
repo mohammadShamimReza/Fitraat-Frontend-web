@@ -34,7 +34,7 @@ const MyTasks: React.FC = () => {
     };
 
     fetchToken(); // Fetch the token on component mount
-  }, []);
+  }, [userData]);
 
   return (
     <>
