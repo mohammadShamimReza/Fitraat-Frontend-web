@@ -5,7 +5,6 @@ export function middleware(request: NextRequest) {
   const currentUser = request.cookies.get("jwt")?.value;
   const { pathname } = request.nextUrl;
 
-  // Handle unauthenticated user access
   if (!currentUser) {
     if (
       pathname.startsWith("/profile") ||
