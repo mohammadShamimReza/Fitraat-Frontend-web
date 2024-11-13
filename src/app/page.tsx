@@ -57,7 +57,11 @@ const MyTasks: React.FC = () => {
     userData === undefined ||
     !userData.paid
   ) {
-    return <UnAuthTask paid={userData?.paid} />;
+    return (
+      <div className="min-h-screen">
+        <UnAuthTask paid={userData?.paid} />
+      </div>
+    );
   }
 
   return null;

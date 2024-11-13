@@ -3,9 +3,10 @@ import Footer from "@/components/structure/Footer";
 import NavBar from "@/components/structure/NavBar";
 import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { Inter } from "next/font/google";
 import React from "react";
 import "./globals.css";
+import { Inter } from "next/font/google";
+
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
