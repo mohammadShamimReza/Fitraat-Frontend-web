@@ -23,8 +23,8 @@ import {
   Upload,
 } from "antd";
 import { formatDistanceToNow } from "date-fns";
+import Image from "next/image";
 import { useRef, useState } from "react";
-import "tailwindcss/tailwind.css";
 import { z } from "zod";
 
 const passwordSchema = z
@@ -494,7 +494,7 @@ function ProfilePage() {
           </p>
         </Upload.Dragger>
         {profileImage && (
-          <img
+          <Image
             src={profileImage}
             alt="Uploaded"
             className="mt-4 w-32 h-32 rounded-full"
