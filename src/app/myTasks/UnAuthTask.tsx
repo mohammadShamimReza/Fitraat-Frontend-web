@@ -26,7 +26,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
     }
     console.log(dayId);
     setUnAuthDayId(dayId);
-  }, []);
+  }, [router]);
 
   const tasks = ["video", "kagel", "quiz", "Blog"];
 
