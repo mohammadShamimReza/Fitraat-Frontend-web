@@ -12,6 +12,8 @@ import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai"; // Hamburger icon
 import { CiVideoOn } from "react-icons/ci";
 import { FaBlogger } from "react-icons/fa6";
+import { IoMdClose } from "react-icons/io";
+
 import {
   GiFrankensteinCreature,
   GiRank1,
@@ -88,7 +90,7 @@ function TaskPage({
                   className="fixed top-4 left-4 z-30 text-2xl p-2 md:hidden"
                   onClick={() => setSidebarVisible(false)}
                 >
-                  <AiOutlineMenu /> {/* Close icon when sidebar is open */}
+                  <IoMdClose /> {/* Close icon when sidebar is open */}
                 </button>
               )}
               Tasks
@@ -205,16 +207,20 @@ function TaskPage({
 
         {/* Main Content */}
         <div className="flex-grow p-6">
-          <div className="backgroundDot p-5 rounded-lg">
+          <div className="backgroundDot rounded-lg">
             <div className="mx-auto flex flex-col justify-evenly gap-3">
+              <div className="flex justify-center ">
+                <Link href="/emergency">
+                  <button className="relative inline-flex items-center justify-center px-4 py-2 overflow-hidden font-medium text-white transition-all duration-300 ease-out bg-black border border-gray-700 rounded-md hover:bg-gray-900 animate-border-glow">
+                    <span className="relative  text-sm">⚡ Emergency ⚡</span>
+                  </button>
+                </Link>
+              </div>
+
               <div className="basis-1/6">
-                <p className="text-3xl font-bold text-left flex justify-between">
+                <p className="text-xl  font-bold text-left flex justify-between">
                   <span>Day: {DayCount}</span>
-                  <Link href="/emergency">
-                    <button className="relative inline-flex items-center justify-center px-4 py-2 overflow-hidden font-medium text-white transition-all duration-300 ease-out bg-black border border-gray-700 rounded-md hover:bg-gray-900 animate-border-glow">
-                      <span className="relative  text-sm">⚡ Emergency ⚡</span>
-                    </button>
-                  </Link>
+
                   <span className="flex items-center gap-2">
                     Rank:{" "}
                     {DayCount < 5 ? (
