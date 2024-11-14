@@ -86,7 +86,7 @@ function LoginPage() {
   };
 
   return (
-    <div className=" min-h-screen flex flex-col justify-center items-center">
+    <div className=" min-h-screen flex flex-col mt-10 justify-left items-center">
       <div className=" shadow-lg rounded-lg p-8 max-w-md w-full">
         <h1 className="text-3xl font-semibold text-center mb-6">Login</h1>
         <form onSubmit={handleSubmit}>
@@ -146,7 +146,15 @@ function LoginPage() {
           >
             Login
           </button>
-          <div className="text-center text-gray-600">
+          <div className="text-left mt-5 text-gray-600">
+            
+            <Link
+              href="/forgetPass"
+              className="text-gray-600 hover:text-black underline"
+            >Forget password 
+            </Link>
+          </div>
+          <div className="text-center mt-5 text-gray-600">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"

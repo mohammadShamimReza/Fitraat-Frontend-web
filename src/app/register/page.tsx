@@ -99,7 +99,7 @@ function RegisterPage() {
 
   return (
     <>
-      <div className=" min-h-screen flex flex-col justify-center items-center">
+      <div className=" min-h-screen flex flex-col mt-10 items-center">
         <div className=" shadow-lg rounded-lg p-8 max-w-md w-full">
           <h1 className="text-center mb-10 font-bold text-3xl text-blue-500">
             Registration is Free
