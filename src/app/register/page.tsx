@@ -37,6 +37,7 @@ function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const currentDate = formatISO(new Date());
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const [formData, setFormData] = useState({
     username: "",
@@ -67,6 +68,7 @@ function RegisterPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true); // Set loading state to true
 
     try {
       // Validate form data with Zod
@@ -80,11 +82,12 @@ function RegisterPage() {
           message.error(result?.error.error.message);
         }
       } else {
-        router.push("/");
         message.success("User created successfully");
         storeTokenInCookie(result?.data?.jwt);
         dispatch(storeAuthToken(result?.data?.jwt));
         dispatch(storeUserInfo(result?.data?.user));
+        router.push("/");
+        window.location.reload();
       }
     } catch (error: any) {
       if (error instanceof z.ZodError) {
@@ -94,6 +97,8 @@ function RegisterPage() {
         console.error(error);
         message.error("An unexpected error occurred");
       }
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
@@ -254,8 +259,9 @@ function RegisterPage() {
             <button
               type="submit"
               className="bg-gray-800 text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors w-full mb-4"
+              disabled={loading} // Disable button when loading
             >
-              Register
+              {loading ? "Loading..." : "Register"} {/* Show loading text */}
             </button>
           </form>
         </div>

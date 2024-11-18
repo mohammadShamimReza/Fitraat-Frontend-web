@@ -77,8 +77,6 @@ function SinglePost({
         });
         if (!result) {
           message.error("something went wrong, try again later");
-        } else if (result) {
-          message.success("Thanks for like the post");
         }
       } catch (error) {
         message.error("something went wrong, try again later");
