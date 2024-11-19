@@ -1,11 +1,11 @@
 import { Blog } from "@/types/contantType";
-import Image from "next/image";
+import { marked } from "marked";
 import Link from "next/link";
-import myPic from "../assets/myPic.png";
 
 function Blogs({ blog }: { blog: Blog }) {
   const blogData = blog.attributes;
   const blgoUpdateAt = new Date(blogData.updatedAt).toDateString();
+  const contentHtml = blogData?.content ? marked(blogData.content) : "";
 
   return (
     <div className="">
@@ -23,14 +23,10 @@ function Blogs({ blog }: { blog: Blog }) {
               >
                 {blogData.title}
               </h2>
-              <p
-                className=" mb-2
-               line-clamp-5 text-justify text-gray-500"
-              >
-                {blogData?.content && (
-                  <p dangerouslySetInnerHTML={{ __html: blogData.content }} />
-                )}
-              </p>
+              <div
+                className="mb-2 line-clamp-5 text-justify text-gray-500"
+                dangerouslySetInnerHTML={{ __html: contentHtml }}
+              />
             </div>
             <div className="flex items-center justify-between text-gray-600">
               <div className="">
@@ -38,7 +34,7 @@ function Blogs({ blog }: { blog: Blog }) {
                 <span className="text-gray-900"> {blgoUpdateAt}</span>
               </div>
 
-              <Link href={`/profile/`} className="flex items-center">
+              {/* <Link href={`/profile/`} className="flex items-center">
                 <div>
                   <Image
                     priority={false}
@@ -50,7 +46,7 @@ function Blogs({ blog }: { blog: Blog }) {
                   />
                 </div>
                 <span className="text-gray-900">Shamim Reza</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </Link>

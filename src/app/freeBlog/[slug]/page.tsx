@@ -1,6 +1,7 @@
 "use client";
 import { useGetFreeBlogsByIdQuery } from "@/redux/api/freeBlogApi";
 import { Skeleton } from "antd";
+import { marked } from "marked";
 import Image from "next/image";
 import stopPornImage from "../../assets/stopPorn.png";
 
@@ -9,6 +10,7 @@ function Page({ params }: { params: { slug: string } }) {
   const { data, isLoading } = useGetFreeBlogsByIdQuery(blogId);
   const blogData = data?.data.attributes;
   console.log(blogData);
+  const contentHtml = blogData?.content ? marked(blogData.content) : "";
 
   return isLoading ? (
     Array.from({ length: 4 }).map((_, index) => (
@@ -45,7 +47,7 @@ function Page({ params }: { params: { slug: string } }) {
           style={{ lineHeight: "1.8" }}
         >
           {blogData?.content && (
-            <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
+            <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
           )}
         </div>
       </div>

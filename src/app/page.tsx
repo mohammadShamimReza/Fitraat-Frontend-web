@@ -35,9 +35,24 @@ const MyTasks: React.FC = () => {
   if (!isMounted) {
     return (
       <>
-        {Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton style={{ marginTop: "40px" }} key={index} active />
-        ))}
+        <div className="flex h-screen">
+          {/* Sidebar */}
+          <div className="w-1/4 bg-gray-200 p-4 rounded-md">
+            <Skeleton active title={false} paragraph={{ rows: 5 }} />
+          </div>
+
+          {/* Content Box */}
+          <div className="flex-1 bg-white p-20">
+            <Skeleton
+              active
+              title={{ width: "60%" }}
+              paragraph={{
+                rows: 10,
+                width: ["100%", "90%", "80%", "70%", "50%"],
+              }}
+            />
+          </div>
+        </div>
       </>
     );
   }
@@ -45,9 +60,24 @@ const MyTasks: React.FC = () => {
   if (isLoading) {
     return (
       <>
-        {Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton style={{ marginTop: "40px" }} key={index} active />
-        ))}
+        <div className="flex h-screen">
+          {/* Sidebar */}
+          <div className="w-1/4 bg-gray-200 p-4 rounded-md">
+            <Skeleton active title={false} paragraph={{ rows: 5 }} />
+          </div>
+
+          {/* Content Box */}
+          <div className="flex-1 bg-white p-20">
+            <Skeleton
+              active
+              title={{ width: "60%" }}
+              paragraph={{
+                rows: 10,
+                width: ["100%", "90%", "80%", "70%", "50%"],
+              }}
+            />
+          </div>
+        </div>
       </>
     );
   }
