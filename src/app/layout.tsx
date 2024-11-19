@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import React from "react";
 import "./globals.css";
 
+import Head from "next/head";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,6 +28,45 @@ export default function RootLayout({
   return (
     <Providers>
       <html lang="en">
+        <Head>
+          {/* Global SEO Tags */}
+          <title>Fitraat - Discover Your True Potential</title>
+          <meta
+            name="description"
+            content="Welcome to Fitraat! Discover your true potential with our resources and insights tailored to help you grow."
+          />
+          <meta
+            name="keywords"
+            content="Fitraat, self-discovery, growth, motivation"
+          />
+          {/* Open Graph Tags */}
+          <meta
+            property="og:title"
+            content="Fitraat - Discover Your True Potential"
+          />
+          <meta
+            property="og:description"
+            content="Learn more about personal growth and self-discovery."
+          />
+          <meta property="og:image" content="../assets/detox1.png" />
+          <meta property="og:url" content="https://fitraat.com" />
+          <meta property="og:type" content="website" />
+
+          {/* JSON-LD Structured Data */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                name: "Fitraat",
+                url: "https://yourwebsite.com",
+                description: "Discover your true potential with Fitraat.",
+                keywords: ["Fitraat", "Self-Discovery", "Motivation"],
+              }),
+            }}
+          />
+        </Head>
         <body className={inter.className}>
           <AntdRegistry>
             <div className="  ">
