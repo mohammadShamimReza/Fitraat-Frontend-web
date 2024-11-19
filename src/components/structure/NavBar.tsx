@@ -64,7 +64,6 @@ function NavBar() {
   };
   return (
     <div className="">
-   
       <div className="mb-7   shadow-sm  p-1 bg-white">
         <div className="  p-1 sm:px-4 lg:px-6">
           <div className=" flex h-16 items-center justify-between ">
@@ -128,10 +127,10 @@ function NavBar() {
                     Home
                   </Link>
                   <Link
-                    href="/feed"
+                    href="/feeds"
                     className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
-                    Feed
+                    Feeds
                   </Link>
                   <Link
                     href="/freeBlog"
@@ -253,10 +252,10 @@ function NavBar() {
                 Blog
               </Link>
               <Link
-                href="/feed"
+                href="/feeds"
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
-                Feed
+                Feeds
               </Link>
             </div>
           </div>

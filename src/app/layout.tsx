@@ -3,14 +3,14 @@ import Footer from "@/components/structure/Footer";
 import NavBar from "@/components/structure/NavBar";
 import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { Inter } from "next/font/google";
+import { Luxurious_Roman } from "next/font/google";
 import React from "react";
 import "./globals.css";
 
 import Head from "next/head";
 import Link from "next/link";
 
-const inter = Inter({ subsets: ["latin"] });
+const luxuriousRoman = Luxurious_Roman({ subsets: ["latin"], weight: "400" });
 
 // export const metadata: Metadata = {
 //   title: "Detox-Dopamine ",
@@ -67,7 +67,7 @@ export default function RootLayout({
             }}
           />
         </Head>
-        <body className={inter.className}>
+        <body className={luxuriousRoman.className}>
           <AntdRegistry>
             <div className="  ">
               <div className="w-full bg-green-700 text-white py-2 px-2 flex justify-center items-center space-x-4 text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden">
