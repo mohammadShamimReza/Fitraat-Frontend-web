@@ -246,7 +246,7 @@ function NavBar() {
                 Home
               </Link>
               <Link
-                href="/free-blogs"
+                href="/freeBlogv"
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Blog
