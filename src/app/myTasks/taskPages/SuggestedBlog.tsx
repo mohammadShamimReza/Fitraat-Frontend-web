@@ -1,5 +1,6 @@
 "use client";
 
+import { marked } from "marked";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -16,11 +17,7 @@ function SuggestedBlog({
 }) {
   const [hoveredWords, setHoveredWords] = useState<number[]>([]);
 
-  const handleWordHover = (index: number) => {
-    if (!hoveredWords.includes(index)) {
-      setHoveredWords([...hoveredWords, index]);
-    }
-  };
+  const contentHtml = blog?.content ? marked(blog.content) : "";
 
   const resetHoveredWord = () => {
     // Reset all hovered words when mouse leaves
@@ -33,20 +30,9 @@ function SuggestedBlog({
         <>
           <p className="text-center m-7 text-2xl underline ">{blog?.title}</p>
           <p className="line-clamp-[11] text-lg tracking-wider">
-            {blog?.content?.split(" ").map((word, index) => (
-              <span
-                key={index}
-                onMouseEnter={() => handleWordHover(index)}
-                // onMouseLeave={resetHoveredWord}
-                style={{
-                  color: hoveredWords.includes(index) ? "red" : "inherit",
-                  cursor: "pointer",
-                }}
-                className=""
-              >
-                {word}{" "}
-              </span>
-            ))}
+            {blog?.content && (
+              <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+            )}
           </p>
 
           <Link

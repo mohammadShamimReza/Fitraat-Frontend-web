@@ -1,6 +1,7 @@
 "use client";
 import { useGetBlogsByIdQuery } from "@/redux/api/blogApi";
 import { Skeleton } from "antd";
+import { marked } from "marked";
 import Image from "next/image";
 import * as yup from "yup";
 import stopPornImage from "../../assets/stopPorn.png";
@@ -13,7 +14,7 @@ function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
   const { data, isLoading } = useGetBlogsByIdQuery(blogId);
   const blogData = data?.data.attributes;
-
+  const contentHtml = blogData?.content ? marked(blogData.content) : "";
   return isLoading ? (
     Array.from({ length: 4 }).map((_, index) => (
       <Skeleton style={{ marginTop: "10px" }} key={index} active />
@@ -49,7 +50,7 @@ function Page({ params }: { params: { slug: string } }) {
           style={{ lineHeight: "1.8" }}
         >
           {blogData?.content && (
-            <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
+            <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
           )}
         </div>
       </div>
