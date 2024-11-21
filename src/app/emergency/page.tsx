@@ -105,7 +105,9 @@ const EmergencyService: React.FC = () => {
         {current === steps.length - 1 && (
           <Button
             type="primary"
-            onClick={() => message.success("Emergency Service Completed!")}
+            onClick={() => {
+              message.success("Emergency Service Completed!"), setCurrent(0);
+            }}
           >
             Finish
           </Button>
