@@ -87,7 +87,7 @@ function RegisterPage() {
         dispatch(storeAuthToken(result?.data?.jwt));
         dispatch(storeUserInfo(result?.data?.user));
         router.push("/");
-        window.location.reload();
+        window.location.replace("/");
       }
     } catch (error: any) {
       if (error instanceof z.ZodError) {
