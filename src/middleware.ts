@@ -9,7 +9,8 @@ export function middleware(request: NextRequest) {
     if (
       pathname.startsWith("/profile") ||
       pathname.startsWith("/authTask") ||
-      pathname.startsWith("/authBlog")
+      pathname.startsWith("/authBlog") ||
+      pathname.startsWith("/proMember")
     ) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
@@ -31,3 +32,4 @@ export function middleware(request: NextRequest) {
   // Default response
   return NextResponse.next();
 }
+``;

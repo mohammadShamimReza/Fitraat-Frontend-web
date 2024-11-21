@@ -69,6 +69,8 @@ function AuthMyTask({
 
   const handleNext = async () => {
     if (selectedTask === "Blog") {
+            setSelectedTaskIndex(0);
+
       setIsFinishModalOpen(true);
       dispatch(storeCurrentTask(tasks[0]));
       if (authDayDataId === 40) {

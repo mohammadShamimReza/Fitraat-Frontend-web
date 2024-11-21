@@ -71,6 +71,8 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   const handleNext = () => {
     if (selectedTask === "Blog") {
+        
+        setSelectedTaskIndex(0);
       setIsFinishModalOpen(true);
 
       dispatch(storeCurrentTask(tasks[0]));
