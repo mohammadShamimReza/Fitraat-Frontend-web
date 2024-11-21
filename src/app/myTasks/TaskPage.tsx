@@ -245,7 +245,15 @@ function TaskPage({
                       )}{" "}
                     </div>
                     <div className="flex items-center gap-1">
-                      info: <FaInfoCircle />
+                      info:{" "}
+                      <button title="click for for info">
+                        <Link
+                          href="https://www.youtube.com/watch?v=M1lStPv08_I"
+                          target="_blank"
+                        >
+                          <FaInfoCircle />
+                        </Link>
+                      </button>
                     </div>
                   </span>
                 </p>
