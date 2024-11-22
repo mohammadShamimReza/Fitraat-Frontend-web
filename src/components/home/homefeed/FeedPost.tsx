@@ -1,7 +1,7 @@
 "use client";
 import FancyLoading from "@/app/loading";
 import { useGetPostQuery } from "@/redux/api/postApi";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useCallback, useEffect, useState } from "react";
 import CreatePost from "./CreatePost";
 import SinglePost from "./SinglePost";
@@ -9,6 +9,18 @@ import SinglePost from "./SinglePost";
 function FeedPost() {
   const [pageCount, setPageCount] = useState<number>(1);
   const [allPosts, setAllPosts] = useState<any[]>([]); // State to accumulate all posts
+  const dispatch = useAppDispatch();
+
+  let Posts;
+  Posts = useAppSelector((state) => state.feedSlice.data);
+  let meta;
+  meta = useAppSelector((state) => state.feedSlice.meta);
+
+  if (Posts) {
+    setPageCount(pageCount + 1);
+  }
+
+  console.log(Posts);
 
   const {
     data: feedPosts,
@@ -16,8 +28,13 @@ function FeedPost() {
     isFetching,
   } = useGetPostQuery({ pageCount });
 
+  if (!Posts) {
+    Posts = feedPosts?.data;
+    meta = feedPosts?.meta;
+  }
+
   const totalPosts = feedPosts?.meta.pagination.total || 0;
-  const postsPerPage = 25;
+  const postsPerPage = 2;
 
   const userInfoFromRedux = useAppSelector((state) => state.auth.userInfo);
   const userId = userInfoFromRedux?.id;
@@ -25,10 +42,10 @@ function FeedPost() {
 
   // Append new posts to the existing posts
   useEffect(() => {
-    if (feedPosts?.data) {
-      setAllPosts((prevPosts) => [...feedPosts.data]);
+    if (Posts && feedPosts) {
+      setAllPosts((prevPosts) => [...prevPosts, ...feedPosts.data]);
     }
-  }, [feedPosts]);
+  }, [feedPosts, Posts]);
 
   const loadMorePosts = useCallback(() => {
     if (isFetching) return;

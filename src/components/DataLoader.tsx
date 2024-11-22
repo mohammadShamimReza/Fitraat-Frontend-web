@@ -2,6 +2,7 @@
 import { getTokenFromCookie } from "@/lib/auth/token";
 import { useGetUserInfoQuery } from "@/redux/api/authApi";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
+import { useGetPostQuery } from "@/redux/api/postApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { storeDayData } from "@/redux/slice/daySlice";
@@ -49,6 +50,14 @@ const DataLoader: React.FC<DataLoaderProps> = ({ unAuthDayId }) => {
     dispatch,
     authDayDataId,
   ]);
+
+  const {
+    data: feedPosts,
+    isLoading,
+    isFetching,
+  } = useGetPostQuery({ pageCount: 1 });
+
+  useEffect(() => {});
 
   return null; // This component doesn't render anything, just handles data
 };
