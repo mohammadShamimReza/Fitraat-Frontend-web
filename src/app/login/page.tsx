@@ -51,6 +51,7 @@ function LoginPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(formData, "this is form data");
 
     try {
       // Validate form data with Zod
@@ -60,6 +61,7 @@ function LoginPage() {
         setLoading(true); // Set loading state to true
         try {
           const result: any | Error = await loginUser(formData);
+          console.log(result, "this is loadin result");
           if (result?.error) {
             message.error("User is not valid");
           } else {

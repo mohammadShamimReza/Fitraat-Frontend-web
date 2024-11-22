@@ -7,6 +7,7 @@ import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import { formatISO } from "date-fns";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
@@ -264,6 +265,15 @@ function RegisterPage() {
               {loading ? "Loading..." : "Register"} {/* Show loading text */}
             </button>
           </form>
+          <div className="text-center mt-5 text-gray-600">
+            Have an account?{" "}
+            <Link
+              href="/login"
+              className="text-red-600 hover:text-black underline"
+            >
+              Login here
+            </Link>
+          </div>
         </div>
       </div>
     </>

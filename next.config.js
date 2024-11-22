@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+
   webpack: (config, options) => {
     const { isServer } = options;
     config.module.rules.push({

@@ -121,10 +121,10 @@ function NavBar() {
               <div className="hidden sm:ml-6 sm:block mt-2 ">
                 <div className="flex space-x-4 ">
                   <Link
-                    href="/"
+                    href="/tasks"
                     className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
-                    Home
+                    Tasks
                   </Link>
                   <Link
                     href="/feeds"
@@ -240,10 +240,10 @@ function NavBar() {
           >
             <div className="space-y-1 px-2 pb-3 pt-2 ">
               <Link
-                href="/"
+                href="/tasks"
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
-                Home
+                Tasks
               </Link>
               <Link
                 href="/freeBlogv"
