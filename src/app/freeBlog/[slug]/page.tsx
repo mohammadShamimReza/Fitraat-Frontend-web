@@ -13,9 +13,32 @@ function Page({ params }: { params: { slug: string } }) {
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
 
   return isLoading ? (
-    Array.from({ length: 4 }).map((_, index) => (
-      <Skeleton style={{ marginTop: "10px" }} key={index} active />
-    ))
+    <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">
+      <div className="p-4">
+        {/* Title Skeleton */}
+        <Skeleton.Input
+          style={{ width: "50%", height: "24px", marginBottom: "20px" }}
+          active
+        />
+
+        {/* Image Skeleton */}
+        <Skeleton
+          active
+          paragraph={{
+            rows: 8,
+            width: ["100%", "95%", "90%", "85%", "80%", "75%", "70%", "65%"],
+          }}
+        />
+        {/* Content Skeleton */}
+        <Skeleton
+          active
+          paragraph={{
+            rows: 8,
+            width: ["100%", "95%", "90%", "85%", "80%", "75%", "70%", "65%"],
+          }}
+        />
+      </div>
+    </div>
   ) : (
     <div className="p-5">
       <div className="flex justify-between">

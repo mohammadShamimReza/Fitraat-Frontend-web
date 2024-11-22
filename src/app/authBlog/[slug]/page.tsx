@@ -16,9 +16,29 @@ function Page({ params }: { params: { slug: string } }) {
   const blogData = data?.data.attributes;
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
   return isLoading ? (
-    Array.from({ length: 4 }).map((_, index) => (
-      <Skeleton style={{ marginTop: "10px" }} key={index} active />
-    ))
+    <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">
+      <div className="p-4">
+        {/* Title Skeleton */}
+        <Skeleton.Input
+          style={{ width: "60%", height: "28px", marginBottom: "15px" }}
+          active
+        />
+
+        {/* Content Skeleton */}
+        <Skeleton
+          active
+          paragraph={{ rows: 5, width: ["100%", "95%", "90%", "85%", "80%"] }}
+        />
+
+        {/* Footer Skeleton */}
+        <div className="flex justify-between items-center mt-6">
+          {/* Date Skeleton */}
+          <Skeleton.Input style={{ width: "40%", height: "20px" }} active />
+          {/* Optional Avatar Skeleton */}
+          <Skeleton.Avatar style={{ width: "40px", height: "40px" }} active />
+        </div>
+      </div>
+    </div>
   ) : (
     <div className="p-5">
       <br />

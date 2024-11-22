@@ -6,7 +6,7 @@ function Trendings() {
   const { data: trendingBlogData } = useGet3TrendingFreeBlogQuery({});
   console.log(trendingBlogData);
   return (
-    <div className="pr-3">
+    <div className="pr-3 sticky top-0">
       <div className="">
         <div className="">
           <div className="">
