@@ -1,27 +1,27 @@
 "use client";
 import { getTokenFromCookie } from "@/lib/auth/token";
-import { useGetUserInfoQuery } from "@/redux/api/authApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { Skeleton } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AuthMyTask from "../myTasks/AuthMyTask";
 import UnAuthTask from "../myTasks/UnAuthTask";
 
 const MyTasks: React.FC = () => {
-  const {
-    data: userData,
-    isLoading,
-    isError: authenticatedUserInfoDataError,
-    isSuccess,
-  } = useGetUserInfoQuery();
+  const [isMounted, setIsMounted] = useState(false);
+
+  const userData = useAppSelector((state) => state.auth.userInfo);
+
+  console.log(userData, "this is user data");
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const authDayDataId = userData?.currentDay!;
   const userId = userData?.id!;
   const paid = userData?.paid;
 
-  const userInfo = useAppSelector((store) => store.auth.userInfo);
-  const userToken = useAppSelector((store) => store.auth.authToken);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const MyTasks: React.FC = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isMounted ? (
         <div className="flex h-screen">
           {/* Sidebar */}
           <div className="w-1/4 bg-gray-200 p-4 rounded-md">
@@ -57,9 +57,7 @@ const MyTasks: React.FC = () => {
             />
           </div>
         </div>
-      ) : userData &&
-        authenticatedUserInfoDataError === false &&
-        paid === true ? (
+      ) : userData && paid === true ? (
         // Authenticated user render
         <AuthMyTask authDayDataId={authDayDataId} userId={userId} paid={paid} />
       ) : (

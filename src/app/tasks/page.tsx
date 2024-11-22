@@ -1,7 +1,7 @@
 "use client";
 import { useAppSelector } from "@/redux/hooks";
 import { Skeleton } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UnAuthTask from "../myTasks/UnAuthTask";
 
 const MyTasks: React.FC = () => {
@@ -10,6 +10,10 @@ const MyTasks: React.FC = () => {
   const userData = useAppSelector((state) => state.auth.userInfo);
 
   console.log(userData, "this is user data");
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   if (!isMounted) {
     return (

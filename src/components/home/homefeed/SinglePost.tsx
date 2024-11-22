@@ -1,8 +1,4 @@
 "use client";
-import {
-  useGetLikeOfPostQuery,
-  usePostLikeForCurrentUserQuery,
-} from "@/redux/api/likeApi";
 import { Post } from "@/types/contantType";
 import PostContent from "./post/PostContent";
 import PostHeader from "./post/PostHeader";
@@ -27,11 +23,6 @@ function SinglePost({
 }) {
   const [createComment] = useCreateCommentMutation();
 
-  const { data: postLike } = useGetLikeOfPostQuery({ postId: post?.id });
-  const { data: postLikeForCurrentUser } = usePostLikeForCurrentUserQuery({
-    postId: post?.id,
-    userId: userId || 0,
-  });
   const { data: postComments } = useGetCommentOfPostQuery({ postId: post?.id });
 
   const postComment = postComments?.data;
@@ -44,11 +35,6 @@ function SinglePost({
   });
   const postUserId = post.attributes.user.data.id;
   const postId = post.id;
-
-  const likedPostForCurrentUser =
-    postLikeForCurrentUser?.meta.pagination.total !== 0;
-
-  const postLikeForCurrentUserId = postLikeForCurrentUser?.data[0]?.id;
 
   const [newComment, setNewComment] = useState("");
 

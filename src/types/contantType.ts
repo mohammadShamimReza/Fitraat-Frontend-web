@@ -131,12 +131,12 @@ export interface Blog {
     };
     publishedAt: string;
     updatedAt: string;
-    viewCount: string;
+    viewCount: number;
     authorName: string;
   };
   id: number;
 }
-interface Meta {
+export interface Meta {
   pagination: {
     page: number;
     pageSize: number;

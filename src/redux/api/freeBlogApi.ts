@@ -30,6 +30,21 @@ export const blogApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
+    updateFreeBlog: builder.mutation({
+      query: ({
+        id,
+        updatedFields,
+      }: {
+        id: number;
+        updatedFields: Partial<{ viewCount: number }>;
+      }) => ({
+        url: `${BLOG}/${id}`,
+        method: "PUT",
+        body: {
+          data: updatedFields,
+        },
+      }),
+    }),
   }),
 });
 
@@ -37,4 +52,5 @@ export const {
   useGetFreeBlogsQuery,
   useGetFreeBlogsByIdQuery,
   useGet3TrendingFreeBlogQuery,
+  useUpdateFreeBlogMutation,
 } = blogApi;

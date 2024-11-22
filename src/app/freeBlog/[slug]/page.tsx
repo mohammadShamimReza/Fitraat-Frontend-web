@@ -18,12 +18,19 @@ function Page({ params }: { params: { slug: string } }) {
     ))
   ) : (
     <div className="p-5">
-      <br />
-      <br />
-      <br />
+      <div className="flex justify-between">
+        <p className="text-right p-5">
+          Author
+          <span className="text-gray-500"> {blogData?.viewCount}</span>{" "}
+        </p>
+        <p className="text-right p-7">
+          Total view:{" "}
+          <span className="text-gray-500"> {blogData?.viewCount || 1}</span>{" "}
+        </p>
+      </div>
       <div className="">
         <div
-          className="text-gray-800 mb-4 
+          className="text-gray-700 mb-4 
             dark:text-gray-300 text-5xl font-semibold text-center"
         >
           {blogData?.title}
@@ -52,15 +59,7 @@ function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
       <br />
-      <p className="text-right p-20">
-        Total view:{" "}
-        <span className="text-red-500"> {blogData?.viewCount || 1}</span>{" "}
-      </p>
 
-      <br />
-      <div className="text-2xl text-center pt-5 text-red-500 font-semibold">
-        Thanks for reading this Blog
-      </div>
       <br />
 
       <div className="text-base "></div>

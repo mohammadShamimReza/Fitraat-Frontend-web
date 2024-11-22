@@ -2,6 +2,7 @@
 import { useUpdateUserDayMutation } from "@/redux/api/authApi";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { clearDayData } from "@/redux/slice/daySlice";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
 import { KegelTimes, Quizzes } from "@/types/contantType";
 import { Button, message, Modal } from "antd";
@@ -27,8 +28,16 @@ function AuthMyTask({
 
   const [dayId, setDayId] = useState(authDayDataId);
 
-  const { data: authenticatedDayData, isError } =
+  let authenticatedDayData;
+
+  authenticatedDayData = useAppSelector((state) => state.daySlice.data);
+
+  const { data: authenticatedDayDataForChengeDay, isError } =
     useGetDaysByDayIdQuery(authDayDataId);
+
+  if (!authenticatedDayData) {
+    authenticatedDayData = authenticatedDayDataForChengeDay?.data;
+  }
 
   const [updataUserDay] = useUpdateUserDayMutation();
 
@@ -69,7 +78,8 @@ function AuthMyTask({
 
   const handleNext = async () => {
     if (selectedTask === "Blog") {
-            setSelectedTaskIndex(0);
+      setSelectedTaskIndex(0);
+      dispatch(clearDayData());
 
       setIsFinishModalOpen(true);
       dispatch(storeCurrentTask(tasks[0]));
@@ -114,8 +124,6 @@ function AuthMyTask({
         ...prevState,
         [selectedTask]: true,
       }));
-    }
-    if (selectedTaskIndex < tasks.length - 1) {
       setSelectedTaskIndex(selectedTaskIndex + 1);
       dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
     }
@@ -129,10 +137,12 @@ function AuthMyTask({
     id: number | undefined;
     title: string | undefined;
     content: string | undefined;
+    viewCount: number;
   }>({
     id: 1,
     title: "",
     content: "",
+    viewCount: 0,
   });
   const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
   const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
@@ -143,12 +153,13 @@ function AuthMyTask({
 
   useEffect(() => {
     if (authenticatedDayData) {
-      const authDayData = authenticatedDayData?.data[0].attributes;
+      const authDayData = authenticatedDayData[0].attributes;
       if (authDayData) {
         setBlog({
           id: authDayData.blog.data.id,
           title: authDayData.blog.data.attributes.title,
           content: authDayData.blog.data.attributes.content,
+          viewCount: authDayData.blog.data.attributes.viewCount,
         });
         setQuiz(authDayData?.quizzes.data);
 
@@ -159,9 +170,7 @@ function AuthMyTask({
   }, [authenticatedDayData]);
 
   const DayCount = authDayDataId;
-  const handleDayid = (id: string) => {
-    setDayId(parseInt(id));
-  };
+
   return (
     <>
       <Modal
@@ -197,7 +206,6 @@ function AuthMyTask({
             video={video}
             kegel={kegel}
             DayCount={DayCount}
-            handleDayid={handleDayid}
             paid={paid}
           />
         </>

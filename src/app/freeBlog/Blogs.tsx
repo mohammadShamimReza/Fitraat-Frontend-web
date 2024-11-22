@@ -1,3 +1,4 @@
+import { useUpdateFreeBlogMutation } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
 import { marked } from "marked";
 import Link from "next/link";
@@ -7,11 +8,28 @@ function Blogs({ blog }: { blog: Blog }) {
   const blgoUpdateAt = new Date(blogData.updatedAt).toDateString();
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
 
+  const [updateBlog] = useUpdateFreeBlogMutation();
+
+  const updateViewCount = async (blogId: number) => {
+    try {
+      const result = await updateBlog({
+        id: blogId,
+        updatedFields: { viewCount: blogData.viewCount + 1 },
+      }).unwrap();
+      console.log(result);
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  };
+
   return (
     <div className="">
       {" "}
       <div className="h-full mb-10 p-4 bg-white">
-        <Link href={`/freeBlog/${blog.id}`}>
+        <Link
+          href={`/freeBlog/${blog.id}`}
+          onClick={() => updateViewCount(blog.id)}
+        >
           <div
             className=" p-4 rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
               "
