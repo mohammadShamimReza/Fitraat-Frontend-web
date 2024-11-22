@@ -34,6 +34,8 @@ const PostComments = ({
   const [editCommentId, setEditCommentId] = useState<number | null>(null); // State to store the comment id being edited
   const [editCommentText, setEditCommentText] = useState(""); // State to store the edited comment text
   const [dropdownVisible, setDropdownVisible] = useState<number | null>(null);
+  const [postCommentLoading, setPostCommentLoading] = useState(false);
+  const [deleteCommentLoading, setDeleteCommentLoading] = useState(false);
 
   const [createComment] = useCreateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
@@ -45,6 +47,10 @@ const PostComments = ({
   };
 
   const handleAddComment = async () => {
+    if (!isValidComment(newComment)) {
+      return message.info("Please write a valid comment");
+    }
+    setPostCommentLoading(true);
     if (!currentUserId) {
       return message.info("Please log in first to comment");
     }
@@ -55,9 +61,12 @@ const PostComments = ({
       await createComment({
         data: { user: currentUserId, post: postId, comment: newComment },
       });
-      setNewComment(""); // Clear the comment input after successful addition
+      setNewComment("");
+      // Clear the comment input after successful addition
+      setPostCommentLoading(false);
     } catch (error) {
       console.error("Error adding comment:", error);
+      setPostCommentLoading(false);
     }
   };
 
@@ -83,8 +92,13 @@ const PostComments = ({
   };
 
   const handleDeleteComment = async (commentId: number) => {
+    if (deleteCommentLoading === true) {
+      return;
+    }
     try {
+      setDeleteCommentLoading(true);
       const result = await deleteComment({ postId: commentId });
+      setDeleteCommentLoading(false);
       if (result) {
         message.success("Comment deleted successfully");
       } else {
@@ -92,10 +106,16 @@ const PostComments = ({
       }
     } catch (error) {
       console.error("Error deleting comment:", error);
+      setDeleteCommentLoading(false);
     }
+    setDropdownVisible(null);
   };
 
   const handleUpdateComment = async () => {
+    if (deleteCommentLoading === true) {
+      return;
+    }
+
     setEditModalVisible(false); // Close the edit modal after successful update
     if (editCommentId && isValidComment(editCommentText)) {
       try {
@@ -112,6 +132,7 @@ const PostComments = ({
     } else {
       message.info("Please write a valid comment");
     }
+    setDropdownVisible(null);
   };
 
   const renderDropdownMenu = (commentId: number) => {
@@ -120,7 +141,9 @@ const PostComments = ({
     return (
       <div className="dropdown-menu absolute z-10 right-0 w-32 bg-white shadow-lg rounded-lg border">
         <button
-          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 ${
+            deleteCommentLoading === false ? "" : "cursor-not-allowed"
+          }`}
           onClick={() => {
             const commentToEdit = postComment?.find(
               (comment) => comment.id === commentId
@@ -136,10 +159,12 @@ const PostComments = ({
           Edit
         </button>
         <button
-          className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900" ${
+            deleteCommentLoading === false ? "" : "cursor-not-allowed"
+          }`}
           onClick={() => handleDeleteComment(commentId)}
         >
-          Delete
+          {deleteCommentLoading ? "Loading..." : "Delete"}
         </button>
       </div>
     );
@@ -153,7 +178,7 @@ const PostComments = ({
             <>
               {postComment.slice(0, 1).map((comment) => (
                 <div
-                  className="flex justify-between items-start align-middle mb-2 p-3 shadow rounded-lg"
+                  className="flex justify-between items-start align-middle mb-2 p-3 border rounded-lg"
                   key={comment.id}
                 >
                   <div className="flex gap-3 items-center ">
@@ -186,12 +211,16 @@ const PostComments = ({
                   )}
                 </div>
               ))}
-              <button
-                className="text-blue-500 mt-2 mb-5"
-                onClick={() => setModalVisible(true)}
-              >
-                Show More Comments
-              </button>
+              {postComment.length > 1 ? (
+                <button
+                  className="text-blue-500 mt-2 mb-5"
+                  onClick={() => setModalVisible(true)}
+                >
+                  Show More Comments
+                </button>
+              ) : (
+                ""
+              )}
             </>
           ) : (
             <h3 className="text-lg font-semibold mb-2">No Comments</h3>
@@ -206,13 +235,15 @@ const PostComments = ({
           <button
             onClick={handleAddComment}
             className={`mt-3 px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700 ${
-              isValidComment(newComment)
+              postCommentLoading === false
                 ? " cursor-pointer"
                 : " cursor-not-allowed"
             }`}
-            disabled={!isValidComment(newComment)} // Disable button if comment is not valid
+            disabled={postCommentLoading === true ? true : false}
           >
-            <span style={{ paddingRight: "10px" }}>Post Comment</span>
+            <span style={{ paddingRight: "10px" }}>
+              {postCommentLoading ? "Loading ..." : "Post Comment"}
+            </span>
           </button>
         </div>
         <Modal
@@ -265,14 +296,17 @@ const PostComments = ({
           />
           <button
             className={`px-4 mt-3 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700${
-              isValidComment(modalComment)
+              postCommentLoading === false
                 ? " cursor-pointer"
                 : " cursor-not-allowed"
             }`}
             onClick={handleModalAddComment}
-            disabled={!isValidComment(modalComment)} // Disable button if modal comment is not valid
+            disabled={postCommentLoading ? true : false} // Disable button if comment is not valid
           >
-            <span style={{ paddingRight: "10px" }}>Post Comment</span>
+            <span style={{ paddingRight: "10px" }}>
+              {" "}
+              {postCommentLoading ? "Loading ..." : "Post Comment"}
+            </span>
           </button>
         </Modal>
         {/* Edit Modal */}

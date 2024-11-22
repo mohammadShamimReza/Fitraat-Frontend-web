@@ -6,9 +6,7 @@ import { RootState } from "../store";
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl:
-      // "https://detox-dopamine-backend.onrender.com/api" ||
-      "http://localhost:1337/api",
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token =
         (getState() as RootState).auth.authToken || getTokenFromCookie();

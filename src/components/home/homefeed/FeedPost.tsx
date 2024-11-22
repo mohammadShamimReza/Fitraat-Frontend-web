@@ -26,7 +26,7 @@ function FeedPost() {
   // Append new posts to the existing posts
   useEffect(() => {
     if (feedPosts?.data) {
-      setAllPosts((prevPosts) => [...prevPosts, ...feedPosts.data]);
+      setAllPosts((prevPosts) => [...feedPosts.data]);
     }
   }, [feedPosts]);
 

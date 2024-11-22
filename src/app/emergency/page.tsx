@@ -2,7 +2,7 @@
 
 import { useGetEnergencyContantQuery } from "@/redux/api/emergencyApi";
 import { Button, message, Steps, theme } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const EmergencyService: React.FC = () => {
   const { token } = theme.useToken();
@@ -75,13 +75,15 @@ const EmergencyService: React.FC = () => {
     justifyContent: "center",
     alignItems: "center",
     height: "500px",
-    width: "1000px",
+    width: "100%",
+    maxWidth: "1000px", // Restrict maximum size
     backgroundColor: "white",
+    boxSizing: "border-box", // Ensure padding is included in the width calculation
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
-      <h1 className="mb-12">Emergency Help</h1>
+    <div className="flex flex-col items-center min-h-screen px-4 sm:px-8">
+      <h1 className="mb-12 text-xl md:text-3xl">Emergency Help</h1>
       <Steps
         current={current}
         className="flex justify-center mb-6 mt-12"
@@ -103,7 +105,9 @@ const EmergencyService: React.FC = () => {
         {current === steps.length - 1 && (
           <Button
             type="primary"
-            onClick={() => message.success("Emergency Service Completed!")}
+            onClick={() => {
+              message.success("Emergency Service Completed!"), setCurrent(0);
+            }}
           >
             Finish
           </Button>

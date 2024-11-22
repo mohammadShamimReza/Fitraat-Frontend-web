@@ -27,6 +27,7 @@ function LoginPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -36,7 +37,7 @@ function LoginPage() {
     identifier: "",
     password: "",
   });
-  const [loginUser, { error }] = useLoginUserMutation();
+  const [loginUser] = useLoginUserMutation();
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -50,14 +51,17 @@ function LoginPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(formData, "this is form data");
 
     try {
       // Validate form data with Zod
       loginSchema.parse(formData);
 
       if (formData.identifier !== "" && formData.password !== "") {
+        setLoading(true); // Set loading state to true
         try {
           const result: any | Error = await loginUser(formData);
+          console.log(result, "this is loadin result");
           if (result?.error) {
             message.error("User is not valid");
           } else {
@@ -67,9 +71,12 @@ function LoginPage() {
 
             dispatch(storeUserInfo(result?.data?.user));
             router.push("/authTask");
+            window.location.reload();
           }
         } catch (error) {
           console.log(error);
+        } finally {
+          setLoading(false); // Set loading state to false
         }
       } else {
         message.error("Login is not successfully");
@@ -82,12 +89,13 @@ function LoginPage() {
         console.error(error);
         message.error("An unexpected error occurred");
       }
+      setLoading(false); // Ensure loading state is reset
     }
   };
 
   return (
-    <div className=" min-h-screen flex flex-col justify-center items-center">
-      <div className=" shadow-lg rounded-lg p-8 max-w-md w-full">
+    <div className="min-h-screen flex flex-col mt-10 justify-left items-center">
+      <div className="shadow-lg rounded-lg p-8 max-w-md w-full">
         <h1 className="text-3xl font-semibold text-center mb-6">Login</h1>
         <form onSubmit={handleSubmit}>
           {/* Email Input */}
@@ -142,11 +150,22 @@ function LoginPage() {
           {/* Login Button */}
           <button
             type="submit"
-            className="bg-gray-800 text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors w-full mb-4"
+            className={`bg-gray-800 text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors w-full mb-4 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={loading} // Disable button when loading
           >
-            Login
+            {loading ? "Loading..." : "Login"} {/* Show loading text */}
           </button>
-          <div className="text-center text-gray-600">
+          <div className="text-left mt-5 text-gray-600">
+            <Link
+              href="/forgetPass"
+              className="text-gray-600 hover:text-black underline"
+            >
+              Forget password
+            </Link>
+          </div>
+          <div className="text-center mt-5 text-gray-600">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"

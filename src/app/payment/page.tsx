@@ -76,6 +76,8 @@ const PaymentPage = () => {
 
   // Handle form submission
   const onSubmit = async (data: PaymentFormValues) => {
+    console.log(data);
+    setLoading(true);
     try {
       const result = await paymentInit(data).unwrap();
       console.log(result);
@@ -84,7 +86,9 @@ const PaymentPage = () => {
       } else {
         message.error("Please try again later");
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       message.error("Server have some issues please try again leter");
     }
   };
@@ -174,6 +178,7 @@ const PaymentPage = () => {
               loading={loading}
               className="w-full bg-blue-500 hover:bg-blue-600"
             >
+              {loading ? "Loading..." : "  Pay Now With sslcommerz"}
               Pay Now With sslcommerz
             </Button>
           </Form.Item>

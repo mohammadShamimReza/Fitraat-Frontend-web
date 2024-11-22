@@ -9,7 +9,8 @@ export function middleware(request: NextRequest) {
     if (
       pathname.startsWith("/profile") ||
       pathname.startsWith("/authTask") ||
-      pathname.startsWith("/authBlog")
+      pathname.startsWith("/authBlog") ||
+      pathname.startsWith("/proMember")
     ) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
@@ -20,9 +21,9 @@ export function middleware(request: NextRequest) {
   // Handle authenticated user access
   if (currentUser) {
     if (pathname.startsWith("/login")) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/tasks", request.url));
     }
-    if (pathname === "/") {
+    if (pathname === "/tasks") {
       return NextResponse.redirect(new URL("/authTask", request.url));
     }
     return NextResponse.next(); // Allow access to other routes
@@ -31,3 +32,4 @@ export function middleware(request: NextRequest) {
   // Default response
   return NextResponse.next();
 }
+``;

@@ -7,6 +7,7 @@ import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import { formatISO } from "date-fns";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
@@ -37,6 +38,7 @@ function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const currentDate = formatISO(new Date());
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const [formData, setFormData] = useState({
     username: "",
@@ -67,6 +69,7 @@ function RegisterPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true); // Set loading state to true
 
     try {
       // Validate form data with Zod
@@ -80,11 +83,12 @@ function RegisterPage() {
           message.error(result?.error.error.message);
         }
       } else {
-        router.push("/");
         message.success("User created successfully");
         storeTokenInCookie(result?.data?.jwt);
         dispatch(storeAuthToken(result?.data?.jwt));
         dispatch(storeUserInfo(result?.data?.user));
+        router.push("/");
+        window.location.replace("/");
       }
     } catch (error: any) {
       if (error instanceof z.ZodError) {
@@ -94,12 +98,14 @@ function RegisterPage() {
         console.error(error);
         message.error("An unexpected error occurred");
       }
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
   return (
     <>
-      <div className=" min-h-screen flex flex-col justify-center items-center">
+      <div className=" min-h-screen flex flex-col mt-10 items-center">
         <div className=" shadow-lg rounded-lg p-8 max-w-md w-full">
           <h1 className="text-center mb-10 font-bold text-3xl text-blue-500">
             Registration is Free
@@ -254,10 +260,20 @@ function RegisterPage() {
             <button
               type="submit"
               className="bg-gray-800 text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors w-full mb-4"
+              disabled={loading} // Disable button when loading
             >
-              Register
+              {loading ? "Loading..." : "Register"} {/* Show loading text */}
             </button>
           </form>
+          <div className="text-center mt-5 text-gray-600">
+            Have an account?{" "}
+            <Link
+              href="/login"
+              className="text-red-600 hover:text-black underline"
+            >
+              Login here
+            </Link>
+          </div>
         </div>
       </div>
     </>

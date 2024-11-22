@@ -16,7 +16,7 @@ function Trendings() {
               </p>
               <div className="flex flex-col items-center justify-center text-gray-500">
                 {trendingBlogData?.data?.map((blog: Blog) => (
-                  <Link key={1} href={`/blog/${blog.id}`}>
+                  <Link key={1} href={`/freeBlog/${blog.id}`}>
                     <div className="mb-4 hover:shadow-lg border rounded-xl  ">
                       <div className="p-4">
                         <p className="font-bold text-lg truncate text-black">

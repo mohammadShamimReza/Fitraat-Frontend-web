@@ -169,6 +169,10 @@ function Kagel({
               </span>
             ))}
           </div>
+          <span className="text-red-500">
+            {" "}
+            {times + 1 === kegel?.length ? "Last finishing" : ""}
+          </span>
           <br />
 
           <div className="mb-10 flex justify-center">

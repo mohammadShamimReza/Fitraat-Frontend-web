@@ -1,7 +1,5 @@
 "use client";
 import {
-  useCreateLikeMutation,
-  useDeleteLikeMutation,
   useGetLikeOfPostQuery,
   usePostLikeForCurrentUserQuery,
 } from "@/redux/api/likeApi";
@@ -13,7 +11,6 @@ import {
   useCreateCommentMutation,
   useGetCommentOfPostQuery,
 } from "@/redux/api/commentApi";
-import { message } from "antd";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 import PostActions from "./post/PostAction";
@@ -28,10 +25,8 @@ function SinglePost({
   userId: number | undefined;
   varifiedSine: boolean | undefined;
 }) {
-  const [createLike] = useCreateLikeMutation();
   const [createComment] = useCreateCommentMutation();
 
-  const [deleteLike] = useDeleteLikeMutation();
   const { data: postLike } = useGetLikeOfPostQuery({ postId: post?.id });
   const { data: postLikeForCurrentUser } = usePostLikeForCurrentUserQuery({
     postId: post?.id,
@@ -42,7 +37,6 @@ function SinglePost({
   const postComment = postComments?.data;
   const totalComment = postComments?.meta.pagination.total || 0;
 
-  const totalLikes = postLike?.meta.pagination.total || 0;
   const postDescription = post.attributes.description;
   const postUserName = post.attributes.user.data.attributes.username;
   const postAt = formatDistanceToNow(new Date(post.attributes.createdAt), {
@@ -56,35 +50,6 @@ function SinglePost({
 
   const postLikeForCurrentUserId = postLikeForCurrentUser?.data[0]?.id;
 
-  const handleLikeUnlickClick = async () => {
-    if (!userId) {
-      return message.info("Please login first for like this post");
-    }
-
-    if (likedPostForCurrentUser && postLikeForCurrentUserId) {
-      try {
-        const result = await deleteLike({ postLikeForCurrentUserId });
-        if (!result) {
-          message.error("something went wrong, try again later");
-        }
-      } catch (error) {
-        message.error("something went wrong, try again later");
-      }
-    } else if (!likedPostForCurrentUser) {
-      try {
-        const result = await createLike({
-          data: { user: userId, post: postId },
-        });
-        if (!result) {
-          message.error("something went wrong, try again later");
-        } else if (result) {
-          message.success("Thanks for like the post");
-        }
-      } catch (error) {
-        message.error("something went wrong, try again later");
-      }
-    }
-  };
   const [newComment, setNewComment] = useState("");
 
   // const handleAddComment = async () => {
@@ -110,13 +75,7 @@ function SinglePost({
             varifiedSine={varifiedSine}
           />
           <PostContent postDescription={postDescription} />
-          <PostActions
-            totalLikes={totalLikes}
-            likedPostForCurrentUser={likedPostForCurrentUser}
-            handleLikeUnlickClick={handleLikeUnlickClick}
-            totalComment={totalComment}
-            userId={userId}
-          />
+          <PostActions totalComment={totalComment} userId={userId} />
           <PostComments
             postId={postId}
             postComment={postComment}

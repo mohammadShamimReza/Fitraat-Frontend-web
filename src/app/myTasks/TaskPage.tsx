@@ -11,7 +11,10 @@ import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai"; // Hamburger icon
 import { CiVideoOn } from "react-icons/ci";
+import { FaInfoCircle } from "react-icons/fa";
 import { FaBlogger } from "react-icons/fa6";
+import { IoMdClose } from "react-icons/io";
+
 import {
   GiFrankensteinCreature,
   GiRank1,
@@ -88,7 +91,7 @@ function TaskPage({
                   className="fixed top-4 left-4 z-30 text-2xl p-2 md:hidden"
                   onClick={() => setSidebarVisible(false)}
                 >
-                  <AiOutlineMenu /> {/* Close icon when sidebar is open */}
+                  <IoMdClose /> {/* Close icon when sidebar is open */}
                 </button>
               )}
               Tasks
@@ -149,19 +152,24 @@ function TaskPage({
               {allDays.map((day, index) => (
                 <div
                   key={index}
-                  className={`flex justify-between hover:bg-slate-100 rounded ${
-                    DayCount >= day ? "cursor-pointer" : "cursor-not-allowed"
-                  } ${DayCount === day ? "bg-blue-100" : ""} ${
+                  className={`flex justify-between hover:bg-slate-100 rounded 
+
+                    
+                  ${DayCount === day ? "bg-blue-100" : ""} ${
                     paid === undefined || paid === false
                       ? day > 3
                         ? "blur-sm"
                         : "blur-none"
                       : ""
                   }`}
-                  title={DayCount >= day ? "Unlocked" : "Locked"}
-                  onClick={() =>
-                    DayCount >= day ? handleDayid(day.toString()) : ""
-                  }
+                  title={DayCount >= day ? "Unlocked " : "Locked"}
+                  // onClick={() =>
+                  //   DayCount >= day ? handleDayid(day.toString()) : ""
+                  // }
+
+                  // ${
+                  // DayCount >= day ? "cursor-pointer" : "cursor-not-allowed"
+                  // }
                 >
                   <span
                     className={`transition-colors duration-300 p-2 ${
@@ -205,31 +213,48 @@ function TaskPage({
 
         {/* Main Content */}
         <div className="flex-grow p-6">
-          <div className="backgroundDot p-5 rounded-lg">
+          <div className="backgroundDot rounded-lg">
             <div className="mx-auto flex flex-col justify-evenly gap-3">
+              <div className="flex justify-center ">
+                <Link href="/emergency">
+                  <button className="relative inline-flex items-center justify-center px-4 py-2 overflow-hidden font-medium text-white transition-all duration-300 ease-out bg-black border border-gray-700 rounded-md hover:bg-gray-900 animate-border-glow">
+                    <span className="relative  text-sm">⚡ Emergency ⚡</span>
+                  </button>
+                </Link>
+              </div>
+
               <div className="basis-1/6">
-                <p className="text-3xl font-bold text-left flex justify-between">
+                <p className="text-xl  font-bold text-left flex justify-between">
                   <span>Day: {DayCount}</span>
-                  <Link href="/emergency">
-                    <button className="relative inline-flex items-center justify-center px-4 py-2 overflow-hidden font-medium text-white transition-all duration-300 ease-out bg-black border border-gray-700 rounded-md hover:bg-gray-900 animate-border-glow">
-                      <span className="relative  text-sm">⚡ Emergency ⚡</span>
-                    </button>
-                  </Link>
-                  <span className="flex items-center gap-2">
-                    Rank:{" "}
-                    {DayCount < 5 ? (
-                      <GiFrankensteinCreature />
-                    ) : DayCount >= 40 ? (
-                      <TbMilitaryRank style={{ color: "red" }} />
-                    ) : DayCount > 30 ? (
-                      <GiRank3 style={{ color: "red" }} />
-                    ) : DayCount > 20 ? (
-                      <GiRank2 style={{ color: "red" }} />
-                    ) : DayCount >= 10 ? (
-                      <GiRank1 style={{ color: "red" }} />
-                    ) : (
-                      <TbCurrencyFrank />
-                    )}
+
+                  <span className="flex items-center  gap-5">
+                    <div className="flex items-center gap-1">
+                      Rank:{" "}
+                      {DayCount < 5 ? (
+                        <GiFrankensteinCreature />
+                      ) : DayCount >= 40 ? (
+                        <TbMilitaryRank style={{ color: "red" }} />
+                      ) : DayCount > 30 ? (
+                        <GiRank3 style={{ color: "red" }} />
+                      ) : DayCount > 20 ? (
+                        <GiRank2 style={{ color: "red" }} />
+                      ) : DayCount >= 10 ? (
+                        <GiRank1 style={{ color: "red" }} />
+                      ) : (
+                        <TbCurrencyFrank />
+                      )}{" "}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      info:{" "}
+                      <button title="click for for info">
+                        <Link
+                          href="https://www.youtube.com/watch?v=M1lStPv08_I"
+                          target="_blank"
+                        >
+                          <FaInfoCircle />
+                        </Link>
+                      </button>
+                    </div>
                   </span>
                 </p>
               </div>
@@ -252,6 +277,11 @@ function TaskPage({
                     ? "bg-gray-500 cursor-not-allowed"
                     : "bg-gray-600 hover:bg-gray-700"
                 }`}
+                title={
+                  selectedTaskIndex === 0
+                    ? "This is the first task"
+                    : "Unlock the next task"
+                }
                 onClick={handlePrevious}
                 disabled={selectedTaskIndex === 0}
               >
@@ -261,6 +291,11 @@ function TaskPage({
               <button
                 className="px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700 text-lg"
                 onClick={handleNext}
+                title={
+                  selectedTaskIndex === tasks.length - 1
+                    ? "This is the last task"
+                    : "Unlock the next task"
+                }
               >
                 {selectedTask === "Blog" ? "Complete" : "Next"}
                 <ArrowRightOutlined style={{ paddingLeft: "10px" }} />

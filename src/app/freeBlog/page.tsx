@@ -15,6 +15,8 @@ function Page() {
   const [allBlogs, setAllBlogs] = useState<Blog[]>([]); // State to accumulate all blogs
   const paginationSize = 10;
 
+  console.log(allBlogs, "all blogs");
+
   const {
     data: blogData,
     isLoading,
