@@ -17,7 +17,7 @@ function FeedPost() {
   } = useGetPostQuery({ pageCount });
 
   const totalPosts = feedPosts?.meta.pagination.total || 0;
-  const postsPerPage = 25;
+  const postsPerPage = 10;
 
   const userInfoFromRedux = useAppSelector((state) => state.auth.userInfo);
   const userId = userInfoFromRedux?.id;

@@ -10,15 +10,26 @@ import { useEffect, useState } from "react";
 import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
+import { clearDayData } from "@/redux/slice/daySlice";
 import DayFinishImage from "../assets/dayFinish.gif";
 
 function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 
-  const { data: unAuthenticatedDayData, isError } = useGetDaysByDayIdQuery(
-    parseInt(unAuthDayId)
-  );
+  let unAuthenticatedDayData;
+
+  unAuthenticatedDayData = useAppSelector((state) => state.daySlice.data);
+
+  console.log(unAuthenticatedDayData);
+
+  const { data: unAuthenticatedDayDataForChengeDay, isError } =
+    useGetDaysByDayIdQuery(parseInt(unAuthDayId));
+
+  if (!unAuthenticatedDayData || unAuthenticatedDayData === null) {
+    unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
+  }
+
   useEffect(() => {
     const dayId = window.localStorage.getItem("unAuthDayId") || "1";
     if (parseInt(dayId) > 3) {
@@ -71,8 +82,8 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   const handleNext = () => {
     if (selectedTask === "Blog") {
-        
-        setSelectedTaskIndex(0);
+      dispatch(clearDayData());
+      setSelectedTaskIndex(0);
       setIsFinishModalOpen(true);
 
       dispatch(storeCurrentTask(tasks[0]));
@@ -108,11 +119,12 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
         ...prevState,
         [selectedTask]: true,
       }));
-    }
-    if (selectedTaskIndex < tasks.length - 1) {
       setSelectedTaskIndex(selectedTaskIndex + 1);
       dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
     }
+    // if (selectedTaskIndex < tasks.length - 1) {
+
+    // }
   };
 
   const handleOk = () => {
@@ -125,11 +137,13 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
     title: string | undefined;
     content: string | undefined;
+    viewCount: number;
   }>({
     id: 1,
 
     title: "",
     content: "",
+    viewCount: 0,
   });
   const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
   const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
@@ -142,13 +156,14 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   useEffect(() => {
     if (unAuthenticatedDayData) {
-      const unAuthDayData = unAuthenticatedDayData?.data[0].attributes;
+      const unAuthDayData = unAuthenticatedDayData[0].attributes;
       if (unAuthDayData) {
         setBlog({
           id: unAuthDayData.blog.data.id,
 
           title: unAuthDayData.blog.data.attributes.title,
           content: unAuthDayData.blog.data.attributes.content,
+          viewCount: unAuthDayData.blog.data.attributes.viewCount,
         });
         setQuiz(unAuthDayData?.quizzes.data);
 
@@ -160,10 +175,6 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   }, [unAuthenticatedDayData, unAuthDayId]);
 
   const DayCount = parseInt(unAuthDayId) || 0;
-
-  const handleDayid = (id: string) => {
-    setUnAuthDayId(id.toString());
-  };
 
   return (
     <>
@@ -199,7 +210,6 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
           video={video}
           kegel={kegel}
           DayCount={DayCount}
-          handleDayid={handleDayid}
           paid={paid}
         />
       )}

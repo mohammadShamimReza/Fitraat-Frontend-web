@@ -13,7 +13,7 @@ function Page() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [pageCount, setPageCount] = useState<number>(1);
   const [allBlogs, setAllBlogs] = useState<Blog[]>([]); // State to accumulate all blogs
-  const paginationSize = 10;
+  const paginationSize = 3;
 
   console.log(allBlogs, "all blogs");
 
@@ -68,9 +68,9 @@ function Page() {
 
   return (
     <div>
-      <div className="min-h-screen">
-        <div className="flex flex-col justify-between  gap-3 sm:flex-row">
-          <div className="order-3">
+      <div className="min-h-screen ">
+        <div className="flex flex-col justify-between  gap-3 sm:flex-row ">
+          <div className="order-3 ">
             <Trendings />
           </div>
           <div className="w-full sm:w-4/5 order-2">

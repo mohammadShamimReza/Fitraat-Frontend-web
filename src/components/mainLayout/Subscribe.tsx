@@ -38,9 +38,9 @@ const Subscribe = () => {
   };
 
   return (
-    <div className=" mx-auto bg-white border-t overflow-hidden  w-full  ">
+    <div className=" mx-auto bg-white my-28 overflow-hidden  w-full  ">
       <div className="md:flex flex-col">
-        <div className="p-8 text-center">
+        <div className=" text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-2 ">
             Subscribe to our newsletter
           </h2>
@@ -48,10 +48,7 @@ const Subscribe = () => {
             Get updates on our latest projects and news straight to your inbox.
           </p>
         </div>
-        <form
-          onSubmit={handleSubscribe}
-          className="mx-auto p-8 space-y-4 w-2/3"
-        >
+        <form onSubmit={handleSubscribe} className="mx-auto  space-y-4 w-2/3">
           <div>
             <label
               htmlFor="email"

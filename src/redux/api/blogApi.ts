@@ -12,7 +12,22 @@ export const blogApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
+    updateBlog: builder.mutation({
+      query: ({
+        id,
+        updatedFields,
+      }: {
+        id: number;
+        updatedFields: Partial<{ viewCount: number }>;
+      }) => ({
+        url: `${BLOG}/${id}`,
+        method: "PUT",
+        body: {
+          data: updatedFields,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetBlogsByIdQuery } = blogApi;
+export const { useGetBlogsByIdQuery, useUpdateBlogMutation } = blogApi;

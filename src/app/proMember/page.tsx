@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const MembershipCard = () => {
   return (
-    <div className=" min-h-screen">
+    <div className=" ">
       <div className="">
         <div className=" p-5">
           <p className="text-center text-4xl font-bold text-gray-700 underline">

@@ -9,21 +9,50 @@ function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
   const { data, isLoading } = useGetFreeBlogsByIdQuery(blogId);
   const blogData = data?.data.attributes;
-  console.log(blogData);
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
 
   return isLoading ? (
-    Array.from({ length: 4 }).map((_, index) => (
-      <Skeleton style={{ marginTop: "10px" }} key={index} active />
-    ))
+    <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">
+      <div className="p-4">
+        {/* Title Skeleton */}
+        <Skeleton.Input
+          style={{ width: "50%", height: "24px", marginBottom: "20px" }}
+          active
+        />
+
+        {/* Image Skeleton */}
+        <Skeleton
+          active
+          paragraph={{
+            rows: 8,
+            width: ["100%", "95%", "90%", "85%", "80%", "75%", "70%", "65%"],
+          }}
+        />
+        {/* Content Skeleton */}
+        <Skeleton
+          active
+          paragraph={{
+            rows: 8,
+            width: ["100%", "95%", "90%", "85%", "80%", "75%", "70%", "65%"],
+          }}
+        />
+      </div>
+    </div>
   ) : (
     <div className="p-5">
-      <br />
-      <br />
-      <br />
+      <div className="flex justify-between">
+        <p className="text-right p-5">
+          Author
+          <span className="text-gray-500"> {blogData?.viewCount}</span>{" "}
+        </p>
+        <p className="text-right p-7">
+          Total view:{" "}
+          <span className="text-gray-500"> {blogData?.viewCount || 1}</span>{" "}
+        </p>
+      </div>
       <div className="">
         <div
-          className="text-gray-800 mb-4 
+          className="text-gray-700 mb-4 
             dark:text-gray-300 text-5xl font-semibold text-center"
         >
           {blogData?.title}
@@ -52,15 +81,7 @@ function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
       <br />
-      <p className="text-right p-20">
-        Total view:{" "}
-        <span className="text-red-500"> {blogData?.viewCount || 1}</span>{" "}
-      </p>
 
-      <br />
-      <div className="text-2xl text-center pt-5 text-red-500 font-semibold">
-        Thanks for reading this Blog
-      </div>
       <br />
 
       <div className="text-base "></div>

@@ -1,8 +1,8 @@
 "use client";
 
+import { useUpdateBlogMutation } from "@/redux/api/blogApi";
 import { marked } from "marked";
 import Link from "next/link";
-import { useState } from "react";
 
 function SuggestedBlog({
   selectedTask,
@@ -13,16 +13,23 @@ function SuggestedBlog({
     id: number | undefined;
     title: string | undefined;
     content: string | undefined;
+    viewCount: number;
   };
 }) {
-  const [hoveredWords, setHoveredWords] = useState<number[]>([]);
+  const [updateBlog] = useUpdateBlogMutation();
+  const updateViewCount = async (blogId: number) => {
+    try {
+      const result = await updateBlog({
+        id: blogId,
+        updatedFields: { viewCount: blog.viewCount + 1 },
+      }).unwrap();
+      console.log(result);
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  };
 
   const contentHtml = blog?.content ? marked(blog.content) : "";
-
-  const resetHoveredWord = () => {
-    // Reset all hovered words when mouse leaves
-    setHoveredWords([]);
-  };
 
   return (
     <div>

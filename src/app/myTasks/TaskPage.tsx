@@ -36,7 +36,6 @@ function TaskPage({
   video,
   kegel,
   DayCount,
-  handleDayid,
   paid,
 }: {
   localStorageData: {
@@ -54,14 +53,15 @@ function TaskPage({
     id: number | undefined;
     title: string | undefined;
     content: string | undefined;
+    viewCount: number;
   };
   quiz: Quizzes[] | undefined;
   video: { videoUrl: string | undefined };
   kegel: KegelTimes[] | undefined;
   DayCount: number;
-  handleDayid: (id: string) => void;
   paid: boolean | undefined;
 }) {
+  console.log(video);
   const tasks = ["video", "kagel", "quiz", "Blog"];
   const [collapsed, setCollapsed] = useState(false);
   const [isSidebarVisible, setSidebarVisible] = useState(false);

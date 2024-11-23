@@ -16,17 +16,45 @@ function Page({ params }: { params: { slug: string } }) {
   const blogData = data?.data.attributes;
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
   return isLoading ? (
-    Array.from({ length: 4 }).map((_, index) => (
-      <Skeleton style={{ marginTop: "10px" }} key={index} active />
-    ))
+    <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">
+      <div className="p-4">
+        {/* Title Skeleton */}
+        <Skeleton.Input
+          style={{ width: "60%", height: "28px", marginBottom: "15px" }}
+          active
+        />
+
+        {/* Content Skeleton */}
+        <Skeleton
+          active
+          paragraph={{ rows: 5, width: ["100%", "95%", "90%", "85%", "80%"] }}
+        />
+
+        {/* Footer Skeleton */}
+        <div className="flex justify-between items-center mt-6">
+          {/* Date Skeleton */}
+          <Skeleton.Input style={{ width: "40%", height: "20px" }} active />
+          {/* Optional Avatar Skeleton */}
+          <Skeleton.Avatar style={{ width: "40px", height: "40px" }} active />
+        </div>
+      </div>
+    </div>
   ) : (
     <div className="p-5">
       <br />
-      <br />
-      <br />
+      <div className="flex justify-between">
+        <p className="text-right p-5">
+          Author
+          <span className="text-gray-500"> {blogData?.viewCount}</span>{" "}
+        </p>
+        <p className="text-right p-7">
+          Total view:{" "}
+          <span className="text-gray-500"> {blogData?.viewCount || 1}</span>{" "}
+        </p>
+      </div>
       <div className="">
         <div
-          className="text-gray-800 mb-4 
+          className="text-gray-700 mb-4 
             dark:text-gray-300 text-5xl font-semibold text-center"
         >
           {blogData?.title}
@@ -53,12 +81,6 @@ function Page({ params }: { params: { slug: string } }) {
             <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
           )}
         </div>
-      </div>
-      <br />
-
-      <br />
-      <div className="text-2xl text-center pt-5 text-blue-500 font-semibold">
-        Thanks for reading this Blog
       </div>
       <br />
 
