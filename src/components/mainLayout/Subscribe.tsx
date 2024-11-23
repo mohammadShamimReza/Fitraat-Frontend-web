@@ -48,10 +48,7 @@ const Subscribe = () => {
             Get updates on our latest projects and news straight to your inbox.
           </p>
         </div>
-        <form
-          onSubmit={handleSubscribe}
-          className="mx-auto p-8 space-y-4 w-2/3"
-        >
+        <form onSubmit={handleSubscribe} className="mx-auto  space-y-4 w-2/3">
           <div>
             <label
               htmlFor="email"

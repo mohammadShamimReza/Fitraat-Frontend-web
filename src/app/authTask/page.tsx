@@ -11,34 +11,42 @@ const MyTasks: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const userData = useAppSelector((state) => state.auth.userInfo);
-
-  console.log(userData, "this is user data");
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+
+    if (typeof window !== "undefined") {
+      const tokenFromLocalStorage = getTokenFromCookie();
+      if (tokenFromLocalStorage) {
+        dispatch(storeAuthToken(tokenFromLocalStorage));
+        if (userData) {
+          dispatch(storeUserInfo(userData));
+        }
+      }
+    }
+  }, [dispatch, userData]);
 
   const authDayDataId = userData?.currentDay!;
   const userId = userData?.id!;
   const paid = userData?.paid;
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const fetchToken = () => {
-      const tokenFromLocalStorage = getTokenFromCookie();
-      if (tokenFromLocalStorage) {
-        dispatch(storeUserInfo(userData));
-        dispatch(storeAuthToken(tokenFromLocalStorage));
-      }
-    };
-
-    fetchToken(); // Fetch the token on component mount
-  }, [dispatch, userData]);
-
   return (
     <>
       {isMounted ? (
+        userData && paid === true ? (
+          // Authenticated user render
+          <AuthMyTask
+            authDayDataId={authDayDataId}
+            userId={userId}
+            paid={paid}
+          />
+        ) : (
+          // Unauthenticated user render
+          <UnAuthTask paid={userData?.paid} />
+        )
+      ) : (
+        // Skeleton loading screen during hydration
         <div className="flex h-screen">
           {/* Sidebar */}
           <div className="w-1/4 bg-gray-200 p-4 rounded-md">
@@ -57,11 +65,6 @@ const MyTasks: React.FC = () => {
             />
           </div>
         </div>
-      ) : userData && paid === true ? (
-        // Authenticated user render
-        <AuthMyTask authDayDataId={authDayDataId} userId={userId} paid={paid} />
-      ) : (
-        <UnAuthTask paid={userData?.paid} />
       )}
     </>
   );

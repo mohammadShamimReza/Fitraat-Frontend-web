@@ -67,7 +67,7 @@ const HomePage: React.FC = () => {
             A 40-day guided recovery challenge with daily tasks, exercises, and
             insights to help you overcome addiction.
           </p>
-          <Link href="/signup">
+          <Link href="/tasks">
             <Button
               type="primary"
               className="bg-white px-8 py-3 rounded-lg font-bold"
@@ -160,7 +160,7 @@ const HomePage: React.FC = () => {
               Whether you need advice or want to share your experiences, our
               feed is the perfect space for open and respectful discussions.
             </p>
-            <Link href="/feed">
+            <Link href="/feeds">
               <Button
                 type="primary"
                 className="bg-white text-black px-6 py-2 mt-4 rounded-lg"
@@ -181,7 +181,7 @@ const HomePage: React.FC = () => {
               Our blogs cover a wide range of topics, from personal growth to
               effective recovery strategies.
             </p>
-            <Link href="/blog">
+            <Link href="/freeBlog">
               <Button
                 type="primary"
                 className="bg-white text-black px-6 py-2 mt-4 rounded-lg"
