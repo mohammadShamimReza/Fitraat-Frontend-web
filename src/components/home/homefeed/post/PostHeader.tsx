@@ -13,7 +13,6 @@ const PostHeader = ({
 
   varifiedSine: boolean | undefined;
 }) => {
-  console.log(postUserName, varifiedSine);
   return (
     <div className="flex items-center mb-4">
       <Link href={`/postUser/${postUserId}`}>
