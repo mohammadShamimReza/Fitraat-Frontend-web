@@ -9,7 +9,6 @@ function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
   const { data, isLoading } = useGetFreeBlogsByIdQuery(blogId);
   const blogData = data?.data.attributes;
-  console.log(blogData);
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
 
   return isLoading ? (

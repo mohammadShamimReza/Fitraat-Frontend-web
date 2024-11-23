@@ -1,10 +1,11 @@
 import { useGet3TrendingFreeBlogQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
+import { marked } from "marked";
 import Link from "next/link";
 
 function Trendings() {
   const { data: trendingBlogData } = useGet3TrendingFreeBlogQuery({});
-  console.log(trendingBlogData);
+
   return (
     <div className="pr-3 sticky top-0">
       <div className="">
@@ -31,7 +32,7 @@ function Trendings() {
                           {blog?.attributes.content && (
                             <div
                               dangerouslySetInnerHTML={{
-                                __html: blog.attributes.content,
+                                __html: marked(blog.attributes.content),
                               }}
                             />
                           )}

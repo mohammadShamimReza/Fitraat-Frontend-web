@@ -5,13 +5,16 @@ import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { storeDayData } from "@/redux/slice/daySlice";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-interface DataLoaderProps {
-  unAuthDayId: string;
-}
 
-const DataLoader: React.FC<DataLoaderProps> = ({ unAuthDayId }) => {
+
+const DataLoader: React.FC = () => {
+  const unAuthDayIdFormLocalStorage = localStorage.getItem("unAuthDayId");
+  const [unAuthDayId] = useState(
+    unAuthDayIdFormLocalStorage ? unAuthDayIdFormLocalStorage : "1"
+  );
+  console.log(unAuthDayId);
   const dispatch = useAppDispatch();
 
   const { data: userData } = useGetUserInfoQuery();

@@ -21,6 +21,8 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   unAuthenticatedDayData = useAppSelector((state) => state.daySlice.data);
 
+  console.log(unAuthenticatedDayData);
+
   const { data: unAuthenticatedDayDataForChengeDay, isError } =
     useGetDaysByDayIdQuery(parseInt(unAuthDayId));
 

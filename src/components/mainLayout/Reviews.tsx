@@ -28,7 +28,7 @@ function Reviews() {
       <div className="">
         <Carousel autoplay {...settings}>
           <div className="p-5">
-            <div className="bg-gray-800  rounded-lg p-5 sm:h-80 h-96">
+            <div className="bg-gray-600  rounded-lg p-5 sm:h-80 h-96">
               <p className="text-white text-lg leading-relaxed mb-4">
                 Never did I imagine myself free from porn. Thanks to Wael
                 Ibrahim and the Aware Academy. The longest time I recall myself
@@ -41,7 +41,7 @@ function Reviews() {
             </div>
           </div>
           <div className="p-5">
-            <div className="bg-gray-800 rounded-lg p-5 sm:h-80 h-96">
+            <div className="bg-gray-600 rounded-lg p-5 sm:h-80 h-96">
               <p className="text-white text-lg leading-relaxed mb-4">
                 My marriage life was torn apart because of pornography.After
                 more than 9 months working with the Aware Academy, the Critical
@@ -54,7 +54,7 @@ function Reviews() {
             </div>
           </div>
           <div className="p-5">
-            <div className="bg-gray-800 rounded-lg p-5 sm:h-80 h-96">
+            <div className="bg-gray-600 rounded-lg p-5 sm:h-80 h-96">
               <p className="text-white text-lg leading-relaxed mb-4">
                 No words can describe how I felt after revealing my long years
                 of secretive and addictive cycle to my wife. She was the ONE
@@ -66,7 +66,7 @@ function Reviews() {
             </div>
           </div>
           <div className="p-5">
-            <div className="bg-gray-800 rounded-lg p-5 sm:h-80 h-96">
+            <div className="bg-gray-600 rounded-lg p-5 sm:h-80 h-96">
               <p className="text-white text-lg leading-relaxed mb-4">
                 hrough the effort and care of Wael Ibrahim and his team, hope
                 was restored in my life. Even though I didn&apos;t quit or

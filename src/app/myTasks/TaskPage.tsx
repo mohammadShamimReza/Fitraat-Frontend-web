@@ -61,6 +61,7 @@ function TaskPage({
   DayCount: number;
   paid: boolean | undefined;
 }) {
+  console.log(video);
   const tasks = ["video", "kagel", "quiz", "Blog"];
   const [collapsed, setCollapsed] = useState(false);
   const [isSidebarVisible, setSidebarVisible] = useState(false);

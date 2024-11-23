@@ -7,10 +7,7 @@ function RecoveryFeature() {
   return (
     <div>
       {" "}
-      <div className={`container mx-auto py-8 px-4 mt-28`}>
-        <h1 className="text-3xl font-semibold text-center mb-4">
-          Recovery Features
-        </h1>
+      <div className={`container mx-auto py-2 px-4 `}>
         <br />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Add recovery features here */}

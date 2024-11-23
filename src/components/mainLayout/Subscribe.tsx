@@ -38,9 +38,9 @@ const Subscribe = () => {
   };
 
   return (
-    <div className=" mx-auto bg-white border-t overflow-hidden  w-full  ">
+    <div className=" mx-auto bg-white my-28 overflow-hidden  w-full  ">
       <div className="md:flex flex-col">
-        <div className="p-8 text-center">
+        <div className=" text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-2 ">
             Subscribe to our newsletter
           </h2>
