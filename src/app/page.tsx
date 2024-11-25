@@ -28,12 +28,12 @@ const HomePage: React.FC = () => {
         {/* Sidebar */}
 
         {/* Content Box */}
-        <div className="flex-1 bg-white p-20 grid grid-cols-2 gap-8">
-          {[...Array(6)].map((_, index) => (
+        <div className="flex-1 bg-white p-20 grid  gap-8">
+          {[...Array(10)].map((_, index) => (
             <div key={index} className="bg-gray-100 p-6 rounded-lg">
               <Skeleton
                 active
-                title={{ width: "50%" }}
+                title={{ width: "100%" }}
                 paragraph={{ rows: 4, width: ["100%", "90%", "75%", "60%"] }}
               />
             </div>

@@ -12,27 +12,33 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
 
-// Zod schema for form validation
-const registerSchema = z.object({
-  username: z.string().nonempty("Username is required"),
-  email: z
-    .string()
-    .email("Invalid email address")
-    .nonempty("Email is required"),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters long")
-    .regex(/[0-9]/, "Password must contain at least one number")
-    .regex(
-      /[!@#$%^&*(),.?":{}|<>]/,
-      "Password must contain at least one special character"
-    ),
-  age: z.string().nonempty("Age is required"),
-  phone: z.string().nonempty("Phone number is required"),
-  gender: z.string().nonempty("Gender is required"),
-  language: z.string().nonempty("Language is required"),
-  currentDay: z.number(),
-});
+// Zod schema for form validation with confirmPassword
+const registerSchema = z
+  .object({
+    username: z.string().nonempty("Username is required"),
+    email: z
+      .string()
+      .email("Invalid email address")
+      .nonempty("Email is required"),
+    password: z
+      .string()
+      .min(6, "Password must be at least 6 characters long")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least one special character"
+      ),
+    confirmPassword: z.string().nonempty("Please confirm your password"),
+    age: z.string().nonempty("Age is required"),
+    phone: z.string().nonempty("Phone number is required"),
+    gender: z.string().nonempty("Gender is required"),
+    language: z.string().nonempty("Language is required"),
+    currentDay: z.number(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 function RegisterPage() {
   const router = useRouter();
@@ -44,6 +50,7 @@ function RegisterPage() {
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
     age: "",
     phone: "",
     gender: "",
@@ -51,6 +58,7 @@ function RegisterPage() {
     currentDay: 1,
     startDate: currentDate,
   });
+
   const [registerUser, { error }] = useRegisterUserMutation();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
@@ -105,8 +113,8 @@ function RegisterPage() {
 
   return (
     <>
-      <div className=" min-h-screen flex flex-col mt-10 items-center">
-        <div className=" shadow-lg rounded-lg p-8 max-w-md w-full">
+      <div className="min-h-screen flex flex-col mt-10 items-center">
+        <div className="shadow-lg rounded-lg p-8 max-w-md w-full">
           <h1 className="text-center mb-10 font-bold text-3xl text-blue-500">
             Registration is Free
           </h1>
@@ -162,7 +170,7 @@ function RegisterPage() {
                 id="password"
                 name="password"
                 className="w-full rounded-lg border border-gray-300 px-3 py-2"
-                placeholder="Enter your password (min 6 cherecter)"
+                placeholder="Enter your password (min 6 characters)"
                 onChange={handleChange}
                 value={formData.password}
                 required
@@ -178,6 +186,25 @@ function RegisterPage() {
                   onClick={togglePasswordVisibility}
                 />
               )}
+            </div>
+            {/* Confirm Password Input */}
+            <div className="mb-4 relative">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-lg font-semibold mb-2"
+              >
+                Confirm Password <span className="text-red-500">*</span>
+              </label>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2"
+                placeholder="Re-enter your password"
+                onChange={handleChange}
+                value={formData.confirmPassword}
+                required
+              />
             </div>
             {/* Age Input */}
             <div className="mb-4">

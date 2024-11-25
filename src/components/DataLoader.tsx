@@ -2,12 +2,12 @@
 import { getTokenFromCookie } from "@/lib/auth/token";
 import { useGetUserInfoQuery } from "@/redux/api/authApi";
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
+import { useGetPostQuery } from "@/redux/api/postApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { storeDayData } from "@/redux/slice/daySlice";
+import { storeFeedData } from "@/redux/slice/feedSlice";
 import React, { useEffect, useState } from "react";
-
-
 
 const DataLoader: React.FC = () => {
   const unAuthDayIdFormLocalStorage = localStorage.getItem("unAuthDayId");
@@ -53,17 +53,17 @@ const DataLoader: React.FC = () => {
     authDayDataId,
   ]);
 
-  // const {
-  //   data: feedPosts,
-  //   isLoading,
-  //   isFetching,
-  // } = useGetPostQuery({ pageCount: 1 });
+  const {
+    data: feedPosts,
+    isLoading,
+    isFetching,
+  } = useGetPostQuery({ pageCount: 1 });
 
-  // useEffect(() => {
-  //   if (feedPosts) {
-  //     dispatch(storeFeedData(feedPosts));
-  //   }
-  // });
+  useEffect(() => {
+    if (feedPosts) {
+      dispatch(storeFeedData(feedPosts));
+    }
+  });
 
   return null; // This component doesn't render anything, just handles data
 };

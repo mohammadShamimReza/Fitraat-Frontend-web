@@ -23,6 +23,9 @@ export function middleware(request: NextRequest) {
     if (pathname.startsWith("/login")) {
       return NextResponse.redirect(new URL("/tasks", request.url));
     }
+    if (pathname.startsWith("/register")) {
+      return NextResponse.redirect(new URL("/tasks", request.url));
+    }
     if (pathname === "/tasks") {
       return NextResponse.redirect(new URL("/authTask", request.url));
     }

@@ -1,7 +1,7 @@
 "use client";
-import FancyLoading from "@/app/loading";
 import { useGetPostQuery } from "@/redux/api/postApi";
 import { useAppSelector } from "@/redux/hooks";
+import { Skeleton } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import CreatePost from "./CreatePost";
 import SinglePost from "./SinglePost";
@@ -60,7 +60,24 @@ function FeedPost() {
           varifiedSine={varifiedSine}
         />
       ))}
-      {(isLoading || isFetching) && <FancyLoading />}
+      {(isLoading || isFetching) && (
+        <div className="flex h-screen">
+          {/* Sidebar */}
+
+          {/* Content Box */}
+          <div className="flex-1 bg-white p-20 grid  gap-8">
+            {[...Array(10)].map((_, index) => (
+              <div key={index} className="bg-gray-100 p-6 rounded-lg">
+                <Skeleton
+                  active
+                  title={{ width: "100%" }}
+                  paragraph={{ rows: 4, width: ["100%", "90%", "75%", "60%"] }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

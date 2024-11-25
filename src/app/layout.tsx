@@ -67,7 +67,7 @@ export default function RootLayout({
         <body>
           <AntdRegistry>
             <div>
-              <div className="w-full bg-green-700 text-white py-2 px-2 flex justify-center items-center space-x-4 text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden">
+              <div className="w-full bg-blue-500 text-white py-2 px-2 flex justify-center items-center space-x-4 text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden">
                 <span className="font-semibold">Stand with Palestine 🇧🇩</span>
                 <Link target="blank" href={palastineHelpUrl} passHref>
                   <p
