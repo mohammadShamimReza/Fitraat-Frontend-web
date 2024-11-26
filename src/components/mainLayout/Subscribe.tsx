@@ -63,6 +63,7 @@ const Subscribe = () => {
               autoComplete="email"
               required
               value={email}
+              placeholder="Enter you email address"
               onChange={(e) => setEmail(e.target.value)} // Update the email state on change
               className="mt-1 focus:ring-gray-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md h-10 p-5"
             />
