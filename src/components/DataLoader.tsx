@@ -9,6 +9,8 @@ import { storeDayData } from "@/redux/slice/daySlice";
 import { storeFeedData } from "@/redux/slice/feedSlice";
 import React, { useEffect, useState } from "react";
 
+
+
 const DataLoader: React.FC = () => {
   const unAuthDayIdFormLocalStorage = localStorage.getItem("unAuthDayId");
   const [unAuthDayId] = useState(
