@@ -1,23 +1,44 @@
-# -Frontend
-## Overview
-It’s a solution for addicted adult content(Porn) consumers. This is a 40 day marathon solution. Every day users have some tasks, emergency section for emergency excited section. Users can post their questions and get answers through comments. Also lot to informational blog are available
+# Fitraat Frontend
 
+## Overview
+
+**Fitraat** is a 40-day marathon program designed to help individuals overcome addiction to adult content (porn). The app provides daily tasks, an emergency help section for uncontrollable moments, and community support. Users can also access informative blogs to aid their recovery journey.
 
 ## Key Features
 
-- **Daily Progress Steps:**  Everyday users complete 4 types of tasks(video, kegel exercise, quizzes and blog). Users will be assigned those tasks for 40 days.
-- **Community support:** Only logged in users can ask questions (post) and give the answer (comment) in the feed section. Without log user can only able to watch.
-- **Emergency help:** There is a emergency section for excited & uncontrolled moment, every emergency section have video, some quote or advice, reward (finish achievement)
-- **Free and pro:** Free users are able to use this system for 3 days and the user will become a pro member when the user will pay the money using ssl commarz.
-- **Blogs:** Blogs are available for all users. In this field there are lot of myth || question. Whose are combined in this section.
+- **Daily Progress Steps**  
+  Users complete four types of tasks each day for 40 days:
+  - Videos  
+  - Kegel exercises  
+  - Quizzes  
+  - Blogs  
 
-## Credentials
+- **Community Support**  
+  - Logged-in users can post questions and provide answers through comments in the feed section.  
+  - Guests (non-logged-in users) can only view the feed but cannot interact.  
 
-You can use the following credentials to log in:
+- **Emergency Help**  
+  - A dedicated section for moments of intense cravings or lack of control.  
+  - Includes videos, quotes, advice, and achievements for successfully overcoming such moments.  
 
-```bash
-User email: user@gmail.com
+- **Free and Pro Access**  
+  - Free users have access to the system for 3 days.  
+  - Paid users gain Pro membership via **SSL Commerz** integration.  
+
+- **Blogs**  
+  - Accessible to all users.  
+  - Features answers to common myths and questions related to addiction and recovery.  
+
+---
+
+## Credentials for Testing
+
+Use the following credentials to log in:
+
+```plaintext
+Email: user@gmail.com  
 Password: userPass23393$#
+```
 
 ## How to run in locally
 
@@ -41,4 +62,4 @@ NEXT_PUBLIC_BASE_URL="you backend setup"
    cd <Cloned repo>
    npm install
    npm run dev
-
+```
