@@ -3,7 +3,7 @@ import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
 import { KegelTimes, Quizzes } from "@/types/contantType";
-import { Button, message, Modal } from "antd";
+import { Button, message, Modal, Skeleton } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -175,6 +175,31 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   }, [unAuthenticatedDayData, unAuthDayId]);
 
   const DayCount = parseInt(unAuthDayId) || 0;
+
+  if (!unAuthenticatedDayData) {
+    return (
+      <>
+        <div className="flex h-screen">
+          {/* Sidebar */}
+          <div className="w-1/4 bg-gray-200 p-4 rounded-md">
+            <Skeleton active title={false} paragraph={{ rows: 5 }} />
+          </div>
+
+          {/* Content Box */}
+          <div className="flex-1 bg-white p-20">
+            <Skeleton
+              active
+              title={{ width: "60%" }}
+              paragraph={{
+                rows: 10,
+                width: ["100%", "90%", "80%", "70%", "50%"],
+              }}
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
