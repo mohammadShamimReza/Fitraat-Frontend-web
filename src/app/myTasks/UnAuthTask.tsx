@@ -21,7 +21,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   unAuthenticatedDayData = useAppSelector((state) => state.daySlice.data);
 
-  console.log(unAuthenticatedDayData);
+  console.log(unAuthenticatedDayData, "Day data");
 
   const { data: unAuthenticatedDayDataForChengeDay, isError } =
     useGetDaysByDayIdQuery(parseInt(unAuthDayId));
@@ -152,8 +152,6 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
     videoUrl: "",
   });
 
-  console.log(quiz);
-
   useEffect(() => {
     if (unAuthenticatedDayData) {
       const unAuthDayData = unAuthenticatedDayData[0].attributes;
@@ -176,7 +174,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   const DayCount = parseInt(unAuthDayId) || 0;
 
-  if (!unAuthenticatedDayData) {
+  if (unAuthenticatedDayData) {
     return (
       <>
         <div className="flex h-screen">
