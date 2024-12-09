@@ -212,7 +212,7 @@ function TaskPage({
         )}
 
         {/* Main Content */}
-        <div className="flex-grow p-6">
+        <div className="flex-grow p-6 border rounded-lg">
           <div className="backgroundDot rounded-lg">
             <div className="mx-auto flex flex-col justify-evenly gap-3">
               <div className="flex justify-center ">
@@ -260,7 +260,7 @@ function TaskPage({
               </div>
               <br />
               <div className="h-[30rem]">
-                <div className="basis-4/6 border p-3 rounded-lg h-full">
+                <div className="basis-4/6  h-full">
                   <Video selectedTask={selectedTask} video={video} />
                   <Kagel selectedTask={selectedTask} kegel={kegel} />
                   <Quiz selectedTask={selectedTask} quiz={quiz} />
