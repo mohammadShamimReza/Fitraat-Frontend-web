@@ -2,8 +2,9 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const currentUser = request.cookies.get("jwt")?.value;
+  const currentUser = request.cookies.get("fitraatJwt")?.value;
   const { pathname } = request.nextUrl;
+
 
   if (!currentUser) {
     if (
