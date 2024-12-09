@@ -28,16 +28,13 @@ function AuthMyTask({
 
   const [dayId, setDayId] = useState(authDayDataId);
 
-  let authenticatedDayData;
+  const {
+    data: authenticatedDayDataForChengeDay,
+    isError,
+    isLoading,
+  } = useGetDaysByDayIdQuery(authDayDataId);
 
-  authenticatedDayData = useAppSelector((state) => state.daySlice.data);
-
-  const { data: authenticatedDayDataForChengeDay, isError } =
-    useGetDaysByDayIdQuery(authDayDataId);
-
-  if (!authenticatedDayData) {
-    authenticatedDayData = authenticatedDayDataForChengeDay?.data;
-  }
+  const authenticatedDayData = authenticatedDayDataForChengeDay?.data;
 
   const [updataUserDay] = useUpdateUserDayMutation();
 
@@ -171,7 +168,7 @@ function AuthMyTask({
 
   const DayCount = authDayDataId;
 
-  if (!authenticatedDayData) {
+  if (isLoading) {
     return (
       <>
         <div className="flex h-screen">
