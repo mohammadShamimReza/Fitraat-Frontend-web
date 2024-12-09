@@ -17,18 +17,15 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 
-  let unAuthenticatedDayData;
+  const {
+    data: unAuthenticatedDayDataForChengeDay,
+    isError,
+    isLoading,
+  } = useGetDaysByDayIdQuery(parseInt(unAuthDayId));
 
-  unAuthenticatedDayData = useAppSelector((state) => state.daySlice.data);
+  console.log(unAuthenticatedDayDataForChengeDay);
 
-  console.log(unAuthenticatedDayData, "Day data");
-
-  const { data: unAuthenticatedDayDataForChengeDay, isError } =
-    useGetDaysByDayIdQuery(parseInt(unAuthDayId));
-
-  if (!unAuthenticatedDayData || unAuthenticatedDayData === null) {
-    unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
-  }
+  const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
 
   useEffect(() => {
     const dayId = window.localStorage.getItem("unAuthDayId") || "1";
@@ -174,7 +171,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   const DayCount = parseInt(unAuthDayId) || 0;
 
-  if (unAuthenticatedDayData) {
+  if (isLoading) {
     return (
       <>
         <div className="flex h-screen">
