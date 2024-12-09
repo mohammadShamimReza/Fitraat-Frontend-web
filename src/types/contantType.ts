@@ -126,6 +126,7 @@ export interface Blog {
     content: string;
     title: string;
     imageURL: string;
+
     keywords: {
       keyword: string[];
     };
@@ -157,6 +158,7 @@ export interface SingleBlogData {
       content: string;
       imageURL: string;
       viewCount: number;
+      authorName: string;
     };
   };
   meta: Meta;

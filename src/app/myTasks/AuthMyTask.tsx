@@ -75,6 +75,11 @@ function AuthMyTask({
 
   const handleNext = async () => {
     if (selectedTask === "Blog") {
+        setLocalStorageData((prevState: typeof localStorageData) => ({
+          ...prevState,
+          [selectedTask]: true,
+        }));
+        setLocalStorageData(defaultLocalStorageData);
       setSelectedTaskIndex(0);
       dispatch(clearDayData());
 

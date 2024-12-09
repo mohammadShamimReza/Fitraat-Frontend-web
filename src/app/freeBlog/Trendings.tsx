@@ -1,6 +1,5 @@
 import { useGet3TrendingFreeBlogQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
-import { marked } from "marked";
 import Link from "next/link";
 
 function Trendings() {
@@ -16,19 +15,18 @@ function Trendings() {
                 Trending Blogs
               </p>
               <div className="flex flex-col items-center justify-center text-gray-500">
-                {trendingBlogData?.data?.map((blog: Blog) => (
-                  <Link key={1} href={`/freeBlog/${blog.id}`}>
+                {trendingBlogData?.data?.slice(0, 5).map((blog: Blog) => (
+                  <Link
+                    key={blog.attributes.BlogId}
+                    href={`/freeBlog/${blog.id}`}
+                  >
                     <div className="mb-4 hover:shadow-lg border rounded-xl  ">
                       <div className="p-4">
-                        <p className="font-bold text-lg truncate text-black">
-                          {blog?.attributes.title
-                            .split(" ")
-                            .slice(0, 3)
-                            .join(" ")}
-                          ...
+                        <p className="font-bold text-lg  text-black">
+                          {blog?.attributes.title}
                         </p>
 
-                        <div className="mt-2  line-clamp-3  w-44 text-justify text-gray-500">
+                        {/* <div className="mt-2  line-clamp-3  w-44 text-justify text-gray-500">
                           {blog?.attributes.content && (
                             <div
                               dangerouslySetInnerHTML={{
@@ -36,7 +34,7 @@ function Trendings() {
                               }}
                             />
                           )}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </Link>

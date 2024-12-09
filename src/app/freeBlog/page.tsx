@@ -97,7 +97,7 @@ function Page() {
 
             {isLoading
               ? Array.from({ length: 10 }, (_, index) => (
-                  <div key={index} className="">
+                  <div key={index} className="border">
                     <div className="h-full mb-10 p-4">
                       <div
                         className="p-4 rounded-2xl shadow-xl border border-t dark:border-none mb-4 transition duration-100 transform hover:shadow-2xl 
@@ -119,7 +119,7 @@ function Page() {
                 ))
               : isSuccess &&
                 allBlogs.map((blog: Blog) => (
-                  <Blogs key={blog.id} blog={blog} />
+                  <Blogs key={blog.attributes.BlogId} blog={blog} />
                 ))}
           </div>
         </div>

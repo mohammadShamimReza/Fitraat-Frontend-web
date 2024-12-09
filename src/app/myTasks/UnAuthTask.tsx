@@ -24,7 +24,6 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   } = useGetDaysByDayIdQuery(parseInt(unAuthDayId));
 
   console.log(unAuthenticatedDayDataForChengeDay);
-
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
 
   useEffect(() => {
@@ -79,6 +78,13 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
   const handleNext = () => {
     if (selectedTask === "Blog") {
+      setLocalStorageData((prevState: typeof localStorageData) => ({
+        ...prevState,
+        [selectedTask]: true,
+      }));
+      setLocalStorageData(defaultLocalStorageData);
+      setSelectedTaskIndex(selectedTaskIndex + 1);
+      dispatch(storeCurrentTask(tasks[selectedTaskIndex + 1]));
       dispatch(clearDayData());
       setSelectedTaskIndex(0);
       setIsFinishModalOpen(true);

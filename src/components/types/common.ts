@@ -71,6 +71,7 @@ export type IBlog = {
   thumbnailImg?: string | null;
   typeId: string;
   content: string;
+  authorName: string;
   userId: string;
   review: IReview[];
   likes: ILike[];

@@ -123,6 +123,11 @@ function ProfilePage() {
   }));
 
   const handleRestart = async () => {
+    if (!paid) {
+      alert("Please update your plan for use this feacture");
+      return;
+    }
+
     alert("Do you want to restart!");
 
     try {
@@ -140,6 +145,7 @@ function ProfilePage() {
           Blog: false,
         })
       );
+      console.log(result);
       console.log(result);
       if (updateUserDaySuccess) {
         message.success("You have successfully started your journey again!");
@@ -383,6 +389,9 @@ function ProfilePage() {
           Remaining: <span className="text-blue-500">{40 - compliteDay} </span>
           Days
         </h1>
+        <p className="text-red-400">
+          {!paid ? "please upgrade your plan for using this feacture" : ""}
+        </p>
         <br />
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-1">
           {progressData.map((data, index) => (

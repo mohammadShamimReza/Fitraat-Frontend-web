@@ -11,6 +11,8 @@ function Page({ params }: { params: { slug: string } }) {
   const blogData = data?.data.attributes;
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
 
+  console.log(data);
+
   return isLoading ? (
     <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">
       <div className="p-4">
@@ -43,7 +45,7 @@ function Page({ params }: { params: { slug: string } }) {
       <div className="flex justify-between">
         <p className="text-right p-5">
           Author
-          <span className="text-gray-500"> {blogData?.viewCount}</span>{" "}
+          <span className="text-gray-500"> {blogData?.authorName}</span>{" "}
         </p>
         <p className="text-right p-7">
           Total view:{" "}
@@ -52,7 +54,7 @@ function Page({ params }: { params: { slug: string } }) {
       </div>
       <div className="">
         <div
-          className="text-gray-700 mb-4 
+          className=" mb-4 
             dark:text-gray-300 text-5xl font-semibold text-center"
         >
           {blogData?.title}
@@ -72,7 +74,7 @@ function Page({ params }: { params: { slug: string } }) {
 
         <br />
         <div
-          className="flex max-w-5xl mx-auto text-lg text-gray-600 p-5"
+          className="flex max-w-5xl mx-auto text-lg text-gray-700 p-5"
           style={{ lineHeight: "1.8" }}
         >
           {blogData?.content && (

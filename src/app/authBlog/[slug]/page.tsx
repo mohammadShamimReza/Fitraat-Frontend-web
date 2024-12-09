@@ -45,7 +45,7 @@ function Page({ params }: { params: { slug: string } }) {
       <div className="flex justify-between">
         <p className="text-right p-5">
           Author
-          <span className="text-gray-500"> {blogData?.viewCount}</span>{" "}
+          <span className="text-gray-500"> {blogData?.authorName}</span>{" "}
         </p>
         <p className="text-right p-7">
           Total view:{" "}
@@ -54,7 +54,7 @@ function Page({ params }: { params: { slug: string } }) {
       </div>
       <div className="">
         <div
-          className="text-gray-700 mb-4 
+          className=" mb-4 
             dark:text-gray-300 text-5xl font-semibold text-center"
         >
           {blogData?.title}

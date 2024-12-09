@@ -18,7 +18,7 @@ export const blogApi = baseApi.injectEndpoints({
     }),
     getFreeBlogsById: builder.query({
       query: (id: string) =>
-        `${BLOG}/${id}?fields[0]=title&fields[1]=content&fields[2]=imageURL&fields[3]=viewCount`,
+        `${BLOG}/${id}?fields[0]=title&fields[1]=content&fields[2]=imageURL&fields[3]=viewCount&fields[4]=authorName`,
       transformResponse: (rawResult: SingleBlogData) => {
         return rawResult;
       },
