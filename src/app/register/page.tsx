@@ -95,8 +95,8 @@ function RegisterPage() {
         storeTokenInCookie(result?.data?.jwt);
         dispatch(storeAuthToken(result?.data?.jwt));
         dispatch(storeUserInfo(result?.data?.user));
-        router.push("/");
-        window.location.replace("/");
+        router.push("/authTask");
+        window.location.replace("/authTask");
       }
     } catch (error: any) {
       if (error instanceof z.ZodError) {
