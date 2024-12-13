@@ -44,7 +44,7 @@ function Page({ params }: { params: { slug: string } }) {
     <div className="p-5">
       <div className="flex justify-between">
         <p className="text-right p-5">
-          Author
+          Author:
           <span className="text-gray-500"> {blogData?.authorName}</span>{" "}
         </p>
         <p className="text-right p-7">
