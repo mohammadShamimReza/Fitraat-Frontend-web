@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "The Power of Habit",
+    "author": "Charles Duhigg",
+    "genre": "Self-help",
+    "description": "A book that explores the science behind habits and how to change them.",
+    "image": "../../app/assets/book1.png",
+    "pdfUrl": "/bookpdf/book1.pdf"
+  },
+  {
+    "id": 2,
+    "name": "Atomic Habits",
+    "author": "James Clear",
+    "genre": "Self-help",
+    "description": "A guide to building good habits and breaking bad ones with proven strategies.",
+    "image": "/images/book2.jpg",
+    "pdfUrl": "/pdfs/atomic-habits.pdf"
+  },
+  {
+    "id": 3,
+    "name": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "genre": "Fiction",
+    "description": "A classic novel about racial injustice and childhood innocence in the Deep South.",
+    "image": "/images/book3.jpg",
+    "pdfUrl": "/pdfs/to-kill-a-mockingbird.pdf"
+  },
+  {
+    "id": 4,
+    "name": "1984",
+    "author": "George Orwell",
+    "genre": "Dystopian",
+    "description": "A dystopian novel that delves into themes of government surveillance and totalitarianism.",
+    "image": "/images/book4.jpg",
+    "pdfUrl": "/pdfs/1984.pdf"
+  },
+  {
+    "id": 5,
+    "name": "Sapiens: A Brief History of Humankind",
+    "author": "Yuval Noah Harari",
+    "genre": "History",
+    "description": "A book that examines the history and evolution of humans, from ancient times to the present.",
+    "image": "/images/book5.jpg",
+    "pdfUrl": "/pdfs/sapiens.pdf"
+  }
+]

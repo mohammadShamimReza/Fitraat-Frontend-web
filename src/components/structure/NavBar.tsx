@@ -138,6 +138,12 @@ function NavBar() {
                   >
                     Blog
                   </Link>
+                  <Link
+                    href="/books"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
+                  >
+                    Books
+                  </Link>
                 </div>
               </div>
             </div>
@@ -256,6 +262,12 @@ function NavBar() {
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Feeds
+              </Link>
+              <Link
+                href="/books"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
+              >
+                Books
               </Link>
             </div>
           </div>
