@@ -1,81 +1,145 @@
 // components/Footer.js
 
-import { Button } from "antd";
 import Link from "next/link";
 import {
+  FaEnvelope,
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
   FaTwitter,
 } from "react-icons/fa";
 
 const Footer = () => {
+  if (!window) return null;
+
   return (
-    <footer className="border rounded-lg p-8 mt-3">
-      <div className="container mx-auto  max-w-5xl ">
-        {/* First Row of Buttons */}
-        <div className="flex flex-wrap justify-center mb-4">
-          <Link href={"/proMember"}>
-            <Button type="primary" className="mx-2 my-2" ghost>
-              Pro member
-            </Button>
-          </Link>
+    <footer className="bg-gray-800 text-white py-10">
+      <div className="container mx-auto max-w-7xl px-6">
+        {/* Top Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+          {/* About Section */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">About Fitraat</h3>
+            <p className="text-sm text-gray-400">
+              FItraat is a solution for addicted adult content consumers. This
+              is a 40-day marathon solution. Every day users have some tasks,
+              emergency section for emergency excited section. Users can post
+              their questions and get answers through comments. A lot of
+              informational blogs are also available.
+            </p>
+          </div>
 
-          <Link href={"/about"}>
-            <Button type="primary" className="mx-2 my-2" ghost>
-              About us
-            </Button>
-          </Link>
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/" className="text-gray-400 hover:underline">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-gray-400 hover:underline">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/freeBlog"
+                  className="text-gray-400 hover:underline"
+                >
+                  Blogs
+                </Link>
+              </li>
+              <li>
+                <Link href="/books" className="text-gray-400 hover:underline">
+                  Books
+                </Link>
+              </li>
+              <li>
+                <Link href="/privecy" className="text-gray-400 hover:underline">
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Information */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Contact Us</h3>
+            <ul className="space-y-2 text-gray-400">
+              <li className="flex items-center">
+                <FaMapMarkerAlt className="mr-2" />
+                <span>
+                  152/3 kolopara, Simoltoli, Gazipur, Dhaka, Bangladesh
+                </span>
+              </li>
+              <li className="flex items-center">
+                <FaPhoneAlt className="mr-2" />
+                <span>+880 1719-357307</span>
+              </li>
+              <li className="flex items-center">
+                <FaEnvelope className="mr-2" />
+                <span>mohammadshamimrez23393@gmail.com</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Stay Connected */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Stay Connected</h3>
+            <p className="text-sm text-gray-400 mb-4">
+              Follow us on social media for updates, tips, and insights.
+            </p>
+            <div className="flex space-x-4">
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-500"
+              >
+                <FaFacebookF className="text-xl" />
+              </a>
+              <a
+                href="https://www.twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-400"
+              >
+                <FaTwitter className="text-xl" />
+              </a>
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-pink-400"
+              >
+                <FaInstagram className="text-xl" />
+              </a>
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-500"
+              >
+                <FaLinkedinIn className="text-xl" />
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* Second Row of Buttons */}
-        <div className="flex flex-wrap justify-center mb-4">
-          <Link href={"/privecy"}>
-            <Button type="primary" className="mx-2 my-2" ghost>
-              Privecy policy
-            </Button>
-          </Link>
-        </div>
-
-        {/* Bottom Section with Copyright, Email, and Social Media Links */}
-        <div className="flex flex-col md:flex-row items-center justify-between mt-8 ">
-          <p className="text-sm text-center md:text-left">
-            &copy; 2024 Fitraat. All rights reserved.
-          </p>
-          <div className="flex items-center justify-center md:justify-end mt-4 md:mt-0">
-            <span className="mr-4">contact@Fitraat.com</span>
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2"
-            >
-              <FaFacebookF className="text-xl hover:text-blue-500" />
-            </a>
-            <a
-              href="https://www.twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2 hover:text-blue-500"
-            >
-              <FaTwitter className="text-xl" />
-            </a>
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2"
-            >
-              <FaInstagram className="text-xl hover:text-red-400" />
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-2"
-            >
-              <FaLinkedinIn className="text-xl hover:text-blue-500" />
-            </a>
+        {/* Bottom Section */}
+        <div className="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+          <p>&copy; 2024 Fitraat. All rights reserved.</p>
+          <div className="flex items-center space-x-4 mt-4 md:mt-0">
+            <Link href="/terms" className="hover:underline">
+              Terms of Service
+            </Link>
+            <Link href="/cookies" className="hover:underline">
+              Cookie Policy
+            </Link>
           </div>
         </div>
       </div>

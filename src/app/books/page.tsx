@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineDownload, AiOutlineRead } from "react-icons/ai";
 import books from "./book.json"; // Importing the books JSON data
@@ -25,7 +26,9 @@ const BooksPage: React.FC = () => {
 
   return (
     <div className="min-h-screen px-6 py-12 ">
-      <h1 className="text-4xl font-bold text-center mb-8">Explore Our Books</h1>
+      <h1 className="text-4xl font-bold text-center mb-8 underline">
+        Explore Our Books
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {books.map((book: Book) => (
           <div
@@ -33,9 +36,11 @@ const BooksPage: React.FC = () => {
             className="relative group rounded-lg overflow-hidden shadow-lg border"
           >
             {/* Book Image */}
-            <img
+            <Image
               src={book.image}
               alt={book.name}
+              width={100}
+              height={100}
               className="h-64 w-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
             {/* Book Details */}

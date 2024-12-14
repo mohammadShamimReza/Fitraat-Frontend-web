@@ -119,7 +119,7 @@ const CreatePost = ({ user }: { user: UserData | null }) => {
             />
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center text-center space-y-4">
+          <div className="flex flex-col border h-20 rounded-lg items-center justify-center text-center space-y-4">
             <p className="text-lg text-blue-600 font-semibold">
               Please log in first to create a post.
             </p>

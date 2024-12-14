@@ -269,7 +269,7 @@ function TaskPage({
               </div>
             </div>
           </div>
-          <div className="basis-1/6 flex justify-center align-bottom flex-col p-10">
+          <div className="basis-1/6 flex justify-center align-bottom flex-col p-10 border-t">
             <div className="flex justify-between">
               <button
                 className={`px-4 py-2 text-white rounded focus:outline-none text-lg ${
