@@ -29,7 +29,7 @@ const EmergencyService: React.FC = () => {
         <div className="flex justify-center items-center h-full w-full">
           <iframe
             width="1000"
-            height="500"
+            height="380"
             src={data?.data[emergencyNumber].attributes.vedio_url}
             title="Emergency Service Video"
             frameBorder="0"
@@ -74,7 +74,7 @@ const EmergencyService: React.FC = () => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "500px",
+    height: "400px",
     width: "100%",
     maxWidth: "1000px", // Restrict maximum size
     backgroundColor: "white",
@@ -89,6 +89,7 @@ const EmergencyService: React.FC = () => {
         className="flex justify-center mb-6 mt-12"
         items={items}
       />
+
       <div style={contentStyle}>{steps[current].content}</div>
       <div
         style={{

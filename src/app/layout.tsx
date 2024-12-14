@@ -17,7 +17,6 @@ export default function RootLayout({
 }) {
   const palastineHelpUrl =
     process.env.NEXT_PUBLIC_PALESTINE_HELP_URL || "palastineHelpUrl";
-  console.log(palastineHelpUrl);
   return (
     <Providers>
       <html lang="en">

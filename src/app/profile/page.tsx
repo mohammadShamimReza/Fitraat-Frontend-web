@@ -26,6 +26,7 @@ import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { z } from "zod";
+import UserActivityPieChart from "./UserActivity";
 
 const passwordSchema = z
   .object({
@@ -52,7 +53,6 @@ const passwordSchema = z
     message: "New password cannot be the same as the current password!",
     path: ["password"], // The path to the field with the error
   });
-
 
 function ProfilePage() {
   const formRef = useRef<FormInstance>(null);
@@ -109,6 +109,11 @@ function ProfilePage() {
   const userId = getUserInfoData?.id;
   const location = getUserInfoData?.country;
   const paid = getUserInfoData?.paid || false;
+  const startData = getUserInfoData?.startDate || Date.now();
+  const today = new Date();
+  const start = new Date(getUserInfoData?.startDate || new Date());
+  const differenceInTime = today.getTime() - start.getTime(); // Difference in milliseconds
+  const daysLeft = Math.floor(differenceInTime / (1000 * 60 * 60 * 24)) + 1;
 
   const { data: posts } = useGetPostsByUserIdQuery({
     userId: userId || 0,
@@ -293,16 +298,25 @@ function ProfilePage() {
 
   return (
     <div className="w-full px-4 py-6">
-      <h1 className="text-2xl font-semibold mb-6">Profile</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Profile</h1>
 
-      <div className="mb-4">
-        <h2 className="text-lg font-medium">Name: {name}</h2>
-        <h2 className="text-lg font-medium">Age: {age}</h2>
-        <h2 className="text-lg font-medium">Email: {email}</h2>
-        <h2 className="text-lg font-medium">Country: {location}</h2>
-        <h2 className="text-lg font-medium">
-          Membership: {paid ? "Pro" : "Free"}
-        </h2>
+      <div className="mb-4 flex flex-wrap justify-between items-center gap-6">
+        {/* User Info Section */}
+        <div className="w-full sm:w-auto">
+          <h2 className="text-lg font-medium">Name: {name}</h2>
+          <h2 className="text-lg font-medium">Age: {age}</h2>
+          <h2 className="text-lg font-medium">Email: {email}</h2>
+          <h2 className="text-lg font-medium">Country: {location}</h2>
+          <h2 className="text-lg font-medium">Start Date: {startData}</h2>
+          <h2 className="text-lg font-medium">
+            Membership: {paid ? "Pro" : "Free"}
+          </h2>
+        </div>
+
+        {/* Pie Chart Section */}
+        <div className="w-full sm:w-auto flex justify-center items-center">
+          <UserActivityPieChart completed={compliteDay} total={daysLeft} />
+        </div>
       </div>
 
       <div className="flex items-center mb-6 gap-2">

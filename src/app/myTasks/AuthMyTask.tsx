@@ -7,8 +7,10 @@ import { storeCurrentTask } from "@/redux/slice/taskSlice";
 import { KegelTimes, Quizzes } from "@/types/contantType";
 import { Button, message, Modal, Skeleton } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaRegSmileBeam } from "react-icons/fa";
 import DayFinishImage from "../assets//dayFinish.gif";
 import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
@@ -17,10 +19,12 @@ function AuthMyTask({
   authDayDataId,
   userId,
   paid,
+  daysLeft,
 }: {
   authDayDataId: number;
   userId: number;
   paid: boolean | undefined;
+  daysLeft: number;
 }) {
   const router = useRouter();
 
@@ -75,11 +79,11 @@ function AuthMyTask({
 
   const handleNext = async () => {
     if (selectedTask === "Blog") {
-        setLocalStorageData((prevState: typeof localStorageData) => ({
-          ...prevState,
-          [selectedTask]: true,
-        }));
-        setLocalStorageData(defaultLocalStorageData);
+      setLocalStorageData((prevState: typeof localStorageData) => ({
+        ...prevState,
+        [selectedTask]: true,
+      }));
+      setLocalStorageData(defaultLocalStorageData);
       setSelectedTaskIndex(0);
       dispatch(clearDayData());
 
@@ -219,7 +223,7 @@ function AuthMyTask({
       </Modal>
       {DayCount > 40 ? (
         <CompliteTask auth={true} daysCompleted={40} />
-      ) : (
+      ) : authDayDataId <= daysLeft ? (
         <>
           <TaskPage
             localStorageData={localStorageData}
@@ -234,8 +238,44 @@ function AuthMyTask({
             kegel={kegel}
             DayCount={DayCount}
             paid={paid}
+            daysLeft={daysLeft}
           />
         </>
+      ) : (
+        <div className="min-h-screen flex flex-col justify-center items-center  p-6">
+          {/* Congratulations Message */}
+          <div className="text-center mb-8">
+            <FaRegSmileBeam className="text-yellow-500 text-5xl mb-4" />
+            <h1 className="text-3xl font-bold mb-2">Congratulations!</h1>
+            <p className="text-lg">
+              You&apos;ve successfully completed your tasks for the day. 🎉
+            </p>
+            <p className="text-gray-600 mt-4">
+              Pro Tip: Stay on track by exploring a blog or a book to keep
+              yourself motivated.
+            </p>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex space-x-4">
+            <Link href="/freeBlog">
+              <Button
+                type="primary"
+                className="bg-blue-500 hover:bg-blue-600 px-6 py-2"
+              >
+                Explore Blogs
+              </Button>
+            </Link>
+            <Link href="/books">
+              <Button
+                type="primary"
+                className="bg-green-500 hover:bg-green-600 px-6 py-2"
+              >
+                Browse Books
+              </Button>
+            </Link>
+          </div>
+        </div>
       )}
     </>
   );

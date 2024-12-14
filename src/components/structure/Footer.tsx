@@ -12,10 +12,8 @@ import {
 } from "react-icons/fa";
 
 const Footer = () => {
-  if (!window) return null;
-
   return (
-    <footer className="bg-gray-800 text-white py-10">
+    <footer className="bg-gray-800 mt-10 text-white py-10">
       <div className="container mx-auto max-w-7xl px-6">
         {/* Top Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">

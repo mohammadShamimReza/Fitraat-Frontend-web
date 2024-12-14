@@ -23,7 +23,6 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
     isLoading,
   } = useGetDaysByDayIdQuery(parseInt(unAuthDayId));
 
-  console.log(unAuthenticatedDayDataForChengeDay);
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
 
   useEffect(() => {
@@ -31,7 +30,6 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
     if (parseInt(dayId) > 3) {
       router.push("/CompletedFreeTask");
     }
-    console.log(dayId);
     setUnAuthDayId(dayId);
   }, [router]);
 
@@ -237,6 +235,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
           kegel={kegel}
           DayCount={DayCount}
           paid={paid}
+          daysLeft={0}
         />
       )}
     </>

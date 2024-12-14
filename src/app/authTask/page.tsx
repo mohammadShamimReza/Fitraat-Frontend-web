@@ -13,6 +13,8 @@ const MyTasks: React.FC = () => {
   const userData = useAppSelector((state) => state.auth.userInfo);
   const dispatch = useAppDispatch();
 
+  console.log(userData, "userData");
+
   useEffect(() => {
     setIsMounted(true);
 
@@ -31,6 +33,12 @@ const MyTasks: React.FC = () => {
   const userId = userData?.id!;
   const paid = userData?.paid;
 
+  const today = new Date();
+  const start = new Date(userData?.startDate || new Date());
+  const differenceInTime = today.getTime() - start.getTime(); // Difference in milliseconds
+  const daysLeft = Math.floor(differenceInTime / (1000 * 60 * 60 * 24)) + 1;
+  //  setDaysPassed(days);
+
   return (
     <>
       {isMounted ? (
@@ -40,6 +48,7 @@ const MyTasks: React.FC = () => {
             authDayDataId={authDayDataId}
             userId={userId}
             paid={paid}
+            daysLeft={daysLeft}
           />
         ) : (
           // Unauthenticated user render
