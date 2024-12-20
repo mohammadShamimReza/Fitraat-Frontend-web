@@ -24,7 +24,6 @@ function PaymentResult({ params }: { params: Promise<{ slug: string[] }> }) {
       ? "cancel"
       : "";
 
-  const isAuthorizedUser = userId === Number(slug[1]); // Convert slug[1] to a number
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -48,12 +47,11 @@ function PaymentResult({ params }: { params: Promise<{ slug: string[] }> }) {
               <Text strong style={{ color: "green" }}>
                 Thank you for your payment!
               </Text>
-              {isAuthorizedUser && (
-                <Text style={{ display: "block", marginTop: 8 }}>
-                  Your payment has been successfully processed. You can now
-                  enjoy premium features.
-                </Text>
-              )}
+
+              <Text style={{ display: "block", marginTop: 8 }}>
+                Your payment has been successfully processed. You can now enjoy
+                premium features.
+              </Text>
             </div>
           )}
           {result === "fail" && (
