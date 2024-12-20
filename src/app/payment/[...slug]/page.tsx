@@ -1,31 +1,101 @@
 "use client";
 
-import { useUpdateUserDayMutation } from "@/redux/api/authApi";
 import { useAppSelector } from "@/redux/hooks";
+import { Button, Card, Typography } from "antd";
+import React from "react";
 
-function PaymentResult({ params }: { params: { slug: string } }) {
+const { Title, Text } = Typography;
+
+function PaymentResult({ params }: { params: Promise<{ slug: string[] }> }) {
   const userInfo = useAppSelector((state) => state.auth.userInfo);
-  const [updateUser, { isError, isLoading, isSuccess }] =
-    useUpdateUserDayMutation();
-  const userId = userInfo?.id;
+
+  // Use React.use to unwrap params
+  const { slug } = React.use(params);
+
+  const userId = Number(userInfo?.id); // Ensure userId is a number
+
+  // Determine the payment result
   const result =
-    params.slug[0] === "redirectSuccess"
+    slug[0] === "redirectSuccess"
       ? "success"
-      : params.slug[0] === "fail"
+      : slug[0] === "fail"
       ? "fail"
-      : params.slug[0] === "cancel"
+      : slug[0] === "cancel"
       ? "cancel"
       : "";
-  if (result === "success") {
-    if (userId === parseInt(params.slug[1])) {
-      //update user info paid with true
-      try {
-      } catch (error) {}
-    }
-  } else if (result === "fail" || result === "cancel") {
-    //delete user tranId
-  }
-  return <div>page form</div>;
+
+  const isAuthorizedUser = userId === Number(slug[1]); // Convert slug[1] to a number
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <Card
+        style={{ maxWidth: 400, width: "100%" }}
+        className="shadow-lg"
+        bordered
+      >
+        <Title level={3} style={{ textAlign: "center" }}>
+          {result === "success"
+            ? "Payment Successful"
+            : result === "fail"
+            ? "Payment Failed"
+            : result === "cancel"
+            ? "Payment Cancelled"
+            : "Unknown Status"}
+        </Title>
+        <div style={{ textAlign: "center", marginTop: 16 }}>
+          {result === "success" && (
+            <div>
+              <Text strong style={{ color: "green" }}>
+                Thank you for your payment!
+              </Text>
+              {isAuthorizedUser && (
+                <Text style={{ display: "block", marginTop: 8 }}>
+                  Your payment has been successfully processed. You can now
+                  enjoy premium features.
+                </Text>
+              )}
+            </div>
+          )}
+          {result === "fail" && (
+            <div>
+              <Text strong style={{ color: "red" }}>
+                Your payment could not be processed.
+              </Text>
+              <Text style={{ display: "block", marginTop: 8 }}>
+                Please try again later or contact support.
+              </Text>
+            </div>
+          )}
+          {result === "cancel" && (
+            <div>
+              <Text strong style={{ color: "orange" }}>
+                Your payment was cancelled.
+              </Text>
+              <Text style={{ display: "block", marginTop: 8 }}>
+                If this was unintentional, you can try again.
+              </Text>
+            </div>
+          )}
+        </div>
+        <div style={{ textAlign: "center", marginTop: 24 }}>
+          {result === "success" && (
+            <Button type="primary" onClick={() => window.location.replace("/")}>
+              Go to Dashboard
+            </Button>
+          )}
+          {(result === "fail" || result === "cancel") && (
+            <Button
+              type="primary"
+              danger
+              onClick={() => window.location.replace("/payment")}
+            >
+              Retry Payment
+            </Button>
+          )}
+        </div>
+      </Card>
+    </div>
+  );
 }
 
 export default PaymentResult;
