@@ -2,17 +2,16 @@
 
 import { useAppSelector } from "@/redux/hooks";
 import { Button, Card, Typography } from "antd";
-import React from "react";
+import { useParams } from "next/navigation"; // Import useParams
 
 const { Title, Text } = Typography;
 
-function PaymentResult({ params }: { params: Promise<{ slug: string[] }> }) {
+function PaymentResult() {
+  // Use React.use to unwrap params
+  const params = useParams(); // Access dynamic route parameters
   const userInfo = useAppSelector((state) => state.auth.userInfo);
 
-  // Use React.use to unwrap params
-  const { slug } = React.use(params);
-
-  const userId = Number(userInfo?.id); // Ensure userId is a number
+  const { slug } = params as { slug: string[] };
 
   // Determine the payment result
   const result =
@@ -23,7 +22,6 @@ function PaymentResult({ params }: { params: Promise<{ slug: string[] }> }) {
       : slug[0] === "cancel"
       ? "cancel"
       : "";
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

@@ -24,6 +24,7 @@ import {
 } from "antd";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { z } from "zod";
 import UserActivityPieChart from "./UserActivity";
@@ -333,14 +334,23 @@ function ProfilePage() {
         >
           Upload Profile Image
         </button> */}
-
-        <button
-          className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
-          onClick={showPasswordModal}
-        >
-          Change Password
-        </button>
+        {paid === true && (
+          <Link href={"/payment"}>
+            <button
+              className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+            >
+              Become Pro
+            </button>
+          </Link>
+        )}
       </div>
+
+      {/* <button
+        className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+        onClick={showPasswordModal}
+      >
+        Change Password
+      </button> */}
 
       {/* <div>
         <Upload
