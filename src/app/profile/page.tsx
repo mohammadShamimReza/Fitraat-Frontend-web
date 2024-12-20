@@ -334,7 +334,7 @@ function ProfilePage() {
         >
           Upload Profile Image
         </button> */}
-        {paid === true && (
+        {paid === false && (
           <Link href={"/payment"}>
             <button
               className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
