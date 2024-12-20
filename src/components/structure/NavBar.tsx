@@ -135,31 +135,31 @@ function NavBar() {
                 <div className="flex space-x-4 ">
                   <Link
                     href="/"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
                   >
                     Home
                   </Link>
                   <Link
                     href="/tasks"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
                   >
                     Tasks
                   </Link>
                   <Link
                     href="/feeds"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
                   >
                     Feeds
                   </Link>
                   <Link
                     href="/freeBlog"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
                   >
                     Blog
                   </Link>
                   <Link
                     href="/books"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
                   >
                     Books
                   </Link>
@@ -266,31 +266,31 @@ function NavBar() {
             <div className="space-y-1 px-2 pb-3 pt-2 ">
               <Link
                 href="/"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
               >
                 Home
               </Link>
               <Link
                 href="/tasks"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
               >
                 Tasks
               </Link>
               <Link
                 href="/freeBlogv"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
               >
                 Blog
               </Link>
               <Link
                 href="/feeds"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
               >
                 Feeds
               </Link>
               <Link
                 href="/books"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
               >
                 Books
               </Link>
