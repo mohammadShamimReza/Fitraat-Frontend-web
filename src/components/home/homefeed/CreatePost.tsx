@@ -65,7 +65,7 @@ const CreatePost = ({ user }: { user: UserData | null }) => {
         />
       </Head>
       <div
-        className="fixed bottom-8 right-8 text-gray-600 hover:text-white rounded-full cursor-pointer hover:bg-blue-500 transition duration-300 ease-in-out hover:rotate-360"
+        className="fixed bottom-8 right-8 text-gray-600 hover:text-white rounded-full cursor-pointer hover:bg-blue-500 transition duration-300 ease-in-out hover:rotate-360 z-10"
         onClick={handleInputClick}
       >
         <Tooltip

@@ -32,10 +32,10 @@ function SuggestedBlog({
   const contentHtml = blog?.content ? marked(blog.content) : "";
 
   return (
-    <div>
+    <div className="">
       {selectedTask === "Blog" && (
         <>
-          <p className="text-center m-7 text-2xl underline ">{blog?.title}</p>
+          <p className="text-center m-7 text-2xl underline">{blog?.title}</p>
           <p className="line-clamp-[11] text-lg tracking-wider">
             {blog?.content && (
               <div dangerouslySetInnerHTML={{ __html: contentHtml }} />

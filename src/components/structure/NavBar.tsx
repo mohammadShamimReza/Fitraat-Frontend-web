@@ -62,6 +62,19 @@ function NavBar() {
       window.location.href = "/";
     }
   };
+
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      setMenuToggle(false);
+      setUserMenuToggle(false); // Close both menus if clicked outside
+    };
+
+    document.addEventListener("click", handler);
+    return () => {
+      document.removeEventListener("click", handler);
+    };
+  });
+
   return (
     <div className="">
       <div className="mb-7   shadow-sm  p-1 bg-white">
@@ -143,6 +156,12 @@ function NavBar() {
                     className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
                   >
                     Blog
+                  </Link>
+                  <Link
+                    href="/books"
+                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal hover:underline"
+                  >
+                    Books
                   </Link>
                 </div>
               </div>
@@ -268,6 +287,12 @@ function NavBar() {
                 className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
               >
                 Feeds
+              </Link>
+              <Link
+                href="/books"
+                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal hover:underline"
+              >
+                Books
               </Link>
             </div>
           </div>

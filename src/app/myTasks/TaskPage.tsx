@@ -1,20 +1,13 @@
 "use client";
+
 import { KegelTimes, Quizzes } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { FaCheckCircle } from "react-icons/fa";
-import Kagel from "./taskPages/Kagel";
-import Quiz from "./taskPages/Quiz";
-import SuggestedBlog from "./taskPages/SuggestedBlog";
-import Video from "./taskPages/Video";
-
 import Link from "next/link";
 import { useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai"; // Hamburger icon
+import { AiOutlineMenu } from "react-icons/ai";
 import { CiVideoOn } from "react-icons/ci";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaCheckCircle, FaInfoCircle } from "react-icons/fa";
 import { FaBlogger } from "react-icons/fa6";
-import { IoMdClose } from "react-icons/io";
-
 import {
   GiFrankensteinCreature,
   GiRank1,
@@ -22,28 +15,15 @@ import {
   GiRank3,
 } from "react-icons/gi";
 import { GrStatusPlaceholder, GrYoga } from "react-icons/gr";
+import { IoMdClose, IoMdLock } from "react-icons/io";
 import { TbCurrencyFrank, TbMilitaryRank } from "react-icons/tb";
+import Kagel from "./taskPages/Kagel";
+import Quiz from "./taskPages/Quiz";
+import SuggestedBlog from "./taskPages/SuggestedBlog";
+import Video from "./taskPages/Video";
 
-function TaskPage({
-  localStorageData,
-  handleTaskClick,
-  selectedTask,
-  selectedTaskIndex,
-  handlePrevious,
-  handleNext,
-  blog,
-  quiz,
-  video,
-  kegel,
-  DayCount,
-  paid,
-}: {
-  localStorageData: {
-    video: boolean;
-    kagel: boolean;
-    quiz: boolean;
-    Blog: boolean;
-  };
+interface Props {
+  localStorageData: Record<string, boolean>;
   handleTaskClick: (index: number) => void;
   selectedTask: string;
   selectedTaskIndex: number;
@@ -60,247 +40,232 @@ function TaskPage({
   kegel: KegelTimes[] | undefined;
   DayCount: number;
   paid: boolean | undefined;
-}) {
-  console.log(video);
-  const tasks = ["video", "kagel", "quiz", "Blog"];
-  const [collapsed, setCollapsed] = useState(false);
-  const [isSidebarVisible, setSidebarVisible] = useState(false);
+  daysLeft: number;
+}
 
+function TaskPage({
+  localStorageData,
+  handleTaskClick,
+  selectedTask,
+  selectedTaskIndex,
+  handlePrevious,
+  handleNext,
+  blog,
+  quiz,
+  video,
+  kegel,
+  DayCount,
+  paid,
+  daysLeft,
+}: Props) {
+  const tasks = ["video", "kagel", "quiz", "Blog"];
   const icons = [
     <CiVideoOn key={1} />,
     <GrYoga key={2} />,
     <GrStatusPlaceholder key={4} />,
     <FaBlogger key={5} />,
   ];
-
   const allDays = Array.from({ length: 40 }, (_, i) => i + 1);
+  const [isSidebarVisible, setSidebarVisible] = useState(false);
+
+  const renderTaskItem = (task: string, index: number) => {
+    const isUnlocked = localStorageData[task];
+    return (
+      <div
+        key={index}
+        className={`flex justify-between items-center hover:bg-slate-100 rounded ${
+          isUnlocked ? "cursor-pointer" : "cursor-not-allowed"
+        } ${selectedTask === task ? "bg-blue-100" : ""}`}
+        title={
+          isUnlocked
+            ? "You have completed this task"
+            : "This task is not unlocked yet"
+        }
+        onClick={() => isUnlocked && handleTaskClick(index)}
+      >
+        <div
+          className={`p-2 ${
+            selectedTask === task ? "font-bold text-blue-600" : ""
+          }`}
+        >
+          <div className="flex items-center">
+            <span className="mr-2">{icons[index]}</span>
+            <span>{task.charAt(0).toUpperCase() + task.slice(1)}</span>
+          </div>
+        </div>
+        <FaCheckCircle
+          size={25}
+          style={{
+            color: isUnlocked ? "#0578EA" : "gray",
+          }}
+        />
+      </div>
+    );
+  };
+
+  const renderDayItem = (day: number) => {
+    const isUnlocked = DayCount >= day;
+    const isPaidLocked = !paid && day > 3;
+
+    return (
+      <div
+        key={day}
+        className={`flex justify-between items-center hover:bg-slate-100 rounded 
+          
+        ${DayCount === day ? "bg-blue-100" : ""} ${
+          isPaidLocked ? "blur-sm" : ""
+        }`}
+        title={isUnlocked ? "Unlocked" : "Locked"}
+      >
+        <div
+          className={`p-2 ${DayCount === day ? "font-bold text-blue-600" : ""}`}
+        >
+          <span>Day: {day}</span>
+        </div>
+        <span>{day > 3 ? "Paid" : "Free"}</span>
+        {day <= daysLeft ? (
+          <FaCheckCircle
+            size={25}
+            style={{
+              color: isUnlocked ? "#0578EA" : "gray",
+            }}
+          />
+        ) : !paid ? (
+          <FaCheckCircle
+            size={25}
+            style={{
+              color: isUnlocked ? "#0578EA" : "gray",
+            }}
+          />
+        ) : (
+          <IoMdLock
+            size={25}
+            style={{
+              color: isUnlocked ? "#0578EA" : "gray",
+            }}
+          />
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="mx-auto min-h-screen p-3 relative">
       <div className="flex min-h-screen">
-        {/* Sidebar for desktop and toggle button for mobile */}
+        {/* Sidebar */}
         <div
-          className={`fixed inset-0 z-20 bg-white w-64 transition-transform transform ${
+          className={`fixed inset-0 z-20 bg-white min-w-64 transition-transform transform ${
             isSidebarVisible ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 md:static`}
         >
+          {isSidebarVisible && (
+            <button
+              className="fixed top-4 left-4 z-30 text-2xl p-2 md:hidden"
+              onClick={() => setSidebarVisible(false)}
+            >
+              <IoMdClose /> {/* Close icon when sidebar is open */}
+            </button>
+          )}
           <div className="p-4 bg-white border rounded-lg">
-            <p className="text-center text-2xl tracking-wider font-extralight p-2 border-b">
-              {isSidebarVisible && (
-                <button
-                  className="fixed top-4 left-4 z-30 text-2xl p-2 md:hidden"
-                  onClick={() => setSidebarVisible(false)}
-                >
-                  <IoMdClose /> {/* Close icon when sidebar is open */}
-                </button>
-              )}
+            <div className="text-center text-2xl font-light border-b p-2">
               Tasks
-            </p>
-            <div className="mt-4">
-              {tasks.map((task, index) => (
-                <div
-                  key={index}
-                  className={`flex justify-between hover:bg-slate-100 rounded ${
-                    (localStorageData as any)[task] === false
-                      ? "cursor-not-allowed"
-                      : "cursor-pointer"
-                  } ${selectedTask === task && "bg-blue-100"}`}
-                  title={
-                    (localStorageData as any)[task] === false
-                      ? "This task is not unlocked yet"
-                      : "You have completed this task"
-                  }
-                  onClick={() => {
-                    if ((localStorageData as any)[task] === true) {
-                      handleTaskClick(index);
-                    }
-                  }}
-                >
-                  <span
-                    className={`transition-colors duration-300 p-2 ${
-                      selectedTask === task && "font-bold text-blue-600"
-                    }`}
-                  >
-                    <div className="flex align-middle justify-center">
-                      <span className="mr-2 mt-1">{icons[index]}</span>
-                      {!collapsed && (
-                        <span>
-                          {task.charAt(0).toUpperCase() + task.slice(1)}
-                        </span>
-                      )}
-                    </div>
-                  </span>
-                  <span className="pl-3 right-0 p-2">
-                    <FaCheckCircle
-                      size={25}
-                      style={{
-                        color:
-                          (localStorageData as any)[task] === true
-                            ? "#0578EA"
-                            : "gray",
-                        fontWeight: "bold",
-                      }}
-                    />
-                  </span>
-                </div>
-              ))}
             </div>
-            <p className="text-center text-2xl tracking-wider font-extralight p-2 border-b border-t mt-[100%]">
+            <div className="mt-4">{tasks.map(renderTaskItem)}</div>
+            <div className="text-center text-2xl font-light border-b border-t mt-auto p-2">
               Days
-            </p>
-            <div className="mt-4 h-60 overflow-scroll">
-              {allDays.map((day, index) => (
-                <div
-                  key={index}
-                  className={`flex justify-between hover:bg-slate-100 rounded 
-
-                    
-                  ${DayCount === day ? "bg-blue-100" : ""} ${
-                    paid === undefined || paid === false
-                      ? day > 3
-                        ? "blur-sm"
-                        : "blur-none"
-                      : ""
-                  }`}
-                  title={DayCount >= day ? "Unlocked " : "Locked"}
-                  // onClick={() =>
-                  //   DayCount >= day ? handleDayid(day.toString()) : ""
-                  // }
-
-                  // ${
-                  // DayCount >= day ? "cursor-pointer" : "cursor-not-allowed"
-                  // }
-                >
-                  <span
-                    className={`transition-colors duration-300 p-2 ${
-                      DayCount === day && "font-bold text-blue-600"
-                    }`}
-                  >
-                    <div className="flex align-middle justify-center">
-                      {!collapsed && <span>Day: {day}</span>}
-                    </div>
-                  </span>
-                  <span className="mt-2">
-                    {paid === undefined || paid === false
-                      ? day > 3
-                        ? "Paid"
-                        : "Demo"
-                      : ""}
-                  </span>
-                  <span className="pl-3 right-0 p-2">
-                    <FaCheckCircle
-                      size={25}
-                      style={{
-                        color: DayCount >= day ? "#0578EA" : "gray",
-                        fontWeight: "bold",
-                      }}
-                    />
-                  </span>
-                </div>
-              ))}
+            </div>
+            <div className="mt-4 h-96 overflow-scroll">
+              {allDays.map(renderDayItem)}
             </div>
           </div>
         </div>
-        {/* Hamburger Button for Mobile */}
+
+        {/* Hamburger Button */}
         {!isSidebarVisible && (
           <button
-            className="absolute top-4 left-4  text-2xl p-2 md:hidden"
+            className="absolute top-4 left-4 text-2xl p-2 md:hidden"
             onClick={() => setSidebarVisible(true)}
           >
-            <AiOutlineMenu /> {/* Hamburger icon when sidebar is closed */}
+            <AiOutlineMenu />
           </button>
         )}
 
         {/* Main Content */}
         <div className="flex-grow p-6 border rounded-lg">
           <div className="backgroundDot rounded-lg">
-            <div className="mx-auto flex flex-col justify-evenly gap-3">
-              <div className="flex justify-center ">
-                <Link href="/emergency">
-                  <button className="relative inline-flex items-center justify-center px-4 py-2 overflow-hidden font-medium text-white transition-all duration-300 ease-out bg-black border border-gray-700 rounded-md hover:bg-gray-900 animate-border-glow">
-                    <span className="relative  text-sm">⚡ Emergency ⚡</span>
-                  </button>
-                </Link>
-              </div>
-
-              <div className="basis-1/6">
-                <p className="text-xl  font-bold text-left flex justify-between">
-                  <span>Day: {DayCount}</span>
-
-                  <span className="flex items-center  gap-5">
-                    <div className="flex items-center gap-1">
-                      Rank:{" "}
-                      {DayCount < 5 ? (
-                        <GiFrankensteinCreature />
-                      ) : DayCount >= 40 ? (
-                        <TbMilitaryRank style={{ color: "red" }} />
-                      ) : DayCount > 30 ? (
-                        <GiRank3 style={{ color: "red" }} />
-                      ) : DayCount > 20 ? (
-                        <GiRank2 style={{ color: "red" }} />
-                      ) : DayCount >= 10 ? (
-                        <GiRank1 style={{ color: "red" }} />
-                      ) : (
-                        <TbCurrencyFrank />
-                      )}{" "}
-                    </div>
-                    <div className="flex items-center gap-1">
-                      info:{" "}
-                      <button title="click for for info">
-                        <Link
-                          href="https://www.youtube.com/watch?v=M1lStPv08_I"
-                          target="_blank"
-                        >
-                          <FaInfoCircle />
-                        </Link>
-                      </button>
-                    </div>
-                  </span>
-                </p>
-              </div>
-              <br />
-              <div className="h-[30rem]">
-                <div className="basis-4/6  h-full">
-                  <Video selectedTask={selectedTask} video={video} />
-                  <Kagel selectedTask={selectedTask} kegel={kegel} />
-                  <Quiz selectedTask={selectedTask} quiz={quiz} />
-                  <SuggestedBlog selectedTask={selectedTask} blog={blog} />
+            <div className="mx-auto flex flex-col gap-3">
+              <Link href="/emergency" className="self-center">
+                <button className="relative px-4 py-2 bg-black text-white rounded-md hover:bg-gray-900">
+                  ⚡ Emergency ⚡
+                </button>
+              </Link>
+              <div className="text-xl font-bold flex justify-between">
+                <span>Day: {DayCount}</span>
+                <div className="flex items-center gap-5">
+                  <div className="flex items-center gap-1">
+                    Rank:{" "}
+                    {DayCount < 5 ? (
+                      <GiFrankensteinCreature />
+                    ) : DayCount >= 40 ? (
+                      <TbMilitaryRank style={{ color: "red" }} />
+                    ) : DayCount > 30 ? (
+                      <GiRank3 style={{ color: "red" }} />
+                    ) : DayCount > 20 ? (
+                      <GiRank2 style={{ color: "red" }} />
+                    ) : DayCount >= 10 ? (
+                      <GiRank1 style={{ color: "red" }} />
+                    ) : (
+                      <TbCurrencyFrank />
+                    )}
+                  </div>
+                  <Link
+                    href="https://www.youtube.com/watch?v=M1lStPv08_I"
+                    target="_blank"
+                    className="flex items-center gap-1"
+                  >
+                    <FaInfoCircle />
+                    <span>Info</span>
+                  </Link>
                 </div>
+              </div>
+              <div className="h-[30rem]">
+                {selectedTask === "video" && (
+                  <Video selectedTask={selectedTask} video={video} />
+                )}
+                {selectedTask === "kagel" && (
+                  <Kagel selectedTask={selectedTask} kegel={kegel} />
+                )}
+                {selectedTask === "quiz" && (
+                  <Quiz selectedTask={selectedTask} quiz={quiz} />
+                )}
+                {selectedTask === "Blog" && (
+                  <SuggestedBlog selectedTask={selectedTask} blog={blog} />
+                )}
               </div>
             </div>
           </div>
-          <div className="basis-1/6 flex justify-center align-bottom flex-col p-10 border-t">
-            <div className="flex justify-between">
-              <button
-                className={`px-4 py-2 text-white rounded focus:outline-none text-lg ${
-                  selectedTaskIndex === 0
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-gray-600 hover:bg-gray-700"
-                }`}
-                title={
-                  selectedTaskIndex === 0
-                    ? "This is the first task"
-                    : "Unlock the next task"
-                }
-                onClick={handlePrevious}
-                disabled={selectedTaskIndex === 0}
-              >
-                <ArrowLeftOutlined style={{ paddingRight: "10px" }} />
-                Previous
-              </button>
-              <button
-                className="px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700 text-lg"
-                onClick={handleNext}
-                title={
-                  selectedTaskIndex === tasks.length - 1
-                    ? "This is the last task"
-                    : "Unlock the next task"
-                }
-              >
-                {selectedTask === "Blog" ? "Complete" : "Next"}
-                <ArrowRightOutlined style={{ paddingLeft: "10px" }} />
-              </button>
-            </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between mt-6">
+            <button
+              className={`px-4 py-2 text-white rounded ${
+                selectedTaskIndex === 0
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-gray-600 hover:bg-gray-700"
+              }`}
+              onClick={handlePrevious}
+              disabled={selectedTaskIndex === 0}
+            >
+              <ArrowLeftOutlined className="mr-2" />
+              Previous
+            </button>
+            <button
+              className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-700 rounded"
+              onClick={handleNext}
+            >
+              {selectedTask === "Blog" ? "Complete" : "Next"}
+              <ArrowRightOutlined className="ml-2" />
+            </button>
           </div>
         </div>
       </div>
