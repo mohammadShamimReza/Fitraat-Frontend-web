@@ -11,7 +11,8 @@ export function middleware(request: NextRequest) {
       pathname.startsWith("/profile") ||
       pathname.startsWith("/authTask") ||
       pathname.startsWith("/authBlog") ||
-      pathname.startsWith("/proMember")
+      pathname.startsWith("/proMember") ||
+      pathname.startsWith("/payment")
     ) {
       return NextResponse.redirect(new URL("/login", request.url));
     }

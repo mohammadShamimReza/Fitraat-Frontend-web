@@ -3,7 +3,7 @@
 import { getTokenFromCookie, removeTokenFromCookie } from "@/lib/auth/token";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { useGetUserInfoQuery } from "@/redux/api/authApi";
 import { removeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
@@ -12,7 +12,8 @@ import { useCallback, useEffect, useState } from "react";
 import siteLogo from "../../app/assets/detox1.png";
 
 function NavBar() {
-  const router = useRouter();
+  const pathname = usePathname();
+  console.log(pathname, "this is a router");
 
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
@@ -76,8 +77,8 @@ function NavBar() {
   });
 
   return (
-    <div className="">
-      <div className="mb-7   shadow-sm  p-1 bg-white">
+    <div className="mx-auto max-w-7xl">
+      <div className="   shadow-sm  p-1 bg-white">
         <div className="  p-1 sm:px-4 lg:px-6">
           <div className=" flex h-16 items-center justify-between ">
             <div className="   flex items-center sm:hidden">
@@ -135,31 +136,41 @@ function NavBar() {
                 <div className="flex space-x-4 ">
                   <Link
                     href="/"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
+                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                      pathname === "/" ? "bg-gray-200" : ""
+                    }`}
                   >
                     Home
                   </Link>
                   <Link
                     href="/tasks"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
+                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                      pathname === "/tasks" ? "bg-gray-200" : ""
+                    }`}
                   >
                     Tasks
                   </Link>
                   <Link
                     href="/feeds"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
+                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                      pathname === "/feeds" ? "bg-gray-200" : ""
+                    }`}
                   >
                     Feeds
                   </Link>
                   <Link
                     href="/freeBlog"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
+                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                      pathname === "/freeBlog" ? "bg-gray-200" : ""
+                    }`}
                   >
                     Blog
                   </Link>
                   <Link
                     href="/books"
-                    className=" hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal "
+                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                      pathname === "/books" ? "bg-gray-200" : ""
+                    }`}
                   >
                     Books
                   </Link>
@@ -266,31 +277,41 @@ function NavBar() {
             <div className="space-y-1 px-2 pb-3 pt-2 ">
               <Link
                 href="/"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/" ? "bg-gray-200" : ""
+                }`}
               >
                 Home
               </Link>
               <Link
                 href="/tasks"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/tasks" ? "bg-gray-200" : ""
+                }`}
               >
                 Tasks
               </Link>
               <Link
-                href="/freeBlogv"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
+                href="/freeBlog"
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/freeBlog" ? "bg-gray-200" : ""
+                }`}
               >
                 Blog
               </Link>
               <Link
                 href="/feeds"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/feeds" ? "bg-gray-200" : ""
+                }`}
               >
                 Feeds
               </Link>
               <Link
                 href="/books"
-                className=" hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal "
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/books" ? "bg-gray-200" : ""
+                }`}
               >
                 Books
               </Link>

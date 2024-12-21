@@ -3,7 +3,7 @@
 import MainLayout from "@/components/mainLayout/MainLayout";
 import Motivation from "@/components/mainLayout/Motivation";
 import RecoveryFeature from "@/components/mainLayout/RecoveryFeature";
-import { Button, Card, Skeleton } from "antd";
+import { Button, Card } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
@@ -22,32 +22,11 @@ const HomePage: React.FC = () => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) {
-    return (
-      <div className="flex h-screen">
-        {/* Sidebar */}
-
-        {/* Content Box */}
-        <div className="flex-1 bg-white p-20 grid  gap-8">
-          {[...Array(10)].map((_, index) => (
-            <div key={index} className="bg-gray-100 p-6 rounded-lg">
-              <Skeleton
-                active
-                title={{ width: "100%" }}
-                paragraph={{ rows: 4, width: ["100%", "90%", "75%", "60%"] }}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       {/* Hero Section */}
       <div
-        className="relative flex items-center justify-center h-[500px] md:h-[600px] rounded-2xl bg-cover bg-center bg-no-repeat overflow-hidden"
+        className="relative flex items-center justify-center h-[500px] md:h-[600px]  bg-cover bg-center bg-no-repeat overflow-hidden"
         style={{
           backgroundImage: `url(${bannerImage.src})`,
         }}
