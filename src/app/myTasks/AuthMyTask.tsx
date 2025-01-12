@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaRegSmileBeam } from "react-icons/fa";
-import DayFinishImage from "../assets//dayFinish.gif";
+import DayFinishImage from "../asset/dayFinish.gif";
 import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
@@ -29,8 +29,6 @@ function AuthMyTask({
   const router = useRouter();
 
   const tasks = ["video", "kagel", "quiz", "Blog"];
-
-  const [dayId, setDayId] = useState(authDayDataId);
 
   const {
     data: authenticatedDayDataForChengeDay,
@@ -89,21 +87,11 @@ function AuthMyTask({
 
       setIsFinishModalOpen(true);
       dispatch(storeCurrentTask(tasks[0]));
-      if (authDayDataId === 40) {
-        setLocalStorageData((prevState: typeof localStorageData) => ({
-          ...prevState,
-          [selectedTask]: true,
-        }));
-      } else {
-        localStorage.setItem(
-          "AuthDay",
-          JSON.stringify(defaultLocalStorageData)
-        );
-      }
+      localStorage.setItem("AuthDay", JSON.stringify(defaultLocalStorageData));
 
       if (authDayDataId + 1 === 40) {
         message.success(
-          "Hurray this is you last day of task. Then you becone spartan"
+          "Hurray this is you last day of task. Then you become spartan"
         );
         await updataUserDay({
           currentDay: authDayDataId + 1,

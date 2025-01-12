@@ -1,9 +1,14 @@
 "use client";
 
 import { KegelTimes, Quizzes } from "@/types/contantType";
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  FullscreenExitOutlined,
+  FullscreenOutlined,
+} from "@ant-design/icons";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { CiVideoOn } from "react-icons/ci";
 import { FaCheckCircle, FaInfoCircle } from "react-icons/fa";
@@ -58,6 +63,51 @@ function TaskPage({
   paid,
   daysLeft,
 }: Props) {
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+
+  const toggleFullScreen = () => {
+    const elem = document.documentElement;
+
+    if (!isFullScreen) {
+      // Enable full-screen mode
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if ((elem as any).webkitRequestFullscreen) {
+        (elem as any).webkitRequestFullscreen(); // For Safari
+      } else if ((elem as any).msRequestFullscreen) {
+        (elem as any).msRequestFullscreen(); // For IE/Edge
+      }
+    } else {
+      // Exit full-screen mode
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen(); // For Safari
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen(); // For IE/Edge
+      }
+    }
+    setIsFullScreen(!isFullScreen);
+  };
+
+  useEffect(() => {
+    // Exit full-screen mode if the page loads or the component is mounted
+    if (document.fullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen(); // For Safari
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen(); // For IE/Edge
+      }
+    }
+
+    // Cleanup (optional)
+    return () => {
+      setIsFullScreen(false); // Reset state when component unmounts
+    };
+  }, []);
+
   const tasks = ["video", "kagel", "quiz", "Blog"];
   const icons = [
     <CiVideoOn key={1} />,
@@ -192,6 +242,25 @@ function TaskPage({
 
         {/* Main Content */}
         <div className="flex-grow p-6 border rounded-lg">
+          <div className="flex justify-between items-center">
+            <button
+              onClick={toggleFullScreen}
+              className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-900 ml-auto flex items-center gap-2"
+            >
+              {isFullScreen ? (
+                <>
+                  <FullscreenExitOutlined />
+                  Exit Full Screen
+                </>
+              ) : (
+                <>
+                  <FullscreenOutlined />
+                  Full Screen
+                </>
+              )}
+            </button>
+          </div>
+
           <div className="backgroundDot rounded-lg">
             <div className="mx-auto flex flex-col gap-3">
               <Link href="/emergency" className="self-center">
@@ -199,6 +268,7 @@ function TaskPage({
                   ⚡ Emergency ⚡
                 </button>
               </Link>
+
               <div className="text-xl font-bold flex justify-between">
                 <span>Day: {DayCount}</span>
                 <div className="flex items-center gap-5">
