@@ -42,9 +42,14 @@ const PostComments = ({
   const [updateComment] = useUpdateCommentMutation();
 
   // Helper function to check if a comment is valid
-  const isValidComment = (comment: string) => {
-    return /\w/.test(comment); // Check for at least one word character
-  };
+const isValidComment = (comment: string): boolean => {
+  // Check if the comment contains at least one visible character
+  return /\S/.test(comment.trim());
+};
+
+
+
+  console.log(newComment, "new comment");
 
   const handleAddComment = async () => {
     if (!isValidComment(newComment)) {
