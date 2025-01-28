@@ -4,11 +4,10 @@ import { KegelTimes, Quizzes } from "@/types/contantType";
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
-  FullscreenExitOutlined,
-  FullscreenOutlined,
+
 } from "@ant-design/icons";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { CiVideoOn } from "react-icons/ci";
 import { FaCheckCircle, FaInfoCircle } from "react-icons/fa";
