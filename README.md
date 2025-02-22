@@ -54,6 +54,17 @@ Ensure you have the following installed:
 NEXT_PUBLIC_BASE_URL="you backend setup"
 
 
+### Mobile version
+
+![Screenshot from 2025-02-22 22-31-30](https://github.com/user-attachments/assets/a9bf82cc-888b-40cf-9861-f1eaefbc7af6)
+![Screenshot from 2025-02-22 22-31-23](https://github.com/user-attachments/assets/ff9b3596-40a3-44f2-8895-bcc1004760b7)
+![Screenshot from 2025-02-22 22-31-13](https://github.com/user-attachments/assets/9ef4c05a-3a21-4f74-ba28-88c4074c584b)
+![Screenshot from 2025-02-22 22-31-02](https://github.com/user-attachments/assets/e6ac0e6a-c4ff-46b6-92a3-667348f67eda)
+
+
+
+
+
 ### Steps to Run Locally
 
 1. **Clone the Repository**
@@ -63,3 +74,7 @@ NEXT_PUBLIC_BASE_URL="you backend setup"
    npm install
    npm run dev
 ```
+
+
+
+
