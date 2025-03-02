@@ -70,7 +70,7 @@ const CreatePost = ({ user }: { user: UserData | null }) => {
       >
         <Tooltip
           title="Make a post"
-          overlayClassName="rounded-lg p-2 bg-gray-800 text-white text-sm"
+          className="rounded-lg p-2 bg-gray-800 text-white text-sm"
         >
           <CiCirclePlus size={80} />
         </Tooltip>
