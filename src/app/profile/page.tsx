@@ -1,6 +1,5 @@
 "use client";
 
-import PostContent from "@/components/home/homefeed/post/PostContent";
 import ReactQuilEditor from "@/components/shared/ReactQuilEditor";
 import {
   useGetUserInfoQuery,
@@ -386,9 +385,7 @@ function ProfilePage() {
                   addSuffix: true,
                 })}
               </div>
-              <div className="flex-grow">
-                <PostContent postDescription={data.attributes.description} />
-              </div>
+             
               <div className="flex justify-between gap-2 mt-2">
                 <button
                   className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}

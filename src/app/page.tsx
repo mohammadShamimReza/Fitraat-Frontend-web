@@ -175,52 +175,7 @@ const HomePage: React.FC = () => {
 
       <Motivation />
 
-      <div className=" py-16 px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">Stay Engaged</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Community Feed */}
-          <div className="text-center border rounded-lg py-8 px-6">
-            <h3 className="text-2xl font-semibold mb-4">Community Feed</h3>
-            <p className="text-lg mb-4">
-              Ask questions, share answers, and engage with a supportive
-              community dedicated to personal growth.
-            </p>
-            <p className="text-lg mb-4">
-              Whether you need advice or want to share your experiences, our
-              feed is the perfect space for open and respectful discussions.
-            </p>
-            <Link href="/feeds">
-              <Button
-                type="primary"
-                className="bg-white text-black px-6 py-2 mt-4 rounded-lg"
-              >
-                Join the Discussion
-              </Button>
-            </Link>
-          </div>
-
-          {/* Read Blogs */}
-          <div className="text-center border rounded-lg py-8 px-6">
-            <h3 className="text-2xl font-semibold mb-4">Explore Our Blogs</h3>
-            <p className="text-lg mb-4">
-              Discover insights, actionable tips, and inspiring stories curated
-              to help you on your recovery journey.
-            </p>
-            <p className="text-lg mb-4">
-              Our blogs cover a wide range of topics, from personal growth to
-              effective recovery strategies.
-            </p>
-            <Link href="/freeBlog">
-              <Button
-                type="primary"
-                className="bg-white text-black px-6 py-2 mt-4 rounded-lg"
-              >
-                Read Blogs
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
+     
 
       {/* Blog Section */}
       <div className="py-16 px-6">

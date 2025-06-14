@@ -11,11 +11,7 @@
   - Videos  
   - Kegel exercises  
   - Quizzes  
-  - Blogs  
-
-- **Community Support**  
-  - Logged-in users can post questions and provide answers through comments in the feed section.  
-  - Guests (non-logged-in users) can only view the feed but cannot interact.  
+  - Blogs   
 
 - **Emergency Help**  
   - A dedicated section for moments of intense cravings or lack of control.  

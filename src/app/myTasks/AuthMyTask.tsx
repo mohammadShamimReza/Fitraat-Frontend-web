@@ -254,14 +254,7 @@ function AuthMyTask({
                 Explore Blogs
               </Button>
             </Link>
-            <Link href="/books">
-              <Button
-                type="primary"
-                className="bg-green-500 hover:bg-green-600 px-6 py-2"
-              >
-                Browse Books
-              </Button>
-            </Link>
+            
           </div>
         </div>
       )}

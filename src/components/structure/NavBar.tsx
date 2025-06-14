@@ -150,14 +150,7 @@ function NavBar() {
                   >
                     Tasks
                   </Link>
-                  <Link
-                    href="/feeds"
-                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                      pathname === "/feeds" ? "bg-gray-200" : ""
-                    }`}
-                  >
-                    Feeds
-                  </Link>
+                  
                   <Link
                     href="/freeBlog"
                     className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
@@ -166,14 +159,7 @@ function NavBar() {
                   >
                     Blog
                   </Link>
-                  <Link
-                    href="/books"
-                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                      pathname === "/books" ? "bg-gray-200" : ""
-                    }`}
-                  >
-                    Books
-                  </Link>
+                
                 </div>
               </div>
             </div>
@@ -299,22 +285,8 @@ function NavBar() {
               >
                 Blog
               </Link>
-              <Link
-                href="/feeds"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/feeds" ? "bg-gray-200" : ""
-                }`}
-              >
-                Feeds
-              </Link>
-              <Link
-                href="/books"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/books" ? "bg-gray-200" : ""
-                }`}
-              >
-                Books
-              </Link>
+             
+          
             </div>
           </div>
         ) : (

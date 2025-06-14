@@ -1,4 +1,3 @@
-import PostContent from "@/components/home/homefeed/post/PostContent";
 import { Key } from "react";
 
 interface UserPostsProps {
@@ -33,9 +32,7 @@ const UserPosts: React.FC<UserPostsProps> = ({
                 className="border p-2 m-2 relative flex flex-col justify-between h-full"
                 key={data.id}
               >
-                <div className="flex-grow">
-                  <PostContent postDescription={data.attributes.description} />
-                </div>
+                
                 <div className="flex justify-between gap-2 mt-2">
                   <button
                     className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
