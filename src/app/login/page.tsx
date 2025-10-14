@@ -51,7 +51,6 @@ function LoginPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData, "this is form data");
 
     try {
       // Validate form data with Zod

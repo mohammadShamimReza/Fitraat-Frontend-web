@@ -13,21 +13,10 @@ function SuggestedBlog({
     id: number | undefined;
     title: string | undefined;
     content: string | undefined;
-    viewCount: number;
   };
 }) {
   const [updateBlog] = useUpdateBlogMutation();
-  const updateViewCount = async (blogId: number) => {
-    try {
-      const result = await updateBlog({
-        id: blogId,
-        updatedFields: { viewCount: blog.viewCount + 1 },
-      }).unwrap();
-      console.log(result);
-    } catch (error) {
-      console.error("Error updating view count:", error);
-    }
-  };
+
 
   const contentHtml = blog?.content ? marked(blog.content) : "";
 

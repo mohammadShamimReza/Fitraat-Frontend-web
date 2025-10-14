@@ -1,142 +1,59 @@
-export interface Post {
-  id: number;
-  attributes: {
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    user: {
-      data: {
-        id: number;
-        attributes: {
-          username: string;
-          email: string;
-          provider: string;
-          confirmed: boolean;
-          blocked: boolean;
-          createdAt: string;
-          updatedAt: string;
-          age: number;
-          phone: string;
-          compliteDay: number;
-          country: string;
-          videoComplete: boolean;
-          kagelComplete: boolean;
-          quizComplete: boolean;
-          gender: string;
-          language: string;
-          currentDay: number;
-          paid: boolean;
-        };
-      };
-    };
-  };
-}
 
-export interface PostData {
-  data: Post[];
-  meta: Meta;
-}
 
-export interface CreateLikeForPost {
-  id: number;
-  attributes: {
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-}
-export interface CreateCommentForPost {
-  id: number;
-  attributes: {
-    comment: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-}
+type BlogImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+};
 
-export interface postForCommentData {
-  data: {
-    id: number;
-    attributes: {
-      comment: string;
-      createdAt: string;
-      updatedAt: string;
-      publishedAt: string;
-      user: {
-        data: { id: number; attributes: UserData };
-      };
-      post: {
-        data: {
-          id: number;
-          attributes: {
-            description: Array<{
-              type: string;
-              children: Array<{
-                text: string;
-                type: string;
-              }>;
-            }>;
-            createdAt: string;
-            updatedAt: string;
-            publishedAt: string;
-          };
-        };
-      };
-    };
-  }[];
-  meta: Meta;
-}
-
-export interface singleCommentForPostData {
+type BlogImage = {
   id: number;
-  attributes: {
-    comment: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    user: {
-      data: { id: number; attributes: UserData };
-    };
-    post: {
-      data: {
-        id: number;
-        attributes: {
-          description: Array<{
-            type: string;
-            children: Array<{
-              text: string;
-              type: string;
-            }>;
-          }>;
-          createdAt: string;
-          updatedAt: string;
-          publishedAt: string;
-        };
-      };
-    };
+  documentId: string;
+  name: string;
+  alternativeText: string;
+  caption: string;
+  width: number;
+  height: number;
+  formats: {
+    large: BlogImageFormat;
+    medium: BlogImageFormat;
+    small: BlogImageFormat;
+    thumbnail: BlogImageFormat;
   };
-}
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: any;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
 
 export interface Blog {
-  attributes: {
-    BlogId: number;
-    topic: string;
-    content: string;
-    title: string;
-    imageURL: string;
-
-    keywords: {
-      keyword: string[];
-    };
-    publishedAt: string;
-    updatedAt: string;
-    viewCount: number;
-    authorName: string;
-  };
   id: number;
+  documentId: string;
+  topic: string;
+  title: string;
+  content: string;
+  tag: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  image: BlogImage;
 }
+
 export interface Meta {
   pagination: {
     page: number;
@@ -151,18 +68,7 @@ export interface BlogData {
   meta: Meta;
 }
 
-export interface SingleBlogData {
-  data: {
-    attributes: {
-      title: string;
-      content: string;
-      imageURL: string;
-      viewCount: number;
-      authorName: string;
-    };
-  };
-  meta: Meta;
-}
+
 
 export interface Emergencys {
   data: {
@@ -266,30 +172,26 @@ export interface Error {
     status: number;
   };
 }
-
+export type FitraatPaymentStatus = "Complete" | "Not complete";
+export type Gender = "Male" | "Female" | null;
 export interface UserData {
-  age: number;
-  blocked: boolean;
-  compliteDay: number;
-  confirmed: boolean;
-  country: string;
-  createdAt: string;
-  currentDay: number;
-  email: string;
-  gender: string;
   id: number;
-  kagelComplete: boolean;
-  language: string;
-  phone: string;
-  provider: string;
-  quizComplete: boolean;
-  updateAt: string;
+  documentId: string;
   username: string;
-  videoComplete: boolean;
-  tran_id: string;
-  varifiedSine: boolean;
-  paid: boolean;
-  startDate: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  age: number | null;
+  phone: string | null;
+  currentDay: number;
+  gender: Gender;
+  startDate: string | null;
+  fitraatPayment: FitraatPaymentStatus;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  tran_id: string | null;
 }
 
 export interface UserDataWithDay {
@@ -300,66 +202,7 @@ export interface UserDataWithDay {
   country: string;
   createdAt: string;
   currentDay: number;
-  // {
-  //   DayId: number;
-  //   createdAt: string;
-
-  //   updatedAt: string;
-  //   quiz: {
-  //     id: number;
-  //     question: string;
-  //     answer: string;
-  //     quizOptions: string;
-  //     quizId: number;
-  //     createdAt: string;
-  //     updatedAt: string;
-  //     publishedAt: string;
-  //   };
-  //   blog: {
-  //     BlogId: number;
-  //     topic: string;
-  //     content: string;
-  //     title: string;
-  //     imageURL: string;
-  //     keywords: {
-  //       keyword: string[];
-  //     };
-  //     publishedAt: string;
-  //     updatedAt: string;
-  //     viewCount: string;
-  //   };
-  //   kegel: {
-  //     KagelId: number;
-  //     createdAt: string;
-  //     kegel_times: {
-  //       squeeze: number;
-  //       stop: number;
-  //       createdAt: string;
-  //       publishedAt: string;
-  //       updatedAt: string;
-  //     }[];
-  //     publishedAt: string;
-  //     updatedAt: string;
-  //   };
-  //   publishedAt: string;
-  //   reward: string;
-  //   sort_note: {
-  //     createdAt: string;
-  //     publishedAt: string;
-  //     updatedAt: string;
-  //   };
-  //   video: {
-  //     vedeoId: number;
-  //     createdAt: string;
-
-  //     updatedAt: string;
-  //     publishedAt: string;
-
-  //     VideoUrl: string;
-  //     videoId: number;
-  //   };
-  //   id: number;
-  // } | null;
+  
   email: string;
   gender: string;
   id: number;

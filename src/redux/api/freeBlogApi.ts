@@ -1,4 +1,4 @@
-import { BlogData, SingleBlogData } from "@/types/contantType";
+import { Blog, BlogData } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
 const BLOG = "/free-blogs";
@@ -18,8 +18,8 @@ export const blogApi = baseApi.injectEndpoints({
     }),
     getFreeBlogsById: builder.query({
       query: (id: string) =>
-        `${BLOG}/${id}?fields[0]=title&fields[1]=content&fields[2]=imageURL&fields[3]=viewCount&fields[4]=authorName`,
-      transformResponse: (rawResult: SingleBlogData) => {
+        `${BLOG}/${id}?populate=image&fields[0]=title&fields[1]=content`,
+      transformResponse: (rawResult: { data: Blog }) => {
         return rawResult;
       },
     }),

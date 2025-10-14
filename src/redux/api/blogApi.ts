@@ -1,4 +1,4 @@
-import { SingleBlogData } from "@/types/contantType";
+import { Blog } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
 const BLOG = "/blogs";
@@ -8,23 +8,14 @@ export const blogApi = baseApi.injectEndpoints({
     getBlogsById: builder.query({
       query: (id: string) =>
         `${BLOG}/${id}?fields[0]=title&fields[1]=content&fields[2]=imageURL&fields[3]=viewCount&fields[4]=authorName`,
-      transformResponse: (rawResult: SingleBlogData) => {
+      transformResponse: (rawResult: Blog) => {
         return rawResult;
       },
     }),
     updateBlog: builder.mutation({
-      query: ({
-        id,
-        updatedFields,
-      }: {
-        id: number;
-        updatedFields: Partial<{ viewCount: number }>;
-      }) => ({
+      query: ({ id }: { id: number }) => ({
         url: `${BLOG}/${id}`,
         method: "PUT",
-        body: {
-          data: updatedFields,
-        },
       }),
     }),
   }),

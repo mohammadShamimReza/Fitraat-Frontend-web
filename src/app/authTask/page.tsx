@@ -30,7 +30,7 @@ const MyTasks: React.FC = () => {
 
   const authDayDataId = userData?.currentDay!;
   const userId = userData?.id!;
-  const paid = userData?.paid;
+  const payment = userData?.fitraatPayment;
 
   const today = new Date();
   const start = new Date(userData?.startDate || new Date());
@@ -41,17 +41,17 @@ const MyTasks: React.FC = () => {
   return (
     <>
       {isMounted ? (
-        userData && paid === true ? (
+        userData && payment === "Complete" ? (
           // Authenticated user render
           <AuthMyTask
             authDayDataId={authDayDataId}
             userId={userId}
-            paid={paid}
+            payment={payment}
             daysLeft={daysLeft}
           />
         ) : (
           // Unauthenticated user render
-          <UnAuthTask paid={userData?.paid} />
+          <UnAuthTask payment={userData?.fitraatPayment} />
         )
       ) : (
         // Skeleton loading screen during hydration

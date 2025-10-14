@@ -93,7 +93,7 @@ function Page() {
                 ))
               : isSuccess &&
                 allBlogs.map((blog: Blog) => (
-                  <Blogs key={blog.attributes.BlogId} blog={blog} />
+                  <Blogs key={blog.id} blog={blog} />
                 ))}
 
             {isLoading && <div className="text-center">Loading blogs...</div>}

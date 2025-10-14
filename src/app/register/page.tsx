@@ -12,33 +12,21 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
 
-// Zod schema for form validation with confirmPassword
-const registerSchema = z
-  .object({
-    username: z.string().nonempty("Username is required"),
-    email: z
-      .string()
-      .email("Invalid email address")
-      .nonempty("Email is required"),
-    password: z
-      .string()
-      .min(6, "Password must be at least 6 characters long")
-      .regex(/[0-9]/, "Password must contain at least one number")
-      .regex(
-        /[!@#$%^&*(),.?":{}|<>]/,
-        "Password must contain at least one special character"
-      ),
-    confirmPassword: z.string().nonempty("Please confirm your password"),
-    age: z.string().nonempty("Age is required"),
-    phone: z.string().nonempty("Phone number is required"),
-    gender: z.string().nonempty("Gender is required"),
-    language: z.string().nonempty("Language is required"),
-    currentDay: z.number(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+const registerSchema = z.object({
+  username: z.string().nonempty("Username is required"),
+  email: z
+    .string()
+    .email("Invalid email address")
+    .nonempty("Email is required"),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters long")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    ),
+});
 
 function RegisterPage() {
   const router = useRouter();
@@ -50,13 +38,6 @@ function RegisterPage() {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
-    age: "",
-    phone: "",
-    gender: "",
-    language: "",
-    currentDay: 1,
-    startDate: currentDate,
   });
 
   const [registerUser, { error }] = useRegisterUserMutation();
@@ -84,9 +65,10 @@ function RegisterPage() {
       registerSchema.parse(formData);
 
       const result: any = await registerUser(formData);
+      console.log(result, "this is result");
       if (result?.error) {
         if (result?.error?.error?.message === "This attribute must be unique") {
-          message.error("Phone is used already.");
+          message.error("credentials is used already.");
         } else if (result?.error) {
           message.error(result?.error.error.message);
         }
@@ -113,7 +95,7 @@ function RegisterPage() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col mt-10 items-center">
+      <div className="min-h-screen flex flex-col mt-10 items-center bg-white">
         <div className="shadow-lg rounded-lg p-8 max-w-md w-full">
           <h1 className="text-center mb-10 font-bold text-3xl text-blue-500">
             Registration is Free
@@ -187,102 +169,7 @@ function RegisterPage() {
                 />
               )}
             </div>
-            {/* Confirm Password Input */}
-            <div className="mb-4 relative">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-lg font-semibold mb-2"
-              >
-                Confirm Password <span className="text-red-500">*</span>
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="confirmPassword"
-                name="confirmPassword"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-                placeholder="Re-enter your password"
-                onChange={handleChange}
-                value={formData.confirmPassword}
-                required
-              />
-            </div>
-            {/* Age Input */}
-            <div className="mb-4">
-              <label htmlFor="age" className="block text-lg font-semibold mb-2">
-                Age <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="number"
-                id="age"
-                name="age"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-                placeholder="Enter your age"
-                value={formData.age}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            {/* Phone Input */}
-            <div className="mb-4">
-              <label
-                htmlFor="phone"
-                className="block text-lg font-semibold mb-2"
-              >
-                Phone <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="number"
-                id="phone"
-                name="phone"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-                placeholder="Enter your phone number"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            {/* Gender Input */}
-            <div className="mb-4">
-              <label
-                htmlFor="gender"
-                className="block text-lg font-semibold mb-2"
-              >
-                Gender <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="gender"
-                name="gender"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-                value={formData.gender}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </div>
-            {/* Language Input */}
-            <div className="mb-4">
-              <label
-                htmlFor="language"
-                className="block text-lg font-semibold mb-2"
-              >
-                Language
-              </label>
-              <select
-                id="language"
-                name="language"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2"
-                value={formData.language}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select language</option>
-                <option value="Bangla">Bangla</option>
-                <option value="English">English</option>
-              </select>
-            </div>
+
             {/* Submit Button */}
             <button
               type="submit"

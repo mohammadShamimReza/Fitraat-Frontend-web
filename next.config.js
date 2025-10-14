@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
   webpack: (config, options) => {
     const { isServer } = options;
     config.module.rules.push({
@@ -24,7 +23,13 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["i.ibb.co", "res.cloudinary.com", "svgrepo.com", "delamere.com"], // Add the hostname for your images here
+    domains: [
+      "i.ibb.co",
+      "res.cloudinary.com",
+      "svgrepo.com",
+      "delamere.com",
+      "localhost",
+    ], // Add the hostname for your images here
   },
 };
 

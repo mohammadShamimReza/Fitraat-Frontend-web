@@ -13,7 +13,7 @@ import TaskPage from "./TaskPage";
 import { clearDayData } from "@/redux/slice/daySlice";
 import DayFinishImage from "../assets/dayFinish.gif";
 
-function UnAuthTask({ paid }: { paid: boolean | undefined }) {
+function UnAuthTask({ payment }: { payment: string | undefined }) {
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 
@@ -24,6 +24,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
   } = useGetDaysByDayIdQuery(parseInt(unAuthDayId));
 
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
+  console.log(unAuthenticatedDayData, "day data");
 
   useEffect(() => {
     const dayId = window.localStorage.getItem("unAuthDayId") || "1";
@@ -138,13 +139,11 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
 
     title: string | undefined;
     content: string | undefined;
-    viewCount: number;
   }>({
     id: 1,
 
     title: "",
     content: "",
-    viewCount: 0,
   });
   const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
   const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
@@ -160,9 +159,8 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
         setBlog({
           id: unAuthDayData.blog.data.id,
 
-          title: unAuthDayData.blog.data.attributes.title,
-          content: unAuthDayData.blog.data.attributes.content,
-          viewCount: unAuthDayData.blog.data.attributes.viewCount,
+          title: unAuthDayData.blog.data.title,
+          content: unAuthDayData.blog.data.content,
         });
         setQuiz(unAuthDayData?.quizzes.data);
 
@@ -234,7 +232,7 @@ function UnAuthTask({ paid }: { paid: boolean | undefined }) {
           video={video}
           kegel={kegel}
           DayCount={DayCount}
-          paid={paid}
+          payment={payment}
           daysLeft={0}
         />
       )}

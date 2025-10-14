@@ -37,13 +37,12 @@ interface Props {
     id: number | undefined;
     title: string | undefined;
     content: string | undefined;
-    viewCount: number;
   };
   quiz: Quizzes[] | undefined;
   video: { videoUrl: string | undefined };
   kegel: KegelTimes[] | undefined;
   DayCount: number;
-  paid: boolean | undefined;
+  payment: string | undefined;
   daysLeft: number;
 }
 
@@ -59,7 +58,7 @@ function TaskPage({
   video,
   kegel,
   DayCount,
-  paid,
+  payment,
   daysLeft,
 }: Props) {
  
@@ -113,7 +112,7 @@ function TaskPage({
 
   const renderDayItem = (day: number) => {
     const isUnlocked = DayCount >= day;
-    const isPaidLocked = !paid && day > 3;
+    const isPaidLocked = payment != "Complete" && day > 3;
 
     return (
       <div
@@ -138,7 +137,7 @@ function TaskPage({
               color: isUnlocked ? "#0578EA" : "gray",
             }}
           />
-        ) : !paid ? (
+        ) : payment != "Complete" ? (
           <FaCheckCircle
             size={25}
             style={{

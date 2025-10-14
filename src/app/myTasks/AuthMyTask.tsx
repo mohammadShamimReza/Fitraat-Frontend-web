@@ -18,12 +18,12 @@ import TaskPage from "./TaskPage";
 function AuthMyTask({
   authDayDataId,
   userId,
-  paid,
+  payment,
   daysLeft,
 }: {
   authDayDataId: number;
   userId: number;
-  paid: boolean | undefined;
+  payment: string | undefined;
   daysLeft: number;
 }) {
   const router = useRouter();
@@ -225,7 +225,7 @@ function AuthMyTask({
             video={video}
             kegel={kegel}
             DayCount={DayCount}
-            paid={paid}
+            payment={payment}
             daysLeft={daysLeft}
           />
         </>
