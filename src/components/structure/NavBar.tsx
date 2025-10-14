@@ -13,7 +13,6 @@ import siteLogo from "../../app/assets/detox1.png";
 
 function NavBar() {
   const pathname = usePathname();
-  console.log(pathname, "this is a router");
 
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
