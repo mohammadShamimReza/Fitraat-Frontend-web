@@ -54,22 +54,109 @@ export interface Blog {
   image: BlogImage;
 }
 
-export interface Meta {
-  pagination: {
-    page: number;
-    pageSize: number;
-    pageCount: number;
-    total: number;
-  };
-}
 
 export interface BlogData {
   data: Blog[];
   meta: Meta;
 }
 
+// Blog section complete
 
 
+
+// start Day section
+
+
+export type Video = {
+  id: number;
+  documentId: string;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number | null;
+  height: number | null;
+  formats: any | null;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: any | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
+
+
+export type QuizOption = {
+  id: number;
+  option1: string;
+  option2: string;
+  option3: string;
+  option4: string;
+};
+
+export type Quiz = {
+  id: number;
+  question: string;
+  answer: string;
+  serial: number;
+  options: QuizOption;
+};
+
+export type FreeQuizz = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  quizzess: Quiz[];
+};
+
+export type KagelTimeEntry = {
+  id: number;
+  squizz: number;
+  stop: number;
+};
+
+export type KagelTime = {
+  id: number;
+  gap: number;
+  serial: number;
+  times: KagelTimeEntry[];
+};
+
+export type FreeKagel = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  kagelTimes: KagelTime[];
+};
+
+export type Day = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  free_blog: Blog;
+  regulerVideo: Video;
+  meditationVideo: Video;
+  free_quizz: FreeQuizz;
+  free_kagel: FreeKagel;
+};
+
+export type FreeDaysResponse = {
+  data: Day[];
+  meta: Meta;
+};
 export interface Emergencys {
   data: {
     attributes: {
@@ -104,41 +191,7 @@ export interface Kegel {
   };
 }
 
-export interface Video {
-  data: {
-    attributes: {
-      vedeoId: number;
-      createdAt: string;
 
-      updatedAt: string;
-      publishedAt: string;
-
-      VideoUrl: string;
-      videoId: number;
-    };
-    id: number;
-  };
-}
-
-export interface Day {
-  attributes: {
-    DayId: number;
-    createdAt: string;
-
-    updatedAt: string;
-    blog: {
-      data: Blog;
-    };
-    kegel: Kegel;
-    publishedAt: string;
-    video: Video;
-    id: number;
-    quizzes: {
-      data: Quizzes[];
-    };
-  };
-  id: number;
-}
 
 export interface Quizzes {
   attributes: {
@@ -158,20 +211,7 @@ export interface DayData {
   meta: Meta;
 }
 
-export interface Error {
-  error: {
-    data: {
-      data: null;
-      error: {
-        status: number;
-        name: string;
-        message: string;
-        details: {}[];
-      };
-    };
-    status: number;
-  };
-}
+
 export type FitraatPaymentStatus = "Complete" | "Not complete";
 export type Gender = "Male" | "Female" | null;
 export interface UserData {
@@ -240,4 +280,26 @@ export interface PaymentFormValues {
   cus_add1: string;
   cus_country: string;
   cus_phone: string;
+}
+export interface Meta {
+  pagination: {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
+  };
+}
+export interface Error {
+  error: {
+    data: {
+      data: null;
+      error: {
+        status: number;
+        name: string;
+        message: string;
+        details: {}[];
+      };
+    };
+    status: number;
+  };
 }

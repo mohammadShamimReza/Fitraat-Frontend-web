@@ -131,12 +131,10 @@ function AuthMyTask({
     id: number | undefined;
     title: string | undefined;
     content: string | undefined;
-    viewCount: number;
   }>({
     id: 1,
     title: "",
     content: "",
-    viewCount: 0,
   });
   const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
   const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
@@ -151,9 +149,8 @@ function AuthMyTask({
       if (authDayData) {
         setBlog({
           id: authDayData.blog.data.id,
-          title: authDayData.blog.data.attributes.title,
-          content: authDayData.blog.data.attributes.content,
-          viewCount: authDayData.blog.data.attributes.viewCount,
+          title: authDayData.blog.data.title,
+          content: authDayData.blog.data.content,
         });
         setQuiz(authDayData?.quizzes.data);
 

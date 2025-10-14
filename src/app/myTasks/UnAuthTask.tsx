@@ -154,7 +154,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
 
   useEffect(() => {
     if (unAuthenticatedDayData) {
-      const unAuthDayData = unAuthenticatedDayData[0].attributes;
+      const unAuthDayData = unAuthenticatedDayData[0];
       if (unAuthDayData) {
         setBlog({
           id: unAuthDayData.blog.data.id,
