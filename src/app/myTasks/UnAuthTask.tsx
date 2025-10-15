@@ -2,7 +2,7 @@
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
-import { KegelTimes, Quizzes } from "@/types/contantType";
+import { FreeKagel, KagelTime, KagelTimeEntry, Quiz } from "@/types/contantType";
 import { Button, message, Modal, Skeleton } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -135,41 +135,42 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   };
 
   const [blog, setBlog] = useState<{
-    id: number | undefined;
+    id: string | undefined;
 
     title: string | undefined;
     content: string | undefined;
   }>({
-    id: 1,
+    id: "",
 
     title: "",
     content: "",
   });
-  const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
-  const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
+  const [kegel, setKegel] = useState<KagelTime[] | undefined>(undefined);
+
+  const [quiz, setQuiz] = useState<Quiz[] | undefined>(undefined);
 
   const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
     videoUrl: "",
   });
 
-  useEffect(() => {
-    if (unAuthenticatedDayData) {
-      const unAuthDayData = unAuthenticatedDayData[0];
-      if (unAuthDayData) {
-        setBlog({
-          id: unAuthDayData.blog.data.id,
+useEffect(() => {
+  if (unAuthenticatedDayData) {
+    const unAuthDayData = unAuthenticatedDayData[0];
 
-          title: unAuthDayData.blog.data.title,
-          content: unAuthDayData.blog.data.content,
-        });
-        setQuiz(unAuthDayData?.quizzes.data);
+    if (unAuthDayData) {
+      setBlog({
+        id: unAuthDayData.free_blog.documentId,
+        title: unAuthDayData.free_blog.title,
+        content: unAuthDayData.free_blog.content,
+      });
 
-        setVideo({ videoUrl: unAuthDayData.video.data.attributes.VideoUrl });
-
-        setKegel(unAuthDayData?.kegel.data.attributes.kegel_times.data);
-      }
+      setQuiz(unAuthDayData?.free_quizz.quizzess);
+      setVideo({ videoUrl: unAuthDayData.regulerVideo.url });
+      setKegel(unAuthDayData?.free_kagel.kagelTimes);
     }
-  }, [unAuthenticatedDayData, unAuthDayId]);
+  }
+}, [unAuthenticatedDayData, unAuthDayId]);
+
 
   const DayCount = parseInt(unAuthDayId) || 0;
 

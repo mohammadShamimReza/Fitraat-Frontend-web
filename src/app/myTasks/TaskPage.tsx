@@ -1,6 +1,6 @@
 "use client";
 
-import { KegelTimes, Quizzes } from "@/types/contantType";
+import { KagelTime, Quiz } from "@/types/contantType";
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
@@ -22,7 +22,7 @@ import { GrStatusPlaceholder, GrYoga } from "react-icons/gr";
 import { IoMdClose, IoMdLock } from "react-icons/io";
 import { TbCurrencyFrank, TbMilitaryRank } from "react-icons/tb";
 import Kagel from "./taskPages/Kagel";
-import Quiz from "./taskPages/Quiz";
+import Quizz from "./taskPages/Quiz";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
@@ -34,13 +34,13 @@ interface Props {
   handlePrevious: () => void;
   handleNext: () => void;
   blog: {
-    id: number | undefined;
+    id: string | undefined;
     title: string | undefined;
     content: string | undefined;
   };
-  quiz: Quizzes[] | undefined;
+  quiz: Quiz[] | undefined;
   video: { videoUrl: string | undefined };
-  kegel: KegelTimes[] | undefined;
+  kegel: KagelTime[] | undefined;
   DayCount: number;
   payment: string | undefined;
   daysLeft: number;
@@ -246,7 +246,7 @@ function TaskPage({
                   <Kagel selectedTask={selectedTask} kegel={kegel} />
                 )}
                 {selectedTask === "quiz" && (
-                  <Quiz selectedTask={selectedTask} quiz={quiz} />
+                  <Quizz selectedTask={selectedTask} quiz={quiz} />
                 )}
                 {selectedTask === "Blog" && (
                   <SuggestedBlog selectedTask={selectedTask} blog={blog} />

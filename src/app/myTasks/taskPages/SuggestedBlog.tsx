@@ -10,12 +10,11 @@ function SuggestedBlog({
 }: {
   selectedTask: string;
   blog: {
-    id: number | undefined;
+    id: string | undefined;
     title: string | undefined;
     content: string | undefined;
   };
 }) {
-  const [updateBlog] = useUpdateBlogMutation();
 
 
   const contentHtml = blog?.content ? marked(blog.content) : "";

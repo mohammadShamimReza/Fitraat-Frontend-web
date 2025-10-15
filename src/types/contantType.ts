@@ -167,44 +167,10 @@ export interface Emergencys {
   meta: Meta;
 }
 
-export interface KegelTimes {
-  attributes: {
-    times: string;
-    createdAt: string;
-    publishedAt: string;
-    updatedAt: string;
-  };
-  id: number;
-}
-
-export interface Kegel {
-  data: {
-    attributes: {
-      KagelId: number;
-      createdAt: string;
-      kegel_times: {
-        data: KegelTimes[];
-      };
-      publishedAt: string;
-      updatedAt: string;
-    };
-  };
-}
 
 
 
-export interface Quizzes {
-  attributes: {
-    question: string;
-    answer: string;
-    quizOptions: string;
-    quizId: number;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-  id: number;
-}
+
 
 export interface DayData {
   data: Day[];

@@ -1,4 +1,4 @@
-import { Quizzes } from "@/types/contantType";
+import {  Quiz as Quizzes } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 

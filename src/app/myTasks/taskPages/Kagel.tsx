@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeInitialRender } from "@/redux/slice/initialRenderSlice";
-import { KegelTimes } from "@/types/contantType";
+import { KagelTime } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Progress } from "antd";
 import { useEffect, useRef, useState } from "react";
@@ -12,7 +12,7 @@ function Kagel({
   kegel,
 }: {
   selectedTask: string;
-  kegel: KegelTimes[] | undefined;
+  kegel: KagelTime[] | undefined;
 }) {
   function getKegelTimes(text: string) {
     const numbersArray = text.split(/,\s*/);
@@ -78,7 +78,6 @@ function Kagel({
   };
 
   const stopTimer = () => {
-
     clearInterval(timerId.current);
     setIsRunning(false);
   };
