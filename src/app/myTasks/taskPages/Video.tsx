@@ -7,6 +7,7 @@ function Video({
     videoUrl: string | undefined;
   };
 }) {
+  console.log(video, "this is video");
   return (
     <div
     //   className="h-full
@@ -18,7 +19,10 @@ function Video({
             width="100%"
             height="450px"
             className="rounded-xl"
-            src={video?.videoUrl || `https://www.youtube.com/embed/7WUKdCV8J34`}
+            src={
+              `http://localhost:1337${video?.videoUrl}` ||
+              `https://www.youtube.com/embed/7WUKdCV8J34`
+            }
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen

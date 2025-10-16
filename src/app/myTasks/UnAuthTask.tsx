@@ -2,7 +2,7 @@
 import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
-import { FreeKagel, KagelTime, KagelTimeEntry, Quiz } from "@/types/contantType";
+import { KagelTime, Quiz } from "@/types/contantType";
 import { Button, message, Modal, Skeleton } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,9 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   } = useGetDaysByDayIdQuery(parseInt(unAuthDayId));
 
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
-  console.log(unAuthenticatedDayData, "day data");
+  console.log(unAuthenticatedDayDataForChengeDay, "day data");
+
+
 
   useEffect(() => {
     const dayId = window.localStorage.getItem("unAuthDayId") || "1";
@@ -153,24 +155,23 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
     videoUrl: "",
   });
 
-useEffect(() => {
-  if (unAuthenticatedDayData) {
-    const unAuthDayData = unAuthenticatedDayData[0];
+  useEffect(() => {
+    if (unAuthenticatedDayData) {
+      const unAuthDayData = unAuthenticatedDayData[0];
 
-    if (unAuthDayData) {
-      setBlog({
-        id: unAuthDayData.free_blog.documentId,
-        title: unAuthDayData.free_blog.title,
-        content: unAuthDayData.free_blog.content,
-      });
+      if (unAuthDayData) {
+        setBlog({
+          id: unAuthDayData.free_blog.documentId,
+          title: unAuthDayData.free_blog.title,
+          content: unAuthDayData.free_blog.content,
+        });
 
-      setQuiz(unAuthDayData?.free_quizz.quizzess);
-      setVideo({ videoUrl: unAuthDayData.regulerVideo.url });
-      setKegel(unAuthDayData?.free_kagel.kagelTimes);
+        setQuiz(unAuthDayData?.free_quizz.quizzess);
+        setVideo({ videoUrl: unAuthDayData.regulerVideo.url });
+        setKegel(unAuthDayData?.free_kagel.kagelTimes);
+      }
     }
-  }
-}, [unAuthenticatedDayData, unAuthDayId]);
-
+  }, [unAuthenticatedDayData, unAuthDayId]);
 
   const DayCount = parseInt(unAuthDayId) || 0;
 
