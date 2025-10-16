@@ -7,7 +7,6 @@ function Video({
     videoUrl: string | undefined;
   };
 }) {
-  console.log(video, "this is video");
   return (
     <div
     //   className="h-full

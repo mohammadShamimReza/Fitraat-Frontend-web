@@ -60,7 +60,6 @@ function LoginPage() {
         setLoading(true); // Set loading state to true
         try {
           const result: any | Error = await loginUser(formData);
-          console.log(result, "this is loadin result");
           if (result?.error) {
             message.error("User is not valid");
           } else {

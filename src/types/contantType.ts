@@ -92,10 +92,10 @@ export type Video = {
 
 export type QuizOption = {
   id: number;
-  option1: string;
-  option2: string;
+  opiotn1: string;
+  optoin2: string;
   option3: string;
-  option4: string;
+  optoin4: string;
 };
 
 export type Quiz = {

@@ -26,8 +26,6 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
   console.log(unAuthenticatedDayDataForChengeDay, "day data");
 
-
-
   useEffect(() => {
     const dayId = window.localStorage.getItem("unAuthDayId") || "1";
     if (parseInt(dayId) > 3) {

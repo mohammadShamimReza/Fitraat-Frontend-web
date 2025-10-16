@@ -9,7 +9,6 @@ const MyTasks: React.FC = () => {
 
   const userData = useAppSelector((state) => state.auth.userInfo);
 
-  console.log(userData, "this is user data");
 
   useEffect(() => {
     setIsMounted(true);
@@ -40,10 +39,10 @@ const MyTasks: React.FC = () => {
     );
   }
 
-  if (userData === undefined || !userData?.paid) {
+  if (userData === undefined || userData?.fitraatPayment !== "Complete") {
     return (
       <div className="min-h-screen">
-        <UnAuthTask paid={userData?.paid} />
+        <UnAuthTask payment={userData?.fitraatPayment} />
       </div>
     );
   }

@@ -145,7 +145,7 @@ function AuthMyTask({
 
   useEffect(() => {
     if (authenticatedDayData) {
-      const authDayData = authenticatedDayData[0].attributes;
+      const authDayData = authenticatedDayData[0];
       if (authDayData) {
         setBlog({
           id: authDayData.blog.data.id,
