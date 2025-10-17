@@ -1,6 +1,5 @@
 "use client";
 
-import { useUpdateBlogMutation } from "@/redux/api/blogApi";
 import { marked } from "marked";
 import Link from "next/link";
 
@@ -15,8 +14,6 @@ function SuggestedBlog({
     content: string | undefined;
   };
 }) {
-
-
   const contentHtml = blog?.content ? marked(blog.content) : "";
 
   return (

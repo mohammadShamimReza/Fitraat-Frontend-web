@@ -13,7 +13,7 @@ const schema = yup.object().shape({
 function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
   const { data, isLoading } = useGetBlogsByIdQuery(blogId);
-  const blogData = data?.data.attributes;
+  const blogData = data;
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
   return isLoading ? (
     <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">
@@ -42,16 +42,7 @@ function Page({ params }: { params: { slug: string } }) {
   ) : (
     <div className="p-5">
       <br />
-      <div className="flex justify-between">
-        <p className="text-right p-5">
-          Author:
-          <span className="text-gray-500"> {blogData?.authorName}</span>{" "}
-        </p>
-        <p className="text-right p-7">
-          Total view:{" "}
-          <span className="text-gray-500"> {blogData?.viewCount || 1}</span>{" "}
-        </p>
-      </div>
+
       <div className="">
         <div
           className=" mb-4 
@@ -62,7 +53,7 @@ function Page({ params }: { params: { slug: string } }) {
         <br />
         <div className="flex align-middle justify-center h-full ">
           <Image
-            src={blogData?.imageURL || stopPornImage}
+            src={blogData?.image.previewUrl || stopPornImage}
             height={300}
             width={500}
             // layout="responsive"
