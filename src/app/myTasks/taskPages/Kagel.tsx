@@ -460,7 +460,17 @@ function Kagel({
             {currentSetSerial})
           </p>
 
-          <div>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap", // ✅ allows items to wrap to the next line
+              justifyContent: "flex-start",
+              rowGap: 6, // ✅ small vertical spacing between lines
+              columnGap: 10, // ✅ small horizontal spacing between items
+              width: "100%",
+            }}
+          >
+            <span className="text-black font-bold text-xl">Type: </span>
             {sequence.map((s, i) => (
               <span
                 key={i}

@@ -153,8 +153,8 @@ function TaskPage({
   };
 
   return (
-    <div className="mx-auto min-h-screen p-3 relative">
-      <div className="flex min-h-screen">
+    <div className="mx-auto  p-3 relative">
+      <div className="flex ">
         {/* Sidebar */}
         <div
           className={`fixed inset-0 z-20 bg-white min-w-64 transition-transform transform ${
@@ -195,8 +195,6 @@ function TaskPage({
 
         {/* Main Content */}
         <div className="flex-grow p-6 border rounded-lg">
-          
-
           <div className="backgroundDot rounded-lg">
             <div className="mx-auto flex flex-col gap-3">
               <Link href="/emergency" className="self-center">
