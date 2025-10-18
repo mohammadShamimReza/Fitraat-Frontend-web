@@ -269,3 +269,97 @@ export interface Error {
     status: number;
   };
 }
+
+
+
+
+//  pro contant type
+
+export interface ProBlog {
+  id: number;
+  documentId: string;
+  topic: string;
+  titile: string; // note: typo in API, keep 'titile'
+  content: string;
+  tag: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  image: BlogImage;
+}
+
+
+// Quizz (Pro)
+export type ProQuizOption = {
+  id: number;
+  opiotn1: string;
+  optoin2: string;
+  option3: string;
+  optoin4: string;
+};
+
+
+export type ProQuiz = {
+  id: number;
+  question: string;
+  answer: string;
+  serial: number;
+  options: ProQuizOption;
+};
+
+export type ProQuizz = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  quizzess: ProQuiz[];
+};
+
+
+export type ProKagelTimeEntry = {
+  id: number;
+  squizz: number;
+  stop: number;
+};
+
+export type ProKagelTime = {
+  id: number;
+  gap: number;
+  serial: number;
+  times: ProKagelTimeEntry[];
+};
+
+export type ProKagel = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  kagelTimes: ProKagelTime[];
+};
+
+// Day (Pro)
+
+export type ProDay = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+
+  pro_blog: ProBlog;
+  regulerVideo: Video;
+  meditationVideo: Video;
+  pro_quizz: ProQuizz;
+  pro_kagel: ProKagel;
+};
+
+export type ProDaysResponse = {
+  data: ProDay[];
+  meta: Meta;
+};

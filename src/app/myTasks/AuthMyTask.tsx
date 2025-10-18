@@ -1,10 +1,10 @@
 "use client";
 import { useUpdateUserDayMutation } from "@/redux/api/authApi";
-import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
+import { useGetAuthDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearDayData } from "@/redux/slice/daySlice";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
-import { KegelTimes, Quizzes } from "@/types/contantType";
+import { ProKagelTime, ProQuiz } from "@/types/contantType";
 import { Button, message, Modal, Skeleton } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,7 +34,8 @@ function AuthMyTask({
     data: authenticatedDayDataForChengeDay,
     isError,
     isLoading,
-  } = useGetDaysByDayIdQuery(authDayDataId);
+  } = useGetAuthDaysByDayIdQuery(authDayDataId);
+  console.log(authenticatedDayDataForChengeDay, "day is");
 
   const authenticatedDayData = authenticatedDayDataForChengeDay?.data;
 
@@ -128,16 +129,16 @@ function AuthMyTask({
   };
 
   const [blog, setBlog] = useState<{
-    id: number | undefined;
+    id: string | undefined;
     title: string | undefined;
     content: string | undefined;
   }>({
-    id: 1,
+    id: "",
     title: "",
     content: "",
   });
-  const [kegel, setKegel] = useState<KegelTimes[] | undefined>(undefined);
-  const [quiz, setQuiz] = useState<Quizzes[] | undefined>(undefined);
+  const [kegel, setKegel] = useState<ProKagelTime[] | undefined>(undefined);
+  const [quiz, setQuiz] = useState<ProQuiz[] | undefined>(undefined);
 
   const [video, setVideo] = useState<{ videoUrl: string | undefined }>({
     videoUrl: "",
@@ -148,14 +149,14 @@ function AuthMyTask({
       const authDayData = authenticatedDayData[0];
       if (authDayData) {
         setBlog({
-          id: authDayData.blog.data.id,
-          title: authDayData.blog.data.title,
-          content: authDayData.blog.data.content,
+          id: authDayData.pro_blog.documentId,
+          title: authDayData.pro_blog.titile,
+          content: authDayData.pro_blog.content,
         });
-        setQuiz(authDayData?.quizzes.data);
+        setQuiz(authDayData?.pro_quizz.quizzess);
 
-        setVideo({ videoUrl: authDayData.video.data.attributes.VideoUrl });
-        setKegel(authDayData?.kegel.data.attributes.kegel_times.data);
+        setVideo({ videoUrl: authDayData.regulerVideo.url });
+        setKegel(authDayData?.pro_kagel.kagelTimes);
       }
     }
   }, [authenticatedDayData]);
@@ -251,7 +252,6 @@ function AuthMyTask({
                 Explore Blogs
               </Button>
             </Link>
-            
           </div>
         </div>
       )}
