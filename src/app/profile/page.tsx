@@ -1,15 +1,10 @@
 "use client";
 
-import ReactQuilEditor from "@/components/shared/ReactQuilEditor";
 import {
   useGetUserInfoQuery,
   useUpdateUserDayMutation,
 } from "@/redux/api/authApi";
-import {
-  useDeletePostMutation,
-  useGetPostsByUserIdQuery,
-  useUpdatePostMutation,
-} from "@/redux/api/postApi";
+
 import { useUpdateUserPasswordMutation } from "@/redux/api/userApi";
 import { InboxOutlined } from "@ant-design/icons";
 import {
@@ -19,9 +14,9 @@ import {
   Input,
   message,
   Modal,
+  Spin,
   Upload,
 } from "antd";
-import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -63,6 +58,7 @@ function ProfilePage() {
     isSuccess: getUserInfoSuccess,
   } = useGetUserInfoQuery();
 
+  console.log(getUserInfoData, "user info");
   const [
     updataUserDay,
     {
@@ -73,32 +69,11 @@ function ProfilePage() {
   ] = useUpdateUserDayMutation();
 
   const [updateUserPassword] = useUpdateUserPasswordMutation();
-  const [
-    updatePost,
-    {
-      isError: updatePostError,
-      isLoading: updatePostLoading,
-      isSuccess: updatePostSuccess,
-    },
-  ] = useUpdatePostMutation(); // Add update post mutation
-  const [
-    deletePost,
-    {
-      isError: deletePostError,
-      isLoading: deletePostLoading,
-      isSuccess: deletePostSuccess,
-    },
-  ] = useDeletePostMutation(); // Add delete post mutation
 
-  const [isProfileModalVisible, setIsProfileModalVisible] = useState(false);
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
-  const [isPostModalVisible, setIsPostModalVisible] = useState(false); // State for post modal
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // State for delete confirmation modal
+
   const [isImageUploadModalVisible, setIsImageUploadModalVisible] =
     useState(false); // State for image upload modal
-
-  const [currentPost, setCurrentPost] = useState<any>(null); // State to hold the post being edited or deleted
-  const [valueEditor, setValueEditor] = useState<string>("");
 
   const [profileImage, setProfileImage] = useState<string | null>(null); // State for profile image
 
@@ -107,19 +82,12 @@ function ProfilePage() {
   const email = getUserInfoData?.email;
   const compliteDay = getUserInfoData?.compliteDay || 0;
   const userId = getUserInfoData?.id;
-  const location = getUserInfoData?.country;
-  const paid = getUserInfoData?.paid || false;
+  const paid = getUserInfoData?.fitraatPayment || "Not Complete";
   const startData = getUserInfoData?.startDate || Date.now();
   const today = new Date();
   const start = new Date(getUserInfoData?.startDate || new Date());
   const differenceInTime = today.getTime() - start.getTime(); // Difference in milliseconds
   const daysLeft = Math.floor(differenceInTime / (1000 * 60 * 60 * 24)) + 1;
-
-  const { data: posts } = useGetPostsByUserIdQuery({
-    userId: userId || 0,
-  });
-
-  const postsByUser = posts?.data;
 
   const days = Array.from({ length: 40 }, (_, i) => i + 1);
   const progressData = days.map((day) => ({
@@ -162,12 +130,6 @@ function ProfilePage() {
     }
   };
 
-  const showPasswordModal = () => {
-    setIsPasswordModalVisible(true);
-  };
-
-  // ...
-
   const handlePasswordOk = async (values: any) => {
     console.log(values);
     try {
@@ -203,77 +165,6 @@ function ProfilePage() {
     formRef.current?.resetFields();
   };
 
-  const showPostModal = (post: any) => {
-    setCurrentPost(post);
-    setValueEditor(post.attributes.description); // Set initial content for the editor
-    setIsPostModalVisible(true);
-  };
-
-  const handlePostOk = async () => {
-    console.log("hi", valueEditor);
-
-    if (currentPost) {
-      try {
-        const result = await updatePost({
-          body: {
-            postId: currentPost.id,
-
-            data: {
-              description: valueEditor,
-            },
-          },
-        });
-        console.log(result);
-        if (updatePostSuccess) {
-          message.success("Post updated successfully!");
-        } else if (updatePostError) {
-          message.info("Something went wrong. Please try again later.");
-        }
-        setIsPostModalVisible(false);
-        setValueEditor(""); // Clear editor content after successful update
-      } catch (error) {
-        message.info("Something went wrong. Please try again later.");
-      }
-    }
-  };
-
-  const handlePostCancel = () => {
-    setValueEditor(""); // Clear editor content on cancel
-    setIsPostModalVisible(false);
-  };
-
-  const showDeletePostModal = (post: any) => {
-    setCurrentPost(post);
-    console.log(post);
-    setIsDeleteModalVisible(true);
-  };
-
-  const handleDeleteOk = async () => {
-    console.log(currentPost);
-    try {
-      const result = await deletePost({ id: currentPost });
-      console.log(result);
-      if (result) {
-        message.success("Post deleted successfully!");
-      } else {
-        message.info("Something went wrong. Please try again later.");
-      }
-      setIsDeleteModalVisible(false);
-      setCurrentPost(null); // Clear the current post
-    } catch (error) {
-      message.info("Something went wrong. Please try again later.");
-    }
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentPost(null); // Clear the current post
-  };
-
-  const handleImageUploadModal = () => {
-    setIsImageUploadModalVisible(true);
-  };
-
   const handleImageUploadModalCancel = () => {
     setIsImageUploadModalVisible(false);
   };
@@ -296,6 +187,17 @@ function ProfilePage() {
     return false; // Prevent automatic upload
   };
 
+  if (getUserInfoLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className=" p-8 ">
+          <Spin size="large" />
+          <p className="text-white text-lg mt-4">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full px-4 py-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Profile</h1>
@@ -306,7 +208,6 @@ function ProfilePage() {
           <h2 className="text-lg font-medium">Name: {name}</h2>
           <h2 className="text-lg font-medium">Age: {age}</h2>
           <h2 className="text-lg font-medium">Email: {email}</h2>
-          <h2 className="text-lg font-medium">Country: {location}</h2>
           <h2 className="text-lg font-medium">Start Date: {startData}</h2>
           <h2 className="text-lg font-medium">
             Membership: {paid ? "Pro" : "Free"}
@@ -327,13 +228,7 @@ function ProfilePage() {
           Restart Journey
         </button>
 
-        {/* <button
-          className={`px-4 py-2 rounded-xl focus:outline-none bg-blue-500 hover:bg-blue-600 text-white`}
-          onClick={handleImageUploadModal}
-        >
-          Upload Profile Image
-        </button> */}
-        {paid === false && (
+        {paid === "Complete" && (
           <Link href={"/payment"}>
             <button
               className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
@@ -342,67 +237,6 @@ function ProfilePage() {
             </button>
           </Link>
         )}
-      </div>
-
-      {/* <button
-        className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
-        onClick={showPasswordModal}
-      >
-        Change Password
-      </button> */}
-
-      {/* <div>
-        <Upload
-          name="profileImage"
-          accept="image/*"
-          beforeUpload={handleImageUpload}
-          showUploadList={false}
-        >
-          <Button icon={<UploadOutlined />}>Upload</Button>
-        </Upload>
-        {profileImage && (
-          <img
-            src={profileImage}
-            alt="Profile"
-            className="mt-4 w-32 h-32 rounded-full"
-          />
-        )}
-      </div> */}
-
-      <div className={`bg-white border rounded-lg p-6 mt-8`}>
-        <h1 className="text-3xl font-semibold text-center mb-4 ">
-          My <span className="text-blue-500">posts</span>
-        </h1>
-        <br />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
-          {postsByUser?.map((data) => (
-            <div
-              className="border rounded-lg p-2 m-2 relative flex flex-col justify-between h-full"
-              key={data.id}
-            >
-              <div className="">
-                {formatDistanceToNow(new Date(data.attributes.createdAt), {
-                  addSuffix: true,
-                })}
-              </div>
-             
-              <div className="flex justify-between gap-2 mt-2">
-                <button
-                  className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
-                  onClick={() => showPostModal(data)}
-                >
-                  Edit post
-                </button>
-                <button
-                  className={`px-4 py-2 rounded-xl focus:outline-none bg-red-400 hover:bg-red-500 text-white`}
-                  onClick={() => showDeletePostModal(data.id)} // Show delete confirmation modal
-                >
-                  Delete post
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
 
       <div className={`bg-white border rounded-lg p-6 mt-8`}>
@@ -435,61 +269,7 @@ function ProfilePage() {
 
       {/* Edit post modal */}
 
-      <Modal
-        title="Edit Post"
-        open={isPostModalVisible}
-        onOk={handlePostOk}
-        closable={false}
-        footer={[
-          <button
-            key={"ok"}
-            className={`px-4 py-2 rounded-xl focus:outline-none border `}
-            onClick={() => handlePostCancel()}
-          >
-            Cancel
-          </button>,
-          <button
-            key={"ok"}
-            className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white ml-2`}
-            onClick={() => handlePostOk()}
-          >
-            Update
-          </button>,
-        ]}
-      >
-        <ReactQuilEditor
-          valueEditor={valueEditor}
-          setValueEditor={setValueEditor}
-        />
-      </Modal>
-
       {/* Delete post modal */}
-
-      <Modal
-        title="Delete Post"
-        open={isDeleteModalVisible}
-        onOk={handleDeleteOk} // Call the delete function on confirmation
-        onCancel={handleDeleteCancel} // Close the modal on cancel
-        closable={false}
-        footer={[
-          <button
-            key={"cancel"}
-            className={`px-4 py-2 rounded-xl focus:outline-none border `}
-            onClick={() => handleDeleteCancel()}
-          >
-            Cancel
-          </button>,
-          <button
-            key={"delete"}
-            className={`px-4 py-2 rounded-xl focus:outline-none bg-red-400 hover:bg-red-500 text-white ml-2`}
-            onClick={() => handleDeleteOk()}
-          >
-            Delete
-          </button>,
-        ]}
-      >
-        <p>Are you sure you want to delete this post?</p>
-      </Modal>
 
       {/* Image Upload Modal */}
 

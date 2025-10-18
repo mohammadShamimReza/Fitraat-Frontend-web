@@ -1,19 +1,14 @@
 "use client";
-import { useGetBlogsByIdQuery } from "@/redux/api/blogApi";
+import { useGetProBlogsByIdQuery } from "@/redux/api/blogApi";
 import { Skeleton } from "antd";
 import { marked } from "marked";
 import Image from "next/image";
-import * as yup from "yup";
-import stopPornImage from "../../assets/stopPorn.png";
-
-const schema = yup.object().shape({
-  text: yup.string().required("Review is required"),
-});
 
 function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
-  const { data, isLoading } = useGetBlogsByIdQuery(blogId);
-  const blogData = data;
+  const { data, isLoading } = useGetProBlogsByIdQuery(blogId);
+  const blogData = data?.data;
+  console.log(blogData, "this is blog data");
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
   return isLoading ? (
     <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">
@@ -41,19 +36,17 @@ function Page({ params }: { params: { slug: string } }) {
     </div>
   ) : (
     <div className="p-5">
-      <br />
-
       <div className="">
         <div
           className=" mb-4 
-            dark:text-gray-300 text-5xl font-semibold text-center"
+                dark:text-gray-300 text-5xl font-semibold text-center"
         >
           {blogData?.title}
         </div>
         <br />
         <div className="flex align-middle justify-center h-full ">
           <Image
-            src={blogData?.image.previewUrl || stopPornImage}
+            src={`http://localhost:1337/${blogData?.image?.url}`}
             height={300}
             width={500}
             // layout="responsive"
@@ -65,7 +58,7 @@ function Page({ params }: { params: { slug: string } }) {
 
         <br />
         <div
-          className="flex max-w-5xl mx-auto text-lg text-gray-600 p-5"
+          className="flex max-w-5xl mx-auto text-lg text-gray-700 p-5"
           style={{ lineHeight: "1.8" }}
         >
           {blogData?.content && (
@@ -75,39 +68,12 @@ function Page({ params }: { params: { slug: string } }) {
       </div>
       <br />
 
-      <div className="text-base ">
-        {/* {blogData?.review.map((review: IReview, index: number) => (
-          <div key={index} className=" p-4 my-4 border rounded-xl">
-            {review.text}
-          </div>
-        ))} */}
-      </div>
       <br />
-      <br />
-      <br />
-      {/* <form>
-        <div className="mb-4">
-          <label htmlFor="text" className="block  font-semibold mb-2">
-            Give Review
-          </label>
-          <Controller
-            name="text"
-            render={({ field }) => (
-              <textarea
-                {...field}
-                className="border rounded-xl w-full py-2 px-3"
-              />
-            )}
-          />
-        </div>
 
-        <button
-          type="submit"
-          className="bg-gray-200 border rounded-xl py-2 px-4 hover:bg-gray-300  dark:bg-gray-500 dark:hover:bg-slate-400 dark:text-white"
-        >
-          Review
-        </button>
-      </form> */}
+      <div className="text-base "></div>
+      <br />
+      <br />
+      <br />
     </div>
   );
 }

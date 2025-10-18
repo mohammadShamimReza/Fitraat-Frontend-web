@@ -57,7 +57,7 @@ const PaymentPage = () => {
       product_category: "Mental & physical",
       product_profile: "Fitraat",
       cus_add1: "Dhaka",
-      cus_country: userInfo?.country || "",
+      cus_country: "Bangladesh",
       cus_phone: userInfo?.phone || "",
     },
   });

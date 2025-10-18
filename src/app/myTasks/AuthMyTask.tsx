@@ -35,8 +35,8 @@ function AuthMyTask({
     isError,
     isLoading,
   } = useGetAuthDaysByDayIdQuery(authDayDataId);
-  console.log(authenticatedDayDataForChengeDay, "day is");
 
+  console.log(userId, "userid");
   const authenticatedDayData = authenticatedDayDataForChengeDay?.data;
 
   const [updataUserDay] = useUpdateUserDayMutation();

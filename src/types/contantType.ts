@@ -201,27 +201,24 @@ export interface UserData {
 }
 
 export interface UserDataWithDay {
-  age: number;
-  blocked: boolean;
-  compliteDay: number;
-  confirmed: boolean;
-  country: string;
-  createdAt: string;
-  currentDay: number;
-  
-  email: string;
-  gender: string;
   id: number;
-  kagelComplete: boolean;
-  language: string;
-  phone: string;
-  provider: string;
-  quizComplete: boolean;
-  updateAt: string;
+  documentId: string;
   username: string;
-  videoComplete: boolean;
-  paid: boolean;
-  startDate: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  age: number | null;
+  phone: string | null;
+  currentDay: number;
+  gender: Gender | null;
+  startDate: string | null;
+  fitraatPayment: FitraatPaymentStatus;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  tran_id: string | null;
+  compliteDay: number | null;
 }
 
 export interface UserAuthData {
