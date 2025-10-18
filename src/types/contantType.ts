@@ -157,26 +157,11 @@ export type FreeDaysResponse = {
   data: Day[];
   meta: Meta;
 };
-export interface Emergencys {
-  data: {
-    attributes: {
-      vedio_url: string;
-      message: string;
-    };
-  }[];
-  meta: Meta;
-}
-
-
-
-
-
 
 export interface DayData {
   data: Day[];
   meta: Meta;
 }
-
 
 export type FitraatPaymentStatus = "Complete" | "Not complete";
 export type Gender = "Male" | "Female" | null;
@@ -228,8 +213,6 @@ export interface UserAuthData {
   };
 }
 
-
-
 export interface PaymentFormValues {
   cus_name: string;
   cus_email: string;
@@ -267,9 +250,6 @@ export interface Error {
   };
 }
 
-
-
-
 //  pro contant type
 
 export interface ProBlog {
@@ -286,7 +266,6 @@ export interface ProBlog {
   image: BlogImage;
 }
 
-
 // Quizz (Pro)
 export type ProQuizOption = {
   id: number;
@@ -295,7 +274,6 @@ export type ProQuizOption = {
   option3: string;
   optoin4: string;
 };
-
 
 export type ProQuiz = {
   id: number;
@@ -314,7 +292,6 @@ export type ProQuizz = {
   publishedAt: string;
   quizzess: ProQuiz[];
 };
-
 
 export type ProKagelTimeEntry = {
   id: number;
@@ -360,3 +337,69 @@ export type ProDaysResponse = {
   data: ProDay[];
   meta: Meta;
 };
+
+// Text node inside each paragraph
+export interface TextNode {
+  type: "text";
+  text: string;
+  bold?: boolean;
+}
+
+// Paragraph structure
+export interface Paragraph {
+  type: "paragraph";
+  children: TextNode[];
+}
+
+// Video file object
+export interface EVideo {
+  id: number;
+  documentId: string;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number | null;
+  height: number | null;
+  formats: any | null;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: any | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+// Single Emergency Protocol entry
+export interface EmergencyProtocol {
+  id: number;
+  documentId: string;
+  qute: Paragraph[];
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  video: EVideo;
+}
+
+// Pagination metadata
+export interface Pagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
+
+// Meta wrapper
+export interface Meta {
+  pagination: Pagination;
+}
+
+// The entire API response
+export interface EmergencyProtocolResponse {
+  data: EmergencyProtocol[];
+  meta: Meta;
+}

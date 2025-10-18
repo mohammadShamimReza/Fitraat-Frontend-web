@@ -107,12 +107,13 @@ function AuthMyTask({
 
         router.push("/CompletedTask");
       } else if (authDayDataId + 1 <= 40) {
-        await updataUserDay({
+        const res = await updataUserDay({
           currentDay: authDayDataId + 1,
           compliteDay: authDayDataId,
           userId: userId,
         });
-        router.push("/freeBlog");
+        console.log(res, "result");
+        // router.push("/freeBlog");
       }
     } else {
       setLocalStorageData((prevState: typeof localStorageData) => ({
