@@ -1,9 +1,8 @@
 interface UserProfileProps {
   name: string;
-  age: number;
+  age: number | null;
   email: string;
-  location: string;
-  paid: boolean;
+  paid: string;
   showProfileModal: () => void;
   showPasswordModal: () => void;
   handleRestart: () => void;
@@ -13,7 +12,6 @@ const UserProfile: React.FC<UserProfileProps> = ({
   name,
   age,
   email,
-  location,
   paid,
   showProfileModal,
   showPasswordModal,
@@ -25,7 +23,6 @@ const UserProfile: React.FC<UserProfileProps> = ({
         <h2 className="text-lg font-medium">Name: {name}</h2>
         <h2 className="text-lg font-medium">Age: {age}</h2>
         <h2 className="text-lg font-medium">Email: {email}</h2>
-        <h2 className="text-lg font-medium">Country: {location}</h2>
         <h2 className="text-lg font-medium">
           Membership:{" "}
           <span className="text-blue-500">{paid ? "Pro" : "Free"}</span>

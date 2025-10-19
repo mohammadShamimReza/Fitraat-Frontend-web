@@ -4,10 +4,9 @@ import { useGetFreeBlogsQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Blogs from "./Blogs";
-import Trendings from "./Trendings";
 
 function Page() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -53,11 +52,8 @@ function Page() {
     <div>
       <div className="min-h-screen ">
         <div className="flex flex-col justify-between gap-3 sm:flex-row ">
-          <div className="order-3 ">
-            <Trendings />
-          </div>
-          <div className="w-full sm:w-4/5 order-2">
-            <form
+          <div className="w-full sm:w-4/5 ">
+            {/* <form
               onChange={handleSubmit(handleSearchTerm)}
               className="flex justify-center align-middle"
             >
@@ -76,7 +72,7 @@ function Page() {
                   )}
                 />
               </div>
-            </form>
+            </form> */}
 
             {isLoading
               ? Array.from({ length: 10 }, (_, index) => (

@@ -65,7 +65,6 @@ function RegisterPage() {
       registerSchema.parse(formData);
 
       const result: any = await registerUser(formData);
-      console.log(result, "this is result");
       if (result?.error) {
         if (result?.error?.error?.message === "This attribute must be unique") {
           message.error("credentials is used already.");

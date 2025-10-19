@@ -23,7 +23,7 @@ function Blogs({ blog }: { blog: Blog }) {
   // };
 
   return (
-    <div className="">
+    <div className="mt-10">
       {" "}
       <div className="h-full mb-10 p-4 bg-white">
         <Link

@@ -12,6 +12,12 @@ export const blogApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
+    getProBlogsById: builder.query({
+      query: (id: string) => `pro-blogs/${id}??populate=image`,
+      transformResponse: (rawResult: { data: Blog }) => {
+        return rawResult;
+      },
+    }),
     updateBlog: builder.mutation({
       query: ({ id }: { id: number }) => ({
         url: `${BLOG}/${id}`,
@@ -21,4 +27,8 @@ export const blogApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetBlogsByIdQuery, useUpdateBlogMutation } = blogApi;
+export const {
+  useGetBlogsByIdQuery,
+  useUpdateBlogMutation,
+  useGetProBlogsByIdQuery,
+} = blogApi;

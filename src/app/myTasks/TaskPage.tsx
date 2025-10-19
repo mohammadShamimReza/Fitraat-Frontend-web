@@ -1,13 +1,9 @@
 "use client";
 
-import { KegelTimes, Quizzes } from "@/types/contantType";
-import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-
-} from "@ant-design/icons";
+import { KagelTime, Quiz } from "@/types/contantType";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import {  useState } from "react";
+import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { CiVideoOn } from "react-icons/ci";
 import { FaCheckCircle, FaInfoCircle } from "react-icons/fa";
@@ -22,7 +18,7 @@ import { GrStatusPlaceholder, GrYoga } from "react-icons/gr";
 import { IoMdClose, IoMdLock } from "react-icons/io";
 import { TbCurrencyFrank, TbMilitaryRank } from "react-icons/tb";
 import Kagel from "./taskPages/Kagel";
-import Quiz from "./taskPages/Quiz";
+import Quizz from "./taskPages/Quiz";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
 import Video from "./taskPages/Video";
 
@@ -34,13 +30,13 @@ interface Props {
   handlePrevious: () => void;
   handleNext: () => void;
   blog: {
-    id: number | undefined;
+    id: string | undefined;
     title: string | undefined;
     content: string | undefined;
   };
-  quiz: Quizzes[] | undefined;
+  quiz: Quiz[] | undefined;
   video: { videoUrl: string | undefined };
-  kegel: KegelTimes[] | undefined;
+  kegel: KagelTime[] | undefined;
   DayCount: number;
   payment: string | undefined;
   daysLeft: number;
@@ -157,8 +153,8 @@ function TaskPage({
   };
 
   return (
-    <div className="mx-auto min-h-screen p-3 relative">
-      <div className="flex min-h-screen">
+    <div className="mx-auto  p-3 relative">
+      <div className="flex ">
         {/* Sidebar */}
         <div
           className={`fixed inset-0 z-20 bg-white min-w-64 transition-transform transform ${
@@ -199,8 +195,6 @@ function TaskPage({
 
         {/* Main Content */}
         <div className="flex-grow p-6 border rounded-lg">
-          
-
           <div className="backgroundDot rounded-lg">
             <div className="mx-auto flex flex-col gap-3">
               <Link href="/emergency" className="self-center">
@@ -246,7 +240,7 @@ function TaskPage({
                   <Kagel selectedTask={selectedTask} kegel={kegel} />
                 )}
                 {selectedTask === "quiz" && (
-                  <Quiz selectedTask={selectedTask} quiz={quiz} />
+                  <Quizz selectedTask={selectedTask} quiz={quiz} />
                 )}
                 {selectedTask === "Blog" && (
                   <SuggestedBlog selectedTask={selectedTask} blog={blog} />

@@ -5,8 +5,7 @@ interface EditProfileModalProps {
   handleProfileOk: (values: any) => Promise<void>;
   handleProfileCancel: () => void;
   name: string;
-  age: number;
-  location: string;
+  age: number | null;
 }
 
 const EditProfileModal: React.FC<EditProfileModalProps> = ({
@@ -15,7 +14,6 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   handleProfileCancel,
   name,
   age,
-  location,
 }) => {
   return (
     <Modal

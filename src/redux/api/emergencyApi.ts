@@ -1,4 +1,4 @@
-import { Emergencys } from "@/types/contantType";
+import { EmergencyProtocolResponse } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
 const EMERGENCY = "/emergencies";
@@ -6,8 +6,8 @@ const EMERGENCY = "/emergencies";
 export const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getEnergencyContant: builder.query({
-      query: () => `${EMERGENCY}`,
-      transformResponse: (rawResult: Emergencys) => {
+      query: () => `${EMERGENCY}?populate=video`,
+      transformResponse: (rawResult: EmergencyProtocolResponse) => {
         return rawResult;
       },
     }),

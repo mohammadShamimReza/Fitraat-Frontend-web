@@ -92,10 +92,10 @@ export type Video = {
 
 export type QuizOption = {
   id: number;
-  option1: string;
-  option2: string;
+  opiotn1: string;
+  optoin2: string;
   option3: string;
-  option4: string;
+  optoin4: string;
 };
 
 export type Quiz = {
@@ -157,60 +157,11 @@ export type FreeDaysResponse = {
   data: Day[];
   meta: Meta;
 };
-export interface Emergencys {
-  data: {
-    attributes: {
-      vedio_url: string;
-      message: string;
-    };
-  }[];
-  meta: Meta;
-}
-
-export interface KegelTimes {
-  attributes: {
-    times: string;
-    createdAt: string;
-    publishedAt: string;
-    updatedAt: string;
-  };
-  id: number;
-}
-
-export interface Kegel {
-  data: {
-    attributes: {
-      KagelId: number;
-      createdAt: string;
-      kegel_times: {
-        data: KegelTimes[];
-      };
-      publishedAt: string;
-      updatedAt: string;
-    };
-  };
-}
-
-
-
-export interface Quizzes {
-  attributes: {
-    question: string;
-    answer: string;
-    quizOptions: string;
-    quizId: number;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-  id: number;
-}
 
 export interface DayData {
   data: Day[];
   meta: Meta;
 }
-
 
 export type FitraatPaymentStatus = "Complete" | "Not complete";
 export type Gender = "Male" | "Female" | null;
@@ -235,27 +186,24 @@ export interface UserData {
 }
 
 export interface UserDataWithDay {
-  age: number;
-  blocked: boolean;
-  compliteDay: number;
-  confirmed: boolean;
-  country: string;
-  createdAt: string;
-  currentDay: number;
-  
-  email: string;
-  gender: string;
   id: number;
-  kagelComplete: boolean;
-  language: string;
-  phone: string;
-  provider: string;
-  quizComplete: boolean;
-  updateAt: string;
+  documentId: string;
   username: string;
-  videoComplete: boolean;
-  paid: boolean;
-  startDate: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  age: number | null;
+  phone: string | null;
+  currentDay: number;
+  gender: Gender | null;
+  startDate: string | null;
+  fitraatPayment: FitraatPaymentStatus;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  tran_id: string | null;
+  compliteDay: number | null;
 }
 
 export interface UserAuthData {
@@ -264,8 +212,6 @@ export interface UserAuthData {
     user: UserData;
   };
 }
-
-
 
 export interface PaymentFormValues {
   cus_name: string;
@@ -302,4 +248,158 @@ export interface Error {
     };
     status: number;
   };
+}
+
+//  pro contant type
+
+export interface ProBlog {
+  id: number;
+  documentId: string;
+  topic: string;
+  titile: string; // note: typo in API, keep 'titile'
+  content: string;
+  tag: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  image: BlogImage;
+}
+
+// Quizz (Pro)
+export type ProQuizOption = {
+  id: number;
+  opiotn1: string;
+  optoin2: string;
+  option3: string;
+  optoin4: string;
+};
+
+export type ProQuiz = {
+  id: number;
+  question: string;
+  answer: string;
+  serial: number;
+  options: ProQuizOption;
+};
+
+export type ProQuizz = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  quizzess: ProQuiz[];
+};
+
+export type ProKagelTimeEntry = {
+  id: number;
+  squizz: number;
+  stop: number;
+};
+
+export type ProKagelTime = {
+  id: number;
+  gap: number;
+  serial: number;
+  times: ProKagelTimeEntry[];
+};
+
+export type ProKagel = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  kagelTimes: ProKagelTime[];
+};
+
+// Day (Pro)
+
+export type ProDay = {
+  id: number;
+  documentId: string;
+  dayId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+
+  pro_blog: ProBlog;
+  regulerVideo: Video;
+  meditationVideo: Video;
+  pro_quizz: ProQuizz;
+  pro_kagel: ProKagel;
+};
+
+export type ProDaysResponse = {
+  data: ProDay[];
+  meta: Meta;
+};
+
+// Text node inside each paragraph
+export interface TextNode {
+  type: "text";
+  text: string;
+  bold?: boolean;
+}
+
+// Paragraph structure
+export interface Paragraph {
+  type: "paragraph";
+  children: TextNode[];
+}
+
+// Video file object
+export interface EVideo {
+  id: number;
+  documentId: string;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number | null;
+  height: number | null;
+  formats: any | null;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: any | null;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+// Single Emergency Protocol entry
+export interface EmergencyProtocol {
+  id: number;
+  documentId: string;
+  qute: Paragraph[];
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  video: EVideo;
+}
+
+// Pagination metadata
+export interface Pagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
+
+// Meta wrapper
+export interface Meta {
+  pagination: Pagination;
+}
+
+// The entire API response
+export interface EmergencyProtocolResponse {
+  data: EmergencyProtocol[];
+  meta: Meta;
 }
