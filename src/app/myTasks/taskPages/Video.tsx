@@ -19,7 +19,7 @@ function Video({
             height="450px"
             className="rounded-xl"
             src={
-              `http://localhost:1337${video?.videoUrl}` ||
+              `https://reliable-deer-385e3b81c0.strapiapp.com${video?.videoUrl}` ||
               `https://www.youtube.com/embed/7WUKdCV8J34`
             }
             frameBorder="0"

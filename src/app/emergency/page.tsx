@@ -203,7 +203,10 @@ const EmergencyService: React.FC = () => {
             controls
             style={{ backgroundColor: "#000" }}
           >
-            <source src={`http://localhost:1337${videoUrl}`} type="video/mp4" />
+            <source
+              src={`https://reliable-deer-385e3b81c0.strapiapp.com${videoUrl}`}
+              type="video/mp4"
+            />
             Your browser does not support the video tag.
           </video>
         </div>
