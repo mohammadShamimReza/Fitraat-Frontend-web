@@ -46,7 +46,7 @@ function Page({ params }: { params: { slug: string } }) {
         <br />
         <div className="flex align-middle justify-center h-full ">
           <Image
-            src={`https://reliable-deer-385e3b81c0.strapiapp.com/${blogData?.image?.url}`}
+            src={`${blogData?.image?.url}`}
             height={300}
             width={500}
             // layout="responsive"
