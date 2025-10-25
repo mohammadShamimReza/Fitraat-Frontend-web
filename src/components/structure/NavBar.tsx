@@ -77,10 +77,10 @@ function NavBar() {
 
   return (
     <div className="mx-auto max-w-7xl">
-      <div className="   shadow-sm  p-1 bg-white">
-        <div className="  p-1 sm:px-4 lg:px-6">
-          <div className=" flex h-16 items-center justify-between ">
-            <div className="   flex items-center sm:hidden">
+      <div className="p-1 bg-white">
+        <div className="p-1 sm:px-4 lg:px-6">
+          <div className=" flex h-10 items-center justify-between ">
+            <div className="flex items-center sm:hidden">
               <button
                 type="button"
                 onClick={() => setMenuToggle(!menuToggle)}
@@ -149,7 +149,7 @@ function NavBar() {
                   >
                     Tasks
                   </Link>
-                  
+
                   <Link
                     href="/freeBlog"
                     className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
@@ -158,7 +158,6 @@ function NavBar() {
                   >
                     Blog
                   </Link>
-                
                 </div>
               </div>
             </div>
@@ -284,8 +283,6 @@ function NavBar() {
               >
                 Blog
               </Link>
-             
-          
             </div>
           </div>
         ) : (

@@ -3,8 +3,7 @@
 import MainLayout from "@/components/mainLayout/MainLayout";
 import Motivation from "@/components/mainLayout/Motivation";
 import RecoveryFeature from "@/components/mainLayout/RecoveryFeature";
-import { Button, Card } from "antd";
-import Link from "next/link";
+import { Card } from "antd";
 import React, { useState } from "react";
 import {
   FaBookOpen,
@@ -12,7 +11,6 @@ import {
   FaQuestionCircle,
   FaVideo,
 } from "react-icons/fa"; // Import icons
-import bannerImage from "./assets/banner.webp";
 
 const HomePage: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -22,110 +20,34 @@ const HomePage: React.FC = () => {
     setIsMounted(true);
   }, []);
 
+  const fullWidthStyle: React.CSSProperties = {
+    margin: "0 auto",
+  };
+
   return (
     <>
       {/* Hero Section */}
-      <div
-        className="relative flex items-center justify-center h-[500px] md:h-[600px]  bg-cover bg-center bg-no-repeat overflow-hidden"
-        style={{
-          backgroundImage: `url(${bannerImage.src})`,
-        }}
-      >
-        {/* Blur and Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
-
-        {/* Animated Shapes */}
-        <div className="absolute w-96 h-96 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full blur-3xl opacity-30 animate-pulse -top-10 -left-20"></div>
-        <div className="absolute w-72 h-72 bg-gradient-to-r from-green-400 via-teal-400 to-cyan-400 rounded-full blur-3xl opacity-30 animate-pulse delay-200 -bottom-10 -right-10"></div>
-
-        {/* Text Content */}
-        <div
-          className="relative z-10 text-center max-w-4xl px-6 text-white animate-fadeInUp"
-          style={{
-            animation: "fadeInUp 1.5s ease-out forwards",
-          }}
-        >
-          <h1
-            className="text-4xl md:text-6xl font-bold mb-6 animate-slideIn"
-            style={{
-              animation: "slideIn 1s ease-out forwards",
-            }}
-          >
-            Recover and Reclaim Your Life
-          </h1>
-          <p
-            className="text-lg md:text-xl mb-8 animate-fadeIn"
-            style={{
-              animation: "fadeIn 2s ease-out forwards",
-            }}
-          >
-            A 40-day guided recovery challenge with daily tasks, exercises, and
-            insights to help you overcome porn addiction.
-          </p>
-          <Link href="/tasks">
-            <Button
-              type="primary"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-bold shadow-lg transition-transform transform hover:scale-105"
-            >
-              Get Started Now
-            </Button>
-          </Link>
-        </div>
-
-        {/* Keyframes for Animations */}
-        <style jsx>{`
-          @keyframes fadeIn {
-            0% {
-              opacity: 0;
-            }
-            100% {
-              opacity: 1;
-            }
-          }
-
-          @keyframes fadeInUp {
-            0% {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          @keyframes slideIn {
-            0% {
-              opacity: 0;
-              transform: translateX(-30px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateX(0);
-            }
-          }
-        `}</style>
-      </div>
 
       {/* Site Overview Section */}
-      <div className="py-20 px-6  ">
+      <div className="py-20 px-6  border-b border-gray-200">
         <h2 className="text-4xl font-bold text-center mb-12">
           What is Fitraat?
         </h2>
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-lg leading-relaxed ">
-            <span className="font-bold">Fitraat</span> is a comprehensive
-            recovery platform designed to help individuals struggling with porn
-            addiction regain control of their lives. Our program combines
-            science-backed methods and community support to guide you through a
-            transformative 40-day journey.
+            <span className="font-bold">Fitraat</span> is a recovery platform
+            designed to help individuals struggling with{" "}
+            <span className="font-bold">porn addiction . </span> Our program
+            combines <span className="font-bold">science-backed methods</span>
+            to guide you through a transformative{" "}
+            <span className="">40-day journey.</span>
           </p>
           <RecoveryFeature />
         </div>
       </div>
 
       {/* Features Section */}
-      <div className="py-10 px-6">
+      <div className="py-10 px-6 bg-white border-b border-gray-200">
         <h2 className="text-3xl font-bold text-center mb-12">
           What You Will Get
         </h2>
@@ -174,8 +96,6 @@ const HomePage: React.FC = () => {
       </div>
 
       <Motivation />
-
-     
 
       {/* Blog Section */}
       <div className="py-16 px-6">

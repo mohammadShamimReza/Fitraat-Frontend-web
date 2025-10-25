@@ -82,7 +82,7 @@ function LoginPage() {
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         // Display validation errors
-        error.errors.forEach((e) => message.error(e.message));
+        error.issues.forEach((e) => message.error(e.message));
       } else {
         console.error(error);
         message.error("An unexpected error occurred");

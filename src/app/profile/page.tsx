@@ -22,7 +22,10 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { z } from "zod";
 import UserActivityPieChart from "./UserActivity";
-
+const Player = z.object({
+  username: z.string(),
+  xp: z.number(),
+});
 const passwordSchema = z
   .object({
     currentPassword: z.string().min(1, "Please input your current password!"),
@@ -96,7 +99,7 @@ function ProfilePage() {
   }));
 
   const handleRestart = async () => {
-    if (!paid) {
+    if (paid || paid !== "Complete") {
       alert("Please update your plan for use this feacture");
       return;
     }
@@ -133,10 +136,8 @@ function ProfilePage() {
   const handlePasswordOk = async (values: any) => {
     console.log(values);
     try {
-      // Validate the form data using Zod
       passwordSchema.parse(values);
 
-      // Proceed with the API call if validation passes
       const result = await updateUserPassword({
         data: values,
       });
@@ -151,7 +152,7 @@ function ProfilePage() {
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
-        message.error(error.errors[0].message);
+        message.error(error.issues[0].message);
       } else {
         message.info("Something went wrong. Please try again later.");
       }

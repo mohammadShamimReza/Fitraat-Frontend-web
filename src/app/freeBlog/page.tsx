@@ -2,10 +2,7 @@
 
 import { useGetFreeBlogsQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import Blogs from "./Blogs";
 
 function Page() {
@@ -31,14 +28,6 @@ function Page() {
     setSearchTerm(data.searchTerm);
     setPageCount(1); // Reset to first page on new search
   };
-
-  const validationSchema = yup.object().shape({
-    searchTerm: yup.string(),
-  });
-
-  const { control, handleSubmit, reset } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
 
   const total: number = blogData?.meta.pagination.total || 0;
   const totalPages = Math.ceil(total / paginationSize);

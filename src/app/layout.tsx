@@ -1,17 +1,17 @@
 "use client";
+import CookieConsent from "@/components/shared/CookieConsent";
 import Footer from "@/components/structure/Footer";
 import NavBar from "@/components/structure/NavBar";
 import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 import "./globals.css";
 
-import CookieConsent from "@/components/shared/CookieConsent";
-import Head from "next/head";
-import Link from "next/link";
-
-
+import Hero from "@/components/structure/Hero";
 import { Quicksand } from "next/font/google";
+import { usePathname } from "next/navigation";
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Quicksand({
@@ -26,6 +26,8 @@ export default function RootLayout({
 }) {
   const palastineHelpUrl =
     process.env.NEXT_PUBLIC_PALESTINE_HELP_URL || "palastineHelpUrl";
+  const siteUrl = usePathname();
+  console.log(siteUrl, "site url");
   return (
     <Providers>
       <html lang="en" className={inter.className}>
@@ -90,6 +92,9 @@ export default function RootLayout({
               <div className="mx-auto max-w-7xl">
                 <NavBar />
               </div>
+
+              <Hero />
+
               <div className="mx-auto max-w-6xl">{children}</div>
               <Footer />
             </div>
