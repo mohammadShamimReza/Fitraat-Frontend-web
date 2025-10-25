@@ -11,11 +11,11 @@ import Head from "next/head";
 import Link from "next/link";
 
 
-import { Inter } from "next/font/google";
+import { Quicksand } from "next/font/google";
 
 // If loading a variable font, you don't need to specify the font weight
-const inter = Inter({
-  subsets: ["latin"],
+const inter = Quicksand({
+  subsets: ["latin-ext"],
   display: "swap",
 });
 
