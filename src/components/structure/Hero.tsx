@@ -8,7 +8,7 @@ export default function Hero() {
     if(siteUrl == "/") {
          return (
            <div
-             className="relative flex items-center justify-center min-h-screen  md:h-[600px]  bg-cover bg-center bg-no-repeat overflow-hidden"
+             className="relative flex items-center justify-center min-h-screen  bg-cover bg-center bg-no-repeat overflow-hidden"
              style={{
                backgroundImage: `url(${bannerImage.src})`,
                width: "100% !important",
@@ -23,7 +23,7 @@ export default function Hero() {
 
              {/* Text Content */}
              <div
-               className="relative z-10 text-center max-w-4xl px-6 text-white animate-fadeInUp"
+               className="relative bottom-28 z-10 text-center max-w-4xl px-6 text-white animate-fadeInUp"
                style={{
                  animation: "fadeInUp 1.5s ease-out forwards",
                }}

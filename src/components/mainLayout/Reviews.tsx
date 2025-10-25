@@ -54,7 +54,7 @@ function Reviews() {
   ];
 
   return (
-    <div className="mt-24 mb-14 px-5">
+    <div className="mt-14 mb-14 px-5">
       <p className="font-bold text-center text-4xl md:text-6xl mb-12 text-gray-900">
         What Scholars Say
       </p>

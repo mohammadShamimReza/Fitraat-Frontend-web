@@ -13,7 +13,7 @@ function RecoveryFeature() {
           {/* Add recovery features here */}
           <div className="bg-white border shadow-lg rounded-lg p-6 flex gap-10">
             <div className="border rounded-xl p-5">
-              <GrInProgress className="h-full w-10" />
+              <GrInProgress color="green" className="h-full w-10 " />
             </div>
             <div className="">
               <h2 className="text-xl font-semibold mb-2">
@@ -24,7 +24,7 @@ function RecoveryFeature() {
           </div>
           <div className="bg-white border shadow-lg rounded-lg p-6 flex gap-10">
             <div className="border rounded-xl p-5">
-              <GiInspiration className="h-full w-10" />
+              <GiInspiration color="#F87B1B" className="h-full w-10" />
             </div>{" "}
             <div className="">
               {" "}
@@ -46,7 +46,7 @@ function RecoveryFeature() {
           </div>
           <div className="bg-white border shadow-lg rounded-lg p-6 flex gap-10">
             <div className="border rounded-xl p-5">
-              <MdWorkHistory className="h-full w-10" />
+              <MdWorkHistory color="4E61D3" className="h-full w-10" />
             </div>{" "}
             <div className="">
               {" "}
