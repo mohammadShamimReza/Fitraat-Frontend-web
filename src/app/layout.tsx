@@ -10,6 +10,15 @@ import CookieConsent from "@/components/shared/CookieConsent";
 import Head from "next/head";
 import Link from "next/link";
 
+
+import { Inter } from "next/font/google";
+
+// If loading a variable font, you don't need to specify the font weight
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: {
@@ -19,7 +28,7 @@ export default function RootLayout({
     process.env.NEXT_PUBLIC_PALESTINE_HELP_URL || "palastineHelpUrl";
   return (
     <Providers>
-      <html lang="en">
+      <html lang="en" className={inter.className}>
         <Head>
           {/* Global SEO Tags */}
           <title>Fitraat - Discover Your True Potential</title>
