@@ -209,7 +209,7 @@ function TaskPage({
                   <div className="flex items-center gap-1">
                     Rank:{" "}
                     {DayCount < 5 ? (
-                      <GiFrankensteinCreature />
+                      <GiFrankensteinCreature color="blue" />
                     ) : DayCount >= 40 ? (
                       <TbMilitaryRank style={{ color: "red" }} />
                     ) : DayCount > 30 ? (

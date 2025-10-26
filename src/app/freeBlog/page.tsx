@@ -40,29 +40,8 @@ function Page() {
   return (
     <div>
       <div className="min-h-screen ">
-        <div className="flex flex-col justify-between gap-3 sm:flex-row ">
-          <div className="w-full sm:w-4/5 ">
-            {/* <form
-              onChange={handleSubmit(handleSearchTerm)}
-              className="flex justify-center align-middle"
-            >
-              <div className="mt-6 mb-14 w-1/2">
-                <Controller
-                  name="searchTerm"
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      id="searchTerm"
-                      type="text"
-                      placeholder="Search here"
-                      className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
-                    />
-                  )}
-                />
-              </div>
-            </form> */}
-
+        <div className="flex flex-col justify-between gap-3 ">
+          <div className="w-full  ">
             {isLoading
               ? Array.from({ length: 10 }, (_, index) => (
                   <div key={index} className="border">

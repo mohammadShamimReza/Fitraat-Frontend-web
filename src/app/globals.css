@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 
 @layer components {
@@ -18,7 +17,13 @@
     @apply text-xl
   }
 }
-
+.ant-typography,
+.ant-card,
+.ant-collapse,
+.ant-collapse-content,
+.ant-collapse-header {
+  font-family: 'Quicksand', sans-serif !important;
+}
 body {
   margin: 0;
   padding: 0;

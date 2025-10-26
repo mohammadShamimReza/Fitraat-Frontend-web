@@ -24,8 +24,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const palastineHelpUrl =
-    process.env.NEXT_PUBLIC_PALESTINE_HELP_URL || "palastineHelpUrl";
+  const palastineHelpUrl = process.env.PALESTINE_HELP_URL || "palastineHelpUrl";
   const siteUrl = usePathname();
   return (
     <Providers>
@@ -76,7 +75,7 @@ export default function RootLayout({
         </Head>
         <body>
           <AntdRegistry>
-            <div>
+            <div className="">
               <div className="w-full bg-gray-800 text-white py-1 px-2 flex justify-center items-center space-x-4 text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden">
                 <span className="font-semibold">Stand with Palestine 🇧🇩</span>
                 <Link target="blank" href={palastineHelpUrl} passHref>

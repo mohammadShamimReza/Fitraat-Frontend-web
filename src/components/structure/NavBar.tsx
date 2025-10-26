@@ -76,15 +76,18 @@ function NavBar() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl">
-      <div className="p-1 bg-white">
-        <div className="p-1 sm:px-4 lg:px-6">
+    <div className="mx-auto max-w-7xl h-14">
+      <div className=" bg-white">
+        <div className=" sm:px-4 lg:px-6">
           <div className=" flex h-10 items-center justify-between ">
             <div className="flex items-center sm:hidden">
               <button
                 type="button"
                 onClick={() => setMenuToggle(!menuToggle)}
-                className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                className={`relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ${
+                  menuToggle ? "bg-gray-300 text-white" : ""
+                }`}
+                aria-label="Main menu"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
@@ -123,10 +126,10 @@ function NavBar() {
               </button>
             </div>
 
-            <div className="flex flex-shrink-0 items-center text-lg font-bold">
+            <div className="  items-center text-lg font-bold hidden md:block">
               <Link href={"/"}>
                 {" "}
-                <Image src={siteLogo} width={70} alt="website logo" />
+                <Image src={siteLogo} width={50} alt="website logo" />
               </Link>
             </div>
 
@@ -158,6 +161,23 @@ function NavBar() {
                   >
                     Blog
                   </Link>
+                  <Link
+                    href="/blocker"
+                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                      pathname === "/blocker" ? "bg-gray-200" : ""
+                    }`}
+                  >
+                    Blocker
+                  </Link>
+
+                  <Link
+                    href="/emergency"
+                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                      pathname === "/emergency" ? "bg-gray-200" : ""
+                    }`}
+                  >
+                    Emergency
+                  </Link>
                 </div>
               </div>
             </div>
@@ -167,7 +187,7 @@ function NavBar() {
                 <div className="relative ml-3">
                   <Link href={"/login"}>
                     <span className="sr-only">Login</span>
-                    <span className="flex items-center gap-1 text-md hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span className="flex items-center gap-1 text-md hover:bg-gray-100 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span>Login</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -255,10 +275,10 @@ function NavBar() {
 
         {menuToggle ? (
           <div
-            className="sm:hidden  z-10 bg-white w-screen border rounded-lg shadow"
+            className="absolute w-[90%] ml-5 mt-2 p-5 sm:hidden  z-10 bg-white  border rounded-lg shadow"
             id="mobile-menu"
           >
-            <div className="space-y-1 px-2 pb-3 pt-2 ">
+            <div className=" pb-3 pt-2 ">
               <Link
                 href="/pricing"
                 className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
@@ -282,6 +302,23 @@ function NavBar() {
                 }`}
               >
                 Blog
+              </Link>
+              <Link
+                href="/blocker"
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/blocker" ? "bg-gray-200" : ""
+                }`}
+              >
+                Blocker
+              </Link>
+
+              <Link
+                href="/emergency"
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/emergency" ? "bg-gray-200" : ""
+                }`}
+              >
+                Emergency
               </Link>
             </div>
           </div>
