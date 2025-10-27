@@ -60,7 +60,20 @@ function Kagel({
 
     return seq;
   }
+  const [size, setSize] = useState(200);
 
+  useEffect(() => {
+    const updateSize = () => {
+      const width = window.innerWidth;
+      if (width < 640) setSize(100); // sm screens
+      else if (width < 1024) setSize(150); // md screens
+      else setSize(200); // lg and above
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
   // When kegel or setIndex changes, rebuild sequence and reset indices
   useEffect(() => {
     const entry = kegel && kegel.length > 0 ? kegel[setIndex] : undefined;
@@ -286,8 +299,8 @@ function Kagel({
           </span>
           <br />
 
-          <div className="mb-5 flex justify-center">
-            <Progress percent={progressPercent} type="circle" size={200} />
+          <div className="mb-5 flex justify-center ">
+            <Progress percent={progressPercent} type="circle" size={size} />
           </div>
 
           <Button.Group>

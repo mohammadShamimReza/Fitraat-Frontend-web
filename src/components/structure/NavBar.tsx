@@ -280,6 +280,14 @@ function NavBar() {
           >
             <div className=" pb-3 pt-2 ">
               <Link
+                href="/"
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/" ? "bg-gray-200" : ""
+                }`}
+              >
+                Home
+              </Link>
+              <Link
                 href="/tasks"
                 className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
                   pathname === "/tasks" ? "bg-gray-200" : ""

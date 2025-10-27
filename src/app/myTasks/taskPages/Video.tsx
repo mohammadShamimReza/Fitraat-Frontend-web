@@ -13,11 +13,11 @@ function Video({
     // "
     >
       {selectedTask === "video" && (
-        <div className="h-full">
+        <div className="h-full flex justify-center items-center w-full">
           <iframe
             width="100%"
             height="450px"
-            className="rounded-xl"
+            className="sm:w-[90%] md:w-[80%] max-w-[900px] rounded-xl "
             src={
               `${video?.videoUrl}` ||
               `https://www.youtube.com/embed/7WUKdCV8J34`

@@ -161,15 +161,18 @@ function TaskPage({
             isSidebarVisible ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 md:static`}
         >
-          {isSidebarVisible && (
-            <button
-              className="fixed top-4 left-4 z-30 text-2xl p-2 md:hidden"
-              onClick={() => setSidebarVisible(false)}
-            >
-              <IoMdClose /> {/* Close icon when sidebar is open */}
-            </button>
-          )}
-          <div className="p-4 bg-white border rounded-lg">
+          <div className="">
+            {isSidebarVisible && (
+              <button
+                className="mt-20 ml-5 left-4 z-30 text-2xl p-2 md:hidden "
+                onClick={() => setSidebarVisible(false)}
+              >
+                <IoMdClose /> {/* Close icon when sidebar is open */}
+              </button>
+            )}
+          </div>
+
+          <div className="p-4  bg-white border rounded-lg">
             <div className="text-center text-2xl font-light border-b p-2">
               Tasks
             </div>

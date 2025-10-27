@@ -110,7 +110,12 @@ const PaymentPage: React.FC = () => {
             name="cus_name"
             control={control}
             render={({ field }) => (
-              <Input {...field} placeholder="Enter your name" />
+              <Input
+                {...field}
+                placeholder="Enter your name"
+                disabled
+                value={userInfo?.username}
+              />
             )}
           />
           {errors.cus_name && (
@@ -123,7 +128,13 @@ const PaymentPage: React.FC = () => {
             name="cus_email"
             control={control}
             render={({ field }) => (
-              <Input {...field} placeholder="Enter your email" type="email" />
+              <Input
+                {...field}
+                placeholder="Enter your email"
+                disabled
+                value={userInfo?.email}
+                type="email"
+              />
             )}
           />
           {errors.cus_email && (
