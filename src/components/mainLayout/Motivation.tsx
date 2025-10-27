@@ -3,7 +3,7 @@ import image from "../../app/assets/removePorn.webp";
 
 function Motivation() {
   return (
-    <div className="py-10 ">
+    <div className="py-16 ">
       <h2 className="text-4xl font-bold text-center  pb-10">
         Why need to stop
       </h2>{" "}

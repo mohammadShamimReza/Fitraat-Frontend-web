@@ -28,25 +28,25 @@ function Reviews() {
 
   const reviews = [
     {
-      text: "Never did I imagine myself free from porn. Thanks to Wael Ibrahim and the Aware Academy. The longest time I recall myself free from porn was about 3 months. But to break the entire cycle of porn addiction in 4 months is beyond me.",
+      text: "Never did I imagine myself free from porn. Thanks to Wael Ibrahim and the Aware Academy.",
       name: "Mufti Menk",
       location: "South Africa",
       image: scholar1,
     },
     {
-      text: "My marriage life was torn apart because of pornography. After more than 9 months working with the Aware Academy, the Critical Alignment Model Recovery program was my solution. A million thanks.",
+      text: "My marriage life was torn apart because of pornography.",
       name: "Dr. Zakir Naik",
       location: " AN",
       image: scholar2,
     },
     {
-      text: "No words can describe how I felt after revealing my long years of secretive and addictive cycle to my wife. She was the ONE support I needed to cope with this monster.",
+      text: "No words can describe how I felt after revealing my long years of secretive and addictive cycle to my wife.",
       name: " Mufti Tariq Maksood",
       location: "FO",
       image: scholar3,
     },
     {
-      text: "Through the effort and dcare of Wael Ibrahim and his team, hope was restored in my life. Even though I didn’t quit or recover fully yet, I have that strong conviction that this day is coming sooner than later.",
+      text: "Through the effort and dcare of Wael Ibrahim and his team, hope was restored in my life.",
       name: "Sayak Ahmullah",
       location: "UK",
       image: scholar4,
@@ -54,8 +54,8 @@ function Reviews() {
   ];
 
   return (
-    <div className="mt-14 mb-14 px-5">
-      <p className="font-bold text-center text-4xl md:text-6xl mb-12 text-gray-900">
+    <div className="mt-10 mb-14 px-5">
+      <p className="font-bold text-center text-4xl underline mb-12 text-gray-900">
         What Scholars Say
       </p>
 
