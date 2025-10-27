@@ -175,7 +175,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   if (isLoading) {
     return (
       <>
-        <div className="flex h-screen">
+        <div className="flex h-screen mt-10">
           {/* Sidebar */}
           <div className="w-1/4 bg-gray-200 p-4 rounded-md">
             <Skeleton active title={false} paragraph={{ rows: 5 }} />

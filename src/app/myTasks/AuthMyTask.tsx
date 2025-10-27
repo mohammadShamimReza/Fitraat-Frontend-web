@@ -167,9 +167,9 @@ function AuthMyTask({
   if (isLoading) {
     return (
       <>
-        <div className="flex h-screen">
+        <div className="flex h-screen mt-10">
           {/* Sidebar */}
-          <div className="w-1/4 bg-gray-200 p-4 rounded-md">
+          <div className="w-1/4 bg-gray-200 p-4 rounded-md  mt-10">
             <Skeleton active title={false} paragraph={{ rows: 5 }} />
           </div>
 

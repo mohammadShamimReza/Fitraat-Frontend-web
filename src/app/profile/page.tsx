@@ -1,8 +1,11 @@
 "use client";
 
 import {
+  useDeleteUserProfileImageMutation,
   useGetUserInfoQuery,
   useUpdateUserDayMutation,
+  useUpdateUserProfileImageMutation,
+  useUploadUserProfileImageMutation,
 } from "@/redux/api/authApi";
 
 import { InboxOutlined } from "@ant-design/icons";
@@ -18,6 +21,13 @@ const Player = z.object({
 });
 
 function ProfilePage() {
+  const [uploadUserProfileImage] = useUploadUserProfileImageMutation();
+  const [updateUserProfileImage] = useUpdateUserProfileImageMutation();
+
+  const [deleteUserProfileImage, { isLoading: deleteImageLoading }] =
+    useDeleteUserProfileImageMutation();
+  const [isUploading, setIsUploading] = useState(false);
+
   const {
     data: getUserInfoData,
     isLoading: getUserInfoLoading,
@@ -25,7 +35,6 @@ function ProfilePage() {
     isSuccess: getUserInfoSuccess,
   } = useGetUserInfoQuery();
 
-  console.log(getUserInfoData, "user info");
   const [
     updataUserDay,
     {
@@ -81,8 +90,7 @@ function ProfilePage() {
           Blog: false,
         })
       );
-      console.log(result);
-      console.log(result);
+
       if (updateUserDaySuccess) {
         message.success("You have successfully started your journey again!");
       } else if (updateUserDayError) {
@@ -98,19 +106,48 @@ function ProfilePage() {
   };
 
   // Handle image before uploading
-  const handleImageUpload = (file: File) => {
-    const isValidSize = file.size / 1024 / 1024 < 2; // Check if image size is less than 2MB
+  const handleImageUpload = async (file: File) => {
+    const isValidSize = file.size / 1024 / 1024 < 2;
     if (!isValidSize) {
       message.error("Image must be smaller than 2MB!");
       return Upload.LIST_IGNORE;
     }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      setProfileImage(reader.result as string); // Convert image to base64 and set it to state
-      console.log("Uploaded Image:", reader.result); // Log the image data
-    };
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("files", file);
+
+    try {
+      setIsUploading(true);
+      const oldImageId = getUserInfoData?.profileImage?.id;
+      if (oldImageId) {
+        await deleteUserProfileImage(oldImageId).unwrap();
+      }
+      const uploadResponse: any = await uploadUserProfileImage(
+        formData
+      ).unwrap();
+      const uploadedImage = uploadResponse[0];
+
+      if (!uploadedImage?.id) {
+        message.error("Failed to upload image.");
+        return;
+      }
+
+      // Update user's profile image reference in Strapi
+      await updateUserProfileImage({
+        userId: userId,
+        imageId: uploadedImage.id,
+      }).unwrap();
+
+      message.success("Profile image updated successfully!");
+      setProfileImage(uploadedImage.url);
+
+      setIsImageUploadModalVisible(false);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      message.error("Something went wrong while uploading the image.");
+    } finally {
+      setIsUploading(false);
+    }
 
     return false;
   };
@@ -126,20 +163,60 @@ function ProfilePage() {
     );
   }
 
+  console.log(process.env.NEXT_PUBLIC_BASE_URL, "base url");
+
   return (
     <div className="w-full px-4 py-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Profile</h1>
 
       <div className="mb-4 flex flex-wrap justify-between items-center gap-6">
-        {/* User Info Section */}
         <div className="w-full sm:w-auto">
+          {/* User Info Section */}
+          <div className=" mb-6">
+            {getUserInfoData?.profileImage?.url ? (
+              <Image
+                src={`${getUserInfoData.profileImage.url}`}
+                alt="Profile"
+                width={220}
+                height={220}
+                className=" border rounded-sm shadow-md"
+                sizes="1"
+              />
+            ) : (
+              <div className="w-28 h-28 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
+                No Image
+              </div>
+            )}
+            <button
+              className="mt-3 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800"
+              onClick={() => setIsImageUploadModalVisible(true)}
+            >
+              Upload New Image
+            </button>
+          </div>
           <h2 className="text-lg font-medium">Name: {name}</h2>
-          <h2 className="text-lg font-medium">Age: {age}</h2>
           <h2 className="text-lg font-medium">Email: {email}</h2>
-          <h2 className="text-lg font-medium">Start Date: {startData}</h2>
           <h2 className="text-lg font-medium">
             Membership: {paid == "Complete" ? "Pro" : "Free"}
           </h2>
+          <div className="flex items-center my-6 gap-2">
+            <button
+              className={`px-4 py-2  rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+              onClick={handleRestart}
+            >
+              Restart Journey
+            </button>
+
+            {paid !== "Complete" && (
+              <Link href={"/payment"}>
+                <button
+                  className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
+                >
+                  Become Pro
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
 
         {/* Pie Chart Section */}
@@ -169,25 +246,6 @@ function ProfilePage() {
             </div>
           )}
         </div>
-      </div>
-
-      <div className="flex items-center mb-6 gap-2">
-        <button
-          className={`px-4 py-2  rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
-          onClick={handleRestart}
-        >
-          Restart Journey
-        </button>
-
-        {paid === "Complete" && (
-          <Link href={"/payment"}>
-            <button
-              className={`px-4 py-2 rounded-xl focus:outline-none bg-gray-600 hover:bg-gray-800 text-white`}
-            >
-              Become Pro
-            </button>
-          </Link>
-        )}
       </div>
 
       <div className="relative bg-white border rounded-lg p-6 mt-8">
@@ -245,35 +303,54 @@ function ProfilePage() {
         footer={[
           <button
             key={"cancel"}
-            className={`px-4 py-2 rounded-xl focus:outline-none border `}
-            onClick={() => handleImageUploadModalCancel()}
+            className={`px-4 py-2 rounded-xl focus:outline-none border ${
+              isUploading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={handleImageUploadModalCancel}
+            disabled={isUploading}
           >
             Cancel
           </button>,
         ]}
       >
-        <Upload.Dragger
-          name="image"
-          accept="image/*"
-          beforeUpload={handleImageUpload}
-          showUploadList={false}
-        >
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">
-            Click or drag file to this area to upload
-          </p>
-          <p className="ant-upload-hint">
-            Support for a single upload. Image must be less than 2MB.
-          </p>
-        </Upload.Dragger>
+        <div className="relative">
+          {isUploading && (
+            <div className="absolute inset-0 flex flex-col justify-center items-center bg-white/70 backdrop-blur-sm rounded-lg z-10">
+              <Spin size="large" />
+              <p className="mt-3 text-gray-700 font-medium">Uploading...</p>
+            </div>
+          )}
+
+          <Upload.Dragger
+            name="image"
+            accept="image/*"
+            beforeUpload={handleImageUpload}
+            showUploadList={false}
+            disabled={isUploading}
+            className={`${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">
+              Click or drag file to this area to upload
+            </p>
+            <p className="ant-upload-hint">
+              Support for a single upload. Image must be less than 2MB.
+            </p>
+          </Upload.Dragger>
+        </div>
+
         {profileImage && (
-          <Image
-            src={profileImage}
-            alt="Uploaded"
-            className="mt-4 w-32 h-32 rounded-full"
-          />
+          <div className="relative mt-4 w-32 h-32 mx-auto rounded-full overflow-hidden border">
+            <Image
+              src={profileImage}
+              alt="Uploaded"
+              fill
+              className="object-cover rounded-full"
+              sizes="1"
+            />
+          </div>
         )}
       </Modal>
     </div>
