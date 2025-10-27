@@ -47,9 +47,9 @@ function Quiz({ selectedTask, quiz }: QuizProps) {
     <div>
       {selectedTask === "quiz" && quiz && quiz.length > 0 && (
         <>
-          <span className="text-red-500 text-xl font-bold flex justify-center align-middle">
-            {currentQuizIndex + 1} / {quiz.length} (serial:{" "}
-            {quiz[currentQuizIndex].serial})
+          <span className=" text-xl font-bold flex justify-center align-middle">
+            <span className="text-red-500"> {currentQuizIndex + 1}</span> /{" "}
+            {quiz.length} (serial: {quiz[currentQuizIndex].serial})
           </span>
 
           <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md mt-2">

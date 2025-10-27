@@ -87,8 +87,10 @@ export default function RootLayout({
                   </p>
                 </Link>
               </div>
-              <div className="mx-auto max-w-7xl">
-                <NavBar />
+              <div className="sticky top-0 z-50 bg-white shadow-sm">
+                <div className="mx-auto max-w-7xl">
+                  <NavBar />
+                </div>
               </div>
 
               <Hero />

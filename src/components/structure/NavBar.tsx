@@ -76,8 +76,8 @@ function NavBar() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl h-14">
-      <div className=" bg-white">
+    <div className="mx-auto max-w-7xl h-14 ">
+      <div className=" bg-white pt-1">
         <div className=" sm:px-4 lg:px-6">
           <div className=" flex h-10 items-center justify-between ">
             <div className="flex items-center sm:hidden">
@@ -137,14 +137,6 @@ function NavBar() {
               <div className="hidden sm:ml-6 sm:block mt-2 ">
                 <div className="flex space-x-4 ">
                   <Link
-                    href="/pricing"
-                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                      pathname === "/pricing" ? "bg-gray-200" : ""
-                    }`}
-                  >
-                    Pricing
-                  </Link>
-                  <Link
                     href="/tasks"
                     className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
                       pathname === "/tasks" ? "bg-gray-200" : ""
@@ -178,6 +170,14 @@ function NavBar() {
                   >
                     Emergency
                   </Link>
+                  <Link
+                    href="/pricing"
+                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                      pathname === "/pricing" ? "bg-gray-200" : ""
+                    }`}
+                  >
+                    Pricing
+                  </Link>
                 </div>
               </div>
             </div>
@@ -210,7 +210,7 @@ function NavBar() {
                 <div className="relative ml-3">
                   <div
                     onClick={handleUserMenuToggle}
-                    className="relative flex text-md hover:bg-gray-100 p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative flex text-md hover:bg-gray-100  rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 "
                   >
                     <span className="sr-only">Open user menu</span>
                     <div className="flex gap-1">
@@ -280,14 +280,6 @@ function NavBar() {
           >
             <div className=" pb-3 pt-2 ">
               <Link
-                href="/pricing"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/pricing" ? "bg-gray-200" : ""
-                }`}
-              >
-                Pricing
-              </Link>
-              <Link
                 href="/tasks"
                 className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
                   pathname === "/tasks" ? "bg-gray-200" : ""
@@ -319,6 +311,14 @@ function NavBar() {
                 }`}
               >
                 Emergency
+              </Link>
+              <Link
+                href="/pricing"
+                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                  pathname === "/pricing" ? "bg-gray-200" : ""
+                }`}
+              >
+                Pricing
               </Link>
             </div>
           </div>

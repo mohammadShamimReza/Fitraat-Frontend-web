@@ -9,12 +9,8 @@ function Blogs({ blog }: { blog: Blog }) {
 
   return (
     <div className="mt-10">
-      {" "}
       <div className="h-full mb-10 p-4 bg-white">
-        <Link
-          href={`/freeBlog/${blog.documentId}`}
-          // onClick={() => updateViewCount(blog.id)}
-        >
+        <Link href={`/freeBlog/${blog.documentId}`}>
           <div
             className=" p-4  rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
               "

@@ -1,9 +1,8 @@
 "use client";
 
 import { useGetEnergencyContantQuery } from "@/redux/api/emergencyApi";
-import { Button, message, Steps, theme } from "antd";
+import { Button, message, Skeleton, Steps, theme } from "antd";
 import React, { useEffect, useState } from "react";
-import FancyLoading from "../loading";
 
 const EmergencyService: React.FC = () => {
   const { token } = theme.useToken();
@@ -19,11 +18,27 @@ const EmergencyService: React.FC = () => {
       setEmergencyNumber(randomNumber);
     }
   }, [total]);
+  if (isLoading) {
+    return (
+      <>
+        <div className="mx-auto mt-8">
+          {/* Sidebar */}
 
-  if (isLoading || !data) {
-    return <FancyLoading />;
+          {/* Content Box */}
+          <div className="flex-1 bg-white p-20">
+            <Skeleton
+              active
+              title={{ width: "60%" }}
+              paragraph={{
+                rows: 10,
+                width: ["100%", "100%", "100%", "100%", "100%"],
+              }}
+            />
+          </div>
+        </div>
+      </>
+    );
   }
-
   // Helper to render quote text cleanly
   const renderQute = () => {
     const qutes = data?.data[emergencyNumber ?? 0]?.qute ?? [];
@@ -123,7 +138,7 @@ const EmergencyService: React.FC = () => {
   return (
     <div className="flex flex-col items-center min-h-screen px-4 sm:px-6 md:px-8 py-8 ">
       <h1 className="mb-10 text-2xl md:text-3xl font-semibold text-gray-800">
-        Emergency Help
+        Lower you Gaze
       </h1>
 
       <Steps
@@ -132,7 +147,9 @@ const EmergencyService: React.FC = () => {
         items={items}
       />
 
-      <div style={contentStyle}>{steps[current].content}</div>
+      <div className=" h-48" style={contentStyle}>
+        {steps[current].content}
+      </div>
 
       <div className="m-10 flex justify-center flex-wrap gap-4">
         {current > 0 && (

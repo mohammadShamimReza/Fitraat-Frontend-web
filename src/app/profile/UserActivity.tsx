@@ -104,7 +104,7 @@ const UserActivityPieChart: React.FC<PerformancePieChartProps> = ({
             complete the remaining tasks.
           </p>
         )}
-        <p className="italic text-md mt-4 text-yellow-300">{randomQuote}</p>
+        <p className="italic text-md mt-4 text-red-500">{randomQuote}</p>
       </div>
 
       {/* Legend */}

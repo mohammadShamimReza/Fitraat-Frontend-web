@@ -41,6 +41,9 @@ function Page() {
     <div>
       <div className="min-h-screen ">
         <div className="flex flex-col justify-between gap-3 ">
+          <h2 className="text-3xl font-semibold text-center my-5 underline">
+            <span className="text-red-500">Blogs</span> for you
+          </h2>
           <div className="w-full  ">
             {isLoading
               ? Array.from({ length: 10 }, (_, index) => (

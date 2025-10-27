@@ -200,7 +200,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   return (
     <>
       <Modal
-        title="Hurra you have finished another Day! Congratulations"
+        title="HurraY you have finished another Day! Congratulations"
         open={isFinishModalOpen}
         onOk={handleOk}
         closable={false}
