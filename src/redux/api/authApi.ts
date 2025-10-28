@@ -71,10 +71,12 @@ export const daysApi = baseApi.injectEndpoints({
     }),
     chengePassword: builder.mutation({
       query: (body) => ({
-        url: `auth/chenge-password`,
+        url: `auth/reset-password`,
         method: "POST",
         body: {
-          email: body.email,
+          password: body.password,
+          passwordConfirmation: body.passwordConfirmation,
+          code: body.code,
         },
       }),
       transformResponse: (rawResult: any | Error) => {
