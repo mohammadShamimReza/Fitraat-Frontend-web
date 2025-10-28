@@ -33,12 +33,12 @@ export const daysApi = baseApi.injectEndpoints({
     }),
     getUserInfo: builder.query<UserDataWithDay, void>({
       query: () => ({
-        url: `users/me`,
+        url: `users/me?populate=*`,
       }),
       transformResponse: (rawResult: UserDataWithDay) => {
         return rawResult;
       },
-      providesTags: ["updateUserDay", "updateUser"],
+      providesTags: ["updateUserDay", "updateUser", "User"],
     }),
     updateUserDay: builder.mutation({
       query: (body) => ({
@@ -81,6 +81,29 @@ export const daysApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
+    uploadUserProfileImage: builder.mutation({
+      query: (formData) => ({
+        url: "/upload",
+        method: "POST",
+        body: formData,
+      }),
+    }),
+
+    updateUserProfileImage: builder.mutation({
+      query: ({ userId, imageId }) => ({
+        url: `/users/${userId}`,
+        method: "PUT",
+        body: { profileImage: imageId },
+      }),
+      invalidatesTags: ["User"],
+    }),
+    deleteUserProfileImage: builder.mutation({
+      query: (imageId) => ({
+        url: `/upload/files/${imageId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -91,4 +114,7 @@ export const {
   useUpdateUserDayMutation,
   useForgetPasswordMutation,
   useChengePasswordMutation,
+  useUploadUserProfileImageMutation,
+  useUpdateUserProfileImageMutation,
+  useDeleteUserProfileImageMutation,
 } = daysApi;

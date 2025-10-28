@@ -150,14 +150,14 @@ function AuthMyTask({
       const authDayData = authenticatedDayData[0];
       if (authDayData) {
         setBlog({
-          id: authDayData.pro_blog.documentId,
-          title: authDayData.pro_blog.titile,
-          content: authDayData.pro_blog.content,
+          id: authDayData?.pro_blog?.documentId,
+          title: authDayData?.pro_blog?.titile,
+          content: authDayData?.pro_blog?.content,
         });
-        setQuiz(authDayData?.pro_quizz.quizzess);
+        setQuiz(authDayData?.pro_quizz?.quizzess);
 
-        setVideo({ videoUrl: authDayData.regulerVideo.url });
-        setKegel(authDayData?.pro_kagel.kagelTimes);
+        setVideo({ videoUrl: authDayData?.regulerVideo?.url });
+        setKegel(authDayData?.pro_kagel?.kagelTimes);
       }
     }
   }, [authenticatedDayData]);
@@ -167,9 +167,9 @@ function AuthMyTask({
   if (isLoading) {
     return (
       <>
-        <div className="flex h-screen">
+        <div className="flex h-screen mt-10">
           {/* Sidebar */}
-          <div className="w-1/4 bg-gray-200 p-4 rounded-md">
+          <div className="w-1/4 bg-gray-200 p-4 rounded-md  mt-10">
             <Skeleton active title={false} paragraph={{ rows: 5 }} />
           </div>
 

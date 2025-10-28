@@ -153,7 +153,7 @@ function TaskPage({
   };
 
   return (
-    <div className="mx-auto  p-3 relative">
+    <div className="mx-auto  p-3 relative mt-10">
       <div className="flex ">
         {/* Sidebar */}
         <div

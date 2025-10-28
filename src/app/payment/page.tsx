@@ -25,6 +25,7 @@ const schema = z.object({
   userId: z.string(),
 });
 
+
 type PaymentFormValues = z.infer<typeof schema>;
 
 const PaymentPage: React.FC = () => {
@@ -62,6 +63,12 @@ const PaymentPage: React.FC = () => {
   useEffect(() => {
     setValue("total_amount", currency === "USD" ? 20 : 2000);
   }, [currency, setValue]);
+
+  useEffect(() => {
+    setValue("cus_name", userInfo?.username || "");
+    setValue("cus_email", userInfo?.email || "");
+    setValue("userId", userInfo?.id?.toString() || "");
+  });
 
   // 🧾 Submit Handler
   const onSubmit = async (data: PaymentFormValues) => {
@@ -113,7 +120,6 @@ const PaymentPage: React.FC = () => {
               <Input
                 {...field}
                 placeholder="Enter your name"
-                disabled
                 value={userInfo?.username}
               />
             )}
@@ -131,7 +137,6 @@ const PaymentPage: React.FC = () => {
               <Input
                 {...field}
                 placeholder="Enter your email"
-                disabled
                 value={userInfo?.email}
                 type="email"
               />
@@ -147,7 +152,7 @@ const PaymentPage: React.FC = () => {
             name="cus_phone"
             control={control}
             render={({ field }) => (
-              <Input {...field} placeholder="01XXXXXXXXX" />
+              <Input {...field} placeholder="01XXXXXXXXX" value={field.value} />
             )}
           />
           {errors.cus_phone && (

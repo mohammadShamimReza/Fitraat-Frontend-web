@@ -6,7 +6,7 @@ import { RootState } from "../store";
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://reliable-deer-385e3b81c0.strapiapp.com/api",
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:1337/api",
     prepareHeaders: (headers, { getState }) => {
       const token =
         (getState() as RootState).auth.authToken || getTokenFromCookie();
@@ -27,5 +27,6 @@ export const baseApi = createApi({
     "createComment",
     "updateComment",
     "deleteComment",
+    "User",
   ],
 });

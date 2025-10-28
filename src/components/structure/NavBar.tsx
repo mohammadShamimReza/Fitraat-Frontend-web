@@ -212,22 +212,36 @@ function NavBar() {
                     onClick={handleUserMenuToggle}
                     className="relative flex text-md hover:bg-gray-100  rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 "
                   >
-                    <span className="sr-only">Open user menu</span>
-                    <div className="flex gap-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        className="h-10 w-10 rounded-xl border p-2"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <circle cx="12" cy="8" r="7" />
-                        <path d="M12 16s-8-1.5-8 4v2h16v-2c0-5.5-8-4-8-4z" />
-                      </svg>
-                    </div>
+                    {data && data.profileImage ? (
+                      <div className="relative w-10 h-10 rounded-xl overflow-hidden border p-2">
+                        <Image
+                          src={data.profileImage.url}
+                          alt="Profile"
+                          fill
+                          className="object-cover" // or object-contain if you want full image visible
+                          sizes="1"
+                        />
+                      </div>
+                    ) : (
+                      <div className="">
+                        <span className="sr-only">Open user menu</span>
+                        <div className="flex gap-1">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            className="h-10 w-10 rounded-xl border p-2"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <circle cx="12" cy="8" r="7" />
+                            <path d="M12 16s-8-1.5-8 4v2h16v-2c0-5.5-8-4-8-4z" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {userMenuToggle && (
                     <div
@@ -246,15 +260,7 @@ function NavBar() {
                       >
                         Profile
                       </Link>
-                      {/* <Link
-                        href="#"
-                        className="block px-4 py-2 text-md text-gray-700"
-                        role="menuitem"
-                        tabIndex={-1}
-                        id="user-menu-item-1"
-                      >
-                        Settings
-                      </Link> */}
+
                       <Link
                         href="/"
                         onClick={handleLogout}
