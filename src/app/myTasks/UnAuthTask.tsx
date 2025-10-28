@@ -158,14 +158,14 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
 
       if (unAuthDayData) {
         setBlog({
-          id: unAuthDayData.free_blog.documentId,
-          title: unAuthDayData.free_blog.title,
-          content: unAuthDayData.free_blog.content,
+          id: unAuthDayData?.free_blog?.documentId,
+          title: unAuthDayData?.free_blog?.title,
+          content: unAuthDayData?.free_blog?.content,
         });
 
-        setQuiz(unAuthDayData?.free_quizz.quizzess);
-        setVideo({ videoUrl: unAuthDayData.regulerVideo.url });
-        setKegel(unAuthDayData?.free_kagel.kagelTimes);
+        setQuiz(unAuthDayData?.free_quizz?.quizzess);
+        setVideo({ videoUrl: unAuthDayData?.regulerVideo?.url });
+        setKegel(unAuthDayData?.free_kagel?.kagelTimes);
       }
     }
   }, [unAuthenticatedDayData, unAuthDayId]);

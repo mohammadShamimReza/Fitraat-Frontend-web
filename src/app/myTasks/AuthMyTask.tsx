@@ -150,14 +150,14 @@ function AuthMyTask({
       const authDayData = authenticatedDayData[0];
       if (authDayData) {
         setBlog({
-          id: authDayData.pro_blog.documentId,
-          title: authDayData.pro_blog.titile,
-          content: authDayData.pro_blog.content,
+          id: authDayData?.pro_blog?.documentId,
+          title: authDayData?.pro_blog?.titile,
+          content: authDayData?.pro_blog?.content,
         });
-        setQuiz(authDayData?.pro_quizz.quizzess);
+        setQuiz(authDayData?.pro_quizz?.quizzess);
 
-        setVideo({ videoUrl: authDayData.regulerVideo.url });
-        setKegel(authDayData?.pro_kagel.kagelTimes);
+        setVideo({ videoUrl: authDayData?.regulerVideo?.url });
+        setKegel(authDayData?.pro_kagel?.kagelTimes);
       }
     }
   }, [authenticatedDayData]);
