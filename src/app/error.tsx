@@ -15,8 +15,8 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6 text-center">
-      <div className="flex flex-col items-center bg-white shadow-lg p-8 rounded-lg max-w-sm w-full">
+    <div className="flex flex-col items-center justify-center min-h-screen  p-6 text-center">
+      <div className="flex flex-col items-center  shadow-lg p-8 rounded-lg max-w-sm w-full">
         <AiOutlineWarning className="text-red-500 text-6xl mb-4 animate-pulse" />
         <h2 className="text-2xl font-semibold text-gray-800 mb-2">
           Oops! Something went wrong.
