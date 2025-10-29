@@ -14,6 +14,7 @@ import { clearDayData } from "@/redux/slice/daySlice";
 import DayFinishImage from "../assets/dayFinish.gif";
 
 function UnAuthTask({ payment }: { payment: string | undefined }) {
+  console.log("start");
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 
@@ -72,7 +73,6 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
       dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
     }
   };
-  const [currentDay, setCurrentDay] = useState(1);
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
 
   const handleNext = () => {
@@ -130,11 +130,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
 
   const handleOk = () => {
     setIsFinishModalOpen(false);
-    if (unAuthDayId != null && parseInt(unAuthDayId) + 1 > 3) {
-      router.push("/CompletedFreeTask");
-    } else {
-      router.push("/freeBlog");
-    }
+    router.push("/freeBlog");
   };
 
   const [blog, setBlog] = useState<{
@@ -214,7 +210,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
         closable={false}
         footer={[
           <Button key="ok" type="primary" onClick={handleOk}>
-            OK
+            Read blogs
           </Button>,
         ]}
       >
