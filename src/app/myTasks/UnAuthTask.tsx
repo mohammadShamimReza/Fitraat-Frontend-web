@@ -25,6 +25,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
 
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
 
+  console.log(unAuthenticatedDayData, "user day");
   useEffect(() => {
     const dayId = window.localStorage.getItem("unAuthDayId") || "1";
     if (parseInt(dayId) > 3) {
@@ -71,7 +72,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
       dispatch(storeCurrentTask(tasks[selectedTaskIndex - 1]));
     }
   };
-
+  const [currentDay, setCurrentDay] = useState(1);
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
 
   const handleNext = () => {
@@ -96,20 +97,19 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
       if (unAuthDayId === null) {
         localStorage.setItem("unAuthDayId", "1");
       } else if (unAuthDayId !== null) {
-        let parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
+        const parsedUnAuthDayId = parseInt(unAuthDayId) + 1;
         if (parsedUnAuthDayId === 3) {
           message.success(
             " This is you last day of free task. Upgrade membership to access pro contants"
           );
           localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
-          router.push("/freeBlog");
+          // router.push("/freeBlog");
         } else if (parsedUnAuthDayId > 3) {
           message.success(
             "Congratulations you have successfully completed your tasks for 3 day"
           );
-          router.push("/CompletedFreeTask");
 
-          window.location.reload();
+          // window.location.reload();
         }
         if (parsedUnAuthDayId <= 4) {
           localStorage.setItem("unAuthDayId", parsedUnAuthDayId.toString());
@@ -130,7 +130,11 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
 
   const handleOk = () => {
     setIsFinishModalOpen(false);
-    router.push("/freeBlog");
+    if (unAuthDayId != null && parseInt(unAuthDayId) + 1 > 3) {
+      router.push("/CompletedFreeTask");
+    } else {
+      router.push("/freeBlog");
+    }
   };
 
   const [blog, setBlog] = useState<{
@@ -197,10 +201,14 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
     );
   }
 
+  // if (DayCount > 4) {
+  //   return <CompliteTask auth={false} daysCompleted={40} />;
+  // }
+
   return (
     <>
       <Modal
-        title="HurraY you have finished another Day! Congratulations"
+        title="HurraY you have finished another Day! Congratulations. Now time to relax and read blog."
         open={isFinishModalOpen}
         onOk={handleOk}
         closable={false}

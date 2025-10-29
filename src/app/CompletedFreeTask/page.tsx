@@ -10,7 +10,11 @@ const CompletedFreeTask = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen  ">
+    <div className="mx-auto min-h-screen flex flex-col items-center justify-center gap-8 p-4">
+      <h2 className="">
+        Do some little bit more <span className="text-red-500">effort</span> and
+        get a hole <span className="text-red-500">new life</span>
+      </h2>
       <div className="p-8 bg-white border rounded-xl shadow-md max-w-lg text-center">
         <h1 className="text-2xl font-semibold mb-4">Congratulations!</h1>
         <p className="text-lg mb-6">

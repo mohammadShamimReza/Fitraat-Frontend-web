@@ -19,7 +19,7 @@ const CompliteTask: React.FC<Props> = ({ auth, daysCompleted }) => {
           <div>
             <h1 className="text-3xl font-bold mb-6">Congratulations!</h1>
             <p className="mb-4">
-              You have successfully completed your 120-day journey to overcome
+              You have successfully completed your 40-day journey to overcome
               porn addiction.
             </p>
 
@@ -77,17 +77,6 @@ const CompliteTask: React.FC<Props> = ({ auth, daysCompleted }) => {
                 Facebook
               </a>
             </li>
-            {/* <li>
-              <a
-                href="https://www.nofap.com/"
-                className="text-blue-500 underline hover:text-blue-700"
-                type="Email"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                NoFap Community
-              </a>
-            </li> */}
           </ul>
         </div>
         <div className="mt-8">
