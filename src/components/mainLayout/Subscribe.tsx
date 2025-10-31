@@ -7,19 +7,19 @@ import { FormEvent, useState } from "react";
 const Subscribe = () => {
   const [email, setEmail] = useState("");
 
-  const [createSubscribers] = useCreateSubscribersMutation();
+  const [createSubscribers, { isLoading }] = useCreateSubscribersMutation();
 
   const handleSubscribe = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userEmail = (event.target as HTMLFormElement).email.value;
     setEmail(userEmail);
 
-
     if (userEmail !== "") {
       try {
         const result: any | Error = await createSubscribers({
           email: userEmail,
         });
+        console.log(result, "resutl");
         if (result?.error) {
           result?.error.data.error.message === "This attribute must be unique"
             ? message.error("Email is already subscribed")
@@ -71,9 +71,12 @@ const Subscribe = () => {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={isLoading}
             >
-              Subscribe
+              {isLoading ? "Subscribing..." : "Subscribe"}
             </button>
           </div>
         </form>

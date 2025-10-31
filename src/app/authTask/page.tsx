@@ -38,11 +38,11 @@ const MyTasks: React.FC = () => {
   const differenceInTime = today.getTime() - start.getTime(); // Difference in milliseconds
   const daysLeft = Math.floor(differenceInTime / (1000 * 60 * 60 * 24)) + 1;
   //  setDaysPassed(days);
-
+console.log(payment, "payment");
   return (
     <>
-      {isMounted ? (
-        userData && payment === "Complete" ? (
+      {isMounted && userData ? (
+        payment === "Complete" ? (
           // Authenticated user render
           <AuthMyTask
             authDayDataId={authDayDataId}

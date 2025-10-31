@@ -59,7 +59,7 @@ export default function ResetPass() {
         dispatch(storeUserInfo(user));
 
         message.success("Password reset successfully!");
-        router.push("/authTask"); // redirect to dashboard or task page
+        router.push("/profile"); // redirect to dashboard or task page
         window.location.reload();
       } else {
         message.error(
@@ -76,8 +76,8 @@ export default function ResetPass() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 px-4">
-      <div className="w-full max-w-xl p-8 rounded-xl shadow-lg bg-white">
+    <div className="flex items-center justify-center h-screen  px-4">
+      <div className="w-full max-w-xl p-8 rounded-xl shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-center">Reset Password</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

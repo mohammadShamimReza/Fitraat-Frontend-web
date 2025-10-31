@@ -299,7 +299,7 @@ function Kagel({
           </span>
           <br />
 
-          <div className="mb-5 flex justify-center ">
+          <div className="mb-5 mt-2 flex justify-center ">
             <Progress percent={progressPercent} type="circle" size={size} />
           </div>
 

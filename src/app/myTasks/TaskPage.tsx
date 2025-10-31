@@ -59,7 +59,7 @@ function TaskPage({
 }: Props) {
  
 
- 
+ console.log(blog, "this is blog");
 
   const tasks = ["video", "kagel", "quiz", "Blog"];
   const icons = [
