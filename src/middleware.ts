@@ -9,7 +9,6 @@ export function middleware(request: NextRequest) {
   if (!currentUser) {
     if (
       pathname.startsWith("/profile") ||
-      pathname.startsWith("/authTask") ||
       pathname.startsWith("/authBlog") ||
       pathname.startsWith("/proMember") ||
       pathname.startsWith("/payment")
@@ -28,9 +27,7 @@ export function middleware(request: NextRequest) {
     if (pathname.startsWith("/register")) {
       return NextResponse.redirect(new URL("/tasks", request.url));
     }
-    if (pathname === "/tasks") {
-      return NextResponse.redirect(new URL("/authTask", request.url));
-    }
+
     return NextResponse.next(); // Allow access to other routes
   }
 

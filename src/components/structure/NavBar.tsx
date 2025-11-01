@@ -11,6 +11,14 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import siteLogo from "../../app/assets/detox1.png";
 
+const navbarLinks = [
+  { name: "Programs", href: "/tasks" },
+  { name: "Blogs", href: "/freeBlog" },
+  { name: "Blocker", href: "/blocker" },
+  { name: "Emergency", href: "/emergency" },
+  { name: "Pricing", href: "/pricing" },
+];
+
 function NavBar() {
   const pathname = usePathname();
 
@@ -136,48 +144,17 @@ function NavBar() {
             <div className="flex  items-center justify-center sm:items-stretch sm:justify-start ">
               <div className="hidden sm:ml-6 sm:block mt-2 ">
                 <div className="flex space-x-4 ">
-                  <Link
-                    href="/tasks"
-                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                      pathname === "/tasks" ? "bg-gray-200" : ""
-                    }`}
-                  >
-                    Tasks
-                  </Link>
-
-                  <Link
-                    href="/freeBlog"
-                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                      pathname === "/freeBlog" ? "bg-gray-200" : ""
-                    }`}
-                  >
-                    Blog
-                  </Link>
-                  <Link
-                    href="/blocker"
-                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                      pathname === "/blocker" ? "bg-gray-200" : ""
-                    }`}
-                  >
-                    Blocker
-                  </Link>
-
-                  <Link
-                    href="/emergency"
-                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                      pathname === "/emergency" ? "bg-gray-200" : ""
-                    }`}
-                  >
-                    Emergency
-                  </Link>
-                  <Link
-                    href="/pricing"
-                    className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                      pathname === "/pricing" ? "bg-gray-200" : ""
-                    }`}
-                  >
-                    Pricing
-                  </Link>
+                  {navbarLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
+                        pathname === link.href ? "bg-gray-200" : ""
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
@@ -285,55 +262,20 @@ function NavBar() {
             id="mobile-menu"
           >
             <div className=" pb-3 pt-2 ">
-              <Link
-                href="/"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/" ? "bg-gray-200" : ""
-                }`}
-              >
-                Home
-              </Link>
-              <Link
-                href="/tasks"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/tasks" ? "bg-gray-200" : ""
-                }`}
-              >
-                Tasks
-              </Link>
-              <Link
-                href="/freeBlog"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/freeBlog" ? "bg-gray-200" : ""
-                }`}
-              >
-                Blog
-              </Link>
-              <Link
-                href="/blocker"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/blocker" ? "bg-gray-200" : ""
-                }`}
-              >
-                Blocker
-              </Link>
-
-              <Link
-                href="/emergency"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/emergency" ? "bg-gray-200" : ""
-                }`}
-              >
-                Emergency
-              </Link>
-              <Link
-                href="/pricing"
-                className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
-                  pathname === "/pricing" ? "bg-gray-200" : ""
-                }`}
-              >
-                Pricing
-              </Link>
+              {
+                /* Mobile menu links go here */
+                navbarLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                      pathname === link.href ? "bg-gray-200" : ""
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))
+              }
             </div>
           </div>
         ) : (

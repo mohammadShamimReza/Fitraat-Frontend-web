@@ -14,8 +14,10 @@ import { Quicksand } from "next/font/google";
 import { usePathname } from "next/navigation";
 
 // If loading a variable font, you don't need to specify the font weight
-const inter = Quicksand({
-  subsets: ["latin-ext"],
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -28,7 +30,7 @@ export default function RootLayout({
   const siteUrl = usePathname();
   return (
     <Providers>
-      <html lang="en" className={inter.className}>
+      <html lang="en" className={quicksand.className}>
         <Head>
           {/* Global SEO Tags */}
           <title>Fitraat - Discover Your True Potential</title>

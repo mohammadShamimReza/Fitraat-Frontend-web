@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaRegSmileBeam } from "react-icons/fa";
-import DayFinishImage from "../assets/dayFinish.gif";
+import DayFinishImage from "../../app/assets/dayFinish.gif";
 import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 

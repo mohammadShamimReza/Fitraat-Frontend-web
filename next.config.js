@@ -23,14 +23,17 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [
-      "i.ibb.co",
-      "res.cloudinary.com",
-      "svgrepo.com",
-      "delamere.com",
-      "localhost",
-      "reliable-deer-385e3b81c0.media.strapiapp.com",
-    ], // Add the hostname for your images here
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "1337", // optional, only if your Strapi runs on 1337
+      },
+      {
+        protocol: "https",
+        hostname: "reliable-deer-385e3b81c0.media.strapiapp.com",
+      },
+    ],
   },
 };
 

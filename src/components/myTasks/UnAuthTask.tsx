@@ -11,10 +11,9 @@ import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
 import { clearDayData } from "@/redux/slice/daySlice";
-import DayFinishImage from "../assets/dayFinish.gif";
+import DayFinishImage from "../../app/assets/dayFinish.gif";
 
 function UnAuthTask({ payment }: { payment: string | undefined }) {
-  console.log("start");
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 

@@ -96,7 +96,6 @@ const PaymentPage: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
-        background: "#f5f6fa",
         padding: 20,
       }}
     >
