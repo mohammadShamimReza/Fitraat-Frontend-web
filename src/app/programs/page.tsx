@@ -1,13 +1,17 @@
 "use client";
 
+import { useAppSelector } from "@/redux/hooks";
 import { PlayCircleOutlined, ReadOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import FancyLoading from "../loading";
 import bannerImage from "./../../app/assets/banner.webp";
 
 type Program = {
   id: number;
+  link: string;
   title: string;
   image: StaticImageData;
   description: string;
@@ -18,17 +22,21 @@ type Program = {
 const programs: Program[] = [
   {
     id: 1,
+    link: "/tasks",
     title: "Porn Recovery Program",
     image: bannerImage,
     description:
       "A structured 40-day journey to overcome pornography addiction with guided videos, daily tasks, and community support.",
     details:
       "A psychology-backed recovery path with daily lessons, accountability tasks, and progress tracking. Designed to rebuild self-control, resilience, and healthy habits.",
-    tags: ["porn", "young", "ed"], // example tags
+    tags: ["porn", "recovary", "pe", "ed"], // example tags
   },
   {
     id: 2,
+    link: "/kagel-exercise",
+
     title: "Kegel Exercise Program",
+
     image: bannerImage,
     description:
       "Guided Kegel exercises to improve pelvic strength, control and confidence — with timed sessions and progress tracking.",
@@ -38,6 +46,8 @@ const programs: Program[] = [
   },
   {
     id: 3,
+    link: "/child-protection",
+
     title: "Protect Your Child from Porn",
     image: bannerImage,
     description:
@@ -51,21 +61,22 @@ const programs: Program[] = [
 const ProgramsPage: React.FC = () => {
   const [selected, setSelected] = useState<Program | null>(null);
   const [mounted, setMounted] = useState(false);
+  const userData = useAppSelector((state) => state.auth.userInfo);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) return <FancyLoading />;
 
   return (
     <main className="min-h-screen py-12 px-6 sm:px-10">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-8">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center mb-8 underline">
           Our Programs
         </h1>
 
-        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
+        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-20">
           Choose a program that fits your needs — guided recovery, physical
           exercises, or tools for protecting children online. Click{" "}
           <span className="font-medium">Try It</span> to begin or{" "}
@@ -97,7 +108,7 @@ const ProgramsPage: React.FC = () => {
                 }
               >
                 <div className="px-1 pb-2">
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 ">
                     {p.title}
                   </h2>
 
@@ -114,15 +125,18 @@ const ProgramsPage: React.FC = () => {
                   </p>
 
                   <div className="flex items-center justify-between gap-3">
-                    <Button
-                      type="primary"
-                      icon={<PlayCircleOutlined />}
-                      size="middle"
-                      onClick={() => alert(`Starting: ${p.title}`)}
-                      className="flex-1 flex items-center justify-center gap-2 py-2 rounded-md"
-                    >
-                      Try It
-                    </Button>
+                    <Link href={`/programs/${p.link}`} className="flex-1">
+                      <Button
+                        type="primary"
+                        icon={<PlayCircleOutlined />}
+                        size="middle"
+                        className="w-full flex items-center justify-center gap-2 py-2 rounded-md"
+                      >
+                        {!userData || userData?.fitraatPayment !== "Complete"
+                          ? "Try It"
+                          : "Continue"}
+                      </Button>
+                    </Link>
 
                     <Button
                       type="default"

@@ -4,21 +4,36 @@ import Footer from "@/components/structure/Footer";
 import NavBar from "@/components/structure/NavBar";
 import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import localFont from "next/font/local";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import "./globals.css";
 
 import Hero from "@/components/structure/Hero";
-import { Quicksand } from "next/font/google";
+import { ConfigProvider } from "antd";
 import { usePathname } from "next/navigation";
 
 // If loading a variable font, you don't need to specify the font weight
-
-const quicksand = Quicksand({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
+const quicksand = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Quicksand/Quicksand-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Quicksand/Quicksand-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Quicksand/Quicksand-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-quicksand",
 });
 
 export default function RootLayout({
@@ -77,30 +92,38 @@ export default function RootLayout({
         </Head>
         <body>
           <AntdRegistry>
-            <div className="">
-              <div className="w-full bg-gray-800 text-white py-1 px-2 flex justify-center items-center space-x-4 text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden">
-                <span className="font-semibold">Stand with Palestine 🇧🇩</span>
-                <Link target="blank" href={palastineHelpUrl} passHref>
-                  <p
-                    className="underline font-semibold hover:text-gray-200 transition-colors duration-200"
-                    rel="noopener noreferrer"
-                  >
-                    Support 🇵🇸
-                  </p>
-                </Link>
-              </div>
-              <div className="sticky top-0 z-50 bg-white shadow-sm">
-                <div className="mx-auto max-w-7xl">
-                  <NavBar />
+            <ConfigProvider
+              theme={{
+                token: {
+                  fontFamily: quicksand.style.fontFamily,
+                },
+              }}
+            >
+              <div className="">
+                <div className="w-full bg-gray-800 text-white py-1 px-2 flex justify-center items-center space-x-4 text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden">
+                  <span className="font-semibold">Stand with Palestine 🇧🇩</span>
+                  <Link target="blank" href={palastineHelpUrl} passHref>
+                    <p
+                      className="underline font-semibold hover:text-gray-200 transition-colors duration-200"
+                      rel="noopener noreferrer"
+                    >
+                      Support 🇵🇸
+                    </p>
+                  </Link>
                 </div>
+                <div className="sticky top-0 z-50 bg-white shadow-sm">
+                  <div className="mx-auto max-w-7xl">
+                    <NavBar />
+                  </div>
+                </div>
+
+                <Hero />
+
+                <div className="mx-auto max-w-6xl">{children}</div>
+                <Footer />
               </div>
-
-              <Hero />
-
-              <div className="mx-auto max-w-6xl">{children}</div>
-              <Footer />
-            </div>
-            <CookieConsent />
+              <CookieConsent />
+            </ConfigProvider>
           </AntdRegistry>
         </body>
       </html>

@@ -36,7 +36,7 @@ export default function Hero() {
             Recover Your Life from Porn Addiction
           </h1>
 
-          <Link href="/tasks" className="inline-block">
+          <Link href="/programs/tasks" className="inline-block">
             <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-bold shadow-lg transition-transform transform hover:scale-105">
               Get Started Now
             </button>
