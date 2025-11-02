@@ -163,7 +163,7 @@ export interface DayData {
   meta: Meta;
 }
 
-export type FitraatPaymentStatus = "Complete" | "Not complete";
+export type PaymentStatus = "Complete" | "Not complete";
 export type Gender = "Male" | "Female" | null;
 export interface UserData {
   id: number;
@@ -178,11 +178,14 @@ export interface UserData {
   currentDay: number;
   gender: Gender;
   startDate: string | null;
-  fitraatPayment: FitraatPaymentStatus;
+  fitraatPayment: PaymentStatus;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   tran_id: string | null;
+  childProtectionPayment: PaymentStatus;
+  profileImage: StrapiImage | null;
+  kagelPayment: PaymentStatus;
 }
 
 export interface UserDataWithDay {
@@ -198,7 +201,7 @@ export interface UserDataWithDay {
   currentDay: number;
   gender: Gender | null;
   startDate: string | null;
-  fitraatPayment: FitraatPaymentStatus;
+  fitraatPayment: PaymentStatus;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
