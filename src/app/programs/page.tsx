@@ -87,12 +87,12 @@ const ProgramsPage: React.FC = () => {
           {programs.map((p) => (
             <article
               key={p.id}
-              className="transform transition duration-300 hover:-translate-y-2"
+              className="transform transition duration-300 hover:-translate-y-2 "
             >
               <Card
                 hoverable
                 bordered={false}
-                className="rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
+                className="rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 !cursor-default "
                 cover={
                   <div className="relative h-56 w-full bg-gray-100">
                     <Image
