@@ -23,18 +23,7 @@ export const blogApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
-    get3TrendingFreeBlog: builder.query({
-      query: () =>
-        `${BLOG}?sort[0]=viewCount:desc&fields[0]=title&fields[1]=content&fields[2]=imageURL&fields[3]=viewCount&pagination[page]=1&pagination[pageSize]=3`,
-      transformResponse: (rawResult: BlogData) => {
-        return rawResult;
-      },
-    }),
   }),
 });
 
-export const {
-  useGetFreeBlogsQuery,
-  useGetFreeBlogsByIdQuery,
-  useGet3TrendingFreeBlogQuery,
-} = blogApi;
+export const { useGetFreeBlogsQuery, useGetFreeBlogsByIdQuery } = blogApi;

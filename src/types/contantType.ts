@@ -139,6 +139,21 @@ export type FreeKagel = {
   kagelTimes: KagelTime[];
 };
 
+export interface KegelDayIndividualSession {
+  id: number;
+  documentId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  dayCount: number;
+  morningkagel: KagelTime[];
+  afternoonKagel: KagelTime[];
+  nightKagel: KagelTime[];
+}
+export interface KegelIndividualResponse {
+  data: KegelDayIndividualSession[];
+  meta: Meta;
+}
 export type Day = {
   id: number;
   documentId: string;
