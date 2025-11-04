@@ -27,40 +27,50 @@ export default function KegelPage({ kegel, DayCount }: Props) {
 
   const [selectedDay, setSelectedDay] = useState(DayCount);
   const [completedSessions, setCompletedSessions] = useState<
-    Record<number, string[]>
-  >({});
-  // ✅ Load progress from localStorage
-  useEffect(() => {
+    Record<string, boolean>
+  >(() => {
     const saved = localStorage.getItem("kegelProgress");
-    if (saved) {
-      setCompletedSessions(JSON.parse(saved));
-    }
-  }, []);
+    return saved
+      ? JSON.parse(saved)
+      : {
+          morning: false,
+          afternoon: false,
+          night: false,
+        };
+  });
+
+  // ✅ Load progress from localStorage
   useEffect(() => {
     localStorage.setItem("kegelProgress", JSON.stringify(completedSessions));
   }, [completedSessions]);
 
-  const markSessionComplete = (day: number, sessionType: string) => {
+  useEffect(() => {
+    localStorage.setItem("kegelProgress", JSON.stringify(completedSessions));
+  }, [completedSessions]);
+
+  const markSessionComplete = (sessionType: string) => {
     setCompletedSessions((prev) => {
-      const currentDaySessions = prev[day] || [];
-      if (!currentDaySessions.includes(sessionType)) {
-        const updated = {
-          ...prev,
-          [day]: [...currentDaySessions, sessionType],
-        };
-        localStorage.setItem("kegelProgress", JSON.stringify(updated));
-        return updated;
+      if (!prev[sessionType]) {
+        return { ...prev, [sessionType]: true };
       }
       return prev;
     });
   };
 
   const canAccessSession = (day: number, session: string): boolean => {
-    const completed = completedSessions[day] || [];
-    if (session === "Morning") return true;
-    if (session === "Afternoon") return completed.includes("morning");
-    if (session === "Night")
-      return completed.includes("morning") && completed.includes("afternoon");
+    // For the current day, check based on completed sessions
+    console.log(day);
+    if (day < selectedDay) return true;
+    if (day === selectedDay) {
+      if (session === "morning") return true;
+      if (session === "afternoon") return completedSessions.morning === true;
+      if (session === "night")
+        return (
+          completedSessions.morning === true &&
+          completedSessions.afternoon === true
+        );
+    }
+
     return false;
   };
 
@@ -70,7 +80,7 @@ export default function KegelPage({ kegel, DayCount }: Props) {
     const currentDay = selectedDay;
 
     // Auto-mark the current session complete
-    markSessionComplete(currentDay, selectedSession);
+    markSessionComplete(selectedSession);
 
     if (direction === "next") {
       if (currentIndex < sessions.length - 1) {
@@ -78,6 +88,7 @@ export default function KegelPage({ kegel, DayCount }: Props) {
         setSelectedSession(sessions[currentIndex + 1] as any);
       } else {
         // If last session → move to next day morning
+
         if (currentDay < 40) {
           setSelectedDay(currentDay + 1);
           setSelectedSession("morning");
@@ -98,7 +109,7 @@ export default function KegelPage({ kegel, DayCount }: Props) {
   };
 
   const renderSessionItem = (day: number, session: string) => {
-    const isCompleted = completedSessions[day]?.includes(session.toLowerCase());
+    const isCompleted = completedSessions[session.toLowerCase()] === true;
     const isActive =
       day === selectedDay && selectedSession === session.toLowerCase();
     const accessible = canAccessSession(day, session);
@@ -112,7 +123,7 @@ export default function KegelPage({ kegel, DayCount }: Props) {
               ? "bg-blue-100 text-blue-700 font-semibold"
               : "hover:bg-gray-100"
           }
-          ${!accessible ? "opacity-50 cursor-not-allowed" : ""}
+          ${!accessible ? "opacity-50 !cursor-not-allowed" : ""}
         `}
         onClick={() => {
           if (!accessible) return;
@@ -124,17 +135,22 @@ export default function KegelPage({ kegel, DayCount }: Props) {
         <span>{session}</span>
         <FaCheckCircle
           size={18}
-          style={{
-            color: isCompleted ? "#10b981" : "#d1d5db",
-          }}
+          className={`${
+            (isCompleted && day === selectedDay) || day < selectedDay
+              ? "text-green-500"
+              : "text-gray-300"
+          }`}
         />
       </div>
     );
   };
 
   const renderDayItem = (day: number) => {
-    const sessions = ["Morning", "Afternoon", "Night"];
-    const allCompleted = completedSessions[day]?.length === sessions.length;
+    const sessions = ["morning", "afternoon", "night"];
+    const allCompleted =
+      day < selectedDay ||
+      (day === selectedDay &&
+        sessions.every((s) => completedSessions[s.toLowerCase()] === true));
     return (
       <details
         key={day}
