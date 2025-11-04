@@ -159,13 +159,13 @@ function NavBar() {
               </div>
             </div>
 
-            <div className="  flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer">
+            <div className="  flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer ">
               {!authenticated ? (
-                <div className="relative ml-3">
+                <div className="relative ml-3 mt-2">
                   <Link href={"/login"}>
                     <span className="sr-only">Login</span>
                     <span className="flex items-center gap-1 text-md hover:bg-gray-100 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span>Login</span>
+                      <span className="">Login</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"
