@@ -5,13 +5,14 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearDayData } from "@/redux/slice/daySlice";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
 import { ProKagelTime, ProQuiz } from "@/types/contantType";
-import { Button, message, Modal, Skeleton } from "antd";
+import { Button, message, Modal } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaRegSmileBeam } from "react-icons/fa";
 import DayFinishImage from "../../app/assets/dayFinish.gif";
+import ProgramSclaton from "../structure/ProgramSclaton";
 import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
@@ -162,24 +163,7 @@ function AuthMyTask({
   if (isLoading) {
     return (
       <>
-        <div className="flex h-screen mt-10">
-          {/* Sidebar */}
-          <div className="w-1/4 bg-gray-200 p-4 rounded-md  mt-10">
-            <Skeleton active title={false} paragraph={{ rows: 5 }} />
-          </div>
-
-          {/* Content Box */}
-          <div className="flex-1 bg-white p-20">
-            <Skeleton
-              active
-              title={{ width: "60%" }}
-              paragraph={{
-                rows: 10,
-                width: ["100%", "90%", "80%", "70%", "50%"],
-              }}
-            />
-          </div>
-        </div>
+        <ProgramSclaton />
       </>
     );
   }

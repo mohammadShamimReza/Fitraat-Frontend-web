@@ -5,7 +5,6 @@ import ProgramSclaton from "@/components/structure/ProgramSclaton";
 import { useAppSelector } from "@/redux/hooks";
 import React, { lazy, Suspense, useEffect, useState } from "react";
 
-// Reusable Skeleton Loader
 
 const AuthMyTask = lazy(() => import("@/components/myTasks/AuthMyTask"));
 
