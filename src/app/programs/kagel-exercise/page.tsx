@@ -9,7 +9,6 @@ const KagelIndividualPage: React.FC = () => {
   const router = useRouter();
   const { data, isLoading, isError } = useGetKagelIndividualByDayIdQuery("1");
 
-  console.log(data?.data[0].afternoonKagel);
 
   const kagel = {
     morningkagel: data?.data[0].morningkagel,

@@ -294,8 +294,8 @@ function Kagel({
             })}
           </div>
 
-          <span className="text-red-500">
-            {setIndex + 1 === totalSets ? "Last finishing" : ""}
+          <span className="text-red-500 block min-h-[1em]">
+            {setIndex + 1 === totalSets ? "Last finishing" : "\u00A0"}
           </span>
           <br />
 

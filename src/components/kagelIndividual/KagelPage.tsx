@@ -3,7 +3,7 @@
 import Kagel from "@/components/myTasks/taskPages/Kagel";
 import { KagelTime } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
@@ -18,6 +18,8 @@ interface Props {
 }
 
 export default function KegelPage({ kegel, DayCount }: Props) {
+  const sessions = ["morning", "afternoon", "night"];
+
   const [isSidebarVisible, setSidebarVisible] = useState(false);
   const [selectedSession, setSelectedSession] = useState<
     "morning" | "afternoon" | "night"
@@ -26,23 +28,80 @@ export default function KegelPage({ kegel, DayCount }: Props) {
   const [selectedDay, setSelectedDay] = useState(DayCount);
   const [completedSessions, setCompletedSessions] = useState<
     Record<number, string[]>
-  >({}); // e.g. { 1: ["morning"], 2: ["morning", "afternoon"] }
+  >({});
+  // ✅ Load progress from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("kegelProgress");
+    if (saved) {
+      setCompletedSessions(JSON.parse(saved));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("kegelProgress", JSON.stringify(completedSessions));
+  }, [completedSessions]);
 
-  const handleCompleteSession = (sessionType: string) => {
+  const markSessionComplete = (day: number, sessionType: string) => {
     setCompletedSessions((prev) => {
-      const prevSessions = prev[selectedDay] || [];
-      if (prevSessions.includes(sessionType)) return prev;
-      return {
-        ...prev,
-        [selectedDay]: [...prevSessions, sessionType],
-      };
+      const currentDaySessions = prev[day] || [];
+      if (!currentDaySessions.includes(sessionType)) {
+        const updated = {
+          ...prev,
+          [day]: [...currentDaySessions, sessionType],
+        };
+        localStorage.setItem("kegelProgress", JSON.stringify(updated));
+        return updated;
+      }
+      return prev;
     });
   };
 
+  const canAccessSession = (day: number, session: string): boolean => {
+    const completed = completedSessions[day] || [];
+    if (session === "Morning") return true;
+    if (session === "Afternoon") return completed.includes("morning");
+    if (session === "Night")
+      return completed.includes("morning") && completed.includes("afternoon");
+    return false;
+  };
+
+  // ✅ Handle next/previous navigation
+  const handleNavigation = (direction: "next" | "prev") => {
+    const currentIndex = sessions.indexOf(selectedSession);
+    const currentDay = selectedDay;
+
+    // Auto-mark the current session complete
+    markSessionComplete(currentDay, selectedSession);
+
+    if (direction === "next") {
+      if (currentIndex < sessions.length - 1) {
+        // Move to next session (same day)
+        setSelectedSession(sessions[currentIndex + 1] as any);
+      } else {
+        // If last session → move to next day morning
+        if (currentDay < 40) {
+          setSelectedDay(currentDay + 1);
+          setSelectedSession("morning");
+        }
+      }
+    } else {
+      if (currentIndex > 0) {
+        // Move to previous session (same day)
+        setSelectedSession(sessions[currentIndex - 1] as any);
+      } else {
+        // If morning → move to previous day night
+        if (currentDay > 1) {
+          setSelectedDay(currentDay - 1);
+          setSelectedSession("night");
+        }
+      }
+    }
+  };
+
   const renderSessionItem = (day: number, session: string) => {
-    const isCompleted = completedSessions[day]?.includes(session);
+    const isCompleted = completedSessions[day]?.includes(session.toLowerCase());
     const isActive =
       day === selectedDay && selectedSession === session.toLowerCase();
+    const accessible = canAccessSession(day, session);
 
     return (
       <div
@@ -52,8 +111,11 @@ export default function KegelPage({ kegel, DayCount }: Props) {
             isActive
               ? "bg-blue-100 text-blue-700 font-semibold"
               : "hover:bg-gray-100"
-          }`}
+          }
+          ${!accessible ? "opacity-50 cursor-not-allowed" : ""}
+        `}
         onClick={() => {
+          if (!accessible) return;
           setSelectedDay(day);
           setSelectedSession(session.toLowerCase() as any);
           setSidebarVisible(false);
@@ -142,17 +204,11 @@ export default function KegelPage({ kegel, DayCount }: Props) {
         )}
 
         {/* Main Content */}
-        <div className="  p-6 border rounded-lg bg-gray-50 ">
+        <div className="  p-6 border rounded-lg bg-gray-50 w-full">
           <div className="flex justify-between items-center mb-5">
             <h2 className="text-xl font-semibold">
               Day {selectedDay} – {selectedSession.toUpperCase()} Kegel
             </h2>
-            <button
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
-              onClick={() => handleCompleteSession(selectedSession)}
-            >
-              Mark as Complete
-            </button>
           </div>
 
           <div className="flex justify-center ">
@@ -171,26 +227,26 @@ export default function KegelPage({ kegel, DayCount }: Props) {
           <div className="flex justify-between mt-8">
             <button
               className={`px-4 py-2 rounded text-white ${
-                selectedDay === 1
+                selectedDay === 1 && selectedSession === "morning"
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-gray-600 hover:bg-gray-700"
               }`}
-              onClick={() => setSelectedDay((d) => Math.max(1, d - 1))}
-              disabled={selectedDay === 1}
+              onClick={() => handleNavigation("prev")}
+              disabled={selectedDay === 1 && selectedSession === "morning"}
             >
               <ArrowLeftOutlined className="mr-2" />
-              Previous Day
+              Previous
             </button>
             <button
               className={`px-4 py-2 rounded text-white ${
-                selectedDay === 40
+                selectedDay === 40 && selectedSession === "night"
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-gray-600 hover:bg-gray-700"
               }`}
-              onClick={() => setSelectedDay((d) => Math.min(40, d + 1))}
-              disabled={selectedDay === 40}
+              onClick={() => handleNavigation("next")}
+              disabled={selectedDay === 40 && selectedSession === "night"}
             >
-              Next Day
+              Next
               <ArrowRightOutlined className="ml-2" />
             </button>
           </div>
