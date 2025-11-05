@@ -59,7 +59,6 @@ export default function KegelPage({ kegel, DayCount }: Props) {
 
   const canAccessSession = (day: number, session: string): boolean => {
     // For the current day, check based on completed sessions
-    console.log(day);
     if (day < selectedDay) return true;
     if (day === selectedDay) {
       if (session === "morning") return true;

@@ -68,7 +68,7 @@ function LoginPage() {
             dispatch(storeAuthToken(result?.data?.jwt));
 
             dispatch(storeUserInfo(result?.data?.user));
-          window.location.replace("/tasks");
+          window.location.replace("/programs");
           }
         } catch (error) {
           console.log(error);

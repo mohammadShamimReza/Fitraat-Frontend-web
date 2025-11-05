@@ -34,7 +34,7 @@ function ProfilePage() {
     isError: getUserInfoDataError,
     isSuccess: getUserInfoSuccess,
   } = useGetUserInfoQuery();
-
+console.log(getUserInfoData, "user info");
   const [
     updataUserDay,
     {
