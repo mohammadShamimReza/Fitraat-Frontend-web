@@ -17,11 +17,7 @@ export const blogApi = baseApi.injectEndpoints({
         url: `users/${body.userId}`,
         method: "PUT",
         body: {
-          completedInfo: {
-            kagel: {
-              dayNumber: body.compliteDay,
-            },
-          },
+          kagelIndividualDayNumber: body.compliteDay,
         },
       }),
       transformResponse: (rawResult) => {

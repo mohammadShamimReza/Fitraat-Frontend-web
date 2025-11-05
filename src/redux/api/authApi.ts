@@ -33,7 +33,7 @@ export const daysApi = baseApi.injectEndpoints({
     }),
     getUserInfo: builder.query<UserDataWithDay, void>({
       query: () => ({
-        url: `users/me?populate[0]=profileImage&populate[1]=completedInfo.Day&populate[2]=completedInfo.kagel&populate[3]=completedInfo.childProtection`,
+        url: `users/me?populate=*`,
       }),
       transformResponse: (rawResult: UserDataWithDay) => {
         return rawResult;

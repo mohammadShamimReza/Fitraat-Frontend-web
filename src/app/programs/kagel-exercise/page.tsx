@@ -10,10 +10,9 @@ import React, { Suspense, useEffect, useState } from "react";
 const KagelIndividualPage: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
   const userData = useAppSelector((state) => state.auth.userInfo);
-  console.log(userData);
   useEffect(() => setIsMounted(true), []);
   const router = useRouter();
-  const currentDay = userData?.completedInfo?.Day?.dayNumber.toString() || "1";
+  const currentDay = userData?.kagelIndividualDayNumber.toString() || "1";
 
   const {
     data: kagelData,
@@ -21,7 +20,6 @@ const KagelIndividualPage: React.FC = () => {
     isError,
   } = useGetKagelIndividualByDayIdQuery(currentDay);
 
-  console.log(kagelData, "Kagel data");
   const kagel = {
     morningkagel: kagelData?.data[0].morningkagel,
     afternoonKagel: kagelData?.data[0].afternoonKagel,

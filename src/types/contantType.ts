@@ -218,7 +218,8 @@ export interface UserData {
   childProtectionPayment: PaymentStatus;
   profileImage: StrapiImage | null;
   kagelPayment: PaymentStatus;
-  completedInfo: CompletedInfo;
+  kagelIndividualDayNumber: number;
+  childProtectionDayNumber: number;
 }
 
 export interface UserDataWithDay {
