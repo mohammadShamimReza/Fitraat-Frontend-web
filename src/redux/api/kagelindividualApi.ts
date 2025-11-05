@@ -12,9 +12,28 @@ export const blogApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
+    updateUserKagelDay: builder.mutation({
+      query: (body) => ({
+        url: `users/${body.userId}`,
+        method: "PUT",
+        body: {
+          completedInfo: {
+            kagel: {
+              dayNumber: body.compliteDay,
+            },
+          },
+        },
+      }),
+      transformResponse: (rawResult) => {
+        return rawResult;
+      },
+      invalidatesTags: ["updateUserDay"],
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return baseQueryReturnValue.data;
+      },
+    }),
   }),
 });
 
-export const {
-useGetKagelIndividualByDayIdQuery
-} = blogApi;
+export const { useGetKagelIndividualByDayIdQuery, useUpdateUserKagelDayMutation } =
+  blogApi;

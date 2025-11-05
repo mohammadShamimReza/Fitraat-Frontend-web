@@ -1,7 +1,8 @@
 "use client";
 
 import Kagel from "@/components/myTasks/taskPages/Kagel";
-import { KagelTime } from "@/types/contantType";
+import { useUpdateUserKagelDayMutation } from "@/redux/api/kagelindividualApi";
+import { KagelTime, PaymentStatus } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -15,9 +16,12 @@ interface Props {
     nightKagel: KagelTime[] | undefined;
   };
   DayCount: number;
+  payment: PaymentStatus | undefined;
+  userId: number | undefined;
 }
 
-export default function KegelPage({ kegel, DayCount }: Props) {
+export default function KegelPage({ kegel, DayCount, payment, userId }: Props) {
+  const [updateUserKagelDay] = useUpdateUserKagelDayMutation();
   const sessions = ["morning", "afternoon", "night"];
 
   const [isSidebarVisible, setSidebarVisible] = useState(false);
@@ -74,7 +78,7 @@ export default function KegelPage({ kegel, DayCount }: Props) {
   };
 
   // ✅ Handle next/previous navigation
-  const handleNavigation = (direction: "next" | "prev") => {
+  const handleNavigation = async (direction: "next" | "prev") => {
     const currentIndex = sessions.indexOf(selectedSession);
     const currentDay = selectedDay;
 
@@ -89,7 +93,12 @@ export default function KegelPage({ kegel, DayCount }: Props) {
         // If last session → move to next day morning
 
         if (currentDay < 40) {
-          setSelectedDay(currentDay + 1);
+          const res = await updateUserKagelDay({
+            compliteDay: currentDay + 1,
+            userId: userId,
+          });
+          console.log(res, "res");
+          // setSelectedDay(currentDay + 1);
           setSelectedSession("morning");
         }
       }
@@ -100,7 +109,7 @@ export default function KegelPage({ kegel, DayCount }: Props) {
       } else {
         // If morning → move to previous day night
         if (currentDay > 1) {
-          setSelectedDay(currentDay - 1);
+          // setSelectedDay(currentDay - 1);
           setSelectedSession("night");
         }
       }
@@ -126,7 +135,7 @@ export default function KegelPage({ kegel, DayCount }: Props) {
         `}
         onClick={() => {
           if (!accessible) return;
-          setSelectedDay(day);
+          // setSelectedDay(day);
           setSelectedSession(session.toLowerCase() as any);
           setSidebarVisible(false);
         }}
@@ -181,9 +190,14 @@ export default function KegelPage({ kegel, DayCount }: Props) {
   const allDays = Array.from({ length: 40 }, (_, i) => i + 1);
 
   return (
-    <div className="mx-auto  p-3 relative mt-10 ">
-      <div className="flex">
+    <div className={`mx-auto  p-3 relative mt-10 `}>
+      <div
+        className={`flex relative ${
+          payment === "Complete" ? "" : "blur-sm pointer-events-none"
+        }`}
+      >
         {/* Sidebar */}
+
         <div
           className={` fixed inset-0 z-20 bg-white min-w-64 transition-transform transform md:translate-x-0 md:static 
         ${isSidebarVisible ? "translate-x-0" : "-translate-x-full"}`}
@@ -267,6 +281,20 @@ export default function KegelPage({ kegel, DayCount }: Props) {
           </div>
         </div>
       </div>
+      {payment !== "Complete" && (
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-white/40 backdrop-blur-sm rounded-lg">
+          <p className="text-gray-800 font-semibold mb-3 text-sm sm:text-base">
+            To use this kagel exercise feature, please
+            <span className="text-blue-700 font-bold"> Make Payment</span>
+          </p>
+          <button
+            onClick={() => (window.location.href = "/payment")}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm sm:text-base transition-all duration-300 shadow-md"
+          >
+            Go to Payment
+          </button>
+        </div>
+      )}
     </div>
   );
 }

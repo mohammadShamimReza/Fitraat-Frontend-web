@@ -28,12 +28,20 @@ const KagelIndividualPage: React.FC = () => {
     nightKagel: kagelData?.data[0].nightKagel,
   };
   const dayCount = kagelData?.data[0].dayCount || 1;
+  const payment = userData?.kagelPayment;
+  const userId = userData?.id;
   if (!isMounted || !kagelData) return <ProgramSclaton />;
   const key = kagelData?.data[0].id || "defaultKey";
   return (
     <Suspense fallback={<ProgramSclaton />}>
       {" "}
-      <KegelPage DayCount={dayCount} kegel={kagel} key={key} />
+      <KegelPage
+        DayCount={dayCount}
+        kegel={kagel}
+        key={key}
+        payment={payment}
+        userId={userId}
+      />
     </Suspense>
   );
 };
