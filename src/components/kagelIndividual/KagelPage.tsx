@@ -4,10 +4,14 @@ import Kagel from "@/components/myTasks/taskPages/Kagel";
 import { useUpdateUserKagelDayMutation } from "@/redux/api/kagelindividualApi";
 import { KagelTime, PaymentStatus } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import { Button, Modal } from "antd";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import DayFinishImage from "../../app/assets/dayFinish.gif";
 
 interface Props {
   kegel: {
@@ -18,16 +22,31 @@ interface Props {
   DayCount: number;
   payment: PaymentStatus | undefined;
   userId: number | undefined;
+  setDay: (day: string) => void;
 }
 
-export default function KegelPage({ kegel, DayCount, payment, userId }: Props) {
+export default function KegelPage({
+  kegel,
+  DayCount,
+  payment,
+  userId,
+  setDay,
+}: Props) {
+  const router = useRouter();
+
   const [updateUserKagelDay] = useUpdateUserKagelDayMutation();
   const sessions = ["morning", "afternoon", "night"];
-
+  const [loading, setLoading] = useState(false);
   const [isSidebarVisible, setSidebarVisible] = useState(false);
   const [selectedSession, setSelectedSession] = useState<
     "morning" | "afternoon" | "night"
   >("morning");
+  const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
+  const handleOk = () => {
+    setIsFinishModalOpen(false);
+
+    window.location.reload();
+  };
 
   const [selectedDay, setSelectedDay] = useState(DayCount);
   const [completedSessions, setCompletedSessions] = useState<
@@ -79,6 +98,7 @@ export default function KegelPage({ kegel, DayCount, payment, userId }: Props) {
 
   // ✅ Handle next/previous navigation
   const handleNavigation = async (direction: "next" | "prev") => {
+    setLoading(true);
     const currentIndex = sessions.indexOf(selectedSession);
     const currentDay = selectedDay;
 
@@ -92,14 +112,24 @@ export default function KegelPage({ kegel, DayCount, payment, userId }: Props) {
       } else {
         // If last session → move to next day morning
 
-        if (currentDay < 40) {
+        if (currentDay < 365) {
           const res = await updateUserKagelDay({
             compliteDay: currentDay + 1,
             userId: userId,
           });
           console.log(res, "res");
+          localStorage.setItem(
+            "kegelProgress",
+            JSON.stringify({
+              morning: false,
+              afternoon: false,
+              night: false,
+            })
+          );
+          setDay((currentDay + 1).toString());
           // setSelectedDay(currentDay + 1);
           setSelectedSession("morning");
+          setIsFinishModalOpen(true);
         }
       }
     } else {
@@ -114,6 +144,7 @@ export default function KegelPage({ kegel, DayCount, payment, userId }: Props) {
         }
       }
     }
+    setLoading(false);
   };
 
   const renderSessionItem = (day: number, session: string) => {
@@ -164,7 +195,7 @@ export default function KegelPage({ kegel, DayCount, payment, userId }: Props) {
         key={day}
         open={day === selectedDay}
         className={`mb-2 border rounded-lg ${
-          allCompleted ? "border-green-400 bg-green-50" : "border-gray-200"
+          allCompleted ? "border-green-3650 bg-green-50" : "border-gray-200"
         }`}
       >
         <summary
@@ -187,10 +218,27 @@ export default function KegelPage({ kegel, DayCount, payment, userId }: Props) {
     );
   };
 
-  const allDays = Array.from({ length: 40 }, (_, i) => i + 1);
+  const allDays = Array.from({ length: 365 }, (_, i) => i + 1);
 
   return (
     <div className={`mx-auto  p-3 relative mt-10 `}>
+      <Modal
+        title="Hurra you have finished kagel exercise! Congratulations"
+        open={isFinishModalOpen}
+        onOk={handleOk}
+        closable={false}
+        footer={[
+          <Button key="ok" type="primary" onClick={handleOk}>
+            Go to next day
+          </Button>,
+        ]}
+      >
+        <Image
+          className="mx-auto"
+          src={DayFinishImage}
+          alt="Day Fininsh Congratulation image"
+        />
+      </Modal>
       <div
         className={`flex relative ${
           payment === "Complete" ? "" : "blur-sm pointer-events-none"
@@ -257,32 +305,33 @@ export default function KegelPage({ kegel, DayCount, payment, userId }: Props) {
             <button
               className={`px-4 py-2 rounded text-white ${
                 selectedDay === 1 && selectedSession === "morning"
-                  ? "bg-gray-400 cursor-not-allowed"
+                  ? "bg-gray-3650 cursor-not-allowed"
                   : "bg-gray-600 hover:bg-gray-700"
-              }`}
+              } ${loading ? "cursor-not-allowed" : ""}`}
               onClick={() => handleNavigation("prev")}
               disabled={selectedDay === 1 && selectedSession === "morning"}
             >
               <ArrowLeftOutlined className="mr-2" />
-              Previous
+              {loading ? "Loading..." : "Previous"}
             </button>
             <button
               className={`px-4 py-2 rounded text-white ${
-                selectedDay === 40 && selectedSession === "night"
-                  ? "bg-gray-400 cursor-not-allowed"
+                selectedDay === 365 && selectedSession === "night"
+                  ? "bg-gray-3650 cursor-not-allowed"
                   : "bg-gray-600 hover:bg-gray-700"
-              }`}
+              } ${loading ? "cursor-not-allowed" : ""}`}
               onClick={() => handleNavigation("next")}
-              disabled={selectedDay === 40 && selectedSession === "night"}
+              disabled={selectedDay === 365 && selectedSession === "night"}
             >
-              Next
+              {loading ? "Loading..." : "Next"}
+
               <ArrowRightOutlined className="ml-2" />
             </button>
           </div>
         </div>
       </div>
       {payment !== "Complete" && (
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-white/40 backdrop-blur-sm rounded-lg">
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-white/365 backdrop-blur-sm rounded-lg">
           <p className="text-gray-800 font-semibold mb-3 text-sm sm:text-base">
             To use this kagel exercise feature, please
             <span className="text-blue-700 font-bold"> Make Payment</span>
