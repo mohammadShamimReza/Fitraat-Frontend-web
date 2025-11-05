@@ -7,11 +7,12 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import DayFinishImage from "../../app/assets/dayFinish.gif";
+import DayList from "./DayList";
 
 interface Props {
   kegel: {
@@ -33,6 +34,7 @@ export default function KegelPage({
   setDay,
 }: Props) {
   const router = useRouter();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [updateUserKagelDay] = useUpdateUserKagelDayMutation();
   const sessions = ["morning", "afternoon", "night"];
@@ -184,40 +186,6 @@ export default function KegelPage({
     );
   };
 
-  const renderDayItem = (day: number) => {
-    const sessions = ["morning", "afternoon", "night"];
-    const allCompleted =
-      day < selectedDay ||
-      (day === selectedDay &&
-        sessions.every((s) => completedSessions[s.toLowerCase()] === true));
-    return (
-      <details
-        key={day}
-        open={day === selectedDay}
-        className={`mb-2 border rounded-lg ${
-          allCompleted ? "border-green-3650 bg-green-50" : "border-gray-200"
-        }`}
-      >
-        <summary
-          className={`flex justify-between items-center px-4 py-2 cursor-pointer select-none rounded-t-lg ${
-            allCompleted ? "text-green-700 font-semibold" : ""
-          }`}
-        >
-          <span>Day {day}</span>
-          <FaCheckCircle
-            size={20}
-            style={{
-              color: allCompleted ? "#10b981" : "#d1d5db",
-            }}
-          />
-        </summary>
-        <div className="flex flex-col gap-1 px-2 pb-2">
-          {sessions.map((s) => renderSessionItem(day, s))}
-        </div>
-      </details>
-    );
-  };
-
   const allDays = Array.from({ length: 365 }, (_, i) => i + 1);
 
   return (
@@ -263,8 +231,19 @@ export default function KegelPage({
               <div className="text-center text-2xl font-light border-b p-2">
                 Kegel Days
               </div>
-              <div className="mt-4  w-full overflow-x-hidden overflow-y-scroll h-[550px]">
-                {allDays.map((day) => renderDayItem(day))}
+              <div
+                ref={scrollContainerRef}
+                className="mt-4  w-full overflow-x-hidden overflow-y-scroll h-[550px]"
+              >
+                {/* {allDays.map((day) => renderDayItem(day))} */}
+                <DayList
+                  key={selectedDay}
+                  allDays={allDays}
+                  completedSessions={completedSessions}
+                  renderSessionItem={renderSessionItem}
+                  selectedDay={selectedDay}
+                  parentRef={scrollContainerRef}
+                />
               </div>
             </div>
           </div>
@@ -347,3 +326,7 @@ export default function KegelPage({
     </div>
   );
 }
+
+
+
+
