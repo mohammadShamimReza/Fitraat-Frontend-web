@@ -482,3 +482,34 @@ export interface StrapiImage {
   updatedAt: string;
   publishedAt: string;
 }
+
+
+
+
+export interface ProtectionData {
+  id: number;
+  documentId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  numberCount: number;
+  protectionVideo: Video[];
+  title: string;
+}
+
+export interface ProtectionResponse {
+  data: ProtectionData[];
+  meta: Meta;
+}
+
+export interface ChildProtectionListResponse {
+  data: ChildProtectionItem[];
+  meta: Meta;
+}
+
+export interface ChildProtectionItem {
+  id: number;
+  documentId: string;
+  numberCount: number;
+  title: string;
+}

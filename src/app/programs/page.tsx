@@ -7,7 +7,9 @@ import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import FancyLoading from "../loading";
-import bannerImage from "./../../app/assets/banner.webp";
+import childProtection from "./../../app/assets/child-protection.png";
+import kagelIndividual from "./../../app/assets/kagelIndividual.png";
+import recovary from "./../../app/assets/recovary.png";
 
 type Program = {
   id: number;
@@ -24,7 +26,7 @@ const programs: Program[] = [
     id: 1,
     link: "/tasks",
     title: "Porn Recovery Program",
-    image: bannerImage,
+    image: recovary,
     description:
       "A structured 40-day journey to overcome pornography addiction with guided videos, daily tasks, and community support.",
     details:
@@ -37,7 +39,7 @@ const programs: Program[] = [
 
     title: "Kegel Exercise Program",
 
-    image: bannerImage,
+    image: kagelIndividual,
     description:
       "Guided Kegel exercises to improve pelvic strength, control and confidence — with timed sessions and progress tracking.",
     details:
@@ -48,8 +50,8 @@ const programs: Program[] = [
     id: 3,
     link: "/child-protection",
 
-    title: "Protect Your Child from Porn",
-    image: bannerImage,
+    title: "Save Your Child from Adultry",
+    image: childProtection,
     description:
       "Parent-focused guidance to protect children from exposure to pornography and build healthy digital habits.",
     details:
@@ -83,16 +85,16 @@ const ProgramsPage: React.FC = () => {
           <span className="font-medium">Read More</span> for details.
         </p>
 
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {programs.map((p) => (
             <article
               key={p.id}
-              className="transform transition duration-300 hover:-translate-y-2 "
+              className="transform transition duration-300 hover:-translate-y-2 h-full"
             >
               <Card
                 hoverable
                 bordered={false}
-                className="rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 !cursor-default "
+                className="rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 !cursor-default h-full flex flex-col"
                 cover={
                   <div className="relative h-56 w-full bg-gray-100">
                     <Image

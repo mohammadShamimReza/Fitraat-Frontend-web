@@ -312,7 +312,9 @@ export default function KegelPage({
       {payment !== "Complete" && (
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-white/365 backdrop-blur-sm rounded-lg">
           <p className="text-gray-800 font-semibold mb-3 text-sm sm:text-base">
-            To use this kagel exercise feature, please
+            To use this{" "}
+            <span className="text-blue-700 font-bold"> kagel exercise</span>{" "}
+            feature, please
             <span className="text-blue-700 font-bold"> Make Payment</span>
           </p>
           <button
