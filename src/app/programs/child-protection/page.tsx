@@ -1,50 +1,3 @@
-// "use client";
-
-// import CompletedKagelTask from "@/components/kagelIndividual/CompleteKagelTask";
-// import ProgramSclaton from "@/components/structure/ProgramSclaton";
-// import { useGetChildProtectionByDayIdQuery } from "@/redux/api/childProtectionApi";
-// import { useAppSelector } from "@/redux/hooks";
-// import { useRouter } from "next/navigation";
-// import React, { Suspense, useEffect, useState } from "react";
-
-// const ChildProtectionPage: React.FC = () => {
-//   const router = useRouter();
-
-//   const [isMounted, setIsMounted] = useState(false);
-//   const [day, setDay] = useState("1");
-
-//   const userData = useAppSelector((state) => state.auth.userInfo);
-//   useEffect(() => setIsMounted(true), []);
-
-//   useEffect(() => {
-//     if (userData) {
-//       setDay(userData.childProtectionDayNumber.toString());
-//     }
-//   }, [userData]);
-
-//   const {
-//     data: protectionData,
-//     isLoading,
-//     isError,
-//   } = useGetChildProtectionByDayIdQuery(day);
-
-//   if (!isMounted || !protectionData || isLoading) return <ProgramSclaton />;
-//   console.log(protectionData, "protection data");
-//   if (day > "10") {
-//     return <CompletedKagelTask />;
-//   }
-
-//   console.log(isLoading, "isLoading");
-
-//   const dayCount = protectionData?.data[0].numberCount || 1;
-//   const payment = userData?.kagelPayment;
-//   const userId = userData?.id;
-//   const key = protectionData?.data[0].id || "defaultKey";
-//   return <Suspense fallback={<ProgramSclaton />}> </Suspense>;
-// };
-
-// export default ChildProtectionPage;
-
 "use client";
 
 import CompletedKagelTask from "@/components/kagelIndividual/CompleteKagelTask";
@@ -52,8 +5,8 @@ import ProgramSclaton from "@/components/structure/ProgramSclaton";
 import {
   useGetChildProtectionAllTitleQuery,
   useGetChildProtectionByDayIdQuery,
+  useUpdateUserChildProtectionDayMutation,
 } from "@/redux/api/childProtectionApi";
-import { useUpdateUserKagelDayMutation } from "@/redux/api/kagelindividualApi";
 import { useAppSelector } from "@/redux/hooks";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
@@ -75,12 +28,10 @@ export default function ChildProtectionPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [day, setDay] = useState("1");
   const userData = useAppSelector((state) => state.auth.userInfo);
-  const [updateUserKagelDay] = useUpdateUserKagelDayMutation();
+  const [updateUserChildProtectionDay] =
+    useUpdateUserChildProtectionDayMutation();
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
-  const [selectedVideoIndex, setSelectedVideoIndex] = useState(0);
-  const [completedVideos, setCompletedVideos] = useState<
-    Record<number, boolean>
-  >({});
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
@@ -102,25 +53,17 @@ export default function ChildProtectionPage() {
     isLoading: titleLoading,
     isError: titleError,
   } = useGetChildProtectionAllTitleQuery(undefined);
-  console.log(titleData?.data, "title data");
   const handleOk = () => {
     setIsFinishModalOpen(false);
     window.location.reload();
   };
 
-  useEffect(() => {
-    const saved = localStorage.getItem("protectionProgress");
-    if (saved) setCompletedVideos(JSON.parse(saved));
-  }, []);
+  console.log(protectionData);
 
-  useEffect(() => {
-    localStorage.setItem("protectionProgress", JSON.stringify(completedVideos));
-  }, [completedVideos]);
-
-  if (!isMounted || isLoading || !protectionData || !titleData)
+  if (!isMounted || isLoading || !protectionData || !titleData || !userData)
     return <ProgramSclaton />;
 
-  const videos: ProtectionVideo[] =
+  const video: ProtectionVideo[] =
     protectionData?.data?.[0]?.protectionVideo?.map((v: any) => ({
       id: v.id,
       url: `http://localhost:1337${v.url}`,
@@ -133,31 +76,20 @@ export default function ChildProtectionPage() {
 
   if (parseInt(day) > 40) return <CompletedKagelTask />; // example limit
 
-  const handleMarkComplete = (videoId: number) => {
-    setCompletedVideos((prev) => ({ ...prev, [videoId]: true }));
-  };
-
   const handleNavigation = async (direction: "next" | "prev") => {
     setLoading(true);
 
     if (direction === "next") {
-      if (selectedVideoIndex < videos.length - 1) {
-        handleMarkComplete(videos[selectedVideoIndex].id);
-        setSelectedVideoIndex(selectedVideoIndex + 1);
-      } else {
-        // ✅ All videos done → next day
-        const res = await updateUserKagelDay({
-          compliteDay: parseInt(day) + 1,
-          userId,
-        });
-        console.log(res, "update day response");
-        localStorage.setItem("protectionProgress", "{}");
-        setIsFinishModalOpen(true);
-      }
+      // ✅ All videos done → next day
+      const res = await updateUserChildProtectionDay({
+        childProtectionDayNumber: parseInt(day) + 1,
+        userId,
+      });
+      console.log(res, "update day response");
+      setIsFinishModalOpen(true);
+      setDay((prevDay) => (parseInt(prevDay) + 1).toString());
     } else {
-      if (selectedVideoIndex > 0) {
-        setSelectedVideoIndex(selectedVideoIndex - 1);
-      }
+      setDay((prevDay) => (parseInt(prevDay) - 1).toString());
     }
     setLoading(false);
   };
@@ -186,13 +118,38 @@ export default function ChildProtectionPage() {
       >
         {/* ✅ Video Player Section (YouTube iframe version) */}
         <div className="border rounded-lg bg-black mb-6">
-          {videos[selectedVideoIndex] ? (
-            <VideoPlayer videoUrl={videos[selectedVideoIndex].url} />
+          {video ? (
+            <VideoPlayer videoUrl={video[0].url} />
           ) : (
             <div className="text-center text-white py-20">
               No videos available.
             </div>
           )}
+        </div>
+        {/* ✅ Navigation buttons */}
+        <div className="flex justify-between mt-8">
+          <button
+            className={`px-4 py-2 rounded text-white ${
+              day === "1"
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gray-600 hover:bg-gray-700"
+            }`}
+            disabled={day === "1" || loading}
+            onClick={() => handleNavigation("prev")}
+          >
+            <ArrowLeftOutlined className="mr-2" /> Previous
+          </button>
+
+          <button
+            className={`px-4 py-2 rounded text-white ${
+              day === "10" || loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gray-600 hover:bg-gray-700"
+            }`}
+            onClick={() => handleNavigation("next")}
+          >
+            Next <ArrowRightOutlined className="ml-2" />
+          </button>
         </div>
         {/* ✅ All Titles Scrollable Section */}
         {titleData?.data?.length > 0 && (
@@ -202,12 +159,19 @@ export default function ChildProtectionPage() {
             </h3>
             <div className="max-h-64 overflow-y-auto space-y-2 pr-2 scrollbar-hide">
               {titleData.data.map((item: any) => {
-                const isCompleted = completedVideos[item.id];
+                const isCompleted =
+                  day < userData?.childProtectionDayNumber?.toString();
 
                 return (
                   <div
                     key={item.id}
-                    className="flex justify-between items-center border p-3 rounded-lg hover:bg-gray-50 transition-all duration-200"
+                    className={`flex justify-between items-center border p-3 rounded-lg hover:bg-gray-200 transition-all duration-200 ${
+                      isCompleted ? "bg-green-100 " : ""
+                    } ${
+                      item.numberCount.toString() === day
+                        ? "bg-gray-100 border-blue-200"
+                        : ""
+                    }`}
                   >
                     <div className="flex items-center space-x-2">
                       <span className="font-medium text-gray-800">
@@ -218,8 +182,10 @@ export default function ChildProtectionPage() {
                     {/* ✅ Completion Circle */}
                     <div
                       className={`w-5 h-5 rounded-full border-2 ${
-                        isCompleted
-                          ? "bg-green-500 border-green-500"
+                        isCompleted ||
+                        item.numberCount.toString() <
+                          userData?.childProtectionDayNumber?.toString()
+                          ? "bg-green-500 border-green-700 "
                           : "border-gray-300"
                       }`}
                     />
@@ -229,32 +195,6 @@ export default function ChildProtectionPage() {
             </div>
           </div>
         )}
-
-        {/* ✅ Navigation buttons */}
-        <div className="flex justify-between mt-8">
-          <button
-            className={`px-4 py-2 rounded text-white ${
-              selectedVideoIndex === 0
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gray-600 hover:bg-gray-700"
-            }`}
-            disabled={selectedVideoIndex === 0}
-            onClick={() => handleNavigation("prev")}
-          >
-            <ArrowLeftOutlined className="mr-2" /> Previous
-          </button>
-
-          <button
-            className={`px-4 py-2 rounded text-white ${
-              selectedVideoIndex === videos.length - 1
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gray-600 hover:bg-gray-700"
-            }`}
-            onClick={() => handleNavigation("next")}
-          >
-            Next <ArrowRightOutlined className="ml-2" />
-          </button>
-        </div>
       </div>
 
       {/* ✅ Payment Blocker */}

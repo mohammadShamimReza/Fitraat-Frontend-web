@@ -18,12 +18,12 @@ export const blogApi = baseApi.injectEndpoints({
         return rawResult;
       },
     }),
-    updateUserKagelDay: builder.mutation({
+    updateUserChildProtectionDay: builder.mutation({
       query: (body) => ({
         url: `users/${body.userId}`,
         method: "PUT",
         body: {
-          childProtectionDayNumber: body.compliteDay,
+          childProtectionDayNumber: body.childProtectionDayNumber,
         },
       }),
       transformResponse: (rawResult) => {
@@ -37,5 +37,8 @@ export const blogApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetChildProtectionByDayIdQuery, useUpdateUserKagelDayMutation, useGetChildProtectionAllTitleQuery } =
-  blogApi;
+export const {
+  useGetChildProtectionByDayIdQuery,
+  useUpdateUserChildProtectionDayMutation,
+  useGetChildProtectionAllTitleQuery,
+} = blogApi;
