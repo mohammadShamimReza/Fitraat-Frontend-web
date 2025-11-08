@@ -1,6 +1,5 @@
 "use client";
 
-import CompletedKagelTask from "@/components/kagelIndividual/CompleteKagelTask";
 import KegelPage from "@/components/kagelIndividual/KagelPage";
 import ProgramSclaton from "@/components/structure/ProgramSclaton";
 import { useGetKagelIndividualByDayIdQuery } from "@/redux/api/kagelindividualApi";
@@ -30,10 +29,6 @@ const KagelIndividualPage: React.FC = () => {
   } = useGetKagelIndividualByDayIdQuery(day);
 
   if (!isMounted || !kagelData || isLoading) return <ProgramSclaton />;
-
-  if (day > "365") {
-    return <CompletedKagelTask />;
-  }
 
   const kagel = {
     morningkagel: kagelData?.data[0].morningkagel,

@@ -78,9 +78,7 @@ const items = [
 ];
 
 const Faq: React.FC = () => {
-  const onChange = (key: string | string[]) => {
-    console.log(key);
-  };
+
 
   return (
     <div className="mt-15 p-5">
@@ -93,14 +91,13 @@ const Faq: React.FC = () => {
           <CaretRightOutlined rotate={isActive ? 90 : 0} />
         )}
         expandIconPosition={"end"}
-        onChange={onChange}
-        className="text-center text-3xl"
+        className="text-center text-3xl "
         size="large"
       >
         {items.map((item) => (
-          <Panel header={item.label} key={item.key} className="">
+          <Panel header={item.label} key={item.key} className="bg-gray-50">
             <div className="flex">
-              <FaRegFaceSmileBeam className="w-10 h-full text-red-500" />
+              <FaRegFaceSmileBeam className="w-10 h-full text-yellow-500" />
               <span className="text-lg "> {item.children}</span>
             </div>
           </Panel>

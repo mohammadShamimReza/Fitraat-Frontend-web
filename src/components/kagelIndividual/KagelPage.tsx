@@ -108,32 +108,37 @@ export default function KegelPage({
     markSessionComplete(selectedSession);
 
     if (direction === "next") {
-      if (currentIndex < sessions.length - 1) {
-        // Move to next session (same day)
-        setSelectedSession(sessions[currentIndex + 1] as any);
-      } else {
-        // If last session → move to next day morning
+          if (currentDay >= 365) {
+            alert(
+              "You have completed watching all available videos. For any further we will notify you via email."
+            );
+            return;
+          }
+          if (currentIndex < sessions.length - 1) {
+            // Move to next session (same day)
+            setSelectedSession(sessions[currentIndex + 1] as any);
+          } else {
+            // If last session → move to next day morning
 
-        if (currentDay < 365) {
-          const res = await updateUserKagelDay({
-            compliteDay: currentDay + 1,
-            userId: userId,
-          });
-          console.log(res, "res");
-          localStorage.setItem(
-            "kegelProgress",
-            JSON.stringify({
-              morning: false,
-              afternoon: false,
-              night: false,
-            })
-          );
-          setDay((currentDay + 1).toString());
-          // setSelectedDay(currentDay + 1);
-          setSelectedSession("morning");
-          setIsFinishModalOpen(true);
-        }
-      }
+            if (currentDay < 365) {
+              const res = await updateUserKagelDay({
+                compliteDay: currentDay + 1,
+                userId: userId,
+              });
+              localStorage.setItem(
+                "kegelProgress",
+                JSON.stringify({
+                  morning: false,
+                  afternoon: false,
+                  night: false,
+                })
+              );
+              setDay((currentDay + 1).toString());
+              // setSelectedDay(currentDay + 1);
+              setSelectedSession("morning");
+              setIsFinishModalOpen(true);
+            }
+          }
     } else {
       if (currentIndex > 0) {
         // Move to previous session (same day)

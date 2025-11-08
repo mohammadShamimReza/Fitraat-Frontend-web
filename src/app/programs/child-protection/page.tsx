@@ -1,6 +1,5 @@
 "use client";
 
-import CompletedKagelTask from "@/components/kagelIndividual/CompleteKagelTask";
 import ProgramSclaton from "@/components/structure/ProgramSclaton";
 import {
   useGetChildProtectionAllTitleQuery,
@@ -33,7 +32,6 @@ export default function ChildProtectionPage() {
   const [updateUserChildProtectionDay] =
     useUpdateUserChildProtectionDayMutation();
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
-  const skipQuery = !userData || !day;
 
   const [loading, setLoading] = useState(false);
 
@@ -75,18 +73,21 @@ export default function ChildProtectionPage() {
   const payment = userData?.childProtectionPayment;
   const userId = userData?.id;
 
-  if (parseInt(day) > 40) return <CompletedKagelTask />; // example limit
-
   const handleNavigation = async (direction: "next" | "prev") => {
     setLoading(true);
 
+    if (parseInt(day) >= 10) {
+      alert(
+        "You have completed watching all available videos. For any further we will notify you via email."
+      );
+      return;
+    }
     if (direction === "next") {
       // ✅ All videos done → next day
       const res = await updateUserChildProtectionDay({
         childProtectionDayNumber: parseInt(day) + 1,
         userId,
       });
-      console.log(res, "update day response");
       setIsFinishModalOpen(true);
       setDay((prevDay) => (parseInt(prevDay) + 1).toString());
     } else {

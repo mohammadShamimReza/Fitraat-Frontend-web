@@ -71,7 +71,7 @@ function LoginPage() {
           window.location.replace("/programs");
           }
         } catch (error) {
-          console.log(error);
+        alert("Something went wrong");
         } finally {
           setLoading(false); // Set loading state to false
         }

@@ -31,7 +31,7 @@ export default function ChildProtectionNavigation({
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-gray-600 hover:bg-gray-700"
         }`}
-        disabled={parseInt(day) >= 40 || loading}
+        disabled={parseInt(day) >= 40 || loading || day >= "10"}
         onClick={() => onNavigate("next")}
       >
         Next <ArrowRightOutlined className="ml-2" />

@@ -8,7 +8,6 @@ function Page({ params }: { params: { slug: string } }) {
   const blogId = params.slug;
   const { data, isLoading } = useGetProBlogsByIdQuery(blogId);
   const blogData = data?.data;
-  console.log(blogData, "this is blog data");
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
   return isLoading ? (
     <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">

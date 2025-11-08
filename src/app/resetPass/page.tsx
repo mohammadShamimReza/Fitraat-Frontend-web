@@ -50,7 +50,6 @@ export default function ResetPass() {
         password: data.password,
         passwordConfirmation: data.passwordConfirmation,
       });
-      console.log(result, "result");
       if (result?.data?.jwt && result?.data?.user) {
         // Store JWT & user info like login
         const { jwt, user } = result.data;
