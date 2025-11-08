@@ -35,7 +35,6 @@ const KagelIndividualPage: React.FC = () => {
     return <CompletedKagelTask />;
   }
 
-  console.log(isLoading, "isLoading");
   const kagel = {
     morningkagel: kagelData?.data[0].morningkagel,
     afternoonKagel: kagelData?.data[0].afternoonKagel,
