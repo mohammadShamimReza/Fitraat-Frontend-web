@@ -7,7 +7,7 @@ export default function Hero() {
   if (siteUrl == "/") {
     return (
       <div
-        className="relative flex items-center justify-center min-h-screen  bg-cover bg-center bg-no-repeat overflow-hidden"
+        className="relative flex items-center justify-center min-h-[75vh]  bg-cover bg-center bg-no-repeat overflow-hidden"
         style={{
           backgroundImage: `url(${bannerImage.src})`,
           width: "100% !important",
