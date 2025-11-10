@@ -42,24 +42,25 @@ const PaymentPage: React.FC = () => {
     product_profile: "Fitraat",
     cus_add1: "Dhaka",
     cus_country: "Bangladesh",
-    userId: userInfo?.id?.toString() || "",
+    userId: userInfo?.id?.toString(),
     product_category: selectedProgram.value,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
       total_amount: selectedProgram.priceBDT,
       product_name: selectedProgram.label,
-      product_profile: selectedProgram.value,
+      product_profile: selectedProgram.label,
+      product_category: selectedProgram.value,
     }));
   }, [selectedProgram]);
 
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
+      userId: userInfo?.id?.toString(),
       cus_name: userInfo?.username || "",
       cus_email: userInfo?.email || "",
     }));
@@ -71,14 +72,12 @@ const PaymentPage: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
     try {
       setLoading(true);
       setErrors({});
       schema.parse(formData);
 
       const result = await paymentInit(formData).unwrap();
-      console.log(result);
       if (result?.url) {
         window.location.replace(result.url);
       } else {
@@ -184,7 +183,7 @@ const PaymentPage: React.FC = () => {
           onClick={handleSubmit}
           disabled={loading}
           className={`mt-6 w-full py-3 rounded-lg font-bold text-white ${
-            loading ? "bg-gray-50" : "bg-gray-600 hover:bg-gray-700"
+            loading ? "bg-gray-50" : "bg-gray-700 hover:bg-gray-600"
           } ${!userInfo && "cursor-not-allowed"}`}
         >
           {!userInfo || loading ? (
