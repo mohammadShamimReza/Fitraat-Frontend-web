@@ -36,7 +36,6 @@ const CompletedAuthTask = () => {
           Blog: false,
         })
       );
-      console.log(result);
       if (updateUserDaySuccess) {
         message.success("You have successfully started your journey again!");
       } else if (updateUserDayError) {

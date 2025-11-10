@@ -3,7 +3,7 @@ import { useGetDaysByDayIdQuery } from "@/redux/api/dayApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeCurrentTask } from "@/redux/slice/taskSlice";
 import { KagelTime, Quiz } from "@/types/contantType";
-import { Button, message, Modal, Skeleton } from "antd";
+import { Button, message, Modal } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,10 +11,10 @@ import CompliteTask from "./CompliteTask";
 import TaskPage from "./TaskPage";
 
 import { clearDayData } from "@/redux/slice/daySlice";
-import DayFinishImage from "../assets/dayFinish.gif";
+import DayFinishImage from "../../app/assets/dayFinish.gif";
+import ProgramSclaton from "../structure/ProgramSclaton";
 
 function UnAuthTask({ payment }: { payment: string | undefined }) {
-  console.log("start");
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 
@@ -26,7 +26,6 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
 
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
 
-  console.log(unAuthenticatedDayData, "user day");
   useEffect(() => {
     const dayId = window.localStorage.getItem("unAuthDayId") || "1";
     if (parseInt(dayId) > 3) {
@@ -175,24 +174,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   if (isLoading) {
     return (
       <>
-        <div className="flex h-screen mt-10">
-          {/* Sidebar */}
-          <div className="w-1/4 bg-gray-200 p-4 rounded-md">
-            <Skeleton active title={false} paragraph={{ rows: 5 }} />
-          </div>
-
-          {/* Content Box */}
-          <div className="flex-1 bg-white p-20">
-            <Skeleton
-              active
-              title={{ width: "60%" }}
-              paragraph={{
-                rows: 10,
-                width: ["100%", "90%", "80%", "70%", "50%"],
-              }}
-            />
-          </div>
-        </div>
+        <ProgramSclaton />
       </>
     );
   }

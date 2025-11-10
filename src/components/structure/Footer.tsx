@@ -6,10 +6,16 @@ import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
-  FaMapMarkerAlt,
   FaPhoneAlt,
   FaTwitter,
 } from "react-icons/fa";
+
+const quickLinks = [
+  { name: "Payment", href: "/payment" },
+  { name: "About Us", href: "/about" },
+  { name: "Blogs", href: "/freeBlog" },
+  { name: "Privacy Policy", href: "/privecy" },
+];
 
 const Footer = () => {
   return (
@@ -33,34 +39,16 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="/payment" className="text-gray-400 hover:underline">
-                  payment
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-400 hover:underline">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/freeBlog"
-                  className="text-gray-400 hover:underline"
-                >
-                  Blogs
-                </Link>
-              </li>
-              <li>
-                <Link href="/books" className="text-gray-400 hover:underline">
-                  Books
-                </Link>
-              </li>
-              <li>
-                <Link href="/privecy" className="text-gray-400 hover:underline">
-                  Privacy Policy
-                </Link>
-              </li>
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:underline"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -69,18 +57,12 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-4">Contact Us</h3>
             <ul className="space-y-2 text-gray-400">
               <li className="flex items-center">
-                <FaMapMarkerAlt className="mr-2" />
-                <span>
-                  152/3 kolopara, Simoltoli, Gazipur, Dhaka, Bangladesh
-                </span>
-              </li>
-              <li className="flex items-center">
                 <FaPhoneAlt className="mr-2" />
                 <span>+880 1719-357307</span>
               </li>
               <li className="flex items-center">
                 <FaEnvelope className="mr-2" />
-                <span>mohammadshamimrez23393@gmail.com</span>
+                <span>mdshamim@fitraat.com</span>
               </li>
             </ul>
           </div>
@@ -130,13 +112,13 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-          <p>&copy; 2024 Fitraat. All rights reserved.</p>
+          <p>
+            &copy; <span className="text-xl">∞</span> Fitraat. All rights
+            reserved.
+          </p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <Link href="/terms" className="hover:underline">
               Terms of Service
-            </Link>
-            <Link href="/cookies" className="hover:underline">
-              Cookie Policy
             </Link>
           </div>
         </div>

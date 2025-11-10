@@ -139,6 +139,21 @@ export type FreeKagel = {
   kagelTimes: KagelTime[];
 };
 
+export interface KegelDayIndividualSession {
+  id: number;
+  documentId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  dayCount: number;
+  morningkagel: KagelTime[];
+  afternoonKagel: KagelTime[];
+  nightKagel: KagelTime[];
+}
+export interface KegelIndividualResponse {
+  data: KegelDayIndividualSession[];
+  meta: Meta;
+}
 export type Day = {
   id: number;
   documentId: string;
@@ -162,8 +177,25 @@ export interface DayData {
   data: Day[];
   meta: Meta;
 }
-
-export type FitraatPaymentStatus = "Complete" | "Not complete";
+type CompletedInfo = {
+  id: number;
+  childProtection: {
+    id: number;
+    VideoNumber: number;
+    completed: boolean | null;
+  };
+  kagel: {
+    id: number;
+    dayNumber: number;
+    completed: boolean | null;
+  };
+  Day: {
+    id: number;
+    dayNumber: number;
+    completed: boolean | null;
+  };
+};
+export type PaymentStatus = "Complete" | "Not complete";
 export type Gender = "Male" | "Female" | null;
 export interface UserData {
   id: number;
@@ -178,11 +210,16 @@ export interface UserData {
   currentDay: number;
   gender: Gender;
   startDate: string | null;
-  fitraatPayment: FitraatPaymentStatus;
+  fitraatPayment: PaymentStatus;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   tran_id: string | null;
+  childProtectionPayment: PaymentStatus;
+  profileImage: StrapiImage | null;
+  kagelPayment: PaymentStatus;
+  kagelIndividualDayNumber: number;
+  childProtectionDayNumber: number;
 }
 
 export interface UserDataWithDay {
@@ -198,13 +235,14 @@ export interface UserDataWithDay {
   currentDay: number;
   gender: Gender | null;
   startDate: string | null;
-  fitraatPayment: FitraatPaymentStatus;
+  fitraatPayment: PaymentStatus;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   tran_id: string | null;
   compliteDay: number | null;
   profileImage: StrapiImage | null;
+  completedInfo: CompletedInfo;
 }
 
 export interface UserAuthData {
@@ -443,4 +481,35 @@ export interface StrapiImage {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+}
+
+
+
+
+export interface ProtectionData {
+  id: number;
+  documentId: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  numberCount: number;
+  protectionVideo: Video[];
+  title: string;
+}
+
+export interface ProtectionResponse {
+  data: ProtectionData[];
+  meta: Meta;
+}
+
+export interface ChildProtectionListResponse {
+  data: ChildProtectionItem[];
+  meta: Meta;
+}
+
+export interface ChildProtectionItem {
+  id: number;
+  documentId: string;
+  numberCount: number;
+  title: string;
 }

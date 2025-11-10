@@ -1,4 +1,5 @@
 import MembershipCard from "@/app/proMember/page";
+import Faq from "../structure/FAQ";
 import Reviews from "./Reviews";
 import Subscribe from "./Subscribe";
 
@@ -8,6 +9,7 @@ export default function MainLayout() {
       <Reviews />
       <MembershipCard />
       <Subscribe />
+      <Faq />
     </div>
   );
 }

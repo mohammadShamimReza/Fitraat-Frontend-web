@@ -1,26 +1,26 @@
 import { Blog } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
-const BLOG = "/blogs";
+const PRO_BLOG = "/pro-blogs";
 
 export const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBlogsById: builder.query({
       query: (id: string) =>
-        `${BLOG}/${id}?fields[0]=title&fields[1]=content&fields[2]=imageURL&fields[3]=viewCount&fields[4]=authorName`,
+        `${PRO_BLOG}/${id}?fields[0]=title&fields[1]=content&fields[2]=imageURL&fields[3]=viewCount&fields[4]=authorName`,
       transformResponse: (rawResult: Blog) => {
         return rawResult;
       },
     }),
     getProBlogsById: builder.query({
-      query: (id: string) => `pro-blogs/${id}??populate=image`,
+      query: (id: string) => `${PRO_BLOG}/${id}?populate=image`,
       transformResponse: (rawResult: { data: Blog }) => {
         return rawResult;
       },
     }),
     updateBlog: builder.mutation({
       query: ({ id }: { id: number }) => ({
-        url: `${BLOG}/${id}`,
+        url: `${PRO_BLOG}/${id}`,
         method: "PUT",
       }),
     }),

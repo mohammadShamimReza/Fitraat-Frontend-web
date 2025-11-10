@@ -76,8 +76,7 @@ function RegisterPage() {
         storeTokenInCookie(result?.data?.jwt);
         dispatch(storeAuthToken(result?.data?.jwt));
         dispatch(storeUserInfo(result?.data?.user));
-        router.push("/authTask");
-        window.location.replace("/authTask");
+        window.location.replace("/programs");
       }
     } catch (error: any) {
       if (error instanceof z.ZodError) {

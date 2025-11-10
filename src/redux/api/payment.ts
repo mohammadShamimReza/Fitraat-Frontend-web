@@ -12,6 +12,7 @@ export const paymentAPi = baseApi.injectEndpoints({
           return rawResult;
         },
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });

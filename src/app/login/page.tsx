@@ -68,11 +68,10 @@ function LoginPage() {
             dispatch(storeAuthToken(result?.data?.jwt));
 
             dispatch(storeUserInfo(result?.data?.user));
-            router.push("/authTask");
-            window.location.reload();
+          window.location.replace("/programs");
           }
         } catch (error) {
-          console.log(error);
+        alert("Something went wrong");
         } finally {
           setLoading(false); // Set loading state to false
         }

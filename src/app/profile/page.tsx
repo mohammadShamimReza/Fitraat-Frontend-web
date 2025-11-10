@@ -34,7 +34,6 @@ function ProfilePage() {
     isError: getUserInfoDataError,
     isSuccess: getUserInfoSuccess,
   } = useGetUserInfoQuery();
-
   const [
     updataUserDay,
     {
@@ -163,7 +162,6 @@ function ProfilePage() {
     );
   }
 
-  console.log(process.env.NEXT_PUBLIC_BASE_URL, "base url");
 
   return (
     <div className="w-full px-4 py-6">

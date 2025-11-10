@@ -4,8 +4,8 @@ import { KagelTime, KagelTimeEntry } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Progress } from "antd";
 import { useEffect, useRef, useState } from "react";
-import squizze from "../../assets/squizze.mp3";
-import stop from "../../assets/stop.mp3";
+import squizze from "../../../app/assets/squizze.mp3";
+import stop from "../../../app/assets/stop.mp3";
 
 type SequenceStep = {
   label: "Squizze" | "Stop" | "Gap";
@@ -294,8 +294,8 @@ function Kagel({
             })}
           </div>
 
-          <span className="text-red-500">
-            {setIndex + 1 === totalSets ? "Last finishing" : ""}
+          <span className="text-red-500 block min-h-[1em]">
+            {setIndex + 1 === totalSets ? "Last finishing" : "\u00A0"}
           </span>
           <br />
 

@@ -10,7 +10,6 @@ function Page({ params }: { params: { slug: string } }) {
   const blogData = data?.data;
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
 
-  console.log(data);
 
   return isLoading ? (
     <div className="h-full mb-10 p-4 bg-white rounded-xl shadow-lg border border-t dark:border-none transition duration-100">

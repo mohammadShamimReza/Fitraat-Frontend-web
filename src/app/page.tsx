@@ -5,12 +5,8 @@ import Motivation from "@/components/mainLayout/Motivation";
 import RecoveryFeature from "@/components/mainLayout/RecoveryFeature";
 import { Card } from "antd";
 import React, { useState } from "react";
-import {
-  FaBookOpen,
-  FaDumbbell,
-  FaQuestionCircle,
-  FaVideo,
-} from "react-icons/fa"; // Import icons
+import { FaBookOpen, FaDumbbell, FaQuestionCircle } from "react-icons/fa"; // Import icons
+import { MdOutlineOndemandVideo } from "react-icons/md";
 
 const HomePage: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -57,7 +53,9 @@ const HomePage: React.FC = () => {
               title: "Daily Videos",
               description:
                 "Receive motivating and insightful videos every day.",
-              icon: <FaVideo className="text-4xl text-blue-500 mx-auto mb-4" />,
+              icon: (
+                <MdOutlineOndemandVideo className="text-4xl text-blue-500 mx-auto mb-4" />
+              ),
             },
             {
               title: "Kegel Exercises",

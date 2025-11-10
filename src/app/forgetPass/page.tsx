@@ -25,7 +25,6 @@ export default function ForgotPassword() {
     setIsLoading(true);
     try {
       const result: any = await forgetPassword(data);
-      console.log(result);
 
       if (result?.data?.ok) {
         setModalVisible(true);
