@@ -1,3 +1,4 @@
+import { ChildProtectionItem } from "@/types/contantType";
 
 interface Props {
   titles: any[];
@@ -7,20 +8,16 @@ interface Props {
 
 export default function ChildProtectionTitles({
   titles,
-  userDay= 1,
+  userDay = 1,
   currentDay,
 }: Props) {
- 
-
   return (
-
-    
     <div className="border rounded-lg bg-white shadow p-3 mt-6">
       <h3 className="text-lg font-semibold mb-3 text-gray-700">
         All Child Protection Titles
       </h3>
       <div className="max-h-64 overflow-y-auto space-y-2 pr-2 scrollbar-hide">
-        {titles.map((item: any) => {
+        {titles.map((item: ChildProtectionItem) => {
           const isCompleted = item.numberCount < userDay;
           const isCurrent = item.numberCount.toString() === currentDay;
 

@@ -4,12 +4,9 @@ import KegelPage from "@/components/kagelIndividual/KagelPage";
 import ProgramSclaton from "@/components/structure/ProgramSclaton";
 import { useGetKagelIndividualByDayIdQuery } from "@/redux/api/kagelindividualApi";
 import { useAppSelector } from "@/redux/hooks";
-import { useRouter } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 
 const KagelIndividualPage: React.FC = () => {
-  const router = useRouter();
-
   const [isMounted, setIsMounted] = useState(false);
   const [day, setDay] = useState("1");
 
@@ -18,10 +15,9 @@ const KagelIndividualPage: React.FC = () => {
 
   useEffect(() => {
     if (userData) {
-      setDay(userData.kagelIndividualDayNumber.toString());
+      setDay(userData?.kagelIndividualDayNumber?.toString());
     }
   }, [userData]);
-
   const {
     data: kagelData,
     isLoading,
@@ -29,7 +25,7 @@ const KagelIndividualPage: React.FC = () => {
   } = useGetKagelIndividualByDayIdQuery(day);
 
   if (!isMounted || !kagelData || isLoading) return <ProgramSclaton />;
-
+  console.log(kagelData, "kagel data");
   const kagel = {
     morningkagel: kagelData?.data[0].morningkagel,
     afternoonKagel: kagelData?.data[0].afternoonKagel,
