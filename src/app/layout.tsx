@@ -41,7 +41,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const palastineHelpUrl = process.env.PALESTINE_HELP_URL || "palastineHelpUrl";
+  const palastineHelpUrl =
+    process.env.NEXT_PUBLIC_PALESTINE_HELP_URL || "palastineHelpUrl";
   const siteUrl = usePathname();
   return (
     <Providers>
