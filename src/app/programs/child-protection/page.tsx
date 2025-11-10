@@ -65,7 +65,7 @@ export default function ChildProtectionPage() {
   const video: ProtectionVideo[] =
     protectionData?.data?.[0]?.protectionVideo?.map((v: any) => ({
       id: v.id,
-      url: `http://localhost:1337${v.url}`,
+      url: `${v.url}`,
       name: v.name,
     })) || [];
 
