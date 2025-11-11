@@ -21,6 +21,8 @@ const navbarLinks = [
 
 function NavBar() {
   const pathname = usePathname();
+  const programSlug = pathname.split("/programs/")[1];
+  console.log(programSlug);
 
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
@@ -149,7 +151,7 @@ function NavBar() {
                       key={link.href}
                       href={link.href}
                       className={` hover:bg-gray-200 rounded-md px-3 py-2 text-md font-normal ${
-                        pathname === link.href ? "bg-gray-200" : ""
+                        pathname.startsWith(link.href) ? "bg-gray-200" : ""
                       }`}
                     >
                       {link.name}
@@ -164,7 +166,7 @@ function NavBar() {
                 <div className="relative ml-3 mt-2">
                   <Link href={"/login"}>
                     <span className="sr-only">Login</span>
-                    <span className="flex items-center gap-1 text-md hover:bg-gray-100 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span className="flex items-center gap-1 text-md hover:bg-gray-200 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="">Login</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
