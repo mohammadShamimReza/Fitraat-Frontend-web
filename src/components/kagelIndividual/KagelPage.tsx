@@ -225,8 +225,9 @@ export default function KegelPage({
         >
           {isSidebarVisible && (
             <button
-              className="mt-20 ml-5 left-4 z-30 text-2xl p-2 md:hidden"
+              className="mt-24 ml-5 left-4 z-30 text-2xl p-2 md:hidden hover:bg-gray-300 rounded-md mb-5"
               onClick={() => setSidebarVisible(false)}
+              title="Close sidebar"
             >
               <IoMdClose />
             </button>
@@ -257,7 +258,7 @@ export default function KegelPage({
         {/* Hamburger Button (mobile) */}
         {!isSidebarVisible && (
           <button
-            className="absolute top-4 left-4 text-2xl p-2 md:hidden"
+            className="absolute top-4 left-4 text-2xl p-2 md:hidden hover:bg-gray-300 rounded-md"
             onClick={() => setSidebarVisible(true)}
           >
             <AiOutlineMenu />
@@ -266,8 +267,8 @@ export default function KegelPage({
 
         {/* Main Content */}
         <div className="  p-6 border rounded-lg bg-gray-50 w-full">
-          <div className="flex justify-between items-center mb-5">
-            <h2 className="text-xl font-semibold">
+          <div className="flex justify-center items-center mb-5">
+            <h2 className="text-xl font-semibold ">
               Day {selectedDay} – {selectedSession.toUpperCase()} Kegel
             </h2>
           </div>
