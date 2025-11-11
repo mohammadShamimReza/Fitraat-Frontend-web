@@ -8,8 +8,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import FancyLoading from "../loading";
-import childProtection from "./../../app/assets/child-protection.png";
 import kagelIndividual from "./../../app/assets/kagelIndividual.png";
+import childProtection from "./../../app/assets/premarriage.png";
 import recovary from "./../../app/assets/recovary.png";
 
 type Program = {
@@ -72,25 +72,25 @@ const programs: Program[] = [
   },
   {
     id: 3,
-    link: "/programs/child-protection",
-    title: "Save Your Child from Adultry",
-    image: childProtection,
+    link: "/programs/pre-marriage-solution",
+    title: "Pre-Marriage Solution",
+    image: childProtection, // replace with your actual image import
     description:
-      "Parent-focused guidance to protect children from exposure to pornography and build healthy digital habits.",
+      "A complete guidance program to prepare you for a strong, confident, and addiction-free marriage — built on emotional maturity, self-control, and mutual respect.",
     details:
-      "Practical advice, conversation scripts, and digital-safety tools to help parents prevent exposure and support healthy development.",
-    tags: ["parent", "porn", "education"],
+      "This program offers psychological and spiritual preparation for marriage. It helps individuals overcome lust-driven habits, develop emotional intelligence, and build the mindset needed for a healthy, faithful, and fulfilling relationship.",
+    tags: ["marriage", "relationship", "self-improvement", "addiction-free"],
     benefits: [
-      "Protect your child from harmful content",
-      "Develop open and trust-based communication",
-      "Teach digital boundaries early",
-      "Create a positive, safe online environment",
+      "Develop emotional stability and self-control before marriage",
+      "Understand your role and responsibilities in a healthy partnership",
+      "Build confidence and readiness for intimacy based on respect and trust",
+      "Eliminate addictive habits that harm relationships",
     ],
     features: [
-      "Parent-focused daily guidance",
-      "Digital safety tools and resources",
-      "Conversation templates for tough topics",
-      "Expert-led video lessons",
+      "Step-by-step video sessions with actionable reflections",
+      "Practical exercises for communication and emotional growth",
+      "Self-assessment tools to measure readiness for marriage",
+      "Guidance from psychology and faith-based perspectives",
     ],
   },
 ];

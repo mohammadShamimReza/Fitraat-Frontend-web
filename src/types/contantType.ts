@@ -220,6 +220,7 @@ export interface UserData {
   kagelPayment: PaymentStatus;
   kagelIndividualDayNumber: number;
   childProtectionDayNumber: number;
+  compliteDay: number;
 }
 
 export interface UserDataWithDay {
