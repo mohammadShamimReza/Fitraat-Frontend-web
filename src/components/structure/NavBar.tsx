@@ -21,8 +21,6 @@ const navbarLinks = [
 
 function NavBar() {
   const pathname = usePathname();
-  const programSlug = pathname.split("/programs/")[1];
-  console.log(programSlug);
 
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
@@ -41,7 +39,11 @@ function NavBar() {
   }, []);
 
   const authToken = getTokenFromCookie() || authTokenFromRedux;
-  const { data, error, isLoading } = useGetUserInfoQuery(undefined);
+  const { data, error, isLoading } = useGetUserInfoQuery(undefined, {
+    skip: !authToken,
+  });
+
+  console.log(data);
 
   useEffect(() => {
     if (data) {

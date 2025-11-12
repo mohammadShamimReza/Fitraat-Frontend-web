@@ -4,17 +4,14 @@ import { useAppSelector } from "@/redux/hooks";
 import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
+import KegelExercise from "./type/KegelExercise";
+import PreMarriage from "./type/PreMarriage";
 import ProfileTypes from "./type/ProfileTypes";
 import ProRecovery from "./type/ProRecovery";
 
 // Example section components
 
-const KegelExercise = () => (
-  <div className="text-center">Kegel Exercise Tracker</div>
-);
-const PreMarriage = () => (
-  <div className="text-center">Pre Marriage Guidance</div>
-);
+
 
 export default function ProfilePage() {
   const [isSidebarVisible, setSidebarVisible] = useState(false);
@@ -131,9 +128,28 @@ export default function ProfilePage() {
               />
             )}
 
-            {activeSection === "Kegel Exercise" && <KegelExercise />}
+            {activeSection === "Kegel Exercise" && (
+              <KegelExercise
+                user={{
+                  username: name,
+                  kagelPayment: getUserInfoData?.kagelPayment || "",
+                  kagelIndividualDayNumber:
+                    getUserInfoData?.kagelIndividualDayNumber || 0,
+                }}
+              />
+            )}
 
-            {activeSection === "Pre Marriage" && <PreMarriage />}
+            {activeSection === "Pre Marriage" && (
+              <PreMarriage
+                user={{
+                  username: name,
+                  childProtectionPayment:
+                    getUserInfoData?.childProtectionPayment || "",
+                  childProtectionDayNumber:
+                    getUserInfoData?.childProtectionDayNumber || 0,
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
