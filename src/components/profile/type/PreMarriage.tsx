@@ -2,6 +2,7 @@
 
 import { Button, Card } from "antd";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import { useRouter } from "next/navigation";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -13,6 +14,7 @@ interface UserData {
 }
 
 export default function PreMarriage({ user }: { user: UserData }) {
+  const router = useRouter();
   const totalDays = 10;
   const completed = user.childProtectionDayNumber || 0;
   const isPaid = user.childProtectionPayment === "Complete";
@@ -111,9 +113,7 @@ export default function PreMarriage({ user }: { user: UserData }) {
               borderRadius: 8,
               marginTop: 8,
             }}
-            onClick={() =>
-              console.log("Redirecting to child protection payment...")
-            }
+            onClick={() => router.push("/payment")}
           >
             Pay Now
           </Button>

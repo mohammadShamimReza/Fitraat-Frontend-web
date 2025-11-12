@@ -2,6 +2,7 @@
 
 import { Button, Card } from "antd";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import { useRouter } from "next/navigation";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -13,6 +14,7 @@ interface UserData {
 }
 
 export default function KegelExercise({ user }: { user: UserData }) {
+  const router = useRouter();
   const totalExercises = 180;
   const completed = user.kagelIndividualDayNumber;
   const isPaid = user.kagelPayment === "Complete";
@@ -110,7 +112,7 @@ export default function KegelExercise({ user }: { user: UserData }) {
               borderRadius: 8,
               marginTop: 8,
             }}
-            onClick={() => console.log("Redirecting to payment...")}
+            onClick={() => router.push("/payment")}
           >
             Pay Now
           </Button>
