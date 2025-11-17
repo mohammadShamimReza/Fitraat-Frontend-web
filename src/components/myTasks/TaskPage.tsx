@@ -17,10 +17,10 @@ import {
 import { GrStatusPlaceholder, GrYoga } from "react-icons/gr";
 import { IoMdClose, IoMdLock } from "react-icons/io";
 import { TbCurrencyFrank, TbMilitaryRank } from "react-icons/tb";
-import Kagel from "./taskPages/Kagel";
+import Kagel from "../shared/Kagel";
+import VideoPlayer from "../shared/VideoPlayer";
 import Quizz from "./taskPages/Quiz";
 import SuggestedBlog from "./taskPages/SuggestedBlog";
-import Video from "./taskPages/Video";
 
 interface Props {
   localStorageData: Record<string, boolean>;
@@ -57,9 +57,6 @@ function TaskPage({
   payment,
   daysLeft,
 }: Props) {
- 
-
-
   const tasks = ["video", "kagel", "quiz", "Blog"];
   const icons = [
     <CiVideoOn key={1} />,
@@ -236,17 +233,11 @@ function TaskPage({
               </div>
               <div className="h-[30rem]">
                 {selectedTask === "video" && (
-                  <Video selectedTask={selectedTask} video={video} />
+                  <VideoPlayer videoUrl={video.videoUrl} />
                 )}
-                {selectedTask === "kagel" && (
-                  <Kagel selectedTask={selectedTask} kegel={kegel} />
-                )}
-                {selectedTask === "quiz" && (
-                  <Quizz selectedTask={selectedTask} quiz={quiz} />
-                )}
-                {selectedTask === "Blog" && (
-                  <SuggestedBlog selectedTask={selectedTask} blog={blog} />
-                )}
+                {selectedTask === "kagel" && <Kagel kegel={kegel} />}
+                {selectedTask === "quiz" && <Quizz quiz={quiz} />}
+                {selectedTask === "Blog" && <SuggestedBlog blog={blog} />}
               </div>
             </div>
           </div>

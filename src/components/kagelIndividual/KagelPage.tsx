@@ -1,6 +1,6 @@
 "use client";
 
-import Kagel from "@/components/myTasks/taskPages/Kagel";
+import Kagel from "@/components/shared/Kagel";
 import { useUpdateUserKagelDayMutation } from "@/redux/api/kagelindividualApi";
 import { KagelTime, PaymentStatus } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
@@ -275,14 +275,12 @@ export default function KegelPage({
 
           <div className="flex justify-center ">
             {selectedSession === "morning" && (
-              <Kagel selectedTask="kagel" kegel={kegel.morningkagel} />
+              <Kagel kegel={kegel.morningkagel} />
             )}
             {selectedSession === "afternoon" && (
-              <Kagel selectedTask="kagel" kegel={kegel.afternoonKagel} />
+              <Kagel kegel={kegel.afternoonKagel} />
             )}
-            {selectedSession === "night" && (
-              <Kagel selectedTask="kagel" kegel={kegel.nightKagel} />
-            )}
+            {selectedSession === "night" && <Kagel kegel={kegel.nightKagel} />}
           </div>
 
           {/* Navigation buttons */}

@@ -5,7 +5,7 @@ import Subscribe from "./Subscribe";
 
 export default function MainLayout() {
   return (
-    <div>
+    <div className="py-16 px-6">
       <Reviews />
       <MembershipCard />
       <Subscribe />

@@ -26,7 +26,7 @@ type Program = {
 const programs: Program[] = [
   {
     id: 1,
-    link: "/programs/tasks",
+    link: "/programs/porn-recovary",
     title: "Porn Recovery Program",
     image: recovary,
     description:
@@ -49,7 +49,7 @@ const programs: Program[] = [
   },
   {
     id: 2,
-    link: "/programs/kagel-exercise",
+    link: "/programs/kegel-exercise",
     title: "Kegel Exercise Program",
     image: kagelIndividual,
     description:
@@ -72,7 +72,7 @@ const programs: Program[] = [
   },
   {
     id: 3,
-    link: "/programs/pre-marriage-solution",
+    link: "/programs/pre-marriage",
     title: "Pre-Marriage Solution",
     image: childProtection, // replace with your actual image import
     description:

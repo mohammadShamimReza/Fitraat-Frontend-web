@@ -22,10 +22,10 @@ export function middleware(request: NextRequest) {
   // Handle authenticated user access
   if (currentUser) {
     if (pathname.startsWith("/login")) {
-      return NextResponse.redirect(new URL("/programs/tasks", request.url));
+      return NextResponse.redirect(new URL("/programs", request.url));
     }
     if (pathname.startsWith("/register")) {
-      return NextResponse.redirect(new URL("/programs/tasks", request.url));
+      return NextResponse.redirect(new URL("/programs", request.url));
     }
 
     return NextResponse.next(); // Allow access to other routes

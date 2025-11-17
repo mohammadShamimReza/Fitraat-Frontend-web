@@ -6,7 +6,7 @@ interface Props {
   onNavigate: (direction: "next" | "prev") => void;
 }
 
-export default function ChildProtectionNavigation({
+export default function PreMarriageNavigation({
   day,
   loading,
   onNavigate,

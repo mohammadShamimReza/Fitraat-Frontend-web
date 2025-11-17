@@ -35,7 +35,7 @@ const plans: {
   {
     key: "kagelPayment",
     name: "Kegel Exercise",
-    tag: "Pro Access 💪",
+    tag: "Be Pro 💪",
     color: "from-indigo-600 to-blue-600",
     price: "৳499",
     oldPrice: "৳799",

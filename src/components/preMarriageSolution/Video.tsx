@@ -1,10 +1,10 @@
-import VideoPlayer from "./VideoPlayer";
+import VideoPlayer from "../shared/VideoPlayer";
 
 interface Props {
   videos: { id: number; url: string; name: string }[];
 }
 
-export default function ChildProtectionVideo({ videos }: Props) {
+export default function PreMarriageVideo({ videos }: Props) {
   if (!videos || videos.length === 0)
     return (
       <div className="text-center text-white py-20 bg-black rounded-lg">

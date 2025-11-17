@@ -6,7 +6,7 @@ interface Props {
   currentDay: string;
 }
 
-export default function ChildProtectionTitles({
+export default function PreMarriageTitles({
   titles,
   userDay = 1,
   currentDay,

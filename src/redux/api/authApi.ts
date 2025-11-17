@@ -1,4 +1,4 @@
-import { Error, UserData, UserDataWithDay } from "@/types/contantType";
+import { Error, UserData } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
 const AUTH = "/auth/local";
@@ -17,6 +17,8 @@ export const daysApi = baseApi.injectEndpoints({
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         return baseQueryReturnValue.data;
       },
+
+      invalidatesTags: ["User"],
     }),
     loginUser: builder.mutation({
       query: (body) => ({
@@ -30,12 +32,13 @@ export const daysApi = baseApi.injectEndpoints({
       transformErrorResponse(baseQueryReturnValue, meta, arg) {
         return baseQueryReturnValue.data;
       },
+      invalidatesTags: ["User"],
     }),
-    getUserInfo: builder.query<UserDataWithDay, void>({
+    getUserInfo: builder.query<UserData, void>({
       query: () => ({
         url: `users/me?populate=*`,
       }),
-      transformResponse: (rawResult: UserDataWithDay) => {
+      transformResponse: (rawResult: UserData) => {
         return rawResult;
       },
       providesTags: ["updateUserDay", "updateUser", "User"],
