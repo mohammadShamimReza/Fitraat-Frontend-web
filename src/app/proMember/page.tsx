@@ -206,7 +206,7 @@ const MembershipCard = () => {
             ))}
           </ul>
 
-          <Link href="/signup">
+          <Link href="/programs/porn-recovary">
             <motion.button
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.05 }}
