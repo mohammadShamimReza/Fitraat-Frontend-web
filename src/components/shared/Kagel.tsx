@@ -4,21 +4,15 @@ import { KagelTime, KagelTimeEntry } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Progress } from "antd";
 import { useEffect, useRef, useState } from "react";
-import squizze from "../../../app/assets/squizze.mp3";
-import stop from "../../../app/assets/stop.mp3";
+import squizze from "../../app/assets/squizze.mp3";
+import stop from "../../app/assets/stop.mp3";
 
 type SequenceStep = {
   label: "Squizze" | "Stop" | "Gap";
   seconds: number;
 };
 
-function Kagel({
-  selectedTask,
-  kegel,
-}: {
-  selectedTask: string;
-  kegel: KagelTime[] | undefined;
-}) {
+function Kagel({ kegel }: { kegel: KagelTime[] | undefined }) {
   // index of which KagelTime (outer set) is selected
   const [setIndex, setSetIndex] = useState<number>(0);
 
@@ -237,115 +231,113 @@ function Kagel({
 
   return (
     <div>
-      {selectedTask === "kagel" && (
-        <div className="flex flex-col items-center ">
-          <p className="text-xl mb-3">
-            <span className="text-red-500">{currentLabel}</span>,{" "}
-            <span className=""> {setIndex + 1}</span>/{totalSets} (serial:{" "}
-            {currentSetSerial})
-          </p>
+      <div className="flex flex-col items-center ">
+        <p className="text-xl mb-3">
+          <span className="text-red-500">{currentLabel}</span>,{" "}
+          <span className=""> {setIndex + 1}</span>/{totalSets} (serial:{" "}
+          {currentSetSerial})
+        </p>
 
-          <div
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: "8px",
+            width: "100%",
+            backgroundColor: "#f9fafb",
+            padding: "10px 14px",
+            borderRadius: "12px",
+            border: "1px solid #e5e7eb",
+          }}
+        >
+          <span
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              gap: "8px",
-              width: "100%",
-              backgroundColor: "#f9fafb",
-              padding: "10px 14px",
-              borderRadius: "12px",
-              border: "1px solid #e5e7eb",
+              color: "#111827",
+              fontWeight: 700,
+              fontSize: "18px",
+              marginRight: "8px",
             }}
           >
-            <span
-              style={{
-                color: "#111827",
-                fontWeight: 700,
-                fontSize: "18px",
-                marginRight: "8px",
-              }}
-            >
-              Type:
-            </span>
-
-            {sequence.map((s, i) => {
-              const isActive = i === currentStepIndex;
-              return (
-                <span
-                  key={i}
-                  style={{
-                    padding: "6px 10px",
-                    borderRadius: "8px",
-                    backgroundColor: isActive ? "#fee2e2" : "#f3f4f6",
-                    color: isActive ? "#b91c1c" : "#374151",
-                    fontWeight: isActive ? 600 : 400,
-                    fontSize: isActive ? "12px" : "10px",
-                    boxShadow: isActive
-                      ? "0 0 5px rgba(239, 68, 68, 0.4)"
-                      : "none",
-                    transition: "all 0.2s ease-in-out",
-                  }}
-                >
-                  {s.seconds}s <span style={{ opacity: 0.7 }}>({s.label})</span>
-                </span>
-              );
-            })}
-          </div>
-
-          <span className="text-red-500 block min-h-[1em]">
-            {setIndex + 1 === totalSets ? "Last finishing" : "\u00A0"}
+            Type:
           </span>
-          <br />
 
-          <div className="mb-5 mt-2 flex justify-center ">
-            <Progress percent={progressPercent} type="circle" size={size} />
-          </div>
+          {sequence.map((s, i) => {
+            const isActive = i === currentStepIndex;
+            return (
+              <span
+                key={i}
+                style={{
+                  padding: "6px 10px",
+                  borderRadius: "8px",
+                  backgroundColor: isActive ? "#fee2e2" : "#f3f4f6",
+                  color: isActive ? "#b91c1c" : "#374151",
+                  fontWeight: isActive ? 600 : 400,
+                  fontSize: isActive ? "12px" : "10px",
+                  boxShadow: isActive
+                    ? "0 0 5px rgba(239, 68, 68, 0.4)"
+                    : "none",
+                  transition: "all 0.2s ease-in-out",
+                }}
+              >
+                {s.seconds}s <span style={{ opacity: 0.7 }}>({s.label})</span>
+              </span>
+            );
+          })}
+        </div>
 
-          <Button.Group>
-            <Button onClick={startTimer}>Start</Button>
-            <Button onClick={stopTimer}>Stop</Button>
-          </Button.Group>
+        <span className="text-red-500 block min-h-[1em]">
+          {setIndex + 1 === totalSets ? "Last finishing" : "\u00A0"}
+        </span>
+        <br />
 
-          <div className="basis-1/6 flex justify-center align-bottom flex-col">
-            <div className="flex justify-between mt-4 gap-5">
-              <button
-                className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700
+        <div className="mb-5 mt-2 flex justify-center ">
+          <Progress percent={progressPercent} type="circle" size={size} />
+        </div>
+
+        <Button.Group>
+          <Button onClick={startTimer}>Start</Button>
+          <Button onClick={stopTimer}>Stop</Button>
+        </Button.Group>
+
+        <div className="basis-1/6 flex justify-center align-bottom flex-col">
+          <div className="flex justify-between mt-4 gap-5">
+            <button
+              className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700
                 ${
                   setIndex === 0 || !kegel || kegel.length === 0
                     ? "bg-gray-500 cursor-not-allowed "
                     : "bg-gray-700 hover:bg-gray-700"
                 }
                 `}
-                onClick={handlePrevious}
-                disabled={setIndex === 0 || !kegel || kegel.length === 0}
-              >
-                <span style={{ paddingRight: "10px" }}>
-                  <ArrowLeftOutlined />
-                </span>
-                Previous
-              </button>
+              onClick={handlePrevious}
+              disabled={setIndex === 0 || !kegel || kegel.length === 0}
+            >
+              <span style={{ paddingRight: "10px" }}>
+                <ArrowLeftOutlined />
+              </span>
+              Previous
+            </button>
 
-              <button
-                className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700
+            <button
+              className={`px-4 py-2 text-white rounded focus:outline-none bg-gray-600 hover:bg-gray-700
                    ${
                      !kegel || setIndex === kegel.length - 1
                        ? "bg-gray-500 cursor-not-allowed "
                        : "bg-gray-700 hover:bg-gray-700"
                    }`}
-                onClick={handleNext}
-                disabled={!kegel || setIndex === kegel.length - 1}
-              >
-                Next
-                <span style={{ paddingLeft: "10px" }}>
-                  <ArrowRightOutlined />
-                </span>
-              </button>
-            </div>
+              onClick={handleNext}
+              disabled={!kegel || setIndex === kegel.length - 1}
+            >
+              Next
+              <span style={{ paddingLeft: "10px" }}>
+                <ArrowRightOutlined />
+              </span>
+            </button>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

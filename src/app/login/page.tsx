@@ -68,7 +68,7 @@ function LoginPage() {
             dispatch(storeAuthToken(result?.data?.jwt));
 
             dispatch(storeUserInfo(result?.data?.user));
-          window.location.replace("/programs");
+          router.push("/programs");
           }
         } catch (error) {
         alert("Something went wrong");

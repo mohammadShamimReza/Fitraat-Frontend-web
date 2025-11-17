@@ -6,11 +6,11 @@ import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import localFont from "next/font/local";
 import Head from "next/head";
-import Link from "next/link";
 import React from "react";
 import "./globals.css";
 
 import Hero from "@/components/structure/Hero";
+import Support from "@/components/structure/Support";
 import { ConfigProvider } from "antd";
 import { usePathname } from "next/navigation";
 
@@ -41,8 +41,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const palastineHelpUrl =
-    process.env.NEXT_PUBLIC_PALESTINE_HELP_URL || "palastineHelpUrl";
   const siteUrl = usePathname();
   return (
     <Providers>
@@ -100,29 +98,14 @@ export default function RootLayout({
                 },
               }}
             >
-              <div className="">
-                <div className="w-full bg-gray-800 text-white py-1 px-2 flex justify-center items-center space-x-4 text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden">
-                  <span className="font-semibold">Stand with Palestine 🇧🇩</span>
-                  <Link target="blank" href={palastineHelpUrl} passHref>
-                    <p
-                      className="underline font-semibold hover:text-gray-200 transition-colors duration-200"
-                      rel="noopener noreferrer"
-                    >
-                      Support 🇵🇸
-                    </p>
-                  </Link>
-                </div>
-                <div className="sticky top-0 z-50 bg-white shadow-sm">
-                  <div className="mx-auto max-w-7xl">
-                    <NavBar />
-                  </div>
-                </div>
+              <Support />
 
-                <Hero />
+              <NavBar />
 
-                <div className="mx-auto max-w-6xl">{children}</div>
-                <Footer />
-              </div>
+              <Hero />
+
+              <div className="mx-auto max-w-6xl">{children}</div>
+              <Footer />
               <CookieConsent />
             </ConfigProvider>
           </AntdRegistry>

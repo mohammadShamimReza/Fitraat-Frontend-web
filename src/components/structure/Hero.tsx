@@ -33,7 +33,7 @@ export default function Hero() {
               animation: "slideIn 1s ease-out forwards",
             }}
           >
-            Recover Your Life from Porn Addiction
+            Recover Life from Porn
           </h1>
 
           <Link href="/programs/tasks" className="inline-block">

@@ -13,10 +13,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import DayFinishImage from "@/app/assets/dayFinish.gif";
-import ChildProtectionNavigation from "@/components/childProtection/ChildProtectionNavigation";
-import ChildProtectionPaymentBlocker from "@/components/childProtection/ChildProtectionPaymentBlocker";
-import ChildProtectionTitles from "@/components/childProtection/ChildProtectionTitles";
-import ChildProtectionVideo from "@/components/childProtection/ChildProtectionVideo";
+import PreMarriageNavigation from "@/components/preMarriageSolution/Navigation";
+import PreMarriagePaymentBlocker from "@/components/preMarriageSolution/PaymentBlocker";
+import PreMarriageTitles from "@/components/preMarriageSolution/Titles";
+import PreMarriageVideo from "@/components/preMarriageSolution/Video";
+
 
 interface ProtectionVideo {
   id: number;
@@ -121,11 +122,11 @@ export default function ChildProtectionPage() {
         {isLoading ? (
           <Skeleton.Node active={true} style={{ width: 880, height: 400 }} />
         ) : (
-          <ChildProtectionVideo videos={video} />
+          <PreMarriageVideo videos={video} />
         )}
 
         {/* ✅ Navigation */}
-        <ChildProtectionNavigation
+        <PreMarriageNavigation
           day={day}
           loading={loading}
           onNavigate={handleNavigation}
@@ -135,7 +136,7 @@ export default function ChildProtectionPage() {
         {titleLoading ? (
           <Skeleton paragraph={{ rows: 4 }} />
         ) : titleData ? (
-          <ChildProtectionTitles
+          <PreMarriageTitles
             titles={titleData.data}
             userDay={userData?.childProtectionDayNumber}
             currentDay={day}
@@ -143,7 +144,7 @@ export default function ChildProtectionPage() {
         ) : null}
       </div>
       {/* ✅ Payment Overlay */}
-      {payment !== "Complete" && <ChildProtectionPaymentBlocker />}
+      {payment !== "Complete" && <PreMarriagePaymentBlocker />}
     </div>
   );
 }

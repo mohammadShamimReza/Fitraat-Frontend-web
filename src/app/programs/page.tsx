@@ -3,64 +3,100 @@
 import { useAppSelector } from "@/redux/hooks";
 import { PlayCircleOutlined, ReadOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import FancyLoading from "../loading";
-import childProtection from "./../../app/assets/child-protection.png";
 import kagelIndividual from "./../../app/assets/kagelIndividual.png";
+import childProtection from "./../../app/assets/premarriage.png";
 import recovary from "./../../app/assets/recovary.png";
 
 type Program = {
   id: number;
   link: string;
   title: string;
-  image: StaticImageData;
+  image: any;
   description: string;
   details: string;
-  tags: string[]; // <-- Add tags here
+  tags: string[];
+  benefits: string[];
+  features: string[];
 };
-
 const programs: Program[] = [
   {
     id: 1,
-    link: "/tasks",
+    link: "/programs/porn-recovary",
     title: "Porn Recovery Program",
     image: recovary,
     description:
       "A structured 40-day journey to overcome pornography addiction with guided videos, daily tasks, and community support.",
     details:
       "A psychology-backed recovery path with daily lessons, accountability tasks, and progress tracking. Designed to rebuild self-control, resilience, and healthy habits.",
-    tags: ["porn", "recovary", "pe", "ed"], // example tags
+    tags: ["porn", "recovery", "pe", "ed"],
+    benefits: [
+      "Regain mental clarity and focus",
+      "Rebuild confidence and motivation",
+      "Break free from addiction patterns",
+      "Restore healthy sexual performance",
+    ],
+    features: [
+      "40-day structured video lessons",
+      "Daily tasks and self-assessments",
+      "Community accountability support",
+      "Personal progress analytics",
+    ],
   },
   {
     id: 2,
-    link: "/kagel-exercise",
-
+    link: "/programs/kegel-exercise",
     title: "Kegel Exercise Program",
-
     image: kagelIndividual,
     description:
       "Guided Kegel exercises to improve pelvic strength, control and confidence — with timed sessions and progress tracking.",
     details:
       "Step-by-step Kegel training with morning/afternoon/night sessions, audio cues, progress charts, and habit-building challenges.",
-    tags: ["pe", "health", "exercise"], // example tags
+    tags: ["pe", "health", "exercise"],
+    benefits: [
+      "Improve erection strength and control",
+      "Prevent premature ejaculation",
+      "Boost pelvic floor endurance",
+      "Enhance confidence and performance",
+    ],
+    features: [
+      "Audio-guided squeeze & relax sessions",
+      "Morning, afternoon, and night routines",
+      "Progress tracking with analytics",
+      "Adaptive difficulty system",
+    ],
   },
   {
     id: 3,
-    link: "/child-protection",
-
-    title: "Save Your Child from Adultry",
-    image: childProtection,
+    link: "/programs/pre-marriage",
+    title: "Pre-Marriage Solution",
+    image: childProtection, // replace with your actual image import
     description:
-      "Parent-focused guidance to protect children from exposure to pornography and build healthy digital habits.",
+      "A complete guidance program to prepare you for a strong, confident, and addiction-free marriage — built on emotional maturity, self-control, and mutual respect.",
     details:
-      "Practical advice, conversation scripts, and digital-safety tools to help parents prevent exposure and support healthy development.",
-    tags: ["parent", "porn", "education"], // example tags
+      "This program offers psychological and spiritual preparation for marriage. It helps individuals overcome lust-driven habits, develop emotional intelligence, and build the mindset needed for a healthy, faithful, and fulfilling relationship.",
+    tags: ["marriage", "relationship", "self-improvement", "addiction-free"],
+    benefits: [
+      "Develop emotional stability and self-control before marriage",
+      "Understand your role and responsibilities in a healthy partnership",
+      "Build confidence and readiness for intimacy based on respect and trust",
+      "Eliminate addictive habits that harm relationships",
+    ],
+    features: [
+      "Step-by-step video sessions with actionable reflections",
+      "Practical exercises for communication and emotional growth",
+      "Self-assessment tools to measure readiness for marriage",
+      "Guidance from psychology and faith-based perspectives",
+    ],
   },
 ];
 
 const ProgramsPage: React.FC = () => {
+  const router = useRouter();
   const [selected, setSelected] = useState<Program | null>(null);
   const [mounted, setMounted] = useState(false);
   const userData = useAppSelector((state) => state.auth.userInfo);
@@ -127,7 +163,7 @@ const ProgramsPage: React.FC = () => {
                   </p>
 
                   <div className="flex items-center justify-between gap-3">
-                    <Link href={`/programs/${p.link}`} className="flex-1">
+                    <Link href={`${p.link}`} className="flex-1">
                       <Button
                         type="primary"
                         icon={<PlayCircleOutlined />}
@@ -169,16 +205,6 @@ const ProgramsPage: React.FC = () => {
       >
         {selected && (
           <div className="space-y-4">
-            <div className="w-full h-48 overflow-hidden rounded-lg relative">
-              <Image
-                src={selected.image}
-                alt={selected.title}
-                fill
-                className="object-cover"
-                placeholder="blur"
-              />
-            </div>
-
             <h3 className="text-2xl font-semibold text-gray-900">
               {selected.title}
             </h3>
@@ -193,15 +219,33 @@ const ProgramsPage: React.FC = () => {
 
             <p className="text-gray-700 mt-2">{selected.details}</p>
 
-            <ul className="list-disc list-inside space-y-1 text-gray-600">
-              <li>Structured lessons & daily tasks</li>
-              <li>Progress tracking and analytics</li>
-              <li>Community & accountability tools</li>
-            </ul>
+            {/* ✅ Features */}
+            <div>
+              <h4 className="font-semibold text-lg text-gray-800 mt-4">
+                Key Features:
+              </h4>
+              <ul className="list-disc list-inside space-y-1 text-gray-600">
+                {selected.features.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ✅ Benefits */}
+            <div>
+              <h4 className="font-semibold text-lg text-gray-800 mt-4">
+                Benefits:
+              </h4>
+              <ul className="list-disc list-inside space-y-1 text-gray-600">
+                {selected.benefits.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-end mt-4">
               <Button
-                onClick={() => alert(`Start ${selected.title}`)}
+                onClick={() => router.push(selected.link)}
                 type="primary"
                 icon={<PlayCircleOutlined />}
                 className="w-full sm:w-auto"

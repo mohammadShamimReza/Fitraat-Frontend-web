@@ -177,24 +177,7 @@ export interface DayData {
   data: Day[];
   meta: Meta;
 }
-type CompletedInfo = {
-  id: number;
-  childProtection: {
-    id: number;
-    VideoNumber: number;
-    completed: boolean | null;
-  };
-  kagel: {
-    id: number;
-    dayNumber: number;
-    completed: boolean | null;
-  };
-  Day: {
-    id: number;
-    dayNumber: number;
-    completed: boolean | null;
-  };
-};
+
 export type PaymentStatus = "Complete" | "Not complete";
 export type Gender = "Male" | "Female" | null;
 export interface UserData {
@@ -220,29 +203,7 @@ export interface UserData {
   kagelPayment: PaymentStatus;
   kagelIndividualDayNumber: number;
   childProtectionDayNumber: number;
-}
-
-export interface UserDataWithDay {
-  id: number;
-  documentId: string;
-  username: string;
-  email: string;
-  provider: string;
-  confirmed: boolean;
-  blocked: boolean;
-  age: number | null;
-  phone: string | null;
-  currentDay: number;
-  gender: Gender | null;
-  startDate: string | null;
-  fitraatPayment: PaymentStatus;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  tran_id: string | null;
-  compliteDay: number | null;
-  profileImage: StrapiImage | null;
-  completedInfo: CompletedInfo;
+  compliteDay: number;
 }
 
 export interface UserAuthData {
@@ -266,14 +227,8 @@ export interface PaymentFormValues {
   cus_country: string;
   cus_phone: string;
 }
-export interface Meta {
-  pagination: {
-    page: number;
-    pageSize: number;
-    pageCount: number;
-    total: number;
-  };
-}
+
+
 export interface Error {
   error: {
     data: {

@@ -1,4 +1,4 @@
-export default function ChildProtectionPaymentBlocker() {
+export default function PreMarriagePaymentBlocker() {
   return (
     <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-white/80 backdrop-blur-sm rounded-lg">
       <p className="text-gray-800 font-semibold mb-3 text-sm sm:text-base">

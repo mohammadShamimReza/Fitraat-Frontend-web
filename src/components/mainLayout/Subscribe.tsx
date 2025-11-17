@@ -21,8 +21,9 @@ const Subscribe = () => {
         });
         if (result?.error) {
           result?.error.data.error.message === "This attribute must be unique"
-            ? message.error("Email is already subscribed")
+            ? message.success("You are already subscribed")
             : "";
+          setEmail("");
         } else {
           setEmail("");
 

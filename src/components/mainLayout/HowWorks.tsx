@@ -3,10 +3,12 @@ import { GrInProgress } from "react-icons/gr";
 import { MdWorkHistory } from "react-icons/md";
 import { TbBuildingCommunity } from "react-icons/tb";
 
-function RecoveryFeature() {
+function HowWorks() {
   return (
     <div>
-      {" "}
+      <h2 className=" text-4xl font-bold my-20 text-center">
+        How Fitraat works?
+      </h2>
       <div className={`container mx-auto py-2 px-4 `}>
         <br />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -63,4 +65,4 @@ function RecoveryFeature() {
   );
 }
 
-export default RecoveryFeature;
+export default HowWorks;
