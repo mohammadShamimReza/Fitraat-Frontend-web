@@ -27,6 +27,24 @@
 
 ---
 
+```
+.
+├─ packages/
+│  ├─ cli/              → The `statikapi` CLI (build, dev, preview)
+│  ├─ core/             → Shared utilities and internal helpers
+│  ├─ ui/               → React preview UI served at /_ui
+│  └─ create-statikapi/ → Project scaffolder (WIP)
+│
+├─ example/
+│  ├─ basic/            → Simple static routes
+│  ├─ dynamic/          → Dynamic + catch-all routes
+│  └─ showcase/         → Full TS example (remote fetch, dynamic, catch-all)
+│
+├─ docs/                → OSS documentation content (MDX)
+├─ .github/             → Issue templates + release workflows
+└─ scripts, configs, etc.
+```
+
 ## Credentials for Testing
 
 Use the following credentials to log in:

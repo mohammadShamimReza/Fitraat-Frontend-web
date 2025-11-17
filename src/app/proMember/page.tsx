@@ -30,7 +30,7 @@ const plans: {
       "Exclusive recovery content",
     ],
     payLink: "/payment",
-    completeLink: "/pornrecover/program",
+    completeLink: "/programs/porn-recovary",
   },
   {
     key: "kagelPayment",
@@ -47,7 +47,7 @@ const plans: {
       "Bonus health insights",
     ],
     payLink: "/payment",
-    completeLink: "/kegel/program",
+    completeLink: "/programs/kegel-exercise",
   },
   {
     key: "childProtectionPayment",
@@ -64,7 +64,7 @@ const plans: {
       "Guided steps for marriage preparation",
     ],
     payLink: "/payment",
-    completeLink: "/child-protection/program",
+    completeLink: "/programs/pre-marriage",
   },
 ];
 
@@ -206,7 +206,7 @@ const MembershipCard = () => {
             ))}
           </ul>
 
-          <Link href="/signup">
+          <Link href="/programs/porn-recovary">
             <motion.button
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.05 }}
