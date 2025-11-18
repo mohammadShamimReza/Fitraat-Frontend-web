@@ -1,7 +1,7 @@
 "use client";
 import { useAppSelector } from "@/redux/hooks";
-import { motion } from "framer-motion";
 import Link from "next/link";
+
 type PaymentKey = "fitraatPayment" | "kagelPayment" | "childProtectionPayment";
 
 const plans: {
@@ -72,18 +72,13 @@ const MembershipCard = () => {
   const userData = useAppSelector((state) => state.auth.userInfo);
 
   return (
-    <div className="w-full py-16 px-4 sm:px-8 lg:px-16 bg-gradient-to-b ">
+    <div className="w-full py-16 px-4 sm:px-8 lg:px-16 bg-gradient-to-b">
       {/* Header */}
       <div className="text-center mb-14">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl font-extrabold text-gray-800"
-        >
+        <h1 className="text-4xl font-extrabold text-gray-800 animate-fadeInDown">
           Choose Your <span className="text-red-600">Membership</span>
-        </motion.h1>
-        <p className="text-gray-500 mt-3 text-lg">
+        </h1>
+        <p className="text-gray-500 mt-3 text-lg animate-fadeInUp">
           Unlock exclusive features and accelerate your recovery journey.
         </p>
       </div>
@@ -96,11 +91,9 @@ const MembershipCard = () => {
           const link = isComplete ? plan.completeLink : plan.payLink;
 
           return (
-            <motion.div
+            <div
               key={i}
-              whileHover={{ y: -10 }}
-              transition={{ type: "spring", stiffness: 200, damping: 12 }}
-              className={`relative bg-white border-2 border-transparent shadow-lg rounded-2xl p-6 flex flex-col justify-between hover:shadow-2xl group`}
+              className="relative bg-white border-2 border-transparent shadow-lg rounded-2xl p-6 flex flex-col justify-between transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl group"
             >
               {/* Tag */}
               <span
@@ -111,7 +104,7 @@ const MembershipCard = () => {
 
               <div>
                 {/* Title */}
-                <h2 className="text-2xl font-semibold text-gray-800 mt-3 mb-2 text-center group-hover:scale-105 transition-transform duration-300">
+                <h2 className="text-2xl font-semibold text-gray-800 mt-3 mb-2 text-center transition-transform duration-300 group-hover:scale-105">
                   {plan.name}
                 </h2>
 
@@ -145,17 +138,15 @@ const MembershipCard = () => {
 
               {/* Button */}
               <Link href={link}>
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  whileHover={{ scale: 1.05 }}
+                <button
                   className={`mt-8 w-full ${
                     isComplete
                       ? "bg-gradient-to-r from-green-600 to-emerald-700"
                       : `bg-gradient-to-r ${plan.color}`
-                  } text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300`}
+                  } text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-lg transform transition-transform duration-300 hover:scale-105`}
                 >
                   {buttonText}
-                </motion.button>
+                </button>
               </Link>
 
               {/* Completion badge */}
@@ -164,17 +155,14 @@ const MembershipCard = () => {
                   ✅ Active
                 </div>
               )}
-            </motion.div>
+            </div>
           );
         })}
       </div>
 
       {/* Free Plan */}
       <div className="mt-16 max-w-3xl mx-auto">
-        <motion.div
-          whileHover={{ y: -10 }}
-          className="relative bg-white border border-gray-200 shadow-lg rounded-2xl p-8 text-center transition-all duration-500 hover:shadow-2xl"
-        >
+        <div className="relative bg-white border border-gray-200 shadow-lg rounded-2xl p-8 text-center transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl">
           <span className="absolute top-0 left-0 rounded-br-xl rounded-tl-2xl bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-sm font-semibold px-3 py-1">
             Free Trial 🎁
           </span>
@@ -207,15 +195,11 @@ const MembershipCard = () => {
           </ul>
 
           <Link href="/programs/porn-recovary">
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-gradient-to-r from-gray-800 to-gray-900 text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-transform duration-300"
-            >
+            <button className="bg-gradient-to-r from-gray-800 to-gray-900 text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transform transition-transform duration-300 hover:scale-105">
               Start Free 3-Day Trial
-            </motion.button>
+            </button>
           </Link>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
