@@ -26,7 +26,9 @@ export const daysApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      transformResponse: (rawResult: UserData | Error) => {
+      transformResponse: (
+        rawResult: { jwt: string; user: UserData } | Error
+      ) => {
         return rawResult;
       },
       transformErrorResponse(baseQueryReturnValue) {

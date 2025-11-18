@@ -45,15 +45,20 @@ export default function ResetPass() {
     setIsLoading(true);
 
     try {
-      const result: any = await chengePassword({
+      const result = await chengePassword({
         code,
         password: data.password,
         passwordConfirmation: data.passwordConfirmation,
       });
-      if (result?.data?.jwt && result?.data?.user) {
+      if (
+        "data" in result &&
+        result.data &&
+        "jwt" in result.data &&
+        "user" in result.data
+      ) {
         // Store JWT & user info like login
         const { jwt, user } = result.data;
-        storeTokenInCookie(jwt);
+        storeTokenInCookie(jwt as string);
         dispatch(storeAuthToken(jwt));
         dispatch(storeUserInfo(user));
 
@@ -61,14 +66,18 @@ export default function ResetPass() {
         router.push("/profile"); // redirect to dashboard or task page
         window.location.reload();
       } else {
-        message.error(
-          result?.error?.data?.message || "Failed to reset password."
-        );
+        // Normalize error message for both FetchBaseQueryError and SerializedError
+        let errorMessage = "Failed to reset password.";
+        if (result && "error" in result) {
+          errorMessage = "something went wrong";
+        }
+        message.error(errorMessage);
       }
-    } catch (err: any) {
-      message.error(
-        err?.data?.message || "Something went wrong. Try again later."
-      );
+    } catch (err) {
+      if (err) {
+        
+        message.error("Something went wrong. Try again later.");
+      }
     } finally {
       setIsLoading(false);
     }

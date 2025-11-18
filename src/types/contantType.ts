@@ -462,3 +462,19 @@ export interface ChildProtectionItem {
   numberCount: number;
   title: string;
 }
+
+
+
+export interface SubscribeResponse {
+  data: SubscribeData;
+  meta: Meta;
+}
+
+export interface SubscribeData {
+  id: number;
+  documentId: string;
+  email: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  publishedAt: string; // ISO date string
+}

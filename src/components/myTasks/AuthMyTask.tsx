@@ -142,13 +142,13 @@ function AuthMyTask({
     if (authenticatedDayData) {
       const authDayData = authenticatedDayData[0];
       if (authDayData) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setBlog({
           id: authDayData?.pro_blog?.documentId,
           title: authDayData?.pro_blog?.titile,
           content: authDayData?.pro_blog?.content,
         });
         setQuiz(authDayData?.pro_quizz?.quizzess);
-
         setVideo({ videoUrl: authDayData?.regulerVideo?.url });
         setKegel(authDayData?.pro_kagel?.kagelTimes);
       }

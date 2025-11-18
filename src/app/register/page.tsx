@@ -62,7 +62,7 @@ function RegisterPage() {
     try {
       // Validate form data with Zod
       registerSchema.parse(formData);
-
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const result: any = await registerUser(formData);
       if (result?.error) {
         if (result?.error?.error?.message === "This attribute must be unique") {
@@ -77,7 +77,7 @@ function RegisterPage() {
         dispatch(storeUserInfo(result?.data?.user));
         router.push("/programs");
       }
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof z.ZodError) {
         // Display validation errors
         error.issues.map((issue) => message.error(issue.message));

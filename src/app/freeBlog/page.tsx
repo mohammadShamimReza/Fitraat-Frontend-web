@@ -2,11 +2,11 @@
 
 import { useGetFreeBlogsQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Blogs from "./Blogs";
 
 function Page() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm] = useState<string>("");
   const [pageCount, setPageCount] = useState<number>(1);
   const paginationSize = 25;
 
@@ -16,11 +16,10 @@ function Page() {
     isSuccess,
   } = useGetFreeBlogsQuery({ searchTerm, pageCount, paginationSize });
 
-
-  const handleSearchTerm = (data: any) => {
-    setSearchTerm(data.searchTerm);
-    setPageCount(1); // Reset to first page on new search
-  };
+  // const handleSearchTerm = (data: any) => {
+  //   setSearchTerm(data.searchTerm);
+  //   setPageCount(1); // Reset to first page on new search
+  // };
 
   const total: number = blogData?.meta.pagination.total || 0;
   const totalPages = Math.ceil(total / paginationSize);
@@ -29,7 +28,6 @@ function Page() {
     setPageCount(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
 
   return (
     <div>

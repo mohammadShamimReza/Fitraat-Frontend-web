@@ -31,8 +31,9 @@ export default function ForgotPassword() {
         message.error("Email not found or something went wrong.");
       }
     } catch (error) {
-    
-    error &&  message.error("Failed to send reset link. Try again later.");
+      if (error) {
+        alert("Failed to send reset link. Try again later.");
+      }
     } finally {
       setIsLoading(false);
     }

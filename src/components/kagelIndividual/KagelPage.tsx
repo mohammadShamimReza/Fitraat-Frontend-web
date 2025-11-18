@@ -32,9 +32,7 @@ export default function KegelPage({ kegel, DayCount, payment, userId, setDay }: 
   const sessions = ["morning", "afternoon", "night"];
   const [loading, setLoading] = useState(false);
   const [isSidebarVisible, setSidebarVisible] = useState(false);
-  const [selectedSession, setSelectedSession] = useState<
-    "morning" | "afternoon" | "night"
-  >("morning");
+  const [selectedSession, setSelectedSession] = useState<string>("morning");
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
   const handleOk = () => {
     setIsFinishModalOpen(false);
@@ -108,7 +106,7 @@ export default function KegelPage({ kegel, DayCount, payment, userId, setDay }: 
       }
       if (currentIndex < sessions.length - 1) {
         // Move to next session (same day)
-        setSelectedSession(sessions[currentIndex + 1] as any);
+        setSelectedSession(sessions[currentIndex + 1]);
       } else {
         // If last session → move to next day morning
 
@@ -134,7 +132,7 @@ export default function KegelPage({ kegel, DayCount, payment, userId, setDay }: 
     } else {
       if (currentIndex > 0) {
         // Move to previous session (same day)
-        setSelectedSession(sessions[currentIndex - 1] as any);
+        setSelectedSession(sessions[currentIndex - 1]);
       } else {
         // If morning → move to previous day night
         if (currentDay > 1) {
@@ -166,7 +164,7 @@ export default function KegelPage({ kegel, DayCount, payment, userId, setDay }: 
         onClick={() => {
           if (!accessible) return;
           // setSelectedDay(day);
-          setSelectedSession(session.toLowerCase() as any);
+          setSelectedSession(session.toLowerCase());
           setSidebarVisible(false);
         }}
       >

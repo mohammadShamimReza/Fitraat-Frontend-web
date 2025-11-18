@@ -49,7 +49,7 @@ export default function ChildProtectionPage() {
   if (!window || !protectionData) return <ProgramSclaton />;
 
   const video: ProtectionVideo[] =
-    protectionData?.data?.[0]?.protectionVideo?.map((v: any) => ({
+    protectionData?.data?.[0]?.protectionVideo?.map((v) => ({
       id: v.id,
       url: `${v.url}`,
       name: v.name,

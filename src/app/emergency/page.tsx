@@ -9,8 +9,8 @@ const EmergencyService: React.FC = () => {
   const [current, setCurrent] = useState(0);
 
   const { data, isLoading } = useGetEnergencyContantQuery(undefined);
-  const total = data?.meta.pagination.total ?? 0;
-  const [emergencyNumber, setEmergencyNumber] = useState<number>(1);
+  // const total = data?.meta.pagination.total ?? 0;
+  const [emergencyNumber] = useState<number>(1);
 
   if (isLoading) {
     return (

@@ -83,7 +83,7 @@ const PaymentPage: React.FC = () => {
       } else {
         message.error("Payment initialization failed");
       }
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof z.ZodError) {
         const fieldErrors: Record<string, string> = {};
         err.issues.forEach((issue) => {

@@ -7,7 +7,6 @@ import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import FancyLoading from "../loading";
 import kagelIndividual from "./../../app/assets/kagelIndividual.png";
 import childProtection from "./../../app/assets/premarriage.png";
 import recovary from "./../../app/assets/recovary.png";
@@ -100,7 +99,7 @@ const ProgramsPage: React.FC = () => {
   const [selected, setSelected] = useState<Program | null>(null);
   const userData = useAppSelector((state) => state.auth.userInfo);
 
-  if (!window) return <FancyLoading />;
+  // if (!window) return <FancyLoading />;
 
   return (
     <main className="min-h-screen py-12 px-6 sm:px-10">

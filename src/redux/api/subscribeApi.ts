@@ -1,3 +1,4 @@
+import { SubscribeResponse } from "@/types/contantType";
 import { baseApi } from "./baseApi";
 
 const SUBSCRIBES = "/subscribers";
@@ -13,7 +14,7 @@ export const subscribersApi = baseApi.injectEndpoints({
         },
       }),
 
-      transformResponse: (rawResult) => {
+      transformResponse: (rawResult : SubscribeResponse | Error) => {
         return rawResult;
       },
     }),

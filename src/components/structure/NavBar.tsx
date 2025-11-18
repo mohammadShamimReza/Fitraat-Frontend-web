@@ -25,6 +25,7 @@ function NavBar() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
   const [userMenuToggle, setUserMenuToggle] = useState<boolean>(false);
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
 
   const authTokenFromRedux = useAppSelector((state) => state.auth.authToken);
 
@@ -38,27 +39,24 @@ function NavBar() {
   }, []);
 
   const authToken = getTokenFromCookie() || authTokenFromRedux;
-  // const [authenticated, setAuthenticated] = useState<boolean>(
-  //   !authToken ? false : true
-  // );
-
   const { data, error } = useGetUserInfoQuery(undefined, {
     skip: !authToken,
   });
 
-  console.log(data);
   useEffect(() => {
-    if (data) {
-      dispatch(storeUserInfo(data)); // Set user in Redux if data is returned
-    }
-    if (error) {
-      dispatch(storeUserInfo(null)); // Clear user state if there's an error
-    }
-    // if (!authToken) {
-    //   setAuthenticated(false);
-    // } else {
-    //   setAuthenticated(true);
-    // }
+    const timer = setTimeout(() => {
+      // Update Redux user info
+      if (data) {
+        dispatch(storeUserInfo(data));
+      } else if (error) {
+        dispatch(storeUserInfo(null));
+      }
+
+      // Update authenticated flag
+      setAuthenticated(!!authToken);
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, [
     authToken,
     authTokenFromRedux,
@@ -66,7 +64,8 @@ function NavBar() {
     dispatch,
     error,
     removeTokenFromCookies,
-  ]); // include removeTokenFromCookies in the dependency array
+  ]);
+  // include removeTokenFromCookies in the dependency array
 
   const handleLogout = () => {
     removeTokenFromCookies();
@@ -168,7 +167,7 @@ function NavBar() {
                 </div>
 
                 <div className="  flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer ">
-                  {!authToken ? (
+                  {!authenticated ? (
                     <div className="relative ml-3 mt-2">
                       <Link href={"/login"}>
                         <span className="sr-only">Login</span>
