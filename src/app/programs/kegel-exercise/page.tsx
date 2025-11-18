@@ -25,7 +25,6 @@ const KagelIndividualPage: React.FC = () => {
   } = useGetKagelIndividualByDayIdQuery(day);
 
   if (!isMounted || !kagelData || isLoading) return <ProgramSclaton />;
-  console.log(kagelData, "kagel data");
   const kagel = {
     morningkagel: kagelData?.data[0].morningkagel,
     afternoonKagel: kagelData?.data[0].afternoonKagel,

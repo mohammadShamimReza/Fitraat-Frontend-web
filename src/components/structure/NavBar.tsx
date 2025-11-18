@@ -43,7 +43,6 @@ function NavBar() {
     skip: !authToken,
   });
 
-  console.log(data);
 
   useEffect(() => {
     if (data) {
