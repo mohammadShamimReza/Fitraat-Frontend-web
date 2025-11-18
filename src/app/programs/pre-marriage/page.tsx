@@ -9,7 +9,7 @@ import {
 import { useAppSelector } from "@/redux/hooks";
 import { Button, Modal, Skeleton } from "antd";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import DayFinishImage from "@/app/assets/dayFinish.gif";
 import PreMarriageNavigation from "@/components/preMarriageSolution/Navigation";
@@ -24,6 +24,10 @@ interface ProtectionVideo {
 }
 
 export default function ChildProtectionPage() {
+  const [mount, setMount] = useState(false)
+  useEffect(() => {
+    setMount(true)
+  },[])
   const userData = useAppSelector((state) => state.auth.userInfo);
   const [updateUserChildProtectionDay] =
     useUpdateUserChildProtectionDayMutation();
@@ -46,7 +50,7 @@ export default function ChildProtectionPage() {
     window.location.reload();
   };
 
-  if (!window || !protectionData) return <ProgramSclaton />;
+  if (!mount || !protectionData) return <ProgramSclaton />;
 
   const video: ProtectionVideo[] =
     protectionData?.data?.[0]?.protectionVideo?.map((v) => ({
