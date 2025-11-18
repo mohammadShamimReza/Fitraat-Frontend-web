@@ -1,7 +1,6 @@
 "use client";
 import { useForgetPasswordMutation } from "@/redux/api/authApi";
 import { Modal, message } from "antd";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -10,7 +9,6 @@ interface FormData {
 }
 
 export default function ForgotPassword() {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -24,7 +22,8 @@ export default function ForgotPassword() {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
-      const result: any = await forgetPassword(data);
+      const result = await forgetPassword(data);
+      console.log(result);
 
       if (result?.data?.ok) {
         setModalVisible(true);
@@ -32,14 +31,15 @@ export default function ForgotPassword() {
         message.error("Email not found or something went wrong.");
       }
     } catch (error) {
-      message.error("Failed to send reset link. Try again later.");
+    
+    error &&  message.error("Failed to send reset link. Try again later.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen ">
+    <div className="flex items-center justify-center h-screen bg-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-xl p-8 rounded shadow-lg"

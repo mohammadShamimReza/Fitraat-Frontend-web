@@ -71,13 +71,14 @@ function LoginPage() {
           router.push("/programs");
           }
         } catch (error) {
-        alert("Something went wrong");
+       error &&  alert("Something went wrong");
         } finally {
           setLoading(false); // Set loading state to false
         }
       } else {
         message.error("Login is not successfully");
       }
+      
     } catch (error: any) {
       if (error instanceof z.ZodError) {
         // Display validation errors

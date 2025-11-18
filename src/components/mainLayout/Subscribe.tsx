@@ -19,6 +19,7 @@ const Subscribe = () => {
         const result: any | Error = await createSubscribers({
           email: userEmail,
         });
+        console.log(result);
         if (result?.error) {
           result?.error.data.error.message === "This attribute must be unique"
             ? message.success("You are already subscribed")
@@ -30,7 +31,7 @@ const Subscribe = () => {
           message.success("Thanks for subscribing us");
         }
       } catch (error) {
-        alert("Something went wrong");
+      error && alert("Something went wrong");
       }
     } else {
       message.error("Something went wrong");

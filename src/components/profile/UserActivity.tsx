@@ -1,7 +1,7 @@
 "use client";
 
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import "tailwindcss/tailwind.css";
 
@@ -30,9 +30,12 @@ const UserActivityPieChart: React.FC<PerformancePieChartProps> = ({
     "Success is the sum of small efforts repeated daily.",
   ];
 
-  const randomQuote =
-    motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
-
+  const [randomQuote, setRandomQuote] = useState("");
+  useEffect(() => {
+    const quote =
+      motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+    setRandomQuote(quote);
+  }, []);
   const data = {
     labels: ["Completed", "Remaining"],
     datasets: [

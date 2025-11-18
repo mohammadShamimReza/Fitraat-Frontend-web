@@ -12,7 +12,6 @@ import "./globals.css";
 import Hero from "@/components/structure/Hero";
 import Support from "@/components/structure/Support";
 import { ConfigProvider } from "antd";
-import { usePathname } from "next/navigation";
 
 // If loading a variable font, you don't need to specify the font weight
 const quicksand = localFont({
@@ -41,7 +40,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const siteUrl = usePathname();
   return (
     <Providers>
       <html lang="en" className={quicksand.className}>

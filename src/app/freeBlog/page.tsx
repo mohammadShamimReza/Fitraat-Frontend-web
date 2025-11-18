@@ -8,21 +8,14 @@ import Blogs from "./Blogs";
 function Page() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [pageCount, setPageCount] = useState<number>(1);
-  const [allBlogs, setAllBlogs] = useState<Blog[]>([]);
   const paginationSize = 25;
 
   const {
     data: blogData,
     isLoading,
     isSuccess,
-    isFetching,
   } = useGetFreeBlogsQuery({ searchTerm, pageCount, paginationSize });
 
-  useEffect(() => {
-    if (blogData?.data) {
-      setAllBlogs(blogData.data); // Only display blogs for the current page
-    }
-  }, [blogData]);
 
   const handleSearchTerm = (data: any) => {
     setSearchTerm(data.searchTerm);
@@ -36,6 +29,7 @@ function Page() {
     setPageCount(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
 
   return (
     <div>
@@ -59,7 +53,7 @@ function Page() {
                   </div>
                 ))
               : isSuccess &&
-                allBlogs.map((blog: Blog) => (
+                blogData?.data?.map((blog: Blog) => (
                   <Blogs key={blog.id} blog={blog} />
                 ))}
 

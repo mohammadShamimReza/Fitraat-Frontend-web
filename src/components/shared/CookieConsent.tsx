@@ -5,13 +5,16 @@ import { useEffect, useState } from "react";
 const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    // Check if the user has already accepted the cookie policy
-    const hasAccepted = localStorage.getItem("cookieConsent");
-    if (!hasAccepted) {
-      setIsVisible(true);
-    }
-  }, []);
+ useEffect(() => {
+   const timer = setTimeout(() => {
+     const hasAccepted = localStorage.getItem("cookieConsent");
+     if (!hasAccepted) {
+       setIsVisible(true);
+     }
+   }, 0);
+
+   return () => clearTimeout(timer);
+ }, []);
 
   const handleAccept = () => {
     // Set a flag in localStorage to track consent

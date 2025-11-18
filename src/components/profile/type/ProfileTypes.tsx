@@ -22,7 +22,6 @@ export default function ProfileTypes({
   email,
   name,
   compliteDay,
-  progressData,
 }: {
   paid: string;
   getUserInfoData: UserData | null;
@@ -41,8 +40,7 @@ export default function ProfileTypes({
   const [isUploading, setIsUploading] = useState(false);
   const [uploadUserProfileImage] = useUploadUserProfileImageMutation();
   const [updateUserProfileImage] = useUpdateUserProfileImageMutation();
-  const [deleteUserProfileImage, { isLoading: deleteImageLoading }] =
-    useDeleteUserProfileImageMutation();
+  const [deleteUserProfileImage] = useDeleteUserProfileImageMutation();
   const [isImageUploadModalVisible, setIsImageUploadModalVisible] =
     useState(false); // State for image upload modal
   const handleImageUploadModalCancel = () => {
@@ -50,11 +48,7 @@ export default function ProfileTypes({
   };
   const [
     updataUserDay,
-    {
-      isError: updateUserDayError,
-      isLoading: updateUserUpdateDayLoading,
-      isSuccess: updateUserDaySuccess,
-    },
+    { isError: updateUserDayError, isSuccess: updateUserDaySuccess },
   ] = useUpdateUserDayMutation();
 
   // Handle image before uploading
@@ -74,9 +68,7 @@ export default function ProfileTypes({
       if (oldImageId) {
         await deleteUserProfileImage(oldImageId).unwrap();
       }
-      const uploadResponse: any = await uploadUserProfileImage(
-        formData
-      ).unwrap();
+      const uploadResponse = await uploadUserProfileImage(formData).unwrap();
       const uploadedImage = uploadResponse[0];
 
       if (!uploadedImage?.id) {
@@ -113,7 +105,7 @@ export default function ProfileTypes({
     alert("Do you want to restart!");
 
     try {
-      const result = await updataUserDay({
+      await updataUserDay({
         currentDay: 1,
         compliteDay: 0,
         userId: userId,
@@ -160,8 +152,6 @@ export default function ProfileTypes({
         paid={paid}
         setIsImageUploadModalVisible={setIsImageUploadModalVisible}
       />
-
-    
 
       <Modal
         title="Upload Image"

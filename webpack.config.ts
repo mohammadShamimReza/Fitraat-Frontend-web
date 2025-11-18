@@ -1,5 +1,3 @@
-const path = require("path");
-
 module.exports = {
   // Other webpack configurations...
   module: {

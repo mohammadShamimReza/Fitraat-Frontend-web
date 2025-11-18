@@ -3,10 +3,10 @@
 import { useAppSelector } from "@/redux/hooks";
 import { PlayCircleOutlined, ReadOutlined } from "@ant-design/icons";
 import { Button, Card, Modal, Tag } from "antd";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import FancyLoading from "../loading";
 import kagelIndividual from "./../../app/assets/kagelIndividual.png";
 import childProtection from "./../../app/assets/premarriage.png";
@@ -16,7 +16,7 @@ type Program = {
   id: number;
   link: string;
   title: string;
-  image: any;
+  image: StaticImageData;
   description: string;
   details: string;
   tags: string[];
@@ -98,14 +98,9 @@ const programs: Program[] = [
 const ProgramsPage: React.FC = () => {
   const router = useRouter();
   const [selected, setSelected] = useState<Program | null>(null);
-  const [mounted, setMounted] = useState(false);
   const userData = useAppSelector((state) => state.auth.userInfo);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return <FancyLoading />;
+  if (!window) return <FancyLoading />;
 
   return (
     <main className="min-h-screen py-12 px-6 sm:px-10">

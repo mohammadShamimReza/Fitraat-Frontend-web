@@ -18,11 +18,8 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 
-  const {
-    data: unAuthenticatedDayDataForChengeDay,
-    isError,
-    isLoading,
-  } = useGetDaysByDayIdQuery(parseInt(unAuthDayId));
+  const { data: unAuthenticatedDayDataForChengeDay, isLoading } =
+    useGetDaysByDayIdQuery(parseInt(unAuthDayId));
 
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
 

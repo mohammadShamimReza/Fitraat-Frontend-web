@@ -31,11 +31,8 @@ function AuthMyTask({
 
   const tasks = ["video", "kagel", "quiz", "Blog"];
 
-  const {
-    data: authenticatedDayDataForChengeDay,
-    isError,
-    isLoading,
-  } = useGetAuthDaysByDayIdQuery(authDayDataId);
+  const { data: authenticatedDayDataForChengeDay, isLoading } =
+    useGetAuthDaysByDayIdQuery(authDayDataId);
 
   const authenticatedDayData = authenticatedDayDataForChengeDay?.data;
 
@@ -104,7 +101,7 @@ function AuthMyTask({
           "Congratulations you have successfully completed your tasks for 40 day"
         );
       } else if (authDayDataId + 1 <= 40) {
-        const res = await updataUserDay({
+        await updataUserDay({
           currentDay: authDayDataId + 1,
           compliteDay: authDayDataId,
           userId: userId,

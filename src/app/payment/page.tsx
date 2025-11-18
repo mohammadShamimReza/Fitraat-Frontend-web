@@ -66,7 +66,7 @@ const PaymentPage: React.FC = () => {
     }));
   }, [userInfo]);
 
-  const handleChange = (key: string, value: any) => {
+  const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => ({ ...prev, [key]: "" }));
   };

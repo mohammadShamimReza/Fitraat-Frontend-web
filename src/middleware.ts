@@ -34,4 +34,3 @@ export function middleware(request: NextRequest) {
   // Default response
   return NextResponse.next();
 }
-``;

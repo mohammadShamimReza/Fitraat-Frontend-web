@@ -1,7 +1,12 @@
 import { ChildProtectionItem } from "@/types/contantType";
 
 interface Props {
-  titles: any[];
+  titles: {
+    documentId: string;
+    id: number;
+    numberCount: number;
+    title: string;
+  }[];
   userDay: number | undefined;
   currentDay: string;
 }
@@ -11,6 +16,8 @@ export default function PreMarriageTitles({
   userDay = 1,
   currentDay,
 }: Props) {
+
+  console.log(titles);
   return (
     <div className="border rounded-lg bg-white shadow p-3 mt-6">
       <h3 className="text-lg font-semibold mb-3 text-gray-700">

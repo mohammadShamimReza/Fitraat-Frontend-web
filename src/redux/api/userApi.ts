@@ -15,7 +15,7 @@ export const daysApi = baseApi.injectEndpoints({
       transformResponse: (rawResult: UserData | Error) => {
         return rawResult;
       },
-      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+      transformErrorResponse(baseQueryReturnValue) {
         return baseQueryReturnValue.data;
       },
     }),
@@ -28,7 +28,7 @@ export const daysApi = baseApi.injectEndpoints({
       transformResponse: (rawResult: UserData | Error) => {
         return rawResult;
       },
-      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+      transformErrorResponse(baseQueryReturnValue) {
         return baseQueryReturnValue.data;
       },
     }),

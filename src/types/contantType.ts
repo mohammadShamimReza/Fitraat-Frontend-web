@@ -34,7 +34,7 @@ type BlogImage = {
   url: string;
   previewUrl: string | null;
   provider: string;
-  provider_metadata: any;
+  // provider_metadata: any;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -54,7 +54,6 @@ export interface Blog {
   image: BlogImage;
 }
 
-
 export interface BlogData {
   data: Blog[];
   meta: Meta;
@@ -62,10 +61,7 @@ export interface BlogData {
 
 // Blog section complete
 
-
-
 // start Day section
-
 
 export type Video = {
   id: number;
@@ -75,7 +71,7 @@ export type Video = {
   caption: string | null;
   width: number | null;
   height: number | null;
-  formats: any | null;
+  // formats: any | null;
   hash: string;
   ext: string;
   mime: string;
@@ -83,12 +79,11 @@ export type Video = {
   url: string;
   previewUrl: string | null;
   provider: string;
-  provider_metadata: any | null;
+  // provider_metadata: any | null;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 };
-
 
 export type QuizOption = {
   id: number;
@@ -228,7 +223,6 @@ export interface PaymentFormValues {
   cus_phone: string;
 }
 
-
 export interface Error {
   error: {
     data: {
@@ -237,7 +231,7 @@ export interface Error {
         status: number;
         name: string;
         message: string;
-        details: {}[];
+        // details: {}[];
       };
     };
     status: number;
@@ -354,7 +348,7 @@ export interface EVideo {
   caption: string | null;
   width: number | null;
   height: number | null;
-  formats: any | null;
+  // formats: any | null;
   hash: string;
   ext: string;
   mime: string;
@@ -362,7 +356,7 @@ export interface EVideo {
   url: string;
   previewUrl: string | null;
   provider: string;
-  provider_metadata: any | null;
+  // provider_metadata: any | null;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -432,7 +426,7 @@ export interface StrapiImage {
   url: string;
   previewUrl: string | null;
   provider: string;
-  provider_metadata: any | null;
+  // provider_metadata: any | null;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;

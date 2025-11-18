@@ -3,19 +3,14 @@
 import UnAuthTask from "@/components/myTasks/UnAuthTask";
 import ProgramSclaton from "@/components/structure/ProgramSclaton";
 import { useAppSelector } from "@/redux/hooks";
-import React, { lazy, Suspense, useEffect, useState } from "react";
-
+import React, { lazy, Suspense } from "react";
 
 const AuthMyTask = lazy(() => import("@/components/myTasks/AuthMyTask"));
 
 const MyTasks: React.FC = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const userData = useAppSelector((state) => state.auth.userInfo);
-
-  useEffect(() => setIsMounted(true), []);
-
   // Handle SSR hydration phase
-  if (!isMounted) return <ProgramSclaton />;
+  if (!window) return <ProgramSclaton />;
 
   // Handle unauthenticated or unpaid users
   if (!userData || userData.fitraatPayment !== "Complete") {

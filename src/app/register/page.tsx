@@ -6,7 +6,6 @@ import { useAppDispatch } from "@/redux/hooks";
 import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
-import { formatISO } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,7 +30,7 @@ const registerSchema = z.object({
 function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const currentDate = formatISO(new Date());
+  // const currentDate = formatISO(new Date());
   const [loading, setLoading] = useState(false); // Add loading state
 
   const [formData, setFormData] = useState({
@@ -40,7 +39,7 @@ function RegisterPage() {
     password: "",
   });
 
-  const [registerUser, { error }] = useRegisterUserMutation();
+  const [registerUser] = useRegisterUserMutation();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);

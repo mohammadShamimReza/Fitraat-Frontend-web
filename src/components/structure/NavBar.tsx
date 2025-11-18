@@ -25,7 +25,6 @@ function NavBar() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
   const [userMenuToggle, setUserMenuToggle] = useState<boolean>(false);
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
 
   const authTokenFromRedux = useAppSelector((state) => state.auth.authToken);
 
@@ -39,11 +38,15 @@ function NavBar() {
   }, []);
 
   const authToken = getTokenFromCookie() || authTokenFromRedux;
-  const { data, error, isLoading } = useGetUserInfoQuery(undefined, {
+  // const [authenticated, setAuthenticated] = useState<boolean>(
+  //   !authToken ? false : true
+  // );
+
+  const { data, error } = useGetUserInfoQuery(undefined, {
     skip: !authToken,
   });
 
-
+  console.log(data);
   useEffect(() => {
     if (data) {
       dispatch(storeUserInfo(data)); // Set user in Redux if data is returned
@@ -51,11 +54,11 @@ function NavBar() {
     if (error) {
       dispatch(storeUserInfo(null)); // Clear user state if there's an error
     }
-    if (!authToken) {
-      setAuthenticated(false);
-    } else {
-      setAuthenticated(true);
-    }
+    // if (!authToken) {
+    //   setAuthenticated(false);
+    // } else {
+    //   setAuthenticated(true);
+    // }
   }, [
     authToken,
     authTokenFromRedux,
@@ -67,7 +70,7 @@ function NavBar() {
 
   const handleLogout = () => {
     removeTokenFromCookies();
-    dispatch(removeAuthToken(null));
+    dispatch(removeAuthToken());
 
     if (typeof window !== "undefined") {
       window.location.href = "/";
@@ -75,7 +78,7 @@ function NavBar() {
   };
 
   useEffect(() => {
-    const handler = (event: MouseEvent) => {
+    const handler = () => {
       setMenuToggle(false);
       setUserMenuToggle(false); // Close both menus if clicked outside
     };
@@ -165,7 +168,7 @@ function NavBar() {
                 </div>
 
                 <div className="  flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer ">
-                  {!authenticated ? (
+                  {!authToken ? (
                     <div className="relative ml-3 mt-2">
                       <Link href={"/login"}>
                         <span className="sr-only">Login</span>
