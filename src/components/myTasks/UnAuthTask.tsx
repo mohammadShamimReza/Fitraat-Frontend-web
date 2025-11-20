@@ -18,11 +18,8 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
 
-  const {
-    data: unAuthenticatedDayDataForChengeDay,
-    isError,
-    isLoading,
-  } = useGetDaysByDayIdQuery(parseInt(unAuthDayId));
+  const { data: unAuthenticatedDayDataForChengeDay, isLoading } =
+    useGetDaysByDayIdQuery(parseInt(unAuthDayId));
 
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
 
@@ -31,6 +28,8 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
     if (parseInt(dayId) > 3) {
       router.push("/CompletedFreeTask");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     setUnAuthDayId(dayId);
   }, [router]);
 
@@ -152,22 +151,27 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
   });
 
   useEffect(() => {
-    if (unAuthenticatedDayData) {
-      const unAuthDayData = unAuthenticatedDayData[0];
+    const timer = setTimeout(() => {
+      if (unAuthenticatedDayData) {
+        const unAuthDayData = unAuthenticatedDayData[0];
 
-      if (unAuthDayData) {
-        setBlog({
-          id: unAuthDayData?.free_blog?.documentId,
-          title: unAuthDayData?.free_blog?.title,
-          content: unAuthDayData?.free_blog?.content,
-        });
+        if (unAuthDayData) {
+          setBlog({
+            id: unAuthDayData?.free_blog?.documentId,
+            title: unAuthDayData?.free_blog?.title,
+            content: unAuthDayData?.free_blog?.content,
+          });
 
-        setQuiz(unAuthDayData?.free_quizz?.quizzess);
-        setVideo({ videoUrl: unAuthDayData?.regulerVideo?.url });
-        setKegel(unAuthDayData?.free_kagel?.kagelTimes);
+          setQuiz(unAuthDayData?.free_quizz?.quizzess);
+          setVideo({ videoUrl: unAuthDayData?.regulerVideo?.url });
+          setKegel(unAuthDayData?.free_kagel?.kagelTimes);
+        }
       }
-    }
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, [unAuthenticatedDayData, unAuthDayId]);
+
 
   const DayCount = parseInt(unAuthDayId) || 0;
 
@@ -226,3 +230,6 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
 }
 
 export default UnAuthTask;
+
+
+

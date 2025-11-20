@@ -39,24 +39,24 @@ function NavBar() {
   }, []);
 
   const authToken = getTokenFromCookie() || authTokenFromRedux;
-  const { data, error, isLoading } = useGetUserInfoQuery(undefined, {
+  const { data, error } = useGetUserInfoQuery(undefined, {
     skip: !authToken,
   });
 
-  console.log(data);
-
   useEffect(() => {
-    if (data) {
-      dispatch(storeUserInfo(data)); // Set user in Redux if data is returned
-    }
-    if (error) {
-      dispatch(storeUserInfo(null)); // Clear user state if there's an error
-    }
-    if (!authToken) {
-      setAuthenticated(false);
-    } else {
-      setAuthenticated(true);
-    }
+    const timer = setTimeout(() => {
+      // Update Redux user info
+      if (data) {
+        dispatch(storeUserInfo(data));
+      } else if (error) {
+        dispatch(storeUserInfo(null));
+      }
+
+      // Update authenticated flag
+      setAuthenticated(!!authToken);
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, [
     authToken,
     authTokenFromRedux,
@@ -64,11 +64,12 @@ function NavBar() {
     dispatch,
     error,
     removeTokenFromCookies,
-  ]); // include removeTokenFromCookies in the dependency array
+  ]);
+  // include removeTokenFromCookies in the dependency array
 
   const handleLogout = () => {
     removeTokenFromCookies();
-    dispatch(removeAuthToken(null));
+    dispatch(removeAuthToken());
 
     if (typeof window !== "undefined") {
       window.location.href = "/";
@@ -76,7 +77,7 @@ function NavBar() {
   };
 
   useEffect(() => {
-    const handler = (event: MouseEvent) => {
+    const handler = () => {
       setMenuToggle(false);
       setUserMenuToggle(false); // Close both menus if clicked outside
     };

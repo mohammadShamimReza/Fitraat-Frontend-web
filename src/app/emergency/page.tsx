@@ -2,22 +2,16 @@
 
 import { useGetEnergencyContantQuery } from "@/redux/api/emergencyApi";
 import { Button, message, Skeleton, Steps, theme } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const EmergencyService: React.FC = () => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
   const { data, isLoading } = useGetEnergencyContantQuery(undefined);
-  const total = data?.meta.pagination.total ?? 0;
-  const [emergencyNumber, setEmergencyNumber] = useState<number | null>(null);
+  // const total = data?.meta.pagination.total ?? 0;
+  const [emergencyNumber] = useState<number>(1);
 
-  useEffect(() => {
-    if (total > 0) {
-      const randomNumber = Math.floor(Math.random() * total);
-      setEmergencyNumber(randomNumber);
-    }
-  }, [total]);
   if (isLoading) {
     return (
       <>

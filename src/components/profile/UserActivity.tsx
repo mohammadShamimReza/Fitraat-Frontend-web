@@ -22,16 +22,7 @@ const UserActivityPieChart: React.FC<PerformancePieChartProps> = ({
   const percentageCompleted = ((completed / total) * 100).toFixed(2);
   const daysRequired = Math.ceil(remaining / tasksPerDay);
 
-  const motivationalQuotes = [
-    "Keep going, you're doing great!",
-    "Every step forward is progress!",
-    "You’re closer to success than you think.",
-    "Believe in yourself, you’ve got this!",
-    "Success is the sum of small efforts repeated daily.",
-  ];
-
-  const randomQuote =
-    motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+  const randomQuote = "Keep going, you're doing great!";
 
   const data = {
     labels: ["Completed", "Remaining"],
@@ -48,14 +39,51 @@ const UserActivityPieChart: React.FC<PerformancePieChartProps> = ({
     ],
   };
 
-  const options = {
+  interface TooltipDataset {
+    data: number[];
+  }
+
+  interface TooltipItem {
+    dataIndex: number;
+    label?: string;
+    dataset: TooltipDataset;
+  }
+
+  interface TooltipCallbacks {
+    label: (tooltipItem: TooltipItem) => string;
+  }
+
+  interface TooltipOptions {
+    callbacks: TooltipCallbacks;
+    backgroundColor?: string;
+    titleColor?: string;
+    bodyColor?: string;
+    borderColor?: string;
+    borderWidth?: number;
+    padding?: number;
+  }
+
+  interface LegendOptions {
+    display: boolean;
+  }
+
+  interface PluginsOptions {
+    legend: LegendOptions;
+    tooltip: TooltipOptions;
+  }
+
+  interface ChartOptions {
+    plugins: PluginsOptions;
+  }
+
+  const options: ChartOptions = {
     plugins: {
       legend: {
         display: false, // Hide legend to simplify the look
       },
       tooltip: {
         callbacks: {
-          label: (tooltipItem: any) => {
+          label: (tooltipItem) => {
             const dataset = tooltipItem.dataset.data;
             const value = dataset[tooltipItem.dataIndex];
             return `${tooltipItem.label}: ${value} tasks`;

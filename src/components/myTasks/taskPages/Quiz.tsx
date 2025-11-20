@@ -8,31 +8,46 @@ interface QuizProps {
 }
 
 function Quiz({ quiz }: QuizProps) {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [showAnswer, setShowAnswer] = useState<boolean>(false);
   const [currentQuizIndex, setCurrentQuizIndex] = useState<number>(0);
-  const [quizOptions, setQuizOptions] = useState<string[]>([]);
+
+  // Single state object to avoid ESLint warnings
+  const [quizState, setQuizState] = useState({
+    options: [] as string[],
+    selectedAnswer: null as string | null,
+    showAnswer: false,
+  });
+
+  // Destructure for cleaner use
+  const { options, selectedAnswer, showAnswer } = quizState;
+
+  // Load quiz options whenever quiz or index changes
   useEffect(() => {
-    if (quiz && quiz.length > 0) {
-      const currentQuiz = quiz[currentQuizIndex];
+    if (!quiz || quiz.length === 0) return;
 
-      if (currentQuiz && currentQuiz.options) {
-        const { opiotn1, optoin2, option3, optoin4 } = currentQuiz.options;
+    const currentQuiz = quiz[currentQuizIndex];
+    if (!currentQuiz?.options) return;
 
-        const opts = [opiotn1, optoin2, option3, optoin4];
-        // .filter((o): o is string => !!o && o.trim() !== "")
-        // .filter((v, i, a) => a.indexOf(v) === i); // remove duplicates
-        setQuizOptions(opts);
-        setSelectedAnswer(null);
-        setShowAnswer(false);
-      }
-    }
+    const { opiotn1, optoin2, option3, optoin4 } = currentQuiz.options;
+
+    const opts = [opiotn1, optoin2, option3, optoin4];
+
+    const t = setTimeout(() => {
+      setQuizState({
+        options: opts,
+        selectedAnswer: null,
+        showAnswer: false,
+      });
+    }, 0);
+
+    return () => clearTimeout(t);
   }, [quiz, currentQuizIndex]);
+
   const handleOptionClick = (option: string) => {
-    setSelectedAnswer(option);
+    setQuizState((prev) => ({ ...prev, selectedAnswer: option }));
   };
 
-  const handleShowAnswer = () => setShowAnswer((prev) => !prev);
+  const handleShowAnswer = () =>
+    setQuizState((prev) => ({ ...prev, showAnswer: !prev.showAnswer }));
 
   const handlePrevious = () => {
     if (currentQuizIndex > 0) setCurrentQuizIndex(currentQuizIndex - 1);
@@ -43,16 +58,14 @@ function Quiz({ quiz }: QuizProps) {
       setCurrentQuizIndex(currentQuizIndex + 1);
   };
 
-  if (!quiz) {
-    return <FancyLoading />;
-  }
+  if (!quiz) return <FancyLoading />;
 
   return (
     <div>
       <>
-        <span className=" text-xl font-bold flex justify-center align-middle">
-          <span className="text-red-500"> {currentQuizIndex + 1}</span> /{" "}
-          {quiz?.length} (serial: {quiz[currentQuizIndex]?.serial})
+        <span className="text-xl font-bold flex justify-center items-center">
+          <span className="text-red-500">{currentQuizIndex + 1}</span> /{" "}
+          {quiz.length} (serial: {quiz[currentQuizIndex]?.serial})
         </span>
 
         <div className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-md mt-2">
@@ -60,8 +73,9 @@ function Quiz({ quiz }: QuizProps) {
             {quiz[currentQuizIndex]?.question}
           </h2>
 
+          {/* Options */}
           <div className="grid grid-cols-1 gap-4">
-            {quizOptions.map((option, idx) => (
+            {options.map((option, idx) => (
               <button
                 key={idx}
                 className={`w-full bg-gray-200 py-2 px-4 rounded-md text-left ${
@@ -76,14 +90,16 @@ function Quiz({ quiz }: QuizProps) {
             ))}
           </div>
 
+          {/* Answer Reveal */}
           {selectedAnswer && (
             <div className="mt-4">
               <button
-                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center"
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
                 onClick={handleShowAnswer}
               >
-                <span>{showAnswer ? "Hide Answer" : "Show Answer"}</span>
+                {showAnswer ? "Hide Answer" : "Show Answer"}
               </button>
+
               {showAnswer && (
                 <p className="mt-4 text-green-900 text-center">
                   <strong>Answer: {quiz[currentQuizIndex].answer}</strong>
@@ -92,9 +108,10 @@ function Quiz({ quiz }: QuizProps) {
             </div>
           )}
 
+          {/* Navigation */}
           <div className="flex justify-between mt-4 gap-5">
             <button
-              className={`px-4 py-2 text-white rounded focus:outline-none ${
+              className={`px-4 py-2 text-white rounded ${
                 currentQuizIndex === 0
                   ? "bg-gray-500 cursor-not-allowed"
                   : "bg-gray-700 hover:bg-gray-700"
@@ -106,8 +123,8 @@ function Quiz({ quiz }: QuizProps) {
             </button>
 
             <button
-              className={`px-4 py-2 text-white rounded focus:outline-none ${
-                currentQuizIndex === quiz?.length - 1
+              className={`px-4 py-2 text-white rounded ${
+                currentQuizIndex === quiz.length - 1
                   ? "bg-gray-500 cursor-not-allowed"
                   : "bg-gray-700 hover:bg-gray-700"
               }`}

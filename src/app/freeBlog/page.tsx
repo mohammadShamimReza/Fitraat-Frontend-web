@@ -2,32 +2,26 @@
 
 import { useGetFreeBlogsQuery } from "@/redux/api/freeBlogApi";
 import { Blog } from "@/types/contantType";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Blogs from "./Blogs";
 
 function Page() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm] = useState<string>("");
   const [pageCount, setPageCount] = useState<number>(1);
-  const [allBlogs, setAllBlogs] = useState<Blog[]>([]);
   const paginationSize = 25;
 
   const {
     data: blogData,
     isLoading,
     isSuccess,
-    isFetching,
   } = useGetFreeBlogsQuery({ searchTerm, pageCount, paginationSize });
 
-  useEffect(() => {
-    if (blogData?.data) {
-      setAllBlogs(blogData.data); // Only display blogs for the current page
-    }
-  }, [blogData]);
+  // const handleSearchTerm = (data: any) => {
+  //   setSearchTerm(data.searchTerm);
+  //   setPageCount(1); // Reset to first page on new search
+  // };
 
-  const handleSearchTerm = (data: any) => {
-    setSearchTerm(data.searchTerm);
-    setPageCount(1); // Reset to first page on new search
-  };
+  console.log(blogData, "blog data");
 
   const total: number = blogData?.meta.pagination.total || 0;
   const totalPages = Math.ceil(total / paginationSize);
@@ -59,7 +53,7 @@ function Page() {
                   </div>
                 ))
               : isSuccess &&
-                allBlogs.map((blog: Blog) => (
+                blogData?.data?.map((blog: Blog) => (
                   <Blogs key={blog.id} blog={blog} />
                 ))}
 

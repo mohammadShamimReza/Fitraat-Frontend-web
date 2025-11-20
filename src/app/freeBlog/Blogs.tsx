@@ -6,35 +6,48 @@ function Blogs({ blog }: { blog: Blog }) {
   const blogData = blog;
   const blgoUpdateAt = new Date(blogData.updatedAt).toDateString();
   const contentHtml = blogData?.content ? marked(blogData.content) : "";
+const tagsArray = blog.tag.split(" ");
 
-  return (
-    <div className="mt-10">
-      <div className="h-full mb-10 p-4 bg-white">
-        <Link href={`/freeBlog/${blog.documentId}`}>
-          <div
-            className=" p-4  rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
+return (
+  <div className="mt-10">
+    <div className="h-full mb-10 p-4 bg-white">
+      <Link href={`/freeBlog/${blog.documentId}`}>
+        <div
+          className=" p-4  rounded-xl shadow-lg border border-t dark:border-none  mb-4 transition duration-100 transform hover:shadow-2xl 
               "
-          >
-            <div className="p-2 flex flex-col justify-between h-full gap-5">
-              <div className="h-full ">
-                <h2
-                  className="text-gray-800 mb-4 
+        >
+          <div className="p-2 flex flex-col justify-between h-full gap-5">
+            <div className="h-full ">
+              <h2
+                className="text-gray-800 mb-4 
              text-3xl font-semibold overflow-clip tracking-wide"
-                >
-                  {blogData.title}
-                </h2>
-                <div
-                  className="mb-2 line-clamp-5 text-justify text-gray-500"
-                  dangerouslySetInnerHTML={{ __html: contentHtml }}
-                />
+              >
+                {blogData.title}
+              </h2>
+              <div
+                className="mb-2 line-clamp-5 text-justify text-gray-500"
+                dangerouslySetInnerHTML={{ __html: contentHtml }}
+              />
+            </div>
+            {tagsArray && (
+              <div className="flex flex-wrap gap-2">
+                {tagsArray.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded"
+                  >
+                    #{tag}
+                  </span>
+                ))}
               </div>
-              <div className="flex items-center justify-between text-gray-600">
-                <div className="">
-                  Updated At: <br />
-                  <span className="text-gray-900"> {blgoUpdateAt}</span>
-                </div>
+            )}
+            <div className="flex items-center justify-between text-gray-600">
+              <div className="">
+                Updated At: <br />
+                <span className="text-gray-900"> {blgoUpdateAt}</span>
+              </div>
 
-                {/* <Link href={`/profile/`} className="flex items-center">
+              {/* <Link href={`/profile/`} className="flex items-center">
                 <div>
                   <Image
                     priority={false}
@@ -47,13 +60,13 @@ function Blogs({ blog }: { blog: Blog }) {
                 </div>
                 <span className="text-gray-900">Shamim Reza</span>
               </Link> */}
-              </div>
             </div>
           </div>
-        </Link>
-      </div>
+        </div>
+      </Link>
     </div>
-  );
+  </div>
+);
 }
 
 export default Blogs;

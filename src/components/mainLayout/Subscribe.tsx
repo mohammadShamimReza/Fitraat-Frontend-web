@@ -1,6 +1,5 @@
 "use client";
 import { useCreateSubscribersMutation } from "@/redux/api/subscribeApi";
-import { Error } from "@/types/contantType";
 import { message } from "antd";
 import { FormEvent, useState } from "react";
 
@@ -16,22 +15,24 @@ const Subscribe = () => {
 
     if (userEmail !== "") {
       try {
-        const result: any | Error = await createSubscribers({
+        const result = await createSubscribers({
           email: userEmail,
         });
-        if (result?.error) {
-          result?.error.data.error.message === "This attribute must be unique"
-            ? message.success("You are already subscribed")
-            : "";
-          setEmail("");
-        } else {
-          setEmail("");
 
+        console.log(result);
+        if (result?.error) {
+          message.success("You are already subscribed");
+          setEmail("");
+        } else if (result?.data) {
+          setEmail("");
           message.success("Thanks for subscribing us");
         }
       } catch (error) {
-        alert("Something went wrong");
+        if (error) {
+          alert("Something went wrong");
+        }
       }
+
     } else {
       message.error("Something went wrong");
     }

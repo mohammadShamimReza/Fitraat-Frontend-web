@@ -7,7 +7,7 @@ export const blogApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getChildProtectionByDayId: builder.query({
       query: (id: string) =>
-        `${CHILDPROTECTION}?filters[numberCount][$eq]=1&populate=*`,
+        `${CHILDPROTECTION}?filters[numberCount][$eq]=${id}&populate=*`,
       transformResponse: (rawResult: ProtectionResponse) => {
         return rawResult;
       },
@@ -30,7 +30,7 @@ export const blogApi = baseApi.injectEndpoints({
         return rawResult;
       },
       invalidatesTags: ["updateUserDay"],
-      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+      transformErrorResponse(baseQueryReturnValue) {
         return baseQueryReturnValue.data;
       },
     }),

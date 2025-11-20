@@ -10,15 +10,13 @@ export default function UserInfo({
   email,
   paid,
   handleRestart,
-  compliteDay,
-  daysLeft,
 }: {
   getUserInfoData: UserData | null;
   setIsImageUploadModalVisible: Dispatch<SetStateAction<boolean>>;
-  name: string| undefined;
-  email: string| undefined;
+  name: string | undefined;
+  email: string | undefined;
   paid: string;
-        handleRestart: () => Promise<void>;
+  handleRestart: () => Promise<void>;
   compliteDay: number | null;
   daysLeft: number;
 }) {

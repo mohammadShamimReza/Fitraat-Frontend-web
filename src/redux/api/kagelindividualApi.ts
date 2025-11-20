@@ -24,7 +24,7 @@ export const blogApi = baseApi.injectEndpoints({
         return rawResult;
       },
       invalidatesTags: ["updateUserDay"],
-      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+      transformErrorResponse(baseQueryReturnValue) {
         return baseQueryReturnValue.data;
       },
     }),

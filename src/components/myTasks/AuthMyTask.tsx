@@ -31,11 +31,8 @@ function AuthMyTask({
 
   const tasks = ["video", "kagel", "quiz", "Blog"];
 
-  const {
-    data: authenticatedDayDataForChengeDay,
-    isError,
-    isLoading,
-  } = useGetAuthDaysByDayIdQuery(authDayDataId);
+  const { data: authenticatedDayDataForChengeDay, isLoading } =
+    useGetAuthDaysByDayIdQuery(authDayDataId);
 
   const authenticatedDayData = authenticatedDayDataForChengeDay?.data;
 
@@ -104,7 +101,7 @@ function AuthMyTask({
           "Congratulations you have successfully completed your tasks for 40 day"
         );
       } else if (authDayDataId + 1 <= 40) {
-        const res = await updataUserDay({
+        await updataUserDay({
           currentDay: authDayDataId + 1,
           compliteDay: authDayDataId,
           userId: userId,
@@ -145,13 +142,13 @@ function AuthMyTask({
     if (authenticatedDayData) {
       const authDayData = authenticatedDayData[0];
       if (authDayData) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setBlog({
           id: authDayData?.pro_blog?.documentId,
           title: authDayData?.pro_blog?.titile,
           content: authDayData?.pro_blog?.content,
         });
         setQuiz(authDayData?.pro_quizz?.quizzess);
-
         setVideo({ videoUrl: authDayData?.regulerVideo?.url });
         setKegel(authDayData?.pro_kagel?.kagelTimes);
       }

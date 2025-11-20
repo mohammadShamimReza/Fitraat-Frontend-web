@@ -10,11 +10,7 @@ const CompletedAuthTask = () => {
   const getUserInfoData = useAppSelector((state) => state.auth.userInfo);
   const [
     updataUserDay,
-    {
-      isError: updateUserDayError,
-      isLoading: updateUserUpdateDayLoading,
-      isSuccess: updateUserDaySuccess,
-    },
+    { isError: updateUserDayError, isSuccess: updateUserDaySuccess },
   ] = useUpdateUserDayMutation();
   const userId = getUserInfoData?.id;
 
@@ -22,7 +18,7 @@ const CompletedAuthTask = () => {
     alert("Do you want to restart!");
 
     try {
-      const result = await updataUserDay({
+      await updataUserDay({
         currentDay: 1,
         compliteDay: 0,
         userId: userId,

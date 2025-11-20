@@ -5,17 +5,17 @@ import ProgramSclaton from "@/components/structure/ProgramSclaton";
 import { useAppSelector } from "@/redux/hooks";
 import React, { lazy, Suspense, useEffect, useState } from "react";
 
-
 const AuthMyTask = lazy(() => import("@/components/myTasks/AuthMyTask"));
 
 const MyTasks: React.FC = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const userData = useAppSelector((state) => state.auth.userInfo);
-
-  useEffect(() => setIsMounted(true), []);
-
   // Handle SSR hydration phase
-  if (!isMounted) return <ProgramSclaton />;
+  const [mount, setMount] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMount(true);
+  }, []);
+  if (!mount) return <ProgramSclaton />;
 
   // Handle unauthenticated or unpaid users
   if (!userData || userData.fitraatPayment !== "Complete") {

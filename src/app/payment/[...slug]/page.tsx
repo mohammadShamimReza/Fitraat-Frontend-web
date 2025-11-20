@@ -1,6 +1,5 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
 import { Button, Card, Typography } from "antd";
 import { useParams } from "next/navigation"; // Import useParams
 
@@ -9,7 +8,6 @@ const { Title, Text } = Typography;
 function PaymentResult() {
   // Use React.use to unwrap params
   const params = useParams(); // Access dynamic route parameters
-  const userInfo = useAppSelector((state) => state.auth.userInfo);
 
   const { slug } = params as { slug: string[] };
 

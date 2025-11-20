@@ -4,11 +4,11 @@ const PAYMENT = "/payment";
 export const paymentAPi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     paymentInit: builder.mutation({
-      query: (body: any) => ({
+      query: (body) => ({
         url: `${PAYMENT}/init`,
         method: "POST",
         body: body,
-        transformResponse: (rawResult: { url: string; response: any }) => {
+        transformResponse: (rawResult: { url: string }) => {
           return rawResult;
         },
       }),

@@ -66,7 +66,7 @@ const PaymentPage: React.FC = () => {
     }));
   }, [userInfo]);
 
-  const handleChange = (key: string, value: any) => {
+  const handleChange = (key: string, value: string) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => ({ ...prev, [key]: "" }));
   };
@@ -83,7 +83,7 @@ const PaymentPage: React.FC = () => {
       } else {
         message.error("Payment initialization failed");
       }
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof z.ZodError) {
         const fieldErrors: Record<string, string> = {};
         err.issues.forEach((issue) => {

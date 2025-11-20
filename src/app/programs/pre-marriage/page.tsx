@@ -9,7 +9,6 @@ import {
 import { useAppSelector } from "@/redux/hooks";
 import { Button, Modal, Skeleton } from "antd";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import DayFinishImage from "@/app/assets/dayFinish.gif";
@@ -18,7 +17,6 @@ import PreMarriagePaymentBlocker from "@/components/preMarriageSolution/PaymentB
 import PreMarriageTitles from "@/components/preMarriageSolution/Titles";
 import PreMarriageVideo from "@/components/preMarriageSolution/Video";
 
-
 interface ProtectionVideo {
   id: number;
   url: string;
@@ -26,9 +24,11 @@ interface ProtectionVideo {
 }
 
 export default function ChildProtectionPage() {
-  const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
-  const [day, setDay] = useState("1");
+  const [mount, setMount] = useState(false)
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMount(true);
+  },[])
   const userData = useAppSelector((state) => state.auth.userInfo);
   const [updateUserChildProtectionDay] =
     useUpdateUserChildProtectionDayMutation();
@@ -36,41 +36,31 @@ export default function ChildProtectionPage() {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => setIsMounted(true), []);
+  const [day, setDay] = useState(
+    userData?.childProtectionDayNumber?.toString() || "1"
+  );
 
-  useEffect(() => {
-    if (userData) {
-      setDay(userData.childProtectionDayNumber?.toString() || "1");
-    }
-  }, [userData]);
+  const { data: protectionData, isLoading } =
+    useGetChildProtectionByDayIdQuery(day);
 
-  const {
-    data: protectionData,
-    isLoading,
-    isError,
-  } = useGetChildProtectionByDayIdQuery(day);
-
-  const {
-    data: titleData,
-    isLoading: titleLoading,
-    isError: titleError,
-  } = useGetChildProtectionAllTitleQuery(undefined);
+  const { data: titleData, isLoading: titleLoading } =
+    useGetChildProtectionAllTitleQuery(undefined);
 
   const handleOk = () => {
     setIsFinishModalOpen(false);
     window.location.reload();
   };
 
-  if (!isMounted || !protectionData) return <ProgramSclaton />;
+  if (!mount || !protectionData) return <ProgramSclaton />;
 
   const video: ProtectionVideo[] =
-    protectionData?.data?.[0]?.protectionVideo?.map((v: any) => ({
+    protectionData?.data?.[0]?.protectionVideo?.map((v) => ({
       id: v.id,
       url: `${v.url}`,
       name: v.name,
     })) || [];
 
-  const dayCount = protectionData?.data?.[0]?.numberCount || 1;
+  // const dayCount = protectionData?.data?.[0]?.numberCount || 1;
   const payment = userData?.childProtectionPayment;
   const userId = userData?.id;
 
@@ -85,7 +75,7 @@ export default function ChildProtectionPage() {
     }
     if (direction === "next") {
       // ✅ All videos done → next day
-      const res = await updateUserChildProtectionDay({
+      await updateUserChildProtectionDay({
         childProtectionDayNumber: parseInt(day) + 1,
         userId,
       });

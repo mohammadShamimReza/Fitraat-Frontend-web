@@ -14,7 +14,7 @@ export const daysApi = baseApi.injectEndpoints({
       transformResponse: (rawResult: UserData | Error) => {
         return rawResult;
       },
-      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+      transformErrorResponse(baseQueryReturnValue) {
         return baseQueryReturnValue.data;
       },
 
@@ -26,10 +26,24 @@ export const daysApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      transformResponse: (rawResult: UserData | Error) => {
+      transformResponse: (rawResult) => {
         return rawResult;
       },
-      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+      transformErrorResponse(baseQueryReturnValue) {
+        return baseQueryReturnValue.data;
+      },
+      invalidatesTags: ["User"],
+    }),
+    resendConfirmationEmail: builder.mutation({
+      query: (body) => ({
+        url: `/auth/send-email-confirmation`,
+        method: "POST",
+        body,
+      }),
+      transformResponse: (rawResult) => {
+        return rawResult;
+      },
+      transformErrorResponse(baseQueryReturnValue) {
         return baseQueryReturnValue.data;
       },
       invalidatesTags: ["User"],
@@ -56,7 +70,7 @@ export const daysApi = baseApi.injectEndpoints({
         return rawResult;
       },
       invalidatesTags: ["updateUserDay"],
-      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+      transformErrorResponse(baseQueryReturnValue) {
         return baseQueryReturnValue.data;
       },
     }),
@@ -68,8 +82,8 @@ export const daysApi = baseApi.injectEndpoints({
           email: body.email,
         },
       }),
-      transformResponse: (rawResult: any | Error) => {
-        return rawResult;
+      transformResponse: (rawResult: { data: { ok: boolean } }) => {
+        return rawResult.data;
       },
     }),
     chengePassword: builder.mutation({
@@ -82,7 +96,7 @@ export const daysApi = baseApi.injectEndpoints({
           code: body.code,
         },
       }),
-      transformResponse: (rawResult: any | Error) => {
+      transformResponse: (rawResult: Error) => {
         return rawResult;
       },
     }),
@@ -122,4 +136,5 @@ export const {
   useUploadUserProfileImageMutation,
   useUpdateUserProfileImageMutation,
   useDeleteUserProfileImageMutation,
+  useResendConfirmationEmailMutation,
 } = daysApi;

@@ -59,26 +59,36 @@ function LoginPage() {
       if (formData.identifier !== "" && formData.password !== "") {
         setLoading(true); // Set loading state to true
         try {
-          const result: any | Error = await loginUser(formData);
-          if (result?.error) {
-            message.error("User is not valid");
-          } else {
+          const result = await loginUser(formData);
+          console.log(result);
+          if (result.error) {
+            message.error(
+              (result.error as any)?.error?.message || "Login failed"
+            );
+            if (
+              (result.error as any)?.error?.message ===
+              "Your account email is not confirmed"
+            ) {
+              router.push(`/confirm-email?email=${formData.identifier}`);
+            }
+          } else if (result.data && "jwt" in result.data) {
             message.success("Login successfully");
-            storeTokenInCookie(result?.data?.jwt);
-            dispatch(storeAuthToken(result?.data?.jwt));
-
-            dispatch(storeUserInfo(result?.data?.user));
-          router.push("/programs");
+            storeTokenInCookie(result.data.jwt);
+            dispatch(storeAuthToken(result.data.jwt));
+            dispatch(storeUserInfo(result.data.user));
+            router.push("/programs");
           }
         } catch (error) {
-        alert("Something went wrong");
+          if (error) {
+            alert("Something went wrong");
+          }
         } finally {
           setLoading(false); // Set loading state to false
         }
       } else {
         message.error("Login is not successfully");
       }
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof z.ZodError) {
         // Display validation errors
         error.issues.forEach((e) => message.error(e.message));

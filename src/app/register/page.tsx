@@ -1,12 +1,9 @@
 "use client";
 
-import { storeTokenInCookie } from "@/lib/auth/token";
 import { useRegisterUserMutation } from "@/redux/api/authApi";
 import { useAppDispatch } from "@/redux/hooks";
-import { storeAuthToken, storeUserInfo } from "@/redux/slice/authSlice";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
-import { formatISO } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,7 +28,7 @@ const registerSchema = z.object({
 function RegisterPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const currentDate = formatISO(new Date());
+  // const currentDate = formatISO(new Date());
   const [loading, setLoading] = useState(false); // Add loading state
 
   const [formData, setFormData] = useState({
@@ -40,7 +37,7 @@ function RegisterPage() {
     password: "",
   });
 
-  const [registerUser, { error }] = useRegisterUserMutation();
+  const [registerUser] = useRegisterUserMutation();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -63,22 +60,38 @@ function RegisterPage() {
     try {
       // Validate form data with Zod
       registerSchema.parse(formData);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res: any = await registerUser(formData);
 
-      const result: any = await registerUser(formData);
-      if (result?.error) {
-        if (result?.error?.error?.message === "This attribute must be unique") {
-          message.error("credentials is used already.");
-        } else if (result?.error) {
-          message.error(result?.error.error.message);
-        }
-      } else {
-        message.success("User created successfully");
-        storeTokenInCookie(result?.data?.jwt);
-        dispatch(storeAuthToken(result?.data?.jwt));
-        dispatch(storeUserInfo(result?.data?.user));
-        router.push("/programs");
-      }
-    } catch (error: any) {
+      console.log(res, "this is res");
+      router.push("/confirm-email?email=" + formData.email);
+
+      // if (result?.error) {
+      //   if (result?.error?.error?.message === "This attribute must be unique") {
+      //     message.error("credentials is used already.");
+      //   } else if (result?.error) {
+      //     message.error(result?.error.error.message);
+      //   }
+      // } else {
+      //   message.success("User created successfully");
+      //   storeTokenInCookie(result?.data?.jwt);
+      //   dispatch(storeAuthToken(result?.data?.jwt));
+      //   dispatch(storeUserInfo(result?.data?.user));
+      //   router.push("/programs");
+      // }
+
+      // Check for errors in the response
+      // if (res.statusText !== "OK") {
+      //   return {
+      //     errors: {} as Credentials,
+      //     values: { formData.username, email, password } as Credentials,
+      //     message: res?.statusText || res,
+      //     success: false,
+      //   };
+      // }
+      // redirect to confirm email
+    } catch (error) {
+      console.log(error);
       if (error instanceof z.ZodError) {
         // Display validation errors
         error.issues.map((issue) => message.error(issue.message));

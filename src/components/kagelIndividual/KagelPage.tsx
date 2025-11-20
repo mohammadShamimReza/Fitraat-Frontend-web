@@ -6,7 +6,6 @@ import { KagelTime, PaymentStatus } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
@@ -26,23 +25,14 @@ interface Props {
   setDay: (day: string) => void;
 }
 
-export default function KegelPage({
-  kegel,
-  DayCount,
-  payment,
-  userId,
-  setDay,
-}: Props) {
-  const router = useRouter();
+export default function KegelPage({ kegel, DayCount, payment, userId, setDay }: Props) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [updateUserKagelDay] = useUpdateUserKagelDayMutation();
   const sessions = ["morning", "afternoon", "night"];
   const [loading, setLoading] = useState(false);
   const [isSidebarVisible, setSidebarVisible] = useState(false);
-  const [selectedSession, setSelectedSession] = useState<
-    "morning" | "afternoon" | "night"
-  >("morning");
+  const [selectedSession, setSelectedSession] = useState<string>("morning");
   const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
   const handleOk = () => {
     setIsFinishModalOpen(false);
@@ -50,7 +40,7 @@ export default function KegelPage({
     window.location.reload();
   };
 
-  const [selectedDay, setSelectedDay] = useState(DayCount);
+  const selectedDay = DayCount;
   const [completedSessions, setCompletedSessions] = useState<
     Record<string, boolean>
   >(() => {
@@ -108,41 +98,41 @@ export default function KegelPage({
     markSessionComplete(selectedSession);
 
     if (direction === "next") {
-          if (currentDay >= 365) {
-            alert(
-              "You have completed watching all available videos. For any further we will notify you via email."
-            );
-            return;
-          }
-          if (currentIndex < sessions.length - 1) {
-            // Move to next session (same day)
-            setSelectedSession(sessions[currentIndex + 1] as any);
-          } else {
-            // If last session → move to next day morning
+      if (currentDay >= 365) {
+        alert(
+          "You have completed watching all available videos. For any further we will notify you via email."
+        );
+        return;
+      }
+      if (currentIndex < sessions.length - 1) {
+        // Move to next session (same day)
+        setSelectedSession(sessions[currentIndex + 1]);
+      } else {
+        // If last session → move to next day morning
 
-            if (currentDay < 365) {
-              const res = await updateUserKagelDay({
-                compliteDay: currentDay + 1,
-                userId: userId,
-              });
-              localStorage.setItem(
-                "kegelProgress",
-                JSON.stringify({
-                  morning: false,
-                  afternoon: false,
-                  night: false,
-                })
-              );
-              setDay((currentDay + 1).toString());
-              // setSelectedDay(currentDay + 1);
-              setSelectedSession("morning");
-              setIsFinishModalOpen(true);
-            }
-          }
+        if (currentDay < 365) {
+          await updateUserKagelDay({
+            compliteDay: currentDay + 1,
+            userId: userId,
+          });
+          localStorage.setItem(
+            "kegelProgress",
+            JSON.stringify({
+              morning: false,
+              afternoon: false,
+              night: false,
+            })
+          );
+          setDay((currentDay + 1).toString());
+          // setSelectedDay(currentDay + 1);
+          setSelectedSession("morning");
+          setIsFinishModalOpen(true);
+        }
+      }
     } else {
       if (currentIndex > 0) {
         // Move to previous session (same day)
-        setSelectedSession(sessions[currentIndex - 1] as any);
+        setSelectedSession(sessions[currentIndex - 1]);
       } else {
         // If morning → move to previous day night
         if (currentDay > 1) {
@@ -174,7 +164,7 @@ export default function KegelPage({
         onClick={() => {
           if (!accessible) return;
           // setSelectedDay(day);
-          setSelectedSession(session.toLowerCase() as any);
+          setSelectedSession(session.toLowerCase());
           setSidebarVisible(false);
         }}
       >
