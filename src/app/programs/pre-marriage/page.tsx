@@ -26,7 +26,8 @@ interface ProtectionVideo {
 export default function ChildProtectionPage() {
   const [mount, setMount] = useState(false)
   useEffect(() => {
-    setMount(true)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMount(true);
   },[])
   const userData = useAppSelector((state) => state.auth.userInfo);
   const [updateUserChildProtectionDay] =

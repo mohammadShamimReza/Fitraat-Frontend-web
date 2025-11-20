@@ -60,15 +60,18 @@ function LoginPage() {
         setLoading(true); // Set loading state to true
         try {
           const result = await loginUser(formData);
-          console.log(result, "this is 49");
-          if ("error" in result && result.error) {
-            message.error("User is not valid");
-          } else if (
-            "data" in result &&
-            result.data &&
-            !(result.data instanceof Error) &&
-            "jwt" in result.data
-          ) {
+          console.log(result);
+          if (result.error) {
+            message.error(
+              (result.error as any)?.error?.message || "Login failed"
+            );
+            if (
+              (result.error as any)?.error?.message ===
+              "Your account email is not confirmed"
+            ) {
+              router.push(`/confirm-email?email=${formData.identifier}`);
+            }
+          } else if (result.data && "jwt" in result.data) {
             message.success("Login successfully");
             storeTokenInCookie(result.data.jwt);
             dispatch(storeAuthToken(result.data.jwt));

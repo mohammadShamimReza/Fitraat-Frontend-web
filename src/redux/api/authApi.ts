@@ -26,9 +26,21 @@ export const daysApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      transformResponse: (
-        rawResult: { jwt: string; user: UserData } | Error
-      ) => {
+      transformResponse: (rawResult) => {
+        return rawResult;
+      },
+      transformErrorResponse(baseQueryReturnValue) {
+        return baseQueryReturnValue.data;
+      },
+      invalidatesTags: ["User"],
+    }),
+    resendConfirmationEmail: builder.mutation({
+      query: (body) => ({
+        url: `/auth/send-email-confirmation`,
+        method: "POST",
+        body,
+      }),
+      transformResponse: (rawResult) => {
         return rawResult;
       },
       transformErrorResponse(baseQueryReturnValue) {
@@ -124,4 +136,5 @@ export const {
   useUploadUserProfileImageMutation,
   useUpdateUserProfileImageMutation,
   useDeleteUserProfileImageMutation,
+  useResendConfirmationEmailMutation,
 } = daysApi;
