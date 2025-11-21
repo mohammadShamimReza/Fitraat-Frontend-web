@@ -6,6 +6,7 @@ import { Button, Progress } from "antd";
 import { useEffect, useRef, useState } from "react";
 import squizze from "../../app/assets/squizze.mp3";
 import stop from "../../app/assets/stop.mp3";
+import { SequenceDisplay } from "./SequenceDisplay";
 
 type SequenceStep = {
   label: "Squizze" | "Stop" | "Gap";
@@ -263,28 +264,34 @@ function Kagel({ kegel }: { kegel: KagelTime[] | undefined }) {
             Type:
           </span>
 
-          {sequence.map((s, i) => {
+          {/* {sequence.map((s, i) => {
             const isActive = i === currentStepIndex;
             return (
-              <span
-                key={i}
-                style={{
-                  padding: "6px 10px",
-                  borderRadius: "8px",
-                  backgroundColor: isActive ? "#fee2e2" : "#f3f4f6",
-                  color: isActive ? "#b91c1c" : "#374151",
-                  fontWeight: isActive ? 600 : 400,
-                  fontSize: isActive ? "12px" : "10px",
-                  boxShadow: isActive
-                    ? "0 0 5px rgba(239, 68, 68, 0.4)"
-                    : "none",
-                  transition: "all 0.2s ease-in-out",
-                }}
-              >
-                {s.seconds}s <span style={{ opacity: 0.7 }}>({s.label})</span>
-              </span>
+              // <span
+              //   key={i}
+              //   style={{
+              //     padding: "6px 10px",
+              //     borderRadius: "8px",
+              //     backgroundColor: isActive ? "#fee2e2" : "#f3f4f6",
+              //     color: isActive ? "#b91c1c" : "#374151",
+              //     fontWeight: isActive ? 600 : 400,
+              //     fontSize: isActive ? "12px" : "10px",
+              //     boxShadow: isActive
+              //       ? "0 0 5px rgba(239, 68, 68, 0.4)"
+              //       : "none",
+              //     transition: "all 0.2s ease-in-out",
+              //   }}
+              // >
+              //   {s.seconds}s <span style={{ opacity: 0.7 }}>({s.label})</span>
+              // </span>
+            
             );
-          })}
+          })} */}
+
+          <SequenceDisplay
+            sequence={sequence}
+            currentStepIndex={currentStepIndex}
+          />
         </div>
 
         <span className="text-red-500 block min-h-[1em]">
