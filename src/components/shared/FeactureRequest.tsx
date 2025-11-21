@@ -17,7 +17,7 @@ export default function FeatureRequestPopup() {
     const saved = window.localStorage.getItem("fitraat_feature_request_shown");
     if (saved === "true") return;
 
-    const timer = setTimeout(() => setShow(true), 1000);
+    const timer = setTimeout(() => setShow(true), 10000);
     return () => clearTimeout(timer);
   }, []);
 
