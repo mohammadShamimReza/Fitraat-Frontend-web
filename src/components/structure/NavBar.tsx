@@ -143,7 +143,6 @@ function NavBar() {
 
                 <div className="  items-center text-lg font-bold hidden md:block">
                   <Link href={"/"}>
-                    {" "}
                     <Image src={siteLogo} width={50} alt="website logo" />
                   </Link>
                 </div>
@@ -269,8 +268,18 @@ function NavBar() {
                 id="mobile-menu"
               >
                 <div className=" pb-3 pt-2 ">
+                  <Link
+                    key={"/"}
+                    href={"/"}
+                    className={` hover:bg-gray-200  block rounded-md px-3 py-2 text-base font-normal ${
+                      pathname === "/" ? "bg-gray-200" : ""
+                    }`}
+                  >
+                    Home
+                  </Link>
                   {
                     /* Mobile menu links go here */
+
                     navbarLinks.map((link) => (
                       <Link
                         key={link.href}

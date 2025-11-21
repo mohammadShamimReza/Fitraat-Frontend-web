@@ -6,7 +6,7 @@ import { TbBuildingCommunity } from "react-icons/tb";
 function HowWorks() {
   return (
     <div>
-      <h2 className=" text-4xl font-bold my-20 text-center">
+      <h2 className=" text-4xl font-bold pt-10 text-center">
         How Fitraat works?
       </h2>
       <div className={`container mx-auto py-2 px-4 `}>

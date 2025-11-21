@@ -1,7 +1,6 @@
 "use client";
 
 import { useRegisterUserMutation } from "@/redux/api/authApi";
-import { useAppDispatch } from "@/redux/hooks";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import Link from "next/link";
@@ -27,8 +26,6 @@ const registerSchema = z.object({
 
 function RegisterPage() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  // const currentDate = formatISO(new Date());
   const [loading, setLoading] = useState(false); // Add loading state
 
   const [formData, setFormData] = useState({
@@ -61,35 +58,26 @@ function RegisterPage() {
       // Validate form data with Zod
       registerSchema.parse(formData);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res: any = await registerUser(formData);
+      const result: any = await registerUser(formData);
 
-      console.log(res, "this is res");
-      router.push("/confirm-email?email=" + formData.email);
-
-      // if (result?.error) {
-      //   if (result?.error?.error?.message === "This attribute must be unique") {
-      //     message.error("credentials is used already.");
-      //   } else if (result?.error) {
-      //     message.error(result?.error.error.message);
-      //   }
-      // } else {
-      //   message.success("User created successfully");
-      //   storeTokenInCookie(result?.data?.jwt);
-      //   dispatch(storeAuthToken(result?.data?.jwt));
-      //   dispatch(storeUserInfo(result?.data?.user));
-      //   router.push("/programs");
-      // }
-
-      // Check for errors in the response
-      // if (res.statusText !== "OK") {
-      //   return {
-      //     errors: {} as Credentials,
-      //     values: { formData.username, email, password } as Credentials,
-      //     message: res?.statusText || res,
-      //     success: false,
-      //   };
-      // }
-      // redirect to confirm email
+      console.log(result, "this is result");
+      if (result.error) {
+        if (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (result.error as any)?.error?.message ===
+          "Email or Username are already taken"
+        ) {
+          message.error("Email or Username are already taken, Please Login");
+        } else {
+          message.error(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (result.error as any)?.error?.message || "Register failed"
+          );
+        }
+      } else {
+        message.success("Registration successful! Please confirm your email.");
+        router.push(`/confirm-email?email=${formData.email}`);
+      }
     } catch (error) {
       console.log(error);
       if (error instanceof z.ZodError) {

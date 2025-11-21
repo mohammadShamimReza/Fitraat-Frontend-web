@@ -507,8 +507,3 @@ export type FormState = {
   success?: boolean;
 };
 
-export type SessionPayload = {
-  user?: any;
-  expiresAt?: Date;
-  jwt?: string;
-};

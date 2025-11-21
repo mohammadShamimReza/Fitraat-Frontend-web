@@ -22,7 +22,7 @@ export default function Hero() {
 
         {/* Text Content */}
         <div
-          className="relative bottom-28 z-10 text-center max-w-4xl px-6 text-white animate-fadeInUp"
+          className="relative bottom-28 z-10 text-center max-w-4xl px-6 text-white animate-fadeInUp mt-14"
           style={{
             animation: "fadeInUp 1.5s ease-out forwards",
           }}
@@ -37,8 +37,22 @@ export default function Hero() {
           </h1>
 
           <Link href="/programs/tasks" className="inline-block">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-bold shadow-lg transition-transform transform hover:scale-105">
-              Get Started Now
+            <button
+              className="
+    mt-5 inline-block 
+    bg-gradient-to-r from-indigo-600 to-blue-600 
+    text-white px-8 py-3  
+    rounded-br-xl rounded-tl-2xl 
+    transition-all duration-300 
+    shadow-md
+
+    hover:scale-105 
+    hover:-translate-y-1
+    hover:shadow-xl
+    hover:from-indigo-700 hover:to-blue-700
+  "
+            >
+              Get Started Now{" "}
             </button>
           </Link>
         </div>

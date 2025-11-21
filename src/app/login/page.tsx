@@ -62,14 +62,17 @@ function LoginPage() {
           const result = await loginUser(formData);
           console.log(result);
           if (result.error) {
-            message.error(
-              (result.error as any)?.error?.message || "Login failed"
-            );
             if (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (result.error as any)?.error?.message ===
               "Your account email is not confirmed"
             ) {
               router.push(`/confirm-email?email=${formData.identifier}`);
+            } else {
+              message.error(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (result.error as any)?.error?.message || "Login failed"
+              );
             }
           } else if (result.data && "jwt" in result.data) {
             message.success("Login successfully");

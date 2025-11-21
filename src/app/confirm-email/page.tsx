@@ -19,8 +19,7 @@ export default function PleaseConfirmEmail() {
    }
    return ""; // empty if not valid
  });
-  const [resendEmail, { isLoading, isSuccess, isError, error }] =
-    useResendConfirmationEmailMutation();
+  const [resendEmail, { isLoading }] = useResendConfirmationEmailMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,12 +30,14 @@ export default function PleaseConfirmEmail() {
     }
 
     try {
-      const res: {email: string, sent: boolean} = await resendEmail({ email }).unwrap();
+      const res: { email: string; sent: boolean } = await resendEmail({
+        email,
+      }).unwrap();
       if (res.sent) {
-        
         message.success("Confirmation email sent");
       }
       console.log(res);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       message.error(err?.data?.error?.message || "Something went wrong");
     }
