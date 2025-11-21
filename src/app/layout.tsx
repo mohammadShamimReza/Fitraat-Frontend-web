@@ -9,6 +9,7 @@ import Head from "next/head";
 import React from "react";
 import "./globals.css";
 
+import FeatureRequestPopup from "@/components/shared/FeactureRequest";
 import Hero from "@/components/structure/Hero";
 import Support from "@/components/structure/Support";
 import { ConfigProvider } from "antd";
@@ -105,6 +106,7 @@ export default function RootLayout({
               <div className="mx-auto max-w-6xl">{children}</div>
               <Footer />
               <CookieConsent />
+              <FeatureRequestPopup />
             </ConfigProvider>
           </AntdRegistry>
         </body>
