@@ -17,11 +17,14 @@ import ProgramSclaton from "../structure/ProgramSclaton";
 function UnAuthTask({ payment }: { payment: string | undefined }) {
   const router = useRouter();
   const [unAuthDayId, setUnAuthDayId] = useState("1");
-
   const { data: unAuthenticatedDayDataForChengeDay, isLoading } =
-    useGetDaysByDayIdQuery(parseInt(unAuthDayId));
+    useGetDaysByDayIdQuery(parseInt(unAuthDayId), {
+      skip: !unAuthDayId, // prevent wrong first call
+      refetchOnMountOrArgChange: true,
+    });
 
   const unAuthenticatedDayData = unAuthenticatedDayDataForChengeDay?.data;
+  console.log(unAuthenticatedDayData, "day Data", isLoading);
 
   useEffect(() => {
     const dayId = window.localStorage.getItem("unAuthDayId") || "1";
@@ -85,7 +88,7 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
       dispatch(clearDayData());
       setSelectedTaskIndex(0);
       setIsFinishModalOpen(true);
-
+      setUnAuthDayId((parseInt(unAuthDayId) + 1).toString());
       dispatch(storeCurrentTask(tasks[0]));
       localStorage.setItem(
         "UnAuthDay",
@@ -171,7 +174,6 @@ function UnAuthTask({ payment }: { payment: string | undefined }) {
 
     return () => clearTimeout(timer);
   }, [unAuthenticatedDayData, unAuthDayId]);
-
 
   const DayCount = parseInt(unAuthDayId) || 0;
 

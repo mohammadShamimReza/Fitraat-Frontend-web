@@ -30,7 +30,6 @@ function AuthMyTask({
   const router = useRouter();
 
   const tasks = ["video", "kagel", "quiz", "Blog"];
-
   const { data: authenticatedDayDataForChengeDay, isLoading } =
     useGetAuthDaysByDayIdQuery(authDayDataId);
 
