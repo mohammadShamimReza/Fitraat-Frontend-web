@@ -18,19 +18,19 @@ function SuggestedBlog({
     <div className="">
       <>
         <p className="text-center m-7 text-2xl underline">{blog?.title}</p>
-        <p className="line-clamp-[11] text-lg tracking-wider">
+        <div className="line-clamp-[11] text-lg tracking-wider">
           {blog?.content && (
             <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
           )}
-        </p>
+        </div>
 
         <Link
           href={`/authBlog/${blog.id}`}
           className="flex justify-center align-middle "
         >
-          <div className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mt-5">
+          <p className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded inline-flex items-center mt-5">
             <span>Read Full Blog</span>
-          </div>
+          </p>
         </Link>
       </>
     </div>

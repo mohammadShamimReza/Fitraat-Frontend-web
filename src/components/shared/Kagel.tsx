@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { storeInitialRender } from "@/redux/slice/initialRenderSlice";
 import { KagelTime, KagelTimeEntry } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { Button, Progress } from "antd";
+import { Button, Progress, Space } from "antd";
 import { useEffect, useRef, useState } from "react";
 import squizze from "../../app/assets/squizze.mp3";
 import stop from "../../app/assets/stop.mp3";
@@ -244,7 +244,7 @@ function Kagel({ kegel }: { kegel: KagelTime[] | undefined }) {
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
-            justifyContent: "flex-start",
+            justifyContent: "center",
             gap: "8px",
             width: "100%",
             backgroundColor: "#f9fafb",
@@ -303,10 +303,10 @@ function Kagel({ kegel }: { kegel: KagelTime[] | undefined }) {
           <Progress percent={progressPercent} type="circle" size={size} />
         </div>
 
-        <Button.Group>
+        <Space.Compact>
           <Button onClick={startTimer}>Start</Button>
           <Button onClick={stopTimer}>Stop</Button>
-        </Button.Group>
+        </Space.Compact>
 
         <div className="basis-1/6 flex justify-center align-bottom flex-col">
           <div className="flex justify-between mt-4 gap-5">

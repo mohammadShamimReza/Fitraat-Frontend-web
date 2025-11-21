@@ -245,11 +245,17 @@ function TaskPage({
           {/* Navigation Buttons */}
           <div className="flex justify-between mt-6">
             <button
-              className={`px-4 py-2 text-white rounded ${
-                selectedTaskIndex === 0
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gray-600 hover:bg-gray-700"
-              }`}
+              className={`px-4 py-2 mt-5 inline-block 
+    bg-gradient-to-r from-indigo-600 to-blue-600 
+    text-white 
+    rounded-br-xl rounded-tl-2xl 
+    transition-all duration-300 
+    shadow-md  hover:scale-105 
+    hover:-translate-y-1
+    hover:shadow-xl
+    hover:from-indigo-700 hover:to-blue-700 ${
+      selectedTaskIndex === 0 ? " cursor-not-allowed" : " hover:bg-gray-700"
+    }`}
               onClick={handlePrevious}
               disabled={selectedTaskIndex === 0}
             >
@@ -257,7 +263,15 @@ function TaskPage({
               Previous
             </button>
             <button
-              className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-700 rounded"
+              className="px-4 py-2  mt-5 inline-block 
+    bg-gradient-to-r from-indigo-600 to-blue-600 
+    text-white  hover:scale-105 
+    hover:-translate-y-1
+    hover:shadow-xl
+    hover:from-indigo-700 hover:to-blue-700 
+    rounded-br-xl rounded-tl-2xl 
+    transition-all duration-300 
+    shadow-md "
               onClick={handleNext}
             >
               {selectedTask === "Blog" ? "Complete" : "Next"}
