@@ -450,7 +450,7 @@ export interface ProtectionData {
   updatedAt: string;
   publishedAt: string;
   numberCount: number;
-  protectionVideo: Video[];
+  protectionVideo: Video;
   title: string;
 }
 

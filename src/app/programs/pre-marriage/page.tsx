@@ -53,12 +53,16 @@ export default function ChildProtectionPage() {
 
   if (!mount || !protectionData) return <ProgramSclaton />;
 
-  const video: ProtectionVideo[] =
-    protectionData?.data?.[0]?.protectionVideo?.map((v) => ({
-      id: v.id,
-      url: `${v.url}`,
-      name: v.name,
-    })) || [];
+  const video: ProtectionVideo[] = protectionData?.data?.[0]?.protectionVideo
+    ? [
+        {
+          id: protectionData.data[0].protectionVideo.id,
+          url: protectionData.data[0].protectionVideo.url,
+          name: protectionData.data[0].protectionVideo.name,
+        },
+      ]
+    : [];
+
 
   // const dayCount = protectionData?.data?.[0]?.numberCount || 1;
   const payment = userData?.childProtectionPayment;
