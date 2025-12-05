@@ -1,5 +1,6 @@
 "use client";
 
+import VideoWatermark from "@/components/shared/WaterMark";
 import { useGetEnergencyContantQuery } from "@/redux/api/emergencyApi";
 import { Button, message, Skeleton, Steps, theme } from "antd";
 import React, { useState } from "react";
@@ -78,7 +79,7 @@ const EmergencyService: React.FC = () => {
     {
       title: "Video",
       content: videoUrl ? (
-        <div className="flex justify-center items-center w-full">
+        <div className="flex justify-center items-center w-full relative">
           <video
             className="w-full sm:w-[90%] md:w-[80%] max-w-[900px] rounded-xl shadow-lg"
             controls
@@ -87,6 +88,7 @@ const EmergencyService: React.FC = () => {
             <source src={`${videoUrl}`} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+          <VideoWatermark email={""} />
         </div>
       ) : (
         <div className="text-center text-gray-600">No video available</div>

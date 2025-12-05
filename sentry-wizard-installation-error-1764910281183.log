@@ -1,0 +1,7 @@
+npm error code ENOTEMPTY
+npm error syscall rename
+npm error path /Users/mdshamimreza/Documents/projects/fitraat/Fitraat-Frontend-web/node_modules/glob
+npm error dest /Users/mdshamimreza/Documents/projects/fitraat/Fitraat-Frontend-web/node_modules/.glob-wgmfmjAg
+npm error errno -66
+npm error ENOTEMPTY: directory not empty, rename '/Users/mdshamimreza/Documents/projects/fitraat/Fitraat-Frontend-web/node_modules/glob' -> '/Users/mdshamimreza/Documents/projects/fitraat/Fitraat-Frontend-web/node_modules/.glob-wgmfmjAg'
+npm error A complete log of this run can be found in: /Users/mdshamimreza/.npm/_logs/2025-12-05T04_50_59_509Z-debug-0.log

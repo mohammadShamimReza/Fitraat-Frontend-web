@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/redux/hooks";
 import React, { useEffect, useState } from "react";
 
 interface VideoWatermarkProps {
@@ -6,33 +7,34 @@ interface VideoWatermarkProps {
 
 const VideoWatermark: React.FC<VideoWatermarkProps> = ({ email }) => {
   const [timestamp, setTimestamp] = useState(new Date().toLocaleString());
+  const userInfo = useAppSelector((state) => state.auth.userInfo);
+useEffect(() => {
+  const interval = setInterval(() => {
+    setTimestamp(new Date().toLocaleString());
+  }, 1000);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimestamp(new Date().toLocaleString());
-    }, 1000); // update timestamp every second
-
-    return () => clearInterval(interval);
-  }, []);
+  return () => clearInterval(interval);
+}, []);
 
   return (
     <div
       style={{
         position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%) rotate(-20deg)",
-        opacity: 0.15,
-        fontSize: "32px",
-        fontWeight: "bold",
+        top: 180,
+        left: 180,
+        opacity: 0.35,
+        fontSize: "16px",
+        fontWeight: "600",
         color: "#000",
-        pointerEvents: "none", // allow video interaction
+        pointerEvents: "none",
         userSelect: "none",
         zIndex: 9999,
-        whiteSpace: "nowrap",
+        background: "rgba(255,255,255,0.6)",
+        padding: "4px 10px",
+        borderRadius: "6px",
       }}
     >
-      {`${email} - ${timestamp}`}
+      {userInfo?.email} — {timestamp}
     </div>
   );
 };
