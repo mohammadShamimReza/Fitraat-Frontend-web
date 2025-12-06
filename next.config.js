@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import createNextIntlPlugin from "next-intl/plugin";
+
 const nextConfig = {
   webpack: (config, options) => {
     const { isServer } = options;
@@ -40,6 +42,8 @@ const nextConfig = {
 module.exports = nextConfig;
 
 
+const withNextIntl = createNextIntlPlugin();
+export default withNextIntl(nextConfig);
 
 // Injected content via Sentry wizard below
 
