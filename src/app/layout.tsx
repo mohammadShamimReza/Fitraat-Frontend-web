@@ -13,7 +13,6 @@ import FeatureRequestPopup from "@/components/shared/FeactureRequest";
 import Hero from "@/components/structure/Hero";
 import Support from "@/components/structure/Support";
 import { ConfigProvider } from "antd";
-import { NextIntlClientProvider } from "next-intl";
 
 // If loading a variable font, you don't need to specify the font weight
 const quicksand = localFont({
@@ -91,26 +90,24 @@ export default function RootLayout({
         </Head>
         <body>
           <AntdRegistry>
-            <NextIntlClientProvider>
-              <ConfigProvider
-                theme={{
-                  token: {
-                    fontFamily: quicksand.style.fontFamily,
-                  },
-                }}
-              >
-                <Support />
+            <ConfigProvider
+              theme={{
+                token: {
+                  fontFamily: quicksand.style.fontFamily,
+                },
+              }}
+            >
+              <Support />
 
-                <NavBar />
+              <NavBar />
 
-                <Hero />
+              <Hero />
 
-                <div className="mx-auto max-w-6xl">{children}</div>
-                <Footer />
-                <CookieConsent />
-                <FeatureRequestPopup />
-              </ConfigProvider>
-            </NextIntlClientProvider>
+              <div className="mx-auto max-w-6xl">{children}</div>
+              <Footer />
+              <CookieConsent />
+              <FeatureRequestPopup />
+            </ConfigProvider>
           </AntdRegistry>
         </body>
       </html>
