@@ -10,6 +10,7 @@ import React from "react";
 import "./globals.css";
 
 import FeatureRequestPopup from "@/components/shared/FeactureRequest";
+import ServerWarmUp from "@/components/shared/ServerWarmUp";
 import Hero from "@/components/structure/Hero";
 import Support from "@/components/structure/Support";
 import { ConfigProvider } from "antd";
@@ -91,7 +92,7 @@ export default function RootLayout({
         </Head>
         <body>
           <AntdRegistry>
-            <NextIntlClientProvider>
+            <NextIntlClientProvider locale="en">
               <ConfigProvider
                 theme={{
                   token: {
@@ -109,6 +110,7 @@ export default function RootLayout({
                 <Footer />
                 <CookieConsent />
                 <FeatureRequestPopup />
+                <ServerWarmUp />
               </ConfigProvider>
             </NextIntlClientProvider>
           </AntdRegistry>

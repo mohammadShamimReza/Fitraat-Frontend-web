@@ -21,7 +21,6 @@ function Page() {
   //   setPageCount(1); // Reset to first page on new search
   // };
 
-  console.log(blogData, "blog data");
 
   const total: number = blogData?.meta.pagination.total || 0;
   const totalPages = Math.ceil(total / paginationSize);
