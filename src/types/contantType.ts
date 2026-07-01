@@ -101,16 +101,6 @@ export type Quiz = {
   options: QuizOption;
 };
 
-export type FreeQuizz = {
-  id: number;
-  documentId: string;
-  dayId: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  quizzess: Quiz[];
-};
-
 export type KagelTimeEntry = {
   id: number;
   squizz: number;
@@ -122,16 +112,6 @@ export type KagelTime = {
   gap: number;
   serial: number;
   times: KagelTimeEntry[];
-};
-
-export type FreeKagel = {
-  id: number;
-  documentId: string;
-  dayId: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  kagelTimes: KagelTime[];
 };
 
 export interface KegelDayIndividualSession {
@@ -149,30 +129,6 @@ export interface KegelIndividualResponse {
   data: KegelDayIndividualSession[];
   meta: Meta;
 }
-export type Day = {
-  id: number;
-  documentId: string;
-  dayId: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  free_blog: Blog;
-  regulerVideo: Video;
-  meditationVideo: Video;
-  free_quizz: FreeQuizz;
-  free_kagel: FreeKagel;
-};
-
-export type FreeDaysResponse = {
-  data: Day[];
-  meta: Meta;
-};
-
-export interface DayData {
-  data: Day[];
-  meta: Meta;
-}
-
 export type PaymentStatus = "Complete" | "Not complete";
 export type Gender = "Male" | "Female" | null;
 export interface UserData {

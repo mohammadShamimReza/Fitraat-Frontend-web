@@ -23,7 +23,6 @@ export default function ProfilePage() {
   const email = getUserInfoData?.email || "";
   const compliteDay = getUserInfoData?.compliteDay || 0;
   const userId = getUserInfoData?.id || 0;
-  const fitraatPaid = getUserInfoData?.fitraatPayment || "Not Complete";
 
   const startDate = new Date(getUserInfoData?.startDate || new Date());
   const today = new Date();
@@ -108,7 +107,6 @@ export default function ProfilePage() {
           <div className="mt-4">
             {activeSection === "Profile" && (
               <ProfileTypes
-                paid={fitraatPaid}
                 getUserInfoData={getUserInfoData}
                 userId={userId}
                 daysLeft={daysLeft}
@@ -123,7 +121,6 @@ export default function ProfilePage() {
               <ProRecovery
                 compliteDay={compliteDay}
                 daysLeft={daysLeft}
-                paid={fitraatPaid}
                 progressData={progressData}
               />
             )}

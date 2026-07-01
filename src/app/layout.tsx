@@ -6,6 +6,7 @@ import Providers from "@/lib/Providers";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import localFont from "next/font/local";
 import Head from "next/head";
+import { usePathname } from "next/navigation";
 import React from "react";
 import "./globals.css";
 
@@ -43,6 +44,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   return (
     <Providers>
       <html lang="en" className={quicksand.className}>
@@ -100,14 +104,20 @@ export default function RootLayout({
                   },
                 }}
               >
-                <Support />
+                {!isHomePage && (
+                  <>
+                    <Support />
+                    <NavBar />
+                    <Hero />
+                  </>
+                )}
 
-                <NavBar />
-
-                <Hero />
-
-                <div className="mx-auto max-w-6xl">{children}</div>
-                <Footer />
+                {isHomePage ? (
+                  children
+                ) : (
+                  <div className="mx-auto max-w-6xl">{children}</div>
+                )}
+                {!isHomePage && <Footer />}
                 <CookieConsent />
                 <FeatureRequestPopup />
                 <ServerWarmUp />

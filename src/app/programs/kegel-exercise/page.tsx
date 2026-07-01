@@ -20,7 +20,6 @@ const KagelIndividualPage: React.FC = () => {
     nightKagel: kagelData?.data[0].nightKagel,
   };
   const dayCount = kagelData?.data[0].dayCount || 1;
-  const payment = userData?.kagelPayment;
   const userId = userData?.id;
   const key = kagelData?.data[0].id || "defaultKey";
   return (
@@ -30,7 +29,6 @@ const KagelIndividualPage: React.FC = () => {
         DayCount={dayCount}
         kegel={kagel}
         key={key}
-        payment={payment}
         userId={userId}
         setDay={setDay}
       />

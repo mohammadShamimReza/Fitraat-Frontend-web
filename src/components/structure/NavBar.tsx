@@ -13,10 +13,8 @@ import siteLogo from "../../app/assets/detox1.png";
 
 const navbarLinks = [
   { name: "Programs", href: "/programs" },
-  { name: "Blogs", href: "/freeBlog" },
   { name: "Blocker", href: "/blocker" },
   { name: "Emergency", href: "/emergency" },
-  { name: "Pricing", href: "/pricing" },
 ];
 
 function NavBar() {

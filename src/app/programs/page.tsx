@@ -14,6 +14,7 @@ import recovary from "./../../app/assets/recovary.png";
 type Program = {
   id: number;
   link: string;
+  paymentKey: "fitraatPayment" | "kagelPayment" | "childProtectionPayment";
   title: string;
   image: StaticImageData;
   description: string;
@@ -26,6 +27,7 @@ const programs: Program[] = [
   {
     id: 1,
     link: "/programs/porn-recovary",
+    paymentKey: "fitraatPayment",
     title: "Porn Recovery Program",
     image: recovary,
     description:
@@ -49,6 +51,7 @@ const programs: Program[] = [
   {
     id: 2,
     link: "/programs/kegel-exercise",
+    paymentKey: "kagelPayment",
     title: "Kegel Exercise Program",
     image: kagelIndividual,
     description:
@@ -72,6 +75,7 @@ const programs: Program[] = [
   {
     id: 3,
     link: "/programs/pre-marriage",
+    paymentKey: "childProtectionPayment",
     title: "Pre-Marriage Solution",
     image: childProtection, // replace with your actual image import
     description:
@@ -116,12 +120,17 @@ const ProgramsPage: React.FC = () => {
         </p>
 
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-          {programs.map((p) => (
-            <article
-              key={p.id}
-              className="transform transition duration-300 hover:-translate-y-2 h-full"
-            >
-              <Card
+          {programs.map((p) => {
+            const hasAccess = userData?.[p.paymentKey] === "Complete";
+            const ctaHref = hasAccess ? p.link : "/payment";
+            const ctaText = hasAccess ? "Continue" : "Unlock Program";
+
+            return (
+              <article
+                key={p.id}
+                className="transform transition duration-300 hover:-translate-y-2 h-full"
+              >
+                <Card
                 hoverable
                 bordered={false}
                 className="rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 !cursor-default h-full flex flex-col"
@@ -157,16 +166,14 @@ const ProgramsPage: React.FC = () => {
                   </p>
 
                   <div className="flex items-center justify-between gap-3">
-                    <Link href={`${p.link}`} className="flex-1">
+                    <Link href={ctaHref} className="flex-1">
                       <Button
                         type="primary"
                         icon={<PlayCircleOutlined />}
                         size="middle"
                         className="w-full flex items-center justify-center gap-2 py-2 rounded-md"
                       >
-                        {!userData || userData?.fitraatPayment !== "Complete"
-                          ? "Try It"
-                          : "Continue"}
+                        {ctaText}
                       </Button>
                     </Link>
 
@@ -181,9 +188,10 @@ const ProgramsPage: React.FC = () => {
                     </Button>
                   </div>
                 </div>
-              </Card>
-            </article>
-          ))}
+                </Card>
+              </article>
+            );
+          })}
         </section>
       </div>
 
@@ -239,12 +247,20 @@ const ProgramsPage: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-end mt-4">
               <Button
-                onClick={() => router.push(selected.link)}
+                onClick={() =>
+                  router.push(
+                    userData?.[selected.paymentKey] === "Complete"
+                      ? selected.link
+                      : "/payment"
+                  )
+                }
                 type="primary"
                 icon={<PlayCircleOutlined />}
                 className="w-full sm:w-auto"
               >
-                Try It
+                {userData?.[selected.paymentKey] === "Complete"
+                  ? "Continue"
+                  : "Unlock Program"}
               </Button>
 
               <Button

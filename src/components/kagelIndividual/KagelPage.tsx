@@ -2,7 +2,7 @@
 
 import Kagel from "@/components/shared/Kagel";
 import { useUpdateUserKagelDayMutation } from "@/redux/api/kagelindividualApi";
-import { KagelTime, PaymentStatus } from "@/types/contantType";
+import { KagelTime } from "@/types/contantType";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import Image from "next/image";
@@ -20,12 +20,11 @@ interface Props {
     nightKagel: KagelTime[] | undefined;
   };
   DayCount: number;
-  payment: PaymentStatus | undefined;
   userId: number | undefined;
   setDay: (day: string) => void;
 }
 
-export default function KegelPage({ kegel, DayCount, payment, userId, setDay }: Props) {
+export default function KegelPage({ kegel, DayCount, userId, setDay }: Props) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [updateUserKagelDay] = useUpdateUserKagelDayMutation();
@@ -202,11 +201,7 @@ export default function KegelPage({ kegel, DayCount, payment, userId, setDay }: 
           alt="Day Fininsh Congratulation image"
         />
       </Modal>
-      <div
-        className={`flex relative ${
-          payment === "Complete" ? "" : "blur-sm pointer-events-none"
-        }`}
-      >
+      <div className="flex relative">
         {/* Sidebar */}
 
         <div
@@ -303,22 +298,6 @@ export default function KegelPage({ kegel, DayCount, payment, userId, setDay }: 
           </div>
         </div>
       </div>
-      {payment !== "Complete" && (
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center bg-white/365 backdrop-blur-sm rounded-lg">
-          <p className="text-gray-800 font-semibold mb-3 text-sm sm:text-base">
-            To use this{" "}
-            <span className="text-blue-700 font-bold"> kagel exercise</span>{" "}
-            feature, please
-            <span className="text-blue-700 font-bold"> Make Payment</span>
-          </p>
-          <button
-            onClick={() => (window.location.href = "/payment")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm sm:text-base transition-all duration-300 shadow-md"
-          >
-            Go to Payment
-          </button>
-        </div>
-      )}
     </div>
   );
 }

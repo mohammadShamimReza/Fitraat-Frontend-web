@@ -15,7 +15,6 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function ProfileTypes({
-  paid,
   userId,
   getUserInfoData,
   daysLeft,
@@ -23,7 +22,6 @@ export default function ProfileTypes({
   name,
   compliteDay,
 }: {
-  paid: string;
   getUserInfoData: UserData | null;
   userId: number;
   daysLeft: number;
@@ -97,11 +95,6 @@ export default function ProfileTypes({
   };
 
   const handleRestart = async () => {
-    if (paid || paid !== "Complete") {
-      alert("Please update your plan for use this feacture");
-      return;
-    }
-
     alert("Do you want to restart!");
 
     try {
@@ -149,7 +142,6 @@ export default function ProfileTypes({
         getUserInfoData={getUserInfoData}
         handleRestart={handleRestart}
         name={name}
-        paid={paid}
         setIsImageUploadModalVisible={setIsImageUploadModalVisible}
       />
 

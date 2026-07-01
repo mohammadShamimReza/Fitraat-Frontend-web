@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 
 import DayFinishImage from "@/app/assets/dayFinish.gif";
 import PreMarriageNavigation from "@/components/preMarriageSolution/Navigation";
-import PreMarriagePaymentBlocker from "@/components/preMarriageSolution/PaymentBlocker";
 import PreMarriageTitles from "@/components/preMarriageSolution/Titles";
 import PreMarriageVideo from "@/components/preMarriageSolution/Video";
 
@@ -65,7 +64,6 @@ export default function ChildProtectionPage() {
 
 
   // const dayCount = protectionData?.data?.[0]?.numberCount || 1;
-  const payment = userData?.childProtectionPayment;
   const userId = userData?.id;
 
   const handleNavigation = async (direction: "next" | "prev") => {
@@ -107,11 +105,7 @@ export default function ChildProtectionPage() {
       >
         <Image className="mx-auto" src={DayFinishImage} alt="Day Finished" />
       </Modal>
-      <div
-        className={`relative ${
-          payment === "Complete" ? "" : "blur-sm pointer-events-none"
-        }`}
-      >
+      <div className="relative">
         {/* ✅ Video Player */}
         {isLoading ? (
           <Skeleton.Node active={true} style={{ width: 880, height: 400 }} />
@@ -137,8 +131,6 @@ export default function ChildProtectionPage() {
           />
         ) : null}
       </div>
-      {/* ✅ Payment Overlay */}
-      {payment !== "Complete" && <PreMarriagePaymentBlocker />}
     </div>
   );
 }
