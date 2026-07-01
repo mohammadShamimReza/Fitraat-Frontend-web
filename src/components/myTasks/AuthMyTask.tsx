@@ -19,12 +19,10 @@ import TaskPage from "./TaskPage";
 function AuthMyTask({
   authDayDataId,
   userId,
-  payment,
   daysLeft,
 }: {
   authDayDataId: number;
   userId: number;
-  payment: string | undefined;
   daysLeft: number;
 }) {
   const router = useRouter();
@@ -118,7 +116,7 @@ function AuthMyTask({
   const handleOk = () => {
     setIsFinishModalOpen(false);
 
-    router.push("/freeBlog");
+    router.push("/programs");
   };
 
   const [blog, setBlog] = useState<{
@@ -199,7 +197,6 @@ function AuthMyTask({
             video={video}
             kegel={kegel}
             DayCount={DayCount}
-            payment={payment}
             daysLeft={daysLeft}
           />
         </>
@@ -220,12 +217,12 @@ function AuthMyTask({
 
           {/* Action Buttons */}
           <div className="flex space-x-4">
-            <Link href="/freeBlog">
+            <Link href="/programs">
               <Button
                 type="primary"
                 className="bg-blue-500 hover:bg-blue-600 px-6 py-2"
               >
-                Explore Blogs
+                Back to Programs
               </Button>
             </Link>
           </div>

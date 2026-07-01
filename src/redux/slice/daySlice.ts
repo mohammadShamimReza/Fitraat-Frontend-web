@@ -1,10 +1,10 @@
-import { Day, DayData, Meta } from "@/types/contantType";
+import { Meta, ProDay, ProDaysResponse } from "@/types/contantType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface DayState {
-  data: Day[] | null; // Stores the list of days
+  data: ProDay[] | null; // Stores the list of days
   meta: Meta | null; // Stores pagination metadata
-  currentDay: Day | null; // Stores the current selected day
+  currentDay: ProDay | null; // Stores the current selected day
 }
 
 const initialState: DayState = {
@@ -18,12 +18,12 @@ export const daySlice = createSlice({
   initialState,
   reducers: {
     // Store the full day data
-    storeDayData: (state, action: PayloadAction<DayData>) => {
+    storeDayData: (state, action: PayloadAction<ProDaysResponse>) => {
       state.data = action.payload.data;
       state.meta = action.payload.meta;
     },
     // Store a specific current day
-    storeCurrentDay: (state, action: PayloadAction<Day>) => {
+    storeCurrentDay: (state, action: PayloadAction<ProDay>) => {
       state.currentDay = action.payload;
     },
     // Clear all stored day data

@@ -16,8 +16,10 @@ function ServerWarmUp() {
         setShow(true);
       }, 10);
     } else {
-      // API finished → hide popup immediately
-      setShow(false);
+      // API finished -> queue hide to avoid sync setState in effect
+      timer = setTimeout(() => {
+        setShow(false);
+      }, 0);
     }
 
     return () => clearTimeout(timer);

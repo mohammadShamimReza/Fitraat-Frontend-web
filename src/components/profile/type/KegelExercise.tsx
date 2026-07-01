@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, Card } from "antd";
+import { Card } from "antd";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
-import { useRouter } from "next/navigation";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -14,7 +13,6 @@ interface UserData {
 }
 
 export default function KegelExercise({ user }: { user: UserData }) {
-  const router = useRouter();
   const totalExercises = 180;
   const completed = user.kagelIndividualDayNumber;
   const isPaid = user.kagelPayment === "Complete";
@@ -89,35 +87,15 @@ export default function KegelExercise({ user }: { user: UserData }) {
         </div>
       </div>
 
-      {isPaid ? (
-        <p
-          style={{
-            color: "#007BFF",
-            fontWeight: 500,
-            marginTop: 15,
-          }}
-        >
-          Payment Completed ✅
-        </p>
-      ) : (
-        <div>
-          <p style={{ color: "#FF5252", fontWeight: 500, marginTop: 15 }}>
-            Payment Pending ❌
-          </p>
-          <Button
-            type="primary"
-            style={{
-              backgroundColor: "#007BFF",
-              borderColor: "#007BFF",
-              borderRadius: 8,
-              marginTop: 8,
-            }}
-            onClick={() => router.push("/payment")}
-          >
-            Pay Now
-          </Button>
-        </div>
-      )}
+      <p
+        style={{
+          color: isPaid ? "#007BFF" : "#4B5563",
+          fontWeight: 500,
+          marginTop: 15,
+        }}
+      >
+        Program access is active.
+      </p>
     </Card>
   );
 }

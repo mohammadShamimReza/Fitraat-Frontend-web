@@ -13,7 +13,7 @@ import {
 const quickLinks = [
   { name: "Payment", href: "/payment" },
   { name: "About Us", href: "/about" },
-  { name: "Blogs", href: "/freeBlog" },
+  { name: "Programs", href: "/programs" },
   { name: "Privacy Policy", href: "/privecy" },
 ];
 

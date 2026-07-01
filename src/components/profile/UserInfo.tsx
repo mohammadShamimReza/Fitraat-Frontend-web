@@ -1,6 +1,5 @@
 import { UserData } from '@/types/contantType';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
 
 export default function UserInfo({
@@ -8,14 +7,12 @@ export default function UserInfo({
   setIsImageUploadModalVisible,
   name,
   email,
-  paid,
   handleRestart,
 }: {
   getUserInfoData: UserData | null;
   setIsImageUploadModalVisible: Dispatch<SetStateAction<boolean>>;
   name: string | undefined;
   email: string | undefined;
-  paid: string;
   handleRestart: () => Promise<void>;
   compliteDay: number | null;
   daysLeft: number;
@@ -61,14 +58,6 @@ export default function UserInfo({
           >
             Restart Journey
           </button>
-
-          {paid !== "Complete" && (
-            <Link href="/payment">
-              <button className="px-4 py-2 rounded-xl bg-gray-600 hover:bg-gray-800 text-white">
-                Become Pro
-              </button>
-            </Link>
-          )}
         </div>
       </div>
     </>

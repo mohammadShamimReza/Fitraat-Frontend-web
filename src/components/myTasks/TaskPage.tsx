@@ -38,7 +38,6 @@ interface Props {
   video: { videoUrl: string | undefined };
   kegel: KagelTime[] | undefined;
   DayCount: number;
-  payment: string | undefined;
   daysLeft: number;
 }
 
@@ -54,7 +53,6 @@ function TaskPage({
   video,
   kegel,
   DayCount,
-  payment,
   daysLeft,
 }: Props) {
   const tasks = ["video", "kagel", "quiz", "Blog"];
@@ -104,16 +102,13 @@ function TaskPage({
 
   const renderDayItem = (day: number) => {
     const isUnlocked = DayCount >= day;
-    const isPaidLocked = payment != "Complete" && day > 3;
 
     return (
       <div
         key={day}
         className={`flex justify-between items-center hover:bg-slate-100 rounded 
           
-        ${DayCount === day ? "bg-blue-100" : ""} ${
-          isPaidLocked ? "blur-sm" : ""
-        }`}
+        ${DayCount === day ? "bg-blue-100" : ""}`}
         title={isUnlocked ? "Unlocked" : "Locked"}
       >
         <div
@@ -121,15 +116,7 @@ function TaskPage({
         >
           <span>Day: {day}</span>
         </div>
-        <span>{day > 3 ? "Paid" : "Free"}</span>
         {day <= daysLeft ? (
-          <FaCheckCircle
-            size={25}
-            style={{
-              color: isUnlocked ? "#0578EA" : "gray",
-            }}
-          />
-        ) : payment != "Complete" ? (
           <FaCheckCircle
             size={25}
             style={{
